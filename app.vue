@@ -5,5 +5,6 @@ import NavBar from './components/NavBar.vue';
 
 <template>
   <NavBar></NavBar>
-  <NuxtPage />
+  <NuxtPage></NuxtPage>
+  <PageFooter></PageFooter>
 </template>

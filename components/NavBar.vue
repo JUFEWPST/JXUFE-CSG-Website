@@ -14,9 +14,6 @@
                     </NuxtLink>
                     <NuxtLink to="/blog" class="hover:text-(--color-primary-pressed) transition-colors">Blog
                     </NuxtLink>
-                    <NuxtLink to="/joinus" class="hover:text-(--color-primary-pressed) transition-colors">加入我们
-                    </NuxtLink>
-                    <NuxtLink to="/cog" class="hover:text-(--color-primary-pressed) transition-colors">致谢</NuxtLink>
                 </div>
             </nav>
         </div>
