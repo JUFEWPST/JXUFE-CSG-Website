@@ -2,11 +2,14 @@
 
 @layer utilities {
     :root {
-        --color-primary: #4a90e2;
-        --color-primary-bg: #f2f7fa;
-        --color-primary-hover: #6aa4ec;
-        --color-primary-pressed: #2a7bd8;
-        --color-primary-focus: rgba(74, 144, 226, 0.3);
+        --color-primary: #6bb9f0;
+        --color-primary-bg: #f0f8ff;
+        --color-primary-hover: #8ac8f8;
+        --color-primary-pressed: #4da8e0;
+        --color-primary-focus: rgba(107, 185, 240, 0.2);
+
+        --color-accent-text: #ff7e5f;
+        --color-accent-hover: #ff9a80;
     }
 }
 
@@ -32,4 +35,5 @@
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: transparent; }
+    background-color: transparent;
+}
