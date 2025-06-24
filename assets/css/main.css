@@ -37,3 +37,14 @@
 ::-webkit-scrollbar-track-piece {
     background-color: transparent;
 }
+
+
+@keyframes expand {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: var(--to-height, 100px);
+    }
+}

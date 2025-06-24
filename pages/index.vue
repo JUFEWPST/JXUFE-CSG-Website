@@ -23,10 +23,18 @@
             </h3>
         </div>
         <div class="w-full md:w-1/2 max-w-2xl">
-            <ul class="space-y-4">
-                <ArticleBlock v-for="(article, index) in recentArticles" :key="index" :linkto="article.link"
-                    :title="article.title"  />
+            <div v-if="loading" class=" items-center flex justify-center">
+                <AnimationLoadingSpinner size="xl2" color="[var(--color-accent-hover)]">
+                </AnimationLoadingSpinner>
+            </div>
+            <ul v-else-if="archives" class="space-y-4">
+                <ArticleBlock v-for="archive in archives" :key="archive.id"
+                    :datetime="new Date(archive.publishedAt).toLocaleDateString()"
+                    :linkto="`/archive/${archive.documentId}`" :title="archive.title" :tags="archive.tags?.tags" />
             </ul>
+            <div v-else-if="error">
+                <ErrorDisplay :errorData="error"></ErrorDisplay>
+            </div>
         </div>
     </div>
 
@@ -65,15 +73,26 @@
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+import ArticleBlock from '~/components/ArticleBlock.vue';
+import { useApi } from '#imports';
+import type { Archive } from '~/types/archives';
+import ErrorDisplay from '~/components/ErrorDisplay.vue';
 
-const recentArticles = [
-    { link: "/", title: "你好" },
-    { link: "/", title: "Ciallo" },
-    { link: "/", title: "和我一起 签订契约" },
-    { link: "/", title: "成为魔法少女" },
-    { link: "/", title: "一起建设网站吧" }
-];
+const {
+    data: archives,
+    loading,
+    error,
+    get
+} = useApi<Archive[]>()
+
+// 获取文章列表
+const loadArticles = async (page = 1) => {
+    await get(`/archives?pagination[page]=1&pagination[pageSize]=4`)
+    console.log(archives.value)
+}
+
+loadArticles()
 </script>
 
 <style>

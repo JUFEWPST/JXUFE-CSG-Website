@@ -67,7 +67,6 @@ watch(() => props.text, (newText) => {
 <style scoped>
 .typing-effect {
     display: inline-block;
-    font-family: monospace;
     white-space: pre;
 }
 

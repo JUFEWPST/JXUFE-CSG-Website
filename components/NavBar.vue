@@ -12,7 +12,7 @@
                     <NuxtLink to="/" class="hover:text-(--color-primary-pressed) transition-colors">首页</NuxtLink>
                     <NuxtLink to="/about" class="hover:text-(--color-primary-pressed) transition-colors">关于协会
                     </NuxtLink>
-                    <NuxtLink to="/blog" class="hover:text-(--color-primary-pressed) transition-colors">Blog
+                    <NuxtLink to="/archive" class="hover:text-(--color-primary-pressed) transition-colors">归档
                     </NuxtLink>
                 </div>
             </nav>
