@@ -3,6 +3,7 @@
 
 @layer utilities {
     :root {
+        --color-text: #333333;
         --color-primary: #6bb9f0;
         --color-primary-bg: #f0f8ff;
         --color-primary-hover: #8ac8f8;
@@ -14,10 +15,14 @@
     }
 
     .dark {
+        --color-text: #E1E4E8;
         --color-bg: #121212
     }
 }
 
+body {
+    color: var(--color-text)
+}
 
 ::-webkit-scrollbar {
     width: 4px;

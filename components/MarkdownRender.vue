@@ -8,7 +8,7 @@
 import { computed, ref, onMounted, nextTick } from 'vue';
 import { md, renderMarkdown } from '~/composables/markdown';
 import '~/assets/css/github-markdown.css';
-import '~/assets/css/atom-one-light.min.css';
+import '~/assets/css/atom-one.css'
 import type { TocItem } from '~/types/tocitems';
 const props = defineProps<{
   content: string | "";
@@ -75,21 +75,13 @@ onMounted(() => {
 
 <style scoped>
 .markdown-container {
-  display: flex;
+  width: 100%;
+  max-width: 100%;
 }
 
 .markdown-wrapper {
-  flex: 1;
-}
-
-.markdown-wrapper :deep(h1) {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-.markdown-wrapper :deep(pre) {
-  background: #f5f5f5;
-  padding: 1em;
-  border-radius: 4px;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 </style>
