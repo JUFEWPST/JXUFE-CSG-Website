@@ -98,7 +98,7 @@
     gap: 8px;
     margin-left: 12px;
     font-size: 0.875rem;
-    color: #333;
+    color: var(--color-text)
 }
 
 .page-jump input {
