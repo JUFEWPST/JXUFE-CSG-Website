@@ -30,10 +30,13 @@ import { ref, watch } from 'vue';
 import { useRoute, useRouter } from '#imports';
 import { useApi } from '~/composables/useapi';
 import type { Archive } from '~/types/archives';
+
+useHead({
+    title: '归档 - 江西财经大学网络安全协会'
+})
+
 const route = useRoute();
 const router = useRouter();
-
-
 const {
     data: archives,
     meta,
