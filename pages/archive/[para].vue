@@ -57,12 +57,16 @@ const {
   error,
   get,
 } = useApi<ArchiveData>();
+const pageTitle = computed(() => {
+  return archive.value?.title ? `${archive.value.title} - 江西财经大学网络安全协会
+  ` : '加载中...'
+})
 function handleTocUpdate(items: TocItem[]) {
   console.log('Received TOC items:', items);
   tocItems.value = items;
 }
 useHead({
-  title: archive.value?.title
+  title: pageTitle,
 })
 onMounted(() => {
   get(`/archives/${para.value}`)
