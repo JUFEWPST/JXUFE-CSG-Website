@@ -37,9 +37,8 @@
     协会拥有完善的组织架构和专业的技术分支，定期举办：
     <ul class="list-disc list-inside mt-2 space-y-1 marker:text-[var(--color-primary)]">
       <li class="hover:text-[var(--color-accent)] transition-colors">网络安全讲座</li>
-      <li class="hover:text-[var(--color-accent)] transition-colors">技能培训工作坊</li>
+      <li class="hover:text-[var(--color-accent)] transition-colors">技能培训</li>
       <li class="hover:text-[var(--color-accent)] transition-colors">CTF竞赛活动</li>
-      <li class="hover:text-[var(--color-accent)] transition-colors">校企合作项目</li>
     </ul>
   </p>
 
