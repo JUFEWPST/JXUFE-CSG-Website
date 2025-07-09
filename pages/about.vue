@@ -3,9 +3,18 @@ import FlipToggle from '~/components/FlipToggle.vue';
 import { onMounted, ref } from 'vue';
 
 const isMounted = ref(false);
+const currentQuote = ref(0);
+
+const quotes = [
+    "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
+    "放弃的话就到此为止了，但是，你可以改变命运()"
+];
 
 onMounted(() => {
     isMounted.value = true;
+    setInterval(() => {
+        currentQuote.value = (currentQuote.value + 1) % quotes.length;
+    }, 5000);
 });
 </script>
 
@@ -96,29 +105,114 @@ onMounted(() => {
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
+                style="transition-delay: 300ms">
+                <div class="absolute -left-5 -top-5 text-blue-100/70 dark:text-gray-700/80 text-7xl z-0">✦</div>
+                <div class="absolute -right-5 -bottom-5 text-pink-100/70 dark:text-gray-700/80 text-7xl z-0">✧</div>
+                <div class="absolute top-4 right-6 text-2xl text-yellow-400 opacity-60">☆</div>
+                <div class="absolute bottom-4 left-6 text-2xl text-blue-400 opacity-60">☆</div>
+
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
+                        <span class="w-2 h-8 bg-purple-500 mr-3 rounded-full"></span>
+                        协会成员荣誉
+                    </h2>
+                    <div class="space-y-8">
+                        <div>
+                            <h3
+                                class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-200 dark:border-gray-700 flex items-center">
+                                <span class="w-1.5 h-6 bg-blue-500 mr-2 rounded-full"></span>
+                                2024年
+                            </h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
+                                    <span class="text-gray-700 dark:text-gray-300">21届ISCC全国大学生信息安全竞赛</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">十五届蓝桥杯网络安全赛道</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">第九届全国密码挑战赛</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">2024睿抗机器人开发者大赛(RAICOM)全国总决赛</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3
+                                class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-200 dark:border-gray-700 flex items-center">
+                                <span class="w-1.5 h-6 bg-pink-500 mr-2 rounded-full"></span>
+                                2025年
+                            </h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">十六届蓝桥杯网络安全赛道</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省三</span>
+                                    <span class="text-gray-700 dark:text-gray-300">十八届CISCN广东赛区</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
+                                    <span class="text-gray-700 dark:text-gray-300">22届ISCC全国大学生信息安全竞赛</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+                        <p class="mt-1"> 我认为奇迹与魔法对谁都会带来幸福，是十分美好的事物。</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
+                :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
                 style="transition-delay: 200ms">
                 <div
                     class="absolute -right-5 top-1/2 transform -translate-y-1/2 text-pink-100/70 dark:text-gray-700/80 text-8xl z-0">
                     ★</div>
+                <div class="absolute -left-4 bottom-4 text-yellow-300/60 text-4xl z-0">☆</div>
 
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
                         <span class="w-2 h-8 bg-pink-500 mr-3 rounded-full"></span>
                         加入我们
                     </h2>
+
                     <div class="flex flex-col md:flex-row items-center gap-8">
                         <div class="md:w-1/2 space-y-4 text-gray-700 dark:text-gray-300">
                             <p class="text-lg leading-relaxed">
                                 无论您是否是本校学生，都可扫描<span class="md:hidden">下方</span><span
                                     class="hidden md:inline">右方</span>的二维码加入江财网安协会编外群与我们互动
                             </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                加入我们，一起探索网络安全的奥秘，提升技能，参与精彩活动！
-                            </p>
+                            <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg border-l-4 border-pink-400">
+                                <div
+                                    class="text-sm italic text-pink-700 dark:text-pink-300 transition-opacity duration-500">
+                                    「{{ quotes[currentQuote] }}」
+                                </div>
+                            </div>
                             <div class="flex space-x-3 mt-4">
                                 <a class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm"
                                     href="https://qm.qq.com/q/qIC4fkPlbW" target="_blank">
                                     加入群聊
+                                </a>
+                                <a class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition-colors text-sm"
+                                    href="#" @click.prevent="currentQuote = (currentQuote + 1) % quotes.length">
+                                    换一句
                                 </a>
                             </div>
                         </div>
@@ -129,7 +223,7 @@ onMounted(() => {
                                     alt="江财网安协会编外群二维码" />
                                 <div
                                     class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                    一起做学院偶像！
+                                    一起成为学院偶像！
                                 </div>
                             </div>
                         </div>
@@ -139,7 +233,6 @@ onMounted(() => {
         </div>
     </div>
 </template>
-
 <style>
 @keyframes float {
     0% {
