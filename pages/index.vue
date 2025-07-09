@@ -32,6 +32,12 @@
                 本社创立的初衷是为了一起<span
                     class="font-semibold text-[var(--color-accent-hover)]">学习交流网络安全知识，教授同学们有关网络安全的知识</span>，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。
             </p>
+            <NuxtLink to="/about"
+                class="text-sm font-bold text-[var(--color-accent-hover)] transition-colors duration-200 relative group">
+                更多
+                <span
+                    class="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-400 dark:bg-gray-600 group-hover:w-full transition-all duration-300"></span>
+            </NuxtLink>
             <div class="mt-6">
                 <h4 class="text-xl font-semibold text-gray-800 mb-2 dark:text-[#E5E5E5]">参与比赛:</h4>
                 <div class="flex flex-wrap gap-2">
@@ -45,11 +51,12 @@
                         class="px-3 py-1 bg-[var(--color-primary-bg)] text-[var(--color-primary-pressed)] rounded-full text-sm font-medium hover:bg-[var(--color-primary)] hover:text-white transition-colors">校园挖洞活动</span>
                 </div>
             </div>
+
         </div>
         <div class=" absolute w-full py-12 flex justify-center bottom-1">
             <NuxtLink to="/archive"
                 class="text-xl font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 relative group">
-                查看更多 >>
+                查看更多动态 >>
                 <span
                     class="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-400 dark:bg-gray-600 group-hover:w-full transition-all duration-300"></span>
             </NuxtLink>
