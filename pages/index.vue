@@ -53,7 +53,7 @@
             </div>
 
         </div>
-        <div class=" absolute w-full py-12 flex justify-center bottom-1">
+        <div class=" absolute w-full py-3 flex justify-center bottom-2">
             <NuxtLink to="/archive"
                 class="text-xl font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 relative group">
                 查看更多动态 >>

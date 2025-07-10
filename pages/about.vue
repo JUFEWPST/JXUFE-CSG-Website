@@ -9,7 +9,9 @@ const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
     "放弃的话就到此为止了，但是，你可以改变命运()"
 ];
-
+useHead({
+    title:"关于协会 - 江西财经大学网络安全协会"
+})
 onMounted(() => {
     isMounted.value = true;
     setInterval(() => {
@@ -25,16 +27,20 @@ onMounted(() => {
                 <template #front>
                     <div class="font-bold mx-auto text-center text-5xl relative">
                         <client-only>
-                            <div v-for="i in 5" :key="i"
-                                class="absolute top-0 left-0 w-full h-full pointer-events-none">
-                                <div class="absolute text-pink-300 opacity-70 animate-float" :style="{
-                                    left: `${Math.random() * 100}%`,
-                                    animationDuration: `${5 + Math.random() * 10}s`,
-                                    animationDelay: `${Math.random() * 5}s`,
-                                    fontSize: `${10 + Math.random() * 10}px`
-                                }">
-                                    ✿
-                                </div>
+                            <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                                <template v-for="i in 8" :key="i">
+                                    <div class="absolute text-pink-300 opacity-70 animate-float" :style="{
+                                        left: `${Math.random() * 100}%`,
+                                        top: `${-10 - Math.random() * 10}%`,
+                                        animationDuration: `${5 + Math.random() * 10}s`,
+                                        animationDelay: `${Math.random() * 5}s`,
+                                        fontSize: `${10 + Math.random() * 15}px`,
+                                        transform: `rotate(${Math.random() * 360}deg)`,
+                                        filter: `hue-rotate(${Math.random() * 60}deg)`
+                                    }">
+                                        {{ ['✿', '❀', '✽', '✼', '❁'][Math.floor(Math.random() * 5)] }}
+                                    </div>
+                                </template>
                             </div>
                         </client-only>
                         <span class="text-blue-400 hover:text-blue-500 transition-colors">网安</span> *
@@ -201,7 +207,7 @@ onMounted(() => {
                             </p>
                             <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg border-l-4 border-pink-400">
                                 <div
-                                    class="text-sm italic text-pink-700 dark:text-pink-300 transition-opacity duration-500">
+                                    class="text-sm italic text-pink-700 dark:text-pink-300 transition-opacity duration-500 min-h-12">
                                     「{{ quotes[currentQuote] }}」
                                 </div>
                             </div>
@@ -244,13 +250,19 @@ onMounted(() => {
         opacity: 0.7;
     }
 
+    90% {
+        opacity: 0.7;
+    }
+
     100% {
-        transform: translateY(240px) rotate(360deg);
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
         opacity: 0;
     }
 }
 
 .animate-float {
-    animation: float linear infinite;
+    animation-name: float;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
 </style>
