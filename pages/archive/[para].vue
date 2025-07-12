@@ -72,6 +72,28 @@ onMounted(() => {
   get(`/archives/${para.value}`)
 })
 
+// 联动标题相关
+const navArticleInfo = useState('navArticleInfo', () => ({
+  title: '',
+  publishedAt: '',
+  publisher: ''
+}))
+
+// 在获取数据后更新信息
+watch(archive, (newVal) => {
+  if (newVal) {
+    navArticleInfo.value = {
+      title: newVal.title,
+      publishedAt: new Date(newVal.publishedAt).toLocaleDateString(),
+      publisher: newVal.publisher || ''
+    }
+  }
+}, { immediate: true })
+
+// 离开页面时清除数据
+onUnmounted(() => {
+  navArticleInfo.value = { title: '', publishedAt: '', publisher: '' }
+})
 </script>
 
 <style scoped></style>
