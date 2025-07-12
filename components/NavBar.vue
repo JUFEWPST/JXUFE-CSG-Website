@@ -1,47 +1,121 @@
 <template>
     <header ref="headerRef" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out"
         :style="headerStyles">
-        <div class="container mx-auto px-4 py-4">
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
+            <div class="absolute -right-10 -top-10 text-blue-100/70 dark:text-gray-700/80 text-9xl transition-opacity duration-500"
+                :style="{ opacity: currentBgOpacity }">✧</div>
+            <div class="absolute -left-5 -bottom-5 text-pink-100/70 dark:text-gray-700/80 text-7xl transition-opacity duration-500"
+                :style="{ opacity: currentBgOpacity }">♡</div>
+        </div>
+
+        <div class="container mx-auto px-4 py-4 relative z-10">
             <nav class="flex items-center justify-between">
-                <div class="text-xl font-bold hover:text-primary-500 items-center flex">江西财经大学网络安全协会
+                <div class="text-xl font-bold hover:text-primary-500 items-center flex">
+                    <span class="relative">
+                        江西财经大学网络安全协会
+                        <span
+                            class="absolute right-0 top-1/2 -translate-y-1/2 text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">✦</span>
+                    </span>
                     <ToggleTheme class="ml-1"></ToggleTheme>
                 </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none">
+                    <div v-if="route.path.startsWith('/archive/') && navArticleInfo.title"
+                        class="mx-auto transition-all duration-500 text-center" :style="{
+                            opacity: articleTitleOpacity,
+                            transform: `translateY(${titleOffset}px)`,
+                            width: 'fit-content'
+                        }">
+                        <div class="text-lg font-semibold leading-tight transition-all duration-700" :class="{
+                            'translate-y-2 opacity-0': !titleVisible,
+                            'translate-y-0 opacity-100': titleVisible
+                        }">
+                            {{ navArticleInfo.title }}
+                        </div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 flex justify-center gap-4 leading-tight transition-all duration-1000"
+                            :class="{
+                                'translate-y-2 opacity-0': !subtitleVisible,
+                                'translate-y-0 opacity-70': subtitleVisible
+                            }">
+                            <span v-if="navArticleInfo.publishedAt">发布于 {{ navArticleInfo.publishedAt }}</span>
+                            <span v-if="navArticleInfo.publisher">作者 {{ navArticleInfo.publisher }}</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="hidden md:flex space-x-6">
-                    <NuxtLink to="/" class="nav-link" :class="{ 'active-link': $route.path === '/' }">首页</NuxtLink>
-                    <NuxtLink to="/archive" class="nav-link" :class="{ 'active-link': $route.path === '/archive' }">归档
+                    <NuxtLink to="/" class="nav-link" :class="{ 'active-link': $route.path === '/' }">
+                        <span class="relative">
+                            首页
+                            <span v-if="$route.path === '/'"
+                                class="absolute -top-2 -right-3 text-pink-400 text-xs">✧</span>
+                        </span>
                     </NuxtLink>
-                    <NuxtLink to="/about" class="nav-link" :class="{ 'active-link': $route.path === '/about' }">关于协会
+                    <NuxtLink to="/archive" class="nav-link" :class="{ 'active-link': $route.path === '/archive' }">
+                        <span class="relative">
+                            归档
+                            <span v-if="$route.path === '/archive'"
+                                class="absolute -top-2 -right-3 text-blue-400 text-xs">✦</span>
+                        </span>
                     </NuxtLink>
-                    <NuxtLink to="/links" class="nav-link" :class="{ 'active-link': $route.path === '/links' }">相关链接
+                    <NuxtLink to="/about" class="nav-link" :class="{ 'active-link': $route.path === '/about' }">
+                        <span class="relative">
+                            关于协会
+                            <span v-if="$route.path === '/about'"
+                                class="absolute -top-2 -right-3 text-purple-400 text-xs">✧</span>
+                        </span>
+                    </NuxtLink>
+                    <NuxtLink to="/links" class="nav-link" :class="{ 'active-link': $route.path === '/links' }">
+                        <span class="relative">
+                            相关链接
+                            <span v-if="$route.path === '/links'"
+                                class="absolute -top-2 -right-3 text-yellow-400 text-xs">✦</span>
+                        </span>
                     </NuxtLink>
                 </div>
-                <button class="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-500 focus:outline-none"
+                <button
+                    class="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
                     @click.stop="toggleMenu">
-                    <svg v-if="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <Bars3Icon v-if="!isMenuOpen" class="w-8 h-8"></Bars3Icon>
+                    <XMarkIcon v-else class="w-8 h-8"></XMarkIcon>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-75"
+                        v-if="isMenuOpen"></span>
                 </button>
             </nav>
             <div class="md:hidden overflow-hidden transition-all duration-300 ease-in-out"
                 :style="{ maxHeight: isMenuOpen ? '500px' : '0' }">
-                <div class="mt-4 pb-4">
+                <div class="mt-4 pb-4 relative">
+                    <div class="absolute -top-4 right-4 text-pink-300 text-xl opacity-70">✧</div>
+                    <div class="absolute -bottom-4 left-4 text-blue-300 text-xl opacity-70">✦</div>
                     <NuxtLink to="/" class="mobile-nav-link" :class="{ 'mobile-active-link': $route.path === '/' }"
-                        @click.native="closeMenu">首页</NuxtLink>
+                        @click.native="closeMenu">
+                        <span class="relative">
+                            首页
+                            <span v-if="$route.path === '/'"
+                                class="absolute -top-1 -right-4 text-pink-400 text-sm">✧</span>
+                        </span>
+                    </NuxtLink>
                     <NuxtLink to="/archive" class="mobile-nav-link"
-                        :class="{ 'mobile-active-link': $route.path === '/archive' }" @click.native="closeMenu">归档
+                        :class="{ 'mobile-active-link': $route.path === '/archive' }" @click.native="closeMenu">
+                        <span class="relative">
+                            归档
+                            <span v-if="$route.path === '/archive'"
+                                class="absolute -top-1 -right-4 text-blue-400 text-sm">✦</span>
+                        </span>
                     </NuxtLink>
                     <NuxtLink to="/about" class="mobile-nav-link"
-                        :class="{ 'mobile-active-link': $route.path === '/about' }" @click.native="closeMenu">关于协会
+                        :class="{ 'mobile-active-link': $route.path === '/about' }" @click.native="closeMenu">
+                        <span class="relative">
+                            关于协会
+                            <span v-if="$route.path === '/about'"
+                                class="absolute -top-1 -right-4 text-purple-400 text-sm">✧</span>
+                        </span>
                     </NuxtLink>
                     <NuxtLink to="/links" class="mobile-nav-link"
-                        :class="{ 'mobile-active-link': $route.path === '/links' }" @click.native="closeMenu">相关链接
+                        :class="{ 'mobile-active-link': $route.path === '/links' }" @click.native="closeMenu">
+                        <span class="relative">
+                            相关链接
+                            <span v-if="$route.path === '/links'"
+                                class="absolute -top-1 -right-4 text-yellow-400 text-sm">✦</span>
+                        </span>
                     </NuxtLink>
                 </div>
             </div>
@@ -52,16 +126,39 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import ToggleTheme from './ToggleTheme.vue'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const navArticleInfo = useState('navArticleInfo', () => ({
+    title: '',
+    publishedAt: '',
+    publisher: ''
+}))
+
+const titleVisible = ref(false)
+const subtitleVisible = ref(false)
+const titleOffset = ref(0)
+
 const navBgRgb = '255, 255, 255'
 const opacity = ref(0)
 const headerRef = ref<HTMLElement | null>(null)
 const isMenuOpen = ref(false)
 let animationFrameId: number | null = null
 
+const currentBgOpacity = computed(() => {
+    return isMenuOpen.value ? 0.8 : opacity.value * 0.8
+})
+
+const articleTitleOpacity = computed(() => {
+    const baseOpacity = route.path.startsWith('/archive/') ? Math.min(opacity.value * 1.5, 1) : 0
+    return baseOpacity * (titleVisible.value ? 1 : 0.5)
+})
+
 const headerStyles = computed(() => {
     const showBlurEffect = opacity.value > 0.1 || isMenuOpen.value
     return {
-        backgroundColor: `rgba(var(--nav-bg-rgb), ${isMenuOpen.value ? 0.8 : opacity.value * 0.8})`,
+        backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
         backdropFilter: `blur(${isMenuOpen.value ? 10 : Math.min(opacity.value * 12, 10)}px)`,
         boxShadow: showBlurEffect ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none',
         borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.2)' : 'none'
@@ -81,6 +178,7 @@ const handleScroll = () => {
         const scrollPosition = window.scrollY || document.documentElement.scrollTop
         const rawOpacity = Math.min(scrollPosition / 150, 0.85)
         opacity.value = easeOutCubic(rawOpacity)
+        titleOffset.value = Math.min(scrollPosition * 0.1, 10)
     })
 }
 
@@ -103,6 +201,14 @@ onMounted(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
     document.addEventListener('click', handleClickOutside)
     handleScroll()
+
+    // 标题浮现动画
+    setTimeout(() => {
+        titleVisible.value = true
+        setTimeout(() => {
+            subtitleVisible.value = true
+        }, 300)
+    }, 500)
 })
 
 onUnmounted(() => {
@@ -113,6 +219,7 @@ onUnmounted(() => {
     }
 })
 </script>
+
 
 <style scoped>
 header {
@@ -126,6 +233,7 @@ header {
 .nav-link {
     color: inherit;
     transition: color 0.3s ease;
+    position: relative;
 }
 
 .nav-link:hover {
@@ -135,6 +243,7 @@ header {
 .active-link {
     color: var(--color-primary-500);
     font-weight: 500;
+    position: relative;
 }
 
 .mobile-nav-link {
@@ -145,6 +254,7 @@ header {
     transition:
         background-color 0.3s ease,
         color 0.3s ease;
+    position: relative;
 }
 
 .mobile-nav-link:hover {
@@ -157,7 +267,6 @@ header {
     font-weight: 500;
 }
 
-/* 暗色模式适配 */
 .dark header {
     --nav-bg-rgb: 17, 24, 39;
     border-bottom-color: rgba(255, 255, 255, 0.1) !important;
@@ -183,5 +292,33 @@ header {
 
 .dark button:hover {
     color: var(--color-primary-300);
+}
+
+.transition-all {
+    transition-property: all;
+}
+
+.duration-500 {
+    transition-duration: 500ms;
+}
+
+.duration-700 {
+    transition-duration: 700ms;
+}
+
+.duration-1000 {
+    transition-duration: 1000ms;
+}
+
+.ease-out {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.translate-y-2 {
+    transform: translateY(0.5rem);
+}
+
+.translate-y-0 {
+    transform: translateY(0);
 }
 </style>
