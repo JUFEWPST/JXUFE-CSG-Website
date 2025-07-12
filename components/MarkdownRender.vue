@@ -6,8 +6,9 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, nextTick } from 'vue';
+import mediumZoom from 'medium-zoom';
 import { md, renderMarkdown } from '~/composables/markdown';
-import '~/assets/css/github-markdown.css';
+import '~/assets/css/markdown.css';
 import '~/assets/css/atom-one.css'
 import type { TocItem } from '~/types/tocitems';
 const props = defineProps<{
@@ -70,18 +71,18 @@ onMounted(() => {
   nextTick(() => {
     extractHeadings();
   });
+  if (markdownRef.value) {
+    const zoom = mediumZoom(markdownRef.value.querySelectorAll('img'));
+  }
 });
 </script>
 
 <style scoped>
+
 .markdown-container {
   width: 100%;
   max-width: 100%;
 }
 
-.markdown-wrapper {
-  width: 100%;
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
+
 </style>

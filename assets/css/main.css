@@ -21,7 +21,14 @@
 }
 
 body {
-    color: var(--color-text)
+    color: var(--color-text);
+    position: relative;
+    z-index: 1;
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+    z-index: 999;
 }
 
 ::-webkit-scrollbar {

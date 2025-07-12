@@ -1,7 +1,7 @@
 <template>
     <footer
         class="bg-white dark:bg-[#141414] border-t border-gray-200 dark:border-gray-700 py-8 relative overflow-hidden">
-        <div class="container mx-auto px-4 relative z-10">
+        <div class="container mx-auto px-4 relative">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="col-span-1">
                     <div class="flex items-center mb-4 group">
