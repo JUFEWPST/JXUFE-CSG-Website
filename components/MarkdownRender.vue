@@ -11,6 +11,7 @@ import { md, renderMarkdown } from '~/composables/markdown';
 import '~/assets/css/markdown.css';
 import '~/assets/css/atom-one.css'
 import type { TocItem } from '~/types/tocitems';
+import slugify from 'slugify';
 const props = defineProps<{
   content: string | "";
   sanitize?: boolean;
@@ -21,7 +22,13 @@ const emit = defineEmits<{
 
 const markdownRef = ref<HTMLElement | null>(null);
 const tocItems = ref<TocItem[]>([]);
-
+const slugifyConfig = {
+  lower: true,      // 转换为小写
+  strict: true,     // 移除特殊字符
+  remove: /[*+~.()'"!:@]/g, // 额外要移除的字符
+  locale: 'zh',     // 支持中文
+  trim: true        // 移除前后空格
+};
 const renderedContent = computed(() => {
   try {
     return props.sanitize !== false
@@ -42,14 +49,17 @@ function extractHeadings() {
   if (!markdownRef.value) return;
 
   const headings = markdownRef.value.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  const items: { id: string, text: string, level: number }[] = [];
+  const items: TocItem[] = [];
 
-  headings.forEach((heading) => {
+  headings.forEach((heading, index) => {
     if (!heading.id) {
-      heading.id = heading.textContent
-        ?.toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]+/g, '') || '';
+      const textContent = heading.textContent || '';
+      heading.id = slugify(textContent, slugifyConfig);
+
+      // 如果仍然为空，使用备用方案
+      if (!heading.id) {
+        heading.id = `heading-${index}-${Math.random().toString(36).substr(2, 4)}`;
+      }
     }
 
     items.push({
