@@ -24,7 +24,7 @@
                 <li v-for="item in items" :key="item.id" :class="`pl-${(item.level - 1) * 4}`"
                     class="my-1 leading-snug whitespace-nowrap overflow-hidden text-ellipsis transition-colors min-w-0">
                     <a @click="scrollTo(item.id)"
-                        class="block py-1.5 px-2 no-underline rounded-md transition-colors hover:text-gray-900 hover:bg-gray-50 cursor-pointer whitespace-normal break-words overflow-visible"
+                        class="block py-1.5 px-2 no-underline rounded-md transition-colors  hover:bg-purple-300 cursor-pointer whitespace-normal break-words overflow-visible"
                         :class="{
                             ' text-white font-medium bg-purple-400': activeId === item.id,
                             'pl-4': item.level === 2,
@@ -46,12 +46,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-
-interface TocItem {
-    id: string
-    text: string
-    level: number
-}
+import slugify from 'slugify';
+import type { TocItem } from '~/types/tocitems';
 
 const props = defineProps<{
     items: TocItem[]
@@ -67,19 +63,54 @@ function toggleToc() {
     isCollapsed.value = !isCollapsed.value
 }
 
-function scrollTo(id: string) {
-    const element = document.getElementById(id)
-    if (element) {
-        const offset = 80
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-        window.scrollTo({
-            top: elementPosition - offset,
-            behavior: 'smooth',
-        })
-        activeId.value = id
-        if (isMobile.value) {
-            isCollapsed.value = true
+async function scrollTo(idOrText: string) {
+    if (!idOrText) return;
+
+    await nextTick(); // 确保 DOM 更新完成
+
+    let element = document.getElementById(idOrText);
+
+    // 如果通过ID找不到，尝试通过文本内容查找
+    if (!element) {
+        const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+        const matchedHeading = headings.find(heading => {
+            const headingText = heading.textContent?.trim() || '';
+            return (
+                headingText === idOrText ||
+                heading.id === slugify(idOrText, { lower: true }) ||
+                headingText.includes(idOrText)
+            );
+        });
+
+        if (matchedHeading) {
+            // 如果找到匹配的标题但缺少ID，自动生成一个
+            if (!matchedHeading.id) {
+                matchedHeading.id = slugify(matchedHeading.textContent || '', {
+                    lower: true,
+                    strict: true,
+                    locale: 'zh'
+                });
+            }
+            element = matchedHeading;
         }
+    }
+
+    if (element) {
+        const headerHeight = document.querySelector('header')?.offsetHeight || 80;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const targetPosition = elementPosition - headerHeight;
+
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+
+        activeId.value = element.id;
+        if (isMobile.value) {
+            isCollapsed.value = true;
+        }
+    } else {
+        console.warn(`无法定位到目标元素: ${idOrText}`);
     }
 }
 
