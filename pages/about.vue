@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import FlipToggle from '~/components/FlipToggle.vue';
+import { useNotification } from '~/composables/useNotification';
 import { onMounted, ref } from 'vue';
+const { notify } = useNotification()
 
+const showSuccess = () => {
+    notify({
+        message: '操作成功!',
+        type: 'success',
+        timeout: 3000
+    })
+}
 const isMounted = ref(false);
 const currentQuote = ref(0);
 
@@ -10,13 +19,14 @@ const quotes = [
     "放弃的话就到此为止了，但是，你可以改变命运()"
 ];
 useHead({
-    title:"关于协会 - 江西财经大学网络安全协会"
+    title: "关于协会 - 江西财经大学网络安全协会"
 })
 onMounted(() => {
     isMounted.value = true;
     setInterval(() => {
         currentQuote.value = (currentQuote.value + 1) % quotes.length;
     }, 5000);
+    showSuccess();
 });
 </script>
 
