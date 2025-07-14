@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, nextTick } from 'vue';
 import mediumZoom from 'medium-zoom';
-import { md, renderMarkdown } from '~/composables/markdown';
+const { md, renderMarkdown } = useMarkdown();
 import '~/assets/css/markdown.css';
 import '~/assets/css/atom-one.css'
 import type { TocItem } from '~/types/tocitems';
@@ -88,11 +88,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .markdown-container {
   width: 100%;
   max-width: 100%;
 }
-
-
 </style>
