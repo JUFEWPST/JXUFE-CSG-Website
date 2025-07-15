@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import type { NotificationOptions } from '@/types/notification'
 
 const notificationRef = ref<{
     addNotification: (notification: NotificationOptions) => void
@@ -18,11 +19,4 @@ export const useNotification = () => {
         notificationRef,
         notify
     }
-}
-
-export interface NotificationOptions {
-    message: string
-    type?: 'success' | 'info' | 'warning' | 'error'
-    timeout?: number
-    position?: 'bottom-right' | 'top-right' | 'center'
 }

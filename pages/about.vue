@@ -2,15 +2,7 @@
 import FlipToggle from '~/components/FlipToggle.vue';
 import { useNotification } from '~/composables/useNotification';
 import { onMounted, ref } from 'vue';
-const { notify } = useNotification()
 
-const showSuccess = () => {
-    notify({
-        message: '操作成功!',
-        type: 'success',
-        timeout: 3000
-    })
-}
 const isMounted = ref(false);
 const currentQuote = ref(0);
 
@@ -26,7 +18,6 @@ onMounted(() => {
     setInterval(() => {
         currentQuote.value = (currentQuote.value + 1) % quotes.length;
     }, 5000);
-    showSuccess();
 });
 </script>
 
