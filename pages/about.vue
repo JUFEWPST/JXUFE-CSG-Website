@@ -132,6 +132,11 @@ onMounted(() => {
                             <ul class="space-y-4">
                                 <li class="flex items-start group">
                                     <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
+                                    <span class="text-gray-700 dark:text-gray-300">22届ISCC全国大学生信息安全竞赛</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
                                         class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
                                     <span class="text-gray-700 dark:text-gray-300">十六届蓝桥杯网络安全赛道</span>
                                 </li>
@@ -140,11 +145,7 @@ onMounted(() => {
                                         class="px-2 py-1 mr-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省三</span>
                                     <span class="text-gray-700 dark:text-gray-300">十八届CISCN广东赛区</span>
                                 </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
-                                    <span class="text-gray-700 dark:text-gray-300">22届ISCC全国大学生信息安全竞赛</span>
-                                </li>
+
                             </ul>
                         </div>
                         <div>
@@ -161,6 +162,11 @@ onMounted(() => {
                                 </li>
                                 <li class="flex items-start group">
                                     <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">2024睿抗机器人开发者大赛(RAICOM)全国总决赛</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
                                         class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
                                     <span class="text-gray-700 dark:text-gray-300">十五届蓝桥杯网络安全赛道</span>
                                 </li>
@@ -169,11 +175,7 @@ onMounted(() => {
                                         class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
                                     <span class="text-gray-700 dark:text-gray-300">第九届全国密码挑战赛</span>
                                 </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">2024睿抗机器人开发者大赛(RAICOM)全国总决赛</span>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
