@@ -13,7 +13,7 @@ export enum NotificationPosition {
 
 export interface NotificationAction {
     text: string
-    handler: () => void
+    handler?: () => void
     primary?: boolean
     route?: string
 }
