@@ -51,12 +51,12 @@ const timerIds = new Map<number, number>()
 const addNotification = (notification: Omit<Notification, 'id'>) => {
     const id = Date.now() + Math.floor(Math.random() * 1000)
     notifications.value.push({ ...notification, id })
-
-    if (notification.timeout) {
+    const timeout = notification.timeout ?? 5000;
+    if (timeout > 0) {
         const timerId = window.setTimeout(() => {
-            removeNotification(id)
-        }, notification.timeout)
-        timerIds.set(id, timerId)
+            removeNotification(id);
+        }, timeout);
+        timerIds.set(id, timerId);
     }
 }
 
@@ -114,8 +114,8 @@ defineExpose({
                 </div>
                 <div class="px-4 pb-3 flex justify-end space-x-2">
                     <template v-if="notification.actions">
-                        <button v-for="(action, index) in notification.actions" :key="index" @click="handleAction(action)"
-                            class="px-3 py-1 text-xs rounded transition-colors" :class="{
+                        <button v-for="(action, index) in notification.actions" :key="index"
+                            @click="handleAction(action)" class="px-3 py-1 text-xs rounded transition-colors" :class="{
                                 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600': !action.primary,
                                 [getTypeColor(notification.type).bg]: action.primary,
                                 [getTypeColor(notification.type).hover]: action.primary,
@@ -127,9 +127,9 @@ defineExpose({
                 </div>
                 <div class="h-1 w-full absolute bottom-0 overflow-hidden"
                     :class="getTypeColor(notification.type).progress">
-                    <div v-if="notification.timeout" class="h-full bg-white bg-opacity-30 absolute top-0 right-0"
+                    <div v-if="notification.timeout !== 0" class="h-full bg-white bg-opacity-30 absolute top-0 right-0"
                         :style="{
-                            animation: `progress ${notification.timeout}ms linear forwards`
+                            animation: `progress ${notification.timeout ?? 5000}ms linear forwards`
                         }"></div>
                 </div>
             </div>
