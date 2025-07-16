@@ -46,20 +46,42 @@ const getTypeColor = (type: string | undefined) => {
     return typeColors[type as NotificationTypeKey]
 }
 
+const timerIds = new Map<number, number>()
+
 const addNotification = (notification: Omit<Notification, 'id'>) => {
-    const id = Date.now()
+    const id = Date.now() + Math.floor(Math.random() * 1000)
     notifications.value.push({ ...notification, id })
 
     if (notification.timeout) {
-        setTimeout(() => {
+        const timerId = window.setTimeout(() => {
             removeNotification(id)
         }, notification.timeout)
+        timerIds.set(id, timerId)
     }
 }
 
 const removeNotification = (id: number) => {
-    notifications.value = notifications.value.filter(n => n.id !== id)
+    const index = notifications.value.findIndex(n => n.id === id)
+    if (index !== -1) {
+        notifications.value.splice(index, 1)
+        const timerId = timerIds.get(id)
+        if (timerId) {
+            window.clearTimeout(timerId)
+            timerIds.delete(id)
+        }
+    }
 }
+const handleAction = (action: any) => {
+    if (action.route) {
+        navigateTo(action.route)
+    } else if (action.handler) {
+        action.handler()
+    }
+}
+onUnmounted(() => {
+    timerIds.forEach(timerId => window.clearTimeout(timerId))
+    timerIds.clear()
+})
 
 defineExpose({
     addNotification,
@@ -69,9 +91,9 @@ defineExpose({
 
 <template>
     <div class="fixed z-50" :class="{
-        'bottom-4 right-4': props.position === NotificationPosition.BOTTOM_RIGHT,
-        'top-4 right-4': props.position === NotificationPosition.TOP_RIGHT,
-        'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2': props.position === NotificationPosition.CENTER
+        'bottom-4 right-4': position === NotificationPosition.BOTTOM_RIGHT,
+        'top-4 right-4': position === NotificationPosition.TOP_RIGHT,
+        'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2': position === NotificationPosition.CENTER
     }">
         <TransitionGroup name="notification">
             <div v-for="notification in notifications" :key="notification.id"
@@ -92,7 +114,7 @@ defineExpose({
                 </div>
                 <div class="px-4 pb-3 flex justify-end space-x-2">
                     <template v-if="notification.actions">
-                        <button v-for="(action, index) in notification.actions" :key="index" @click="action.handler"
+                        <button v-for="(action, index) in notification.actions" :key="index" @click="handleAction(action)"
                             class="px-3 py-1 text-xs rounded transition-colors" :class="{
                                 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600': !action.primary,
                                 [getTypeColor(notification.type).bg]: action.primary,

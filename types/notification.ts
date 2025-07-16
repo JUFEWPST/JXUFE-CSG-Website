@@ -15,6 +15,7 @@ export interface NotificationAction {
     text: string
     handler: () => void
     primary?: boolean
+    route?: string
 }
 
 export interface NotificationOptions {
