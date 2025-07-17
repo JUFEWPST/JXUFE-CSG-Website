@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NotificationType, NotificationPosition, type Notification } from '@/types/notification'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 const notifications = ref<Notification[]>([])
 
@@ -77,6 +77,7 @@ const handleAction = (action: any) => {
     } else if (action.handler) {
         action.handler()
     }
+    if (action.notificationId) removeNotification(action.notificationId)
 }
 onUnmounted(() => {
     timerIds.forEach(timerId => window.clearTimeout(timerId))
@@ -115,7 +116,7 @@ defineExpose({
                 <div class="px-4 pb-3 flex justify-end space-x-2">
                     <template v-if="notification.actions">
                         <button v-for="(action, index) in notification.actions" :key="index"
-                            @click="handleAction(action)" class="px-3 py-1 text-xs rounded transition-colors" :class="{
+                            @click="handleAction({ ...action, notificationId: notification.id })" class="px-3 py-1 text-xs rounded transition-colors" :class="{
                                 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600': !action.primary,
                                 [getTypeColor(notification.type).bg]: action.primary,
                                 [getTypeColor(notification.type).hover]: action.primary,
