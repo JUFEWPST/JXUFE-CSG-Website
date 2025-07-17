@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FlipToggle from '~/components/FlipToggle.vue';
+import { useNotification } from '~/composables/useNotification';
 import { onMounted, ref } from 'vue';
 
 const isMounted = ref(false);
@@ -10,7 +11,7 @@ const quotes = [
     "放弃的话就到此为止了，但是，你可以改变命运()"
 ];
 useHead({
-    title:"关于协会 - 江西财经大学网络安全协会"
+    title: "关于协会 - 江西财经大学网络安全协会"
 })
 onMounted(() => {
     isMounted.value = true;
