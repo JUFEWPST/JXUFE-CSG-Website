@@ -18,7 +18,7 @@
                     </span>
                     <ToggleTheme class="ml-1"></ToggleTheme>
                 </div>
-                <div class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none">
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none hidden md:inline">
                     <div v-if="route.path.startsWith('/archive/') && navArticleInfo.title"
                         class="mx-auto transition-all duration-500 text-center" :style="{
                             opacity: articleTitleOpacity,
@@ -31,7 +31,7 @@
                         }">
                             {{ navArticleInfo.title }}
                         </div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 flex justify-center gap-4 leading-tight transition-all duration-1000"
+                        <div class="text-xs text-gray-500 dark:text-gray-400 justify-center gap-4 leading-tight transition-all duration-1000"
                             :class="{
                                 'translate-y-2 opacity-0': !subtitleVisible,
                                 'translate-y-0 opacity-70': subtitleVisible
