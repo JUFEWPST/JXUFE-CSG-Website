@@ -10,10 +10,19 @@
             </div>
             <template v-else>
                 <ul class="box-border p-2 w-full md:w-1/2">
+                    <ArticleBlock v-for="archive in topArchives" :key="archive.id" :title="archive.title"
+                        :linkto="`/archive/${archive.documentId}`"
+                        :datetime="new Date(archive.publishedAt).toLocaleDateString()" :tags="archive.tags?.tags || []"
+                        :istop="true">
+                    </ArticleBlock>
+                </ul>
+                <hr
+                    class="box-border p-2 mx-auto w-4/5 md:w-2/5 border-t-2 border-blue-300 transition-colors duration-300 hover:border-blue-500" />
+                <ul class="box-border p-2 w-full md:w-1/2">
                     <ArticleBlock v-for="archive in archives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.publishedAt).toLocaleDateString()"
-                        :tags="archive.tags?.tags || []" />
+                        :datetime="new Date(archive.publishedAt).toLocaleDateString()" :tags="archive.tags?.tags || []">
+                    </ArticleBlock>
                 </ul>
             </template>
             <PageNav v-if="totalPages >= 1" :totalPages="totalPages" :currentPage="currentPage"
@@ -42,15 +51,15 @@ const {
     meta,
     loading,
     error,
-    get: getArticles
+    get: getArchives
 } = useApi<Archive[]>();
-
+const { data: topArchives, get: getTopArchives } = useApi<Archive[]>()
 const currentPage = ref(1);
 const totalPages = ref(1);
 
-const loadArticles = async (page: number = 1) => {
+const loadArchives = async (page: number = 1) => {
     console.log("加载分页数据:", page);
-    await getArticles(`/archives?pagination[page]=${page}`);
+    await getArchives(`/archives?pagination[page]=${page}`);
     if (archives.value) {
         console.log("文章数据:", archives.value);
         if (meta.value?.pagination) {
@@ -62,14 +71,16 @@ const loadArticles = async (page: number = 1) => {
     }
 };
 
-
-
+const loadTopArchives = async () => {
+    getTopArchives('/archives?filters[isTop][$eq]=true')
+}
+loadTopArchives()
 watch(
     () => route.query.page,
     (newPage) => {
         const pageNum = parseInt(newPage as string) || 1;
         currentPage.value = pageNum;
-        loadArticles(pageNum);
+        loadArchives(pageNum);
     },
     { immediate: true }
 );
