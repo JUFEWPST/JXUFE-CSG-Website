@@ -24,7 +24,7 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-row box-border mx-1 md:ml-5 max-w-screen">
+        <div class="flex flex-row box-border mx-1 md:ml-10 max-w-screen">
           <!-- 文章内容 -->
           <MarkdownRender ref="markdownRender" :content="archive.content" @toc-updated="handleTocUpdate"
             class="flex-1 max-w-[calc(100%-18rem)] overflow-hidden box-border p-4">

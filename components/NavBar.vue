@@ -9,7 +9,7 @@
         </div>
 
         <div class="container mx-auto px-4 py-4 relative z-10">
-            <nav class="flex items-center justify-between">
+            <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-xl font-bold hover:text-primary-500 items-center flex">
                     <span class="relative">
                         江西财经大学网络安全协会
@@ -70,7 +70,7 @@
 
             <!-- 移动导航 -->
             <div class="md:hidden overflow-hidden transition-all duration-300 ease-in-out"
-                :style="{ maxHeight: isMenuOpen ? '500px' : '0' }">
+                :style="{ maxHeight: isMenuOpen ? '500px' : '0' }" :aria-hidden="!isMenuOpen">
                 <div class="mt-4 pb-4 relative">
                     <div class="absolute -top-4 right-4 text-pink-300 text-xl opacity-70">✧</div>
                     <div class="absolute -bottom-4 left-4 text-blue-300 text-xl opacity-70">✦</div>
