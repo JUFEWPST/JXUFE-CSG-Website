@@ -29,7 +29,7 @@
                             </li>
                             <li>
                                 <NuxtLink to="/links"
-                                    class="font-medium text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors flex items-center">
+                                    class="font-medium text-pink-600 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors flex items-center">
                                     更多>>
                                 </NuxtLink>
                             </li>

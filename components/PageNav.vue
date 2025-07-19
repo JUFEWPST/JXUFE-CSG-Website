@@ -2,10 +2,9 @@
     <div class="pagination-container">
         <!-- 上一页 -->
         <button class="pagination-button" :class="{ disabled: currentPage <= 1 }" @click="goToPage(currentPage - 1)"
-            :disabled="currentPage <= 1">
+            :disabled="currentPage <= 1" aria-label="上一页">
             <span class="pagination-arrow">←</span>
         </button>
-
         <template v-for="page in displayedPages" :key="page">
             <button class="pagination-button" :class="{
                 active: page === currentPage,
@@ -15,18 +14,17 @@
                 {{ page }}
             </button>
         </template>
-
         <!-- 下一页 -->
         <button class="pagination-button" :class="{ disabled: currentPage >= totalPages }"
-            @click="goToPage(currentPage + 1)" :disabled="currentPage >= totalPages">
+            @click="goToPage(currentPage + 1)" :disabled="currentPage >= totalPages" aria-label="下一页">
             <span class="pagination-arrow">→</span>
         </button>
-
         <div class="page-jump">
             <span>跳至</span>
-            <input type="number" v-model.number="inputPage" min="1" :max="totalPages" @keyup.enter="jumpToPage" />
+            <input type="number" v-model.number="inputPage" min="1" :max="totalPages" @keyup.enter="jumpToPage"
+                aria-label="目标页数" />
             <span>页</span>
-            <button class="jump-button" @click="jumpToPage">GO</button>
+            <button class="jump-button" @click="jumpToPage" :aria-label="`跳转至 ${inputPage} 页}`">GO</button>
         </div>
     </div>
 </template>
@@ -98,7 +96,6 @@
     gap: 8px;
     margin-left: 12px;
     font-size: 0.875rem;
-    color: var(--color-text)
 }
 
 .page-jump input {

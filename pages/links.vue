@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-15 mb-6">
+    <main class="mt-15 mb-6">
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-3">
                 相关链接
@@ -67,7 +67,7 @@
                 </div>
             </section>
         </div>
-    </div>
+    </main>
 </template>
 <script lang="ts" setup>
 import {

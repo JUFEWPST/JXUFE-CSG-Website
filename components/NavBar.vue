@@ -18,7 +18,8 @@
                     </span>
                     <ToggleTheme class="ml-1"></ToggleTheme>
                 </div>
-                <div class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none hidden md:inline">
+                <div
+                    class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none hidden md:inline">
                     <div v-if="route.path.startsWith('/archive/') && navArticleInfo.title"
                         class="mx-auto transition-all duration-500 text-center" :style="{
                             opacity: articleTitleOpacity,
@@ -59,7 +60,7 @@
                 <!-- 移动菜单按钮 -->
                 <button
                     class="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
-                    @click.stop="toggleMenu">
+                    aria-label="打开菜单" @click.stop="toggleMenu">
                     <Bars3Icon v-if="!isMenuOpen" class="w-8 h-8"></Bars3Icon>
                     <XMarkIcon v-else class="w-8 h-8"></XMarkIcon>
                     <span class="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-75"
