@@ -14,7 +14,7 @@
                 'ml-8': !isMobile
             }" :aria-hidden="isCollapsed" id="toc-container" aria-labelledby="toc-title" role="navigation">
             <div v-if="items.length" class="flex items-center justify-between mb-4">
-                <h2 class="font-bold text-lg">目录</h2>
+                <h2 id="toc-title" class="font-bold text-lg">目录</h2>
                 <button @click="toggleToc" class="p-1 rounded-md hover:bg-gray-100 transition-colors" aria-label="关闭目录"
                     aria-expanded="true" aria-controls="toc-container" title="关闭目录">
                     <XMarkIcon class="w-5 h-5" />
