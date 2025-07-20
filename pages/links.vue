@@ -43,6 +43,9 @@
                         友情链接
                     </h2>
                 </div>
+                <div>
+                    <p class="text-gray-400 mb-1.5">本页面提供的个人网站链接仅作信息分享，其内容与责任均由网站所有者自行承担，与本社团无关。</p>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     <a v-for="link in fLinks" :key="link.url" :href="link.url" target="_blank"
                         class="group relative bg-white dark:bg-gray-900 transition-all rounded-xl overflow-hidden shadow-md MAOutlined">
