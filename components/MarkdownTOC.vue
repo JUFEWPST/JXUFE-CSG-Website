@@ -2,7 +2,7 @@
     <div class="relative">
         <button v-if="isCollapsed" @click="toggleToc"
             class="fixed md:sticky top-5 left-0 md:left-auto z-30 p-2 bg-white dark:bg-black  rounded-r-md shadow-md border border-l-0 border-gray-200 dark:border-gray-700 hover:bg-gray-50 transition-colors"
-            aria-label="展开目录">
+            aria-label="展开目录" title="展开目录" aria-expanded="false" aria-controls="toc-container">
             <Bars3Icon class="w-5 h-5" />
         </button>
 
@@ -12,30 +12,31 @@
             :class="{
                 'fixed top-0 left-0 w-72 h-screen bg-white z-40 shadow-lg p-5': isMobile,
                 'ml-8': !isMobile
-            }">
+            }" :aria-hidden="isCollapsed" id="toc-container" aria-labelledby="toc-title" role="navigation">
             <div v-if="items.length" class="flex items-center justify-between mb-4">
-                <h2 class="font-bold text-lg">目录</h2>
-                <button @click="toggleToc" class="p-1 rounded-md hover:bg-gray-100 transition-colors" aria-label="关闭目录">
+                <h2 id="toc-title" class="font-bold text-lg">目录</h2>
+                <button @click="toggleToc" class="p-1 rounded-md hover:bg-gray-100 transition-colors" aria-label="关闭目录"
+                    aria-expanded="true" aria-controls="toc-container" title="关闭目录">
                     <XMarkIcon class="w-5 h-5" />
                 </button>
             </div>
 
-            <ul class="list-none pl-0 m-0 space-y-1">
-                <li v-for="item in items" :key="item.id" :class="`pl-${(item.level - 1) * 4}`"
-                    class="my-1 leading-snug whitespace-nowrap overflow-hidden text-ellipsis transition-colors min-w-0">
-                    <a @click="scrollTo(item.id)"
-                        class="block py-1.5 px-2 no-underline rounded-md transition-colors  hover:bg-purple-300 cursor-pointer whitespace-normal break-words overflow-visible"
-                        :class="{
-                            ' text-white font-medium bg-purple-400': activeId === item.id,
-                            'pl-4': item.level === 2,
-                            'pl-8': item.level === 3,
-                            'pl-12': item.level >= 4
-                        }" :title="item.text">
+            <ul class="list-none p-0 m-0 space-y-1">
+                <li v-for="item in items" :key="item.id" :style="{ paddingLeft: `${(item.level - 1)}rem` }"
+                    class="my-1 leading-snug overflow-hidden text-ellipsis transition-colors min-w-0">
+                    <a @click="scrollTo(item.id)" :class="[
+                        'block py-1.5 px-2 no-underline rounded-md transition-colors hover:bg-purple-300 cursor-pointer whitespace-normal break-words overflow-visible',
+                        {
+                            'text-white font-medium bg-purple-400': activeId === item.id,
+                        },
+                        item.level === 2 && 'pl-4',
+                        item.level === 3 && 'pl-8',
+                        item.level >= 4 && 'pl-12'
+                    ]" :title="item.text" :aria-current="activeId === item.id ? 'location' : undefined">
                         {{ item.text }}
                     </a>
                 </li>
             </ul>
-
             <div v-if="items.length === 0" class="text-gray-500 dark:text-gray-200 text-sm italic">
                 暂无目录项
             </div>
@@ -65,11 +66,7 @@ function toggleToc() {
 
 async function scrollTo(idOrText: string) {
     if (!idOrText) return;
-
-    await nextTick(); // 确保 DOM 更新完成
-
     let element = document.getElementById(idOrText);
-
     // 如果通过ID找不到，尝试通过文本内容查找
     if (!element) {
         const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
@@ -136,7 +133,7 @@ function handleScroll() {
 
 function handleResize() {
     windowWidth.value = window.innerWidth
-    if (!isMobile.value) {
+    if (!isMobile.value && !isCollapsed.value) {
         // 在桌面端默认展开
         isCollapsed.value = false
     }

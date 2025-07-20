@@ -9,7 +9,7 @@
         </div>
 
         <div class="container mx-auto px-4 py-4 relative z-10">
-            <nav class="flex items-center justify-between">
+            <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-xl font-bold hover:text-primary-500 items-center flex">
                     <span class="relative">
                         江西财经大学网络安全协会
@@ -18,7 +18,8 @@
                     </span>
                     <ToggleTheme class="ml-1"></ToggleTheme>
                 </div>
-                <div class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none hidden md:inline">
+                <div
+                    class="absolute left-1/2 transform -translate-x-1/2 w-full max-w-[50vw] pointer-events-none hidden md:inline">
                     <div v-if="route.path.startsWith('/archive/') && navArticleInfo.title"
                         class="mx-auto transition-all duration-500 text-center" :style="{
                             opacity: articleTitleOpacity,
@@ -59,7 +60,7 @@
                 <!-- 移动菜单按钮 -->
                 <button
                     class="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
-                    @click.stop="toggleMenu">
+                    aria-label="打开菜单" @click.stop="toggleMenu">
                     <Bars3Icon v-if="!isMenuOpen" class="w-8 h-8"></Bars3Icon>
                     <XMarkIcon v-else class="w-8 h-8"></XMarkIcon>
                     <span class="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-75"
@@ -69,7 +70,7 @@
 
             <!-- 移动导航 -->
             <div class="md:hidden overflow-hidden transition-all duration-300 ease-in-out"
-                :style="{ maxHeight: isMenuOpen ? '500px' : '0' }">
+                :style="{ maxHeight: isMenuOpen ? '500px' : '0' }" :aria-hidden="!isMenuOpen">
                 <div class="mt-4 pb-4 relative">
                     <div class="absolute -top-4 right-4 text-pink-300 text-xl opacity-70">✧</div>
                     <div class="absolute -bottom-4 left-4 text-blue-300 text-xl opacity-70">✦</div>

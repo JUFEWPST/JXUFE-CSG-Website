@@ -13,7 +13,7 @@
       </div>
       <article v-if="archive" class="mt-15 mb-2 mx-auto box-border p-2 max-w-screen">
         <div class="mb-8">
-          <h1 class="text-4xl font-bold text-center  leading-tight">
+          <h1 class="text-4xl font-bold text-center leading-tight">
             {{ archive?.title }}
           </h1>
           <div class=" text-sm text-gray-500 dark:text-gray-200 flex justify-around">
@@ -24,14 +24,14 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-row box-border mx-1 md:ml-25 max-w-screen">
+        <div class="flex flex-row box-border mx-1 md:ml-10 max-w-screen">
           <!-- 文章内容 -->
           <MarkdownRender ref="markdownRender" :content="archive.content" @toc-updated="handleTocUpdate"
             class="flex-1 max-w-[calc(100%-18rem)] overflow-hidden box-border p-4">
           </MarkdownRender>
 
           <!-- 目录 -->
-          <MarkdownTOC class="hidden md:block w-70 ml-8 sticky top-20 self-start" :items="tocItems">
+          <MarkdownTOC class="hidden md:block ml-2 sticky top-20 self-start" :items="tocItems">
           </MarkdownTOC>
         </div>
 

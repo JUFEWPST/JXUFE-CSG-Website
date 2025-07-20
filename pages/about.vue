@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import FlipToggle from '~/components/FlipToggle.vue';
-import { useNotification } from '~/composables/useNotification';
 import { onMounted, ref } from 'vue';
 
 const isMounted = ref(false);
@@ -22,11 +21,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 flex justify-center">
             <FlipToggle class="w-[240px] h-[240px] hover:scale-105 transition-transform duration-300">
                 <template #front>
-                    <div class="font-bold mx-auto text-center text-5xl relative">
+                    <div class="font-bold mx-auto text-center text-5xl relative" aria-label="江西财经大学网络安全协会 - 关于协会">
                         <client-only>
                             <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
                                 <template v-for="i in 8" :key="i">
@@ -54,7 +53,7 @@ onMounted(() => {
                 </template>
                 <template #back>
                     <div class="relative w-full h-full">
-                        <img src="~/assets/images/网安领域.webp" class="object-contain w-full h-full" />
+                        <img src="~/assets/images/网安领域.webp" class="object-contain w-full h-full" alt="" />
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3 text-sm">
                             <p>「欢迎来到网络安全的世界...」</p>
                         </div>
@@ -240,7 +239,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 <style>
 @keyframes float {

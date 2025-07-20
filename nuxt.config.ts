@@ -9,4 +9,11 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'zh-CN'
+      }
+    }
+  }
 })
