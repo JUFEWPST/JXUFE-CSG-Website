@@ -106,6 +106,9 @@ onMounted(() => {
                                 </div>
                             </div>
                         </div>
+                        <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                            同时，我们网安协会还有一支精湛的安全团队——弱口令安全团队(WPST)。这支团队深耕网络安全领域，在漏洞挖掘、攻防、安全策略等方面积累了丰富经验。
+                        </div>
                     </div>
                 </div>
             </div>
