@@ -24,15 +24,8 @@
             <ul class="list-none p-0 m-0 space-y-1">
                 <li v-for="item in items" :key="item.id" :style="{ paddingLeft: `${(item.level - 1)}rem` }"
                     class="my-1 leading-snug overflow-hidden text-ellipsis transition-colors min-w-0">
-                    <a @click="scrollTo(item.id)" :class="[
-                        'block py-1.5 px-2 no-underline rounded-md transition-colors hover:bg-purple-300 cursor-pointer whitespace-normal break-words overflow-visible',
-                        {
-                            'text-white font-medium bg-purple-400': activeId === item.id,
-                        },
-                        item.level === 2 && 'pl-4',
-                        item.level === 3 && 'pl-8',
-                        item.level >= 4 && 'pl-12'
-                    ]" :title="item.text" :aria-current="activeId === item.id ? 'location' : undefined">
+                    <a @click="scrollTo(item.id)" :class="getLinkClasses(item)" :title="item.text"
+                        :aria-current="activeId === item.id ? 'location' : undefined">
                         {{ item.text }}
                     </a>
                 </li>
@@ -49,27 +42,50 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import slugify from 'slugify';
 import type { TocItem } from '~/types/tocitems';
+const HEADING_SELECTOR = 'h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]';
+const ALL_HEADINGS_SELECTOR = 'h1, h2, h3, h4, h5, h6';
 
 const props = defineProps<{
     items: TocItem[]
+    markdownRenderRef: { $el: HTMLElement };
 }>()
-
+function getHeadingSelector() {
+    if (!props.markdownRenderRef) {
+        // console.log("没有ReF")
+        return [];
+    }
+    return props.markdownRenderRef.$el.querySelectorAll(
+        'h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]'
+    );
+}
 const activeId = ref('')
 const isCollapsed = ref(false)
 const windowWidth = ref(window.innerWidth)
 
 const isMobile = computed(() => windowWidth.value < 768)
+const initialCollapseState = computed(() => isMobile.value);
 
 function toggleToc() {
     isCollapsed.value = !isCollapsed.value
 }
 
+const getLinkClasses = (item: TocItem) => {
+    const baseClasses = 'block py-1.5 px-2 no-underline rounded-md transition-colors hover:bg-purple-300 cursor-pointer whitespace-normal break-words overflow-visible';
+    const activeClasses = activeId.value === item.id ? 'text-white font-medium bg-purple-400' : '';
+    const levelClasses =
+        item.level === 2 ? 'pl-4' :
+            item.level === 3 ? 'pl-8' :
+                item.level >= 4 ? 'pl-12' : '';
+
+    return `${baseClasses} ${activeClasses} ${levelClasses}`;
+}
+
 async function scrollTo(idOrText: string) {
     if (!idOrText) return;
     let element = document.getElementById(idOrText);
-    // 如果通过ID找不到，尝试通过文本内容查找
+
     if (!element) {
-        const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+        const headings = Array.from(document.querySelectorAll(ALL_HEADINGS_SELECTOR)) as HTMLElement[];
         const matchedHeading = headings.find(heading => {
             const headingText = heading.textContent?.trim() || '';
             return (
@@ -80,7 +96,6 @@ async function scrollTo(idOrText: string) {
         });
 
         if (matchedHeading) {
-            // 如果找到匹配的标题但缺少ID，自动生成一个
             if (!matchedHeading.id) {
                 matchedHeading.id = slugify(matchedHeading.textContent || '', {
                     lower: true,
@@ -112,44 +127,44 @@ async function scrollTo(idOrText: string) {
 }
 
 function handleScroll() {
-    const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]')
-    let current = ''
-    let closestDistance = Infinity
+    const headings = getHeadingSelector();
+    let current = '';
+    let closestDistance = Infinity;
 
     headings.forEach((heading) => {
-        const rect = heading.getBoundingClientRect()
-        const distance = Math.abs(rect.top - 100)
+        const rect = heading.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 100);
 
         if (rect.top <= 120 && distance < closestDistance) {
-            closestDistance = distance
-            current = heading.id
+            closestDistance = distance;
+            current = heading.id;
         }
-    })
+    });
 
     if (current) {
-        activeId.value = current
+        activeId.value = current;
     }
 }
 
 function handleResize() {
-    windowWidth.value = window.innerWidth
-    if (!isMobile.value && !isCollapsed.value) {
-        // 在桌面端默认展开
-        isCollapsed.value = false
+    windowWidth.value = window.innerWidth;
+    if (isMobile.value === false) {
+        isCollapsed.value = false;
     }
 }
 
+const scrollHandler = () => handleScroll();
+const resizeHandler = () => handleResize();
+
 onMounted(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleResize)
-    if (isMobile.value) {
-        isCollapsed.value = true
-    }
-    handleScroll()
-})
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    window.addEventListener('resize', resizeHandler);
+    isCollapsed.value = initialCollapseState.value;
+    handleScroll();
+});
 
 onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll)
-    window.removeEventListener('resize', handleResize)
-})
+    window.removeEventListener('scroll', scrollHandler);
+    window.removeEventListener('resize', resizeHandler);
+});
 </script>
