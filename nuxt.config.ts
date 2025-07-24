@@ -11,6 +11,10 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      title: '江西财经大学网络安全协会',
+      link: [
+        { rel: 'icon', type: 'image/webp', href: '/favicon.webp' },
+      ],
       htmlAttrs: {
         lang: 'zh-CN'
       }
