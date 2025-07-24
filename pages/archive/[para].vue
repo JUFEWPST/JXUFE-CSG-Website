@@ -31,7 +31,8 @@
           </MarkdownRender>
 
           <!-- 目录 -->
-          <MarkdownTOC class="hidden md:block ml-2 sticky top-20 self-start" :items="tocItems">
+          <MarkdownTOC class="hidden md:block ml-2 sticky top-20 self-start" :items="tocItems"
+            :markdown-render-ref="markdownRender">
           </MarkdownTOC>
         </div>
 
