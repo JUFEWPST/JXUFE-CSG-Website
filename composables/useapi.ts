@@ -36,7 +36,7 @@ export interface StrapiResponse<T> {
   meta?: StrapiMeta
 }
 
-const BASE_URL = 'http://114.66.61.26:8080/api'
+const BASE_URL = 'https://csgapi.tantanchugasuki.cn/api'
 
 export function useApi<T>() {
   const response: Ref<ApiResponse<T>> = ref({
