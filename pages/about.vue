@@ -208,7 +208,7 @@ onMounted(() => {
                         <div class="md:w-1/2 space-y-4 text-gray-700 dark:text-gray-300">
                             <p class="text-lg leading-relaxed">
                                 无论您是否是本校学生，都可扫描<span class="md:hidden">下方</span><span
-                                    class="hidden md:inline">右方</span>的二维码加入江财网安协会编外群与我们互动
+                                    class="hidden md:inline">右方</span>的二维码加入2025年江财网安协会招新群与我们互动
                             </p>
                             <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg border-l-4 border-pink-400">
                                 <div
@@ -218,7 +218,7 @@ onMounted(() => {
                             </div>
                             <div class="flex space-x-3 mt-4">
                                 <a class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm"
-                                    href="https://qm.qq.com/q/qIC4fkPlbW" target="_blank">
+                                    href="https://qm.qq.com/q/v7pD9BL4Lm" target="_blank">
                                     加入群聊
                                 </a>
                                 <a class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition-colors text-sm"
@@ -229,9 +229,9 @@ onMounted(() => {
                         </div>
                         <div class="md:w-1/2 flex justify-center">
                             <div class="bg-white p-4 rounded-lg shadow-inner relative group">
-                                <img src="/assets/images/qrcode.svg"
+                                <img src="/assets/images/2025JXUFECGS.svg"
                                     class="w-48 h-48 object-contain transition-transform group-hover:scale-105"
-                                    alt="江财网安协会编外群二维码" />
+                                    alt="2025年江财网安协会招新群二维码" />
                                 <div
                                     class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                     一起成为学院偶像！
