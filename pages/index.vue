@@ -12,12 +12,12 @@
                 </h2>
             </div>
             <div class="absolute bottom-10 flex flex-col items-center">
-                <p class="text-xl font-bold mb-2 animate-pulse">视情况可以在这写一些话之类的，或者不写</p>
+                <p class="text-xl font-bold mb-2 animate-pulse">共筑网络安全，坚守网络防线</p>
                 <AnimationScrollDown />
             </div>
         </section>
         <section
-            class="min-h-screen bg-gradient-to-br relative from-blue-50 to-white dark:from-[#121212] dark:to-[#181919] flex flex-col md:flex-row items-center justify-center p-8 gap-8">
+            class="min-h-screen bg-gradient-to-br relative from-blue-50 to-white dark:from-[#121212] dark:to-[#181919] flex flex-col md:flex-row items-center justify-center p-8 py-10 gap-8">
             <div class="w-full md:w-1/3 flex justify-center">
                 <h3
                     class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white p-4 border-b-4 border-[var(--color-primary)]">
@@ -54,7 +54,7 @@
                 </div>
 
             </div>
-            <div class=" absolute w-full py-3 flex justify-center bottom-2">
+            <div class=" absolute w-full flex justify-center bottom-0.5">
                 <NuxtLink to="/archive"
                     class="text-xl font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 relative group">
                     查看更多动态 >>
