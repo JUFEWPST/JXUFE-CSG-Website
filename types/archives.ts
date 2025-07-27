@@ -6,6 +6,8 @@ export interface Archive {
     tags: string[]
   } | null
   publishedAt: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface ArchiveData extends Archive {
