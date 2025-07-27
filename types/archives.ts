@@ -6,10 +6,12 @@ export interface Archive {
     tags: string[]
   } | null
   publishedAt: string
+  createdAt: string
+  updatedAt: string
+  isTop:boolean
 }
 
 export interface ArchiveData extends Archive {
   content: string;
-  publishedAt: string;
   publisher: string | null;
 }

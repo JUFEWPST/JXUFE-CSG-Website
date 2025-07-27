@@ -7,7 +7,8 @@ const currentQuote = ref(0);
 
 const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
-    "放弃的话就到此为止了，但是，你可以改变命运()"
+    "放弃的话就到此为止了，但是，你可以改变命运()",
+    "是我喜欢的协会"
 ];
 useHead({
     title: "关于协会 - 江西财经大学网络安全协会"
@@ -23,9 +24,10 @@ onMounted(() => {
 <template>
     <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 flex justify-center">
-            <FlipToggle class="w-[240px] h-[240px] hover:scale-105 transition-transform duration-300">
+            <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
                 <template #front>
-                    <div class="font-bold mx-auto text-center text-5xl relative" aria-label="江西财经大学网络安全协会 - 关于协会">
+                    <div class="font-bold mx-auto text-center text-3xl md:text-4xl lg:text-5xl  relative"
+                        aria-label="江西财经大学网络安全协会 - 关于协会">
                         <client-only>
                             <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
                                 <template v-for="i in 8" :key="i">

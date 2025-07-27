@@ -37,8 +37,8 @@
                                 'translate-y-2 opacity-0': !subtitleVisible,
                                 'translate-y-0 opacity-70': subtitleVisible
                             }">
-                            <span v-if="navArticleInfo.publishedAt">发布于 {{ navArticleInfo.publishedAt }}</span>
-                            <span v-if="navArticleInfo.publisher">作者 {{ navArticleInfo.publisher }}</span>
+                            <span v-if="navArticleInfo.updatedAt" class="mr-2">更新于:{{ navArticleInfo.updatedAt }}</span>
+                            <span v-if="navArticleInfo.publisher">发布者:{{ navArticleInfo.publisher }}</span>
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const navArticleInfo = useState('navArticleInfo', () => ({
     title: '',
-    publishedAt: '',
+    updatedAt: '',
     publisher: ''
 }))
 

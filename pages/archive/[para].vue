@@ -12,22 +12,25 @@
         <ErrorDisplay :error-data="error"></ErrorDisplay>
       </div>
       <article v-if="archive" class="mt-15 mb-2 mx-auto box-border p-2 max-w-screen">
-        <div class="mb-8">
-          <h1 class="text-4xl font-bold text-center leading-tight">
+        <div class="mb-1">
+          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center leading-tight">
             {{ archive?.title }}
           </h1>
-          <div class=" text-sm text-gray-500 dark:text-gray-200 flex justify-around">
-            <div>发布时间:{{ new Date(archive.publishedAt).toLocaleDateString() }}</div>
+          <div class=" text-sm text-gray-400 dark:text-gray-200 font-light flex flex-wrap gap-7 justify-center mx-1">
+            <div>创建于:{{ new Date(archive.createdAt).toLocaleString() }}</div>
+            <div>最后更新:{{ new Date(archive.updatedAt).toLocaleString() }}</div>
             <div v-if="archive.publisher">发布者:{{ archive.publisher }} </div>
-            <div v-if="archive.tags">
+            <div v-if="archive.tags?.tags?.length">
               <TagList :tags="archive.tags.tags"></TagList>
             </div>
           </div>
         </div>
-        <div class="flex flex-row box-border mx-1 md:ml-10 max-w-screen">
+        <hr class="text-gray-200">
+        </hr>
+        <div class="flex flex-row box-border ml-0 md:ml-10 max-w-screen mt-1">
           <!-- 文章内容 -->
           <MarkdownRender ref="markdownRender" :content="archive.content" @toc-updated="handleTocUpdate"
-            class="flex-1 max-w-[calc(100%-18rem)] overflow-hidden box-border p-4">
+            class="flex-1 max-w-[calc(100%-18rem)] overflow-hidden box-border">
           </MarkdownRender>
 
           <!-- 目录 -->
@@ -76,7 +79,7 @@ onMounted(() => {
 // 联动标题相关
 const navArticleInfo = useState('navArticleInfo', () => ({
   title: '',
-  publishedAt: '',
+  updatedAt: '',
   publisher: ''
 }))
 
@@ -85,7 +88,7 @@ watch(archive, (newVal) => {
   if (newVal) {
     navArticleInfo.value = {
       title: newVal.title,
-      publishedAt: new Date(newVal.publishedAt).toLocaleDateString(),
+      updatedAt: new Date(newVal.publishedAt).toLocaleString(),
       publisher: newVal.publisher || ''
     }
   }
@@ -93,7 +96,7 @@ watch(archive, (newVal) => {
 
 // 离开页面时清除数据
 onUnmounted(() => {
-  navArticleInfo.value = { title: '', publishedAt: '', publisher: '' }
+  navArticleInfo.value = { title: '', updatedAt: '', publisher: '' }
 })
 </script>
 
