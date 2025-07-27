@@ -51,14 +51,14 @@
                         </span>
                     </div>
                     <div class="flex-1" />
-                    <div class="flex min-w-0 items-center space-x-1">
+                    <!--<div class="flex min-w-0 items-center space-x-1">
                         <svg width="1em" height="1em" viewBox="0 0 24 24" class="text-[var(--color-primary)]">
                             <path fill="currentColor"
                                 d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z">
                             </path>
                         </svg>
-                        <span class="min-w-0 truncate">{{ views || '0' }}</span>
-                    </div>
+                        <span class="min-w-0 truncate">{{ views || '无数据' }}</span>
+                    </div>-->
                 </div>
             </div>
         </NuxtLink>
