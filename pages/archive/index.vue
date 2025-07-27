@@ -12,7 +12,7 @@
                 <ul class="box-border p-2 w-full md:w-1/2">
                     <ArticleBlock v-for="archive in topArchives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.publishedAt).toLocaleDateString()" :tags="archive.tags?.tags || []"
+                        :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []"
                         :istop="true">
                     </ArticleBlock>
                 </ul>
@@ -21,7 +21,7 @@
                 <ul class="box-border p-2 w-full md:w-1/2">
                     <ArticleBlock v-for="archive in archives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.publishedAt).toLocaleDateString()" :tags="archive.tags?.tags || []">
+                        :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []">
                     </ArticleBlock>
                 </ul>
             </template>
