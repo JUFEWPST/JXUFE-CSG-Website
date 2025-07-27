@@ -9,7 +9,7 @@
     word-wrap: break-word;
     background-color: var(--bgColor-default);
     border-radius: 8px;
-    padding: 24px;
+    padding: 8px;
     --base-size-4: 0.25rem;
     --base-size-8: 0.5rem;
     --base-size-16: 1rem;
