@@ -16,10 +16,10 @@
           <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center leading-tight">
             {{ archive?.title }}
           </h1>
-          <div class=" text-sm text-gray-400 dark:text-gray-200 font-light flex flex-wrap gap-7 justify-center mx-1">
-            <div>创建于:{{ new Date(archive.createdAt).toLocaleString() }}</div>
-            <div>最后更新:{{ new Date(archive.updatedAt).toLocaleString() }}</div>
-            <div v-if="archive.publisher">发布者:{{ archive.publisher }} </div>
+          <div class=" text-sm text-gray-400 dark:text-gray-200 font-light flex justify-center flex-wrap mx-1 gap-x-2">
+            <span>创建于:{{ new Date(archive.createdAt).toLocaleString() }}</span>
+            <span>最后更新:{{ new Date(archive.updatedAt).toLocaleString() }}</span>
+            <span v-if="archive.publisher">发布者:{{ archive.publisher }} </span>
             <div v-if="archive.tags?.tags?.length">
               <TagList :tags="archive.tags.tags"></TagList>
             </div>

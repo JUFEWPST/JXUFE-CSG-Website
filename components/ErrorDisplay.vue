@@ -12,19 +12,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-error-light p-4 rounded-lg">
                         <h3 class="font-semibold text-error mb-2 flex items-center">
-                            <i class="fa fa-info-circle mr-2"></i>状态码
+                            状态码
                         </h3>
                         <p class="text-lg font-mono font-bold text-gray-800">{{ errorData?.status || '未知' }}</p>
                     </div>
                     <div class="bg-error-light p-4 rounded-lg">
                         <h3 class="font-semibold text-error mb-2 flex items-center">
-                            <i class="fa fa-bug mr-2"></i>错误类型
+                            错误类型
                         </h3>
                         <p class="text-lg font-mono font-bold text-gray-800">{{ errorData?.name || '未知' }}</p>
                     </div>
                     <div class="bg-error-light p-4 rounded-lg md:col-span-2">
                         <h3 class="font-semibold text-error mb-2 flex items-center">
-                            <i class="fa fa-comment mr-2"></i>错误信息
+                            错误信息
                         </h3>
                         <p class="text-lg font-mono font-bold text-gray-800">{{ errorData?.message || '未知错误' }}</p>
                     </div>
@@ -32,7 +32,7 @@
 
                 <div class="mt-6 bg-gray-50 p-4 rounded-lg">
                     <h3 class="font-semibold text-gray-700 mb-2 flex items-center">
-                        <i class="fa fa-code mr-2"></i>错误详情
+                        错误详情
                     </h3>
                     <pre class="text-sm font-mono text-gray-600 bg-gray-100 p-3 rounded overflow-x-auto">
   {{ formattedErrorData }}
@@ -43,7 +43,7 @@
                     <button
                         class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors duration-300 flex items-center"
                         @click="retryRequest">
-                        <i class="fa fa-refresh mr-2"></i>重试
+                        重试
                     </button>
                     <div class="text-sm text-gray-500">
                         错误发生时间: {{ errorTime }}
