@@ -79,7 +79,7 @@ import {
     ArrowRightIcon
 } from '@heroicons/vue/24/outline';
 
-const official_icon = 'https://www.jxufe.edu.cn/favicon.ico';
+const official_icon = '/jxufe-logo.svg';
 const Links = [
     { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/' },
     { name: '江西财经大学计算机与人工智能学院', url: 'http://cai.jxufe.edu.cn/', icon: official_icon },
