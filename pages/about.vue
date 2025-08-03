@@ -19,6 +19,29 @@ onMounted(() => {
         currentQuote.value = (currentQuote.value + 1) % quotes.length;
     }, 5000);
 });
+
+const leadersData = [
+    {
+        name: "邱挺",
+        class: "24网络空间安全1班",
+        year: "2025",
+        message: "寄语",
+        achievements: [
+            "成就"
+        ],
+        avatar: 'https://tantanchugasuki.cn/76721863_p0_お願いごと、ひとつ.avif'
+    }, 
+    {
+        name: "谢智屹",
+        class: "23网络空间安全1班",
+        year: "2024",
+        message: "寄语",
+        achievements: [
+            "ISCC"
+        ],
+        avatar: 'http://47.99.92.213/images/excellent_member/xzy.png'
+    },
+]
 </script>
 
 <template>
@@ -190,8 +213,6 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-
-
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
                 style="transition-delay: 200ms">
@@ -242,6 +263,17 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden">
+                <!-- 卡片装饰元素 -->
+                <div class="absolute -left-5 -top-5 text-blue-100/70 dark:text-gray-700/80 text-7xl z-0">✦</div>
+                <div class="absolute -right-5 -bottom-5 text-pink-100/70 dark:text-gray-700/80 text-7xl z-0">✧</div>
+                <div class="absolute top-4 right-6 text-2xl text-yellow-400 opacity-60">☆</div>
+                <div class="absolute bottom-4 left-6 text-2xl text-blue-400 opacity-60">☆</div>
+
+                <!-- 轮播组件 -->
+                <LeaderCarousel :leaders="leadersData" />
             </div>
         </div>
     </main>
