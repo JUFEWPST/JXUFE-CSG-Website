@@ -11,6 +11,7 @@
         <div class="container mx-auto px-4 py-4 relative z-10">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-xl font-bold hover:text-primary-500 items-center flex">
+                    <img src="/favicon.svg" class="h-8 mr-2">
                     <span class="relative">
                         江西财经大学网络安全协会
                         <span
