@@ -81,7 +81,7 @@ import {
 
 const official_icon = '/jxufe-logo.svg';
 const Links = [
-    { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/' },
+    { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学计算机与人工智能学院', url: 'http://cai.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学本科招生网', url: 'https://zsjy.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon }
