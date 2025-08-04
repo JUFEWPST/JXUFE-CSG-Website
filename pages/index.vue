@@ -58,7 +58,8 @@
         <section
             class="relative min-h-screen bg-gradient-to-b flex flex-col md:flex-row items-center justify-center p-8 gap-8 scroll-section">
             <div class="w-full md:w-1/3 flex justify-center">
-                <h3 class="text-4xl md:text-5xl font-bold text-gray-800 p-4 border-b-4 border-[var(--color-primary)]">
+                <h3
+                    class="text-4xl md:text-5xl font-bold p-4 border-b-4 text-gray-800 dark:text-white border-[var(--color-primary)]">
                     近期动态
                 </h3>
             </div>
