@@ -410,25 +410,6 @@ header {
     z-index: 60;
 }
 
-.dark .absolute>div {
-    background-color: #1f2937;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.dark .absolute>div a {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.dark .absolute>div a:hover {
-    background-color: rgba(55, 65, 81, 0.8);
-    color: white;
-}
-
-.dark .absolute>div a.bg-gray-100 {
-    background-color: rgba(55, 65, 81, 0.8);
-    color: var(--color-primary-300);
-}
-
 .dark .pl-4 a.mobile-active-link {
     color: var(--color-primary-400);
 }
