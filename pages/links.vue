@@ -57,12 +57,17 @@
                             <h3 class="font-semibold text-lg mb-2">
                                 {{ link.name }}
                             </h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-1">
-                                {{ link.url }}
-                            </p>
+                            <div class="flex flex-wrap gap-1">
+                                <div v-for="(tag, index) in link.tags" :key="index"
+                                    class="px-2 py-1 rounded text-white text-xs font-medium whitespace-nowrap"
+                                    :style="{ backgroundColor: getRandomColor(tag) }">
+                                    {{ tag }}
+                                </div>
+                            </div>
                             <div
                                 class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <span class="text-sm text-gray-500 dark:text-gray-400 mr-2">访问</span>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-gray-400 mr-2">{{ link.droptext || '访问' }}</span>
                                 <ArrowRightIcon class="w-4 h-4 text-purple-600 dark:text-purple-400" />
                             </div>
                         </div>
@@ -78,17 +83,19 @@ import {
     HeartIcon,
     ArrowRightIcon
 } from '@heroicons/vue/24/outline';
-
-const official_icon = 'https://www.jxufe.edu.cn/favicon.ico';
+import { getRandomColor } from '@/composables/getRandomColor';
+const official_icon = '/jxufe-logo.svg';
 const Links = [
-    { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/' },
+    { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学计算机与人工智能学院', url: 'http://cai.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学本科招生网', url: 'https://zsjy.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon }
 ];
 const fLinks = [
     { name: '秋雨样大人', url: 'https://amqyy.cn/', icon: 'https://avatars.githubusercontent.com/u/60593418?v=4' },
-    { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.jpg' }
+    { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.jpg' }, {
+        name: 'woodfish', url: 'https://www.woodfishhhh.xyz/', icon: 'https://pic1.imgdb.cn/item/682f3d1658cb8da5c807b704.jpg', droptext: '我喜欢你', tags: ['我喜欢喝雪碧', '全栈开发（with AI）']
+    }
 ];
 
 useHead({

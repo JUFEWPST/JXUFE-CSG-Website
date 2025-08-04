@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import FlipToggle from '~/components/FlipToggle.vue';
 import { onMounted, ref } from 'vue';
-
+import { leadersData } from '~/data/leadersData';
+import membersData from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
 
@@ -19,6 +20,7 @@ onMounted(() => {
         currentQuote.value = (currentQuote.value + 1) % quotes.length;
     }, 5000);
 });
+
 </script>
 
 <template>
@@ -65,7 +67,8 @@ onMounted(() => {
         </div>
 
         <div class="flex flex-col box-border mb-12 space-y-12">
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
                 style="transition-delay: 100ms">
                 <div class="absolute -right-10 -top-10 text-blue-100/70 dark:text-gray-700/80 text-9xl z-0">✧</div>
@@ -113,8 +116,42 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
+            </section>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden">
+                <div class="absolute top-1/5 right-1/6 text-4xl text-purple-300 opacity-50">✭</div>
+                <div class="absolute bottom-1/4 left-1/5 text-3xl text-orange-400 opacity-60">✧</div>
+                <div class="absolute top-1/2 right-1/4 text-5xl text-teal-200 opacity-40">✦</div>
+                <div class="absolute bottom-1/6 left-1/3 text-2xl text-rose-500 opacity-70">☆</div>
+                <div class="absolute top-1/3 left-1/6 text-4xl text-indigo-400 opacity-50">✯</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
+                    <span class="w-2 h-8 bg-amber-300 mr-3 rounded-full"></span>
+                    历届负责人
+                </h2>
+                <NuxtLink to="/about/leaders" class="ml-5"><span
+                        class="text-md font-bold text-gray-400 hover:text-black transition-colors duration-300">>>
+                        列表形式</span></NuxtLink>
+                <LeaderCarousel :leaders="leadersData" />
+            </section>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden">
+                <div class="absolute top-1/5 right-1/6 text-4xl text-purple-300 opacity-50">✭</div>
+                <div class="absolute bottom-1/4 left-1/5 text-3xl text-orange-400 opacity-60">✧</div>
+                <div class="absolute top-1/2 right-1/4 text-5xl text-teal-200 opacity-40">✦</div>
+                <div class="absolute bottom-1/6 left-1/3 text-2xl text-rose-500 opacity-70">☆</div>
+                <div class="absolute top-1/3 left-1/6 text-4xl text-indigo-400 opacity-50">✯</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
+                    <span class="w-2 h-8 bg-amber-300 mr-3 rounded-full"></span>
+                    历届成员
+                </h2>
+                <NuxtLink to="/about/members" class="ml-5"><span
+                        class="text-md font-bold text-gray-400 hover:text-black transition-colors duration-300">>>
+                        列表形式</span></NuxtLink>
+                <MembersCarousel :members-data="membersData" />
+            </section>
+            <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 数据努力收集中 ⇈</h2>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
                 style="transition-delay: 300ms">
                 <div class="absolute -left-5 -top-5 text-blue-100/70 dark:text-gray-700/80 text-7xl z-0">✦</div>
@@ -189,10 +226,9 @@ onMounted(() => {
                         <p class="mt-1"> 我认为奇迹与魔法对谁都会带来幸福，是十分美好的事物。</p>
                     </div>
                 </div>
-            </div>
-
-
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
+            </section>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
                 style="transition-delay: 200ms">
                 <div
@@ -242,11 +278,19 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
         </div>
     </main>
 </template>
-<style>
+<style module>
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+.card {
+    @apply bg-white dark: bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden;
+}
+
 @keyframes float {
     0% {
         transform: translateY(0) rotate(0deg);
