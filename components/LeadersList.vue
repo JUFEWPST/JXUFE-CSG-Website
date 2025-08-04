@@ -1,11 +1,10 @@
 <template>
-    <BaseCarousel :item-count="leaders.length">
+    <div class="flex flex-col justify-center">
         <LeaderCard v-for="(leader, index) in leaders" :key="index" :leader="leader" />
-    </BaseCarousel>
+    </div>
 </template>
 
 <script setup lang="ts">
-import BaseCarousel from '~/components/BaseCarousel.vue'
 import LeaderCard from '~/components/LeaderCard.vue'
 import type { Leader } from '~/types/leader';
 

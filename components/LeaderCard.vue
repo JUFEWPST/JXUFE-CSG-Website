@@ -53,14 +53,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Leader } from '~/types/leader';
 defineProps<{
-    leader: {
-        name: string
-        class?: string
-        year: string
-        message?: string
-        achievements?: string[]
-        avatar?: string
-    }
+    leader: Leader
 }>()
 </script>
