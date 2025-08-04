@@ -149,7 +149,7 @@ onMounted(() => {
                         列表形式</span></NuxtLink>
                 <MembersCarousel :members-data="membersData" />
             </section>
-            <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 仍在建设中 ⇈</h2>
+            <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 数据努力收集中 ⇈</h2>
             <section
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
