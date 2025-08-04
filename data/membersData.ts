@@ -23,6 +23,7 @@ const membersData: MemberCollection = {
         {
             name: '涂紫妍',
             position: '团支书',
+            avatar: '/不退让._2025-08-04 21.46.05_picture-0.png'
         },
     ]
 };
