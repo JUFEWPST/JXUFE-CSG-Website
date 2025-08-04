@@ -47,7 +47,58 @@
                 <!-- 桌面导航 -->
                 <div class="hidden md:flex space-x-6">
                     <template v-for="link in navLinks" :key="link.path">
-                        <NuxtLink :to="link.path" class="nav-link"
+                        <!-- 有下拉菜单的导航项 -->
+                        <div v-if="link.children" class="relative group" @mouseenter="openDropdown(link.path)"
+                            @mouseleave="closeDropdown(link.path)">
+                            <div class="flex items-center">
+                                <!-- 主链接 - 点击跳转到默认路由 -->
+                                <NuxtLink :to="link.defaultPath || link.path" class="nav-link"
+                                    :class="{ 'active-link': isActive(link) }">
+                                    <span class="relative">
+                                        {{ link.label }}
+                                        <span v-if="isActive(link)"
+                                            :class="`absolute -top-2 -right-3 text-${link.color}-400 text-xs`">{{ link.icon }}</span>
+                                    </span>
+                                </NuxtLink>
+
+                                <!-- 下拉菜单触发按钮 -->
+                                <button @click="toggleDropdown(link.path)"
+                                    class="ml-1 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    :class="{ 'rotate-180': dropdownStates[link.path] }">
+                                    <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="absolute top-full left-0 w-full h-2"
+                                :class="{ 'invisible': !dropdownStates[link.path] }"></div>
+
+                            <!-- 下拉菜单内容 -->
+                            <transition enter-active-class="transition duration-200 ease-out"
+                                enter-from-class="transform translate-y-2 opacity-0"
+                                enter-to-class="transform translate-y-0 opacity-100"
+                                leave-active-class="transition duration-150 ease-in"
+                                leave-from-class="transform translate-y-0 opacity-100"
+                                leave-to-class="transform translate-y-2 opacity-0">
+                                <div v-if="dropdownStates[link.path]"
+                                    class="absolute top-full left-0 mt-2 w-48 rounded shadow-lg bg-white dark:bg-gray-800 ring-1 ring-zinc-900/5 dark:ring-zinc-100/10 ring-opacity-5 z-50 overflow-hidden">
+                                    <NuxtLink v-for="child in link.children" :key="child.path" :to="child.path"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
+                                        :class="{
+                                            'bg-gray-100 dark:bg-gray-700 font-medium': route.path === child.path,
+                                            'text-primary-500 dark:text-primary-400': route.path === child.path
+                                        }" @click="closeDropdown(link.path)">
+                                        {{ child.label }}
+                                    </NuxtLink>
+                                </div>
+                            </transition>
+                        </div>
+
+                        <!-- 普通导航项 -->
+                        <NuxtLink v-else :to="link.path" class="nav-link"
                             :class="{ 'active-link': $route.path === link.path }">
                             <span class="relative">
                                 {{ link.label }}
@@ -76,7 +127,41 @@
                     <div class="absolute -top-4 right-4 text-pink-300 text-xl opacity-70">✧</div>
                     <div class="absolute -bottom-4 left-4 text-blue-300 text-xl opacity-70">✦</div>
                     <template v-for="link in navLinks" :key="`mobile-${link.path}`">
-                        <NuxtLink :to="link.path" class="mobile-nav-link"
+                        <!-- 移动端有子菜单的项 -->
+                        <div v-if="link.children" class="mb-1">
+                            <NuxtLink :to="link.defaultPath || link.path"
+                                class="mobile-nav-link flex items-center justify-between w-full"
+                                :class="{ 'mobile-active-link': isActive(link) }">
+                                <span>
+                                    {{ link.label }}
+                                    <span v-if="isActive(link)"
+                                        :class="`ml-2 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
+                                </span>
+                                <button @click.stop="toggleMobileSubmenu(link.path)"
+                                    class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg class="w-4 h-4 transition-transform"
+                                        :class="{ 'rotate-180': mobileDropdownStates[link.path] }" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            </NuxtLink>
+
+                            <!-- 移动端子菜单 -->
+                            <div v-if="mobileDropdownStates[link.path]" class="pl-4 mt-1 space-y-1">
+                                <NuxtLink v-for="child in link.children" :key="child.path" :to="child.path"
+                                    class="block px-3 py-2 text-sm rounded-md mobile-nav-link" :class="{
+                                        'mobile-active-link': route.path === child.path,
+                                        'bg-gray-100 dark:bg-gray-700': route.path === child.path
+                                    }" @click="closeMenu">
+                                    {{ child.label }}
+                                </NuxtLink>
+                            </div>
+                        </div>
+
+                        <!-- 移动端普通项 -->
+                        <NuxtLink v-else :to="link.path" class="mobile-nav-link"
                             :class="{ 'mobile-active-link': $route.path === link.path }" @click="closeMenu">
                             <span class="relative">
                                 {{ link.label }}
@@ -92,7 +177,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, reactive } from 'vue'
 import ToggleTheme from './ToggleTheme.vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
@@ -104,12 +189,55 @@ const navArticleInfo = useState('navArticleInfo', () => ({
     publisher: ''
 }))
 
+
 const navLinks = [
     { path: '/', label: '首页', icon: '✧', color: 'pink' },
     { path: '/archive', label: '归档', icon: '✦', color: 'blue' },
-    { path: '/about', label: '关于协会', icon: '✧', color: 'purple' },
+    {
+        path: '/about',
+        defaultPath: '/about',
+        label: '关于协会',
+        icon: '✧',
+        color: 'purple',
+        children: [
+            { path: '/about', label: '协会简介' },
+            { path: '/about/leaders', label: '历届负责人' },
+            { path: '/about/members', label: '历届成员' }
+        ]
+    },
     { path: '/links', label: '相关链接', icon: '✦', color: 'yellow' }
 ]
+
+const isActive = (link: any) => {
+    if (link.children) {
+        return link.children.some((child: any) => route.path === child.path);
+    }
+    return route.path === link.path;
+};
+
+// 下拉菜单状态
+const dropdownStates = reactive<Record<string, boolean>>({});
+const mobileDropdownStates = reactive<Record<string, boolean>>({});
+
+// 打开下拉菜单
+const openDropdown = (path: string) => {
+    dropdownStates[path] = true;
+};
+
+// 关闭下拉菜单
+const closeDropdown = (path: string) => {
+    dropdownStates[path] = false;
+};
+
+// 切换下拉菜单
+const toggleDropdown = (path: string) => {
+    dropdownStates[path] = !dropdownStates[path];
+};
+
+// 切换移动端子菜单
+const toggleMobileSubmenu = (path: string) => {
+    mobileDropdownStates[path] = !mobileDropdownStates[path];
+};
 
 const titleVisible = ref(false)
 const subtitleVisible = ref(false)
@@ -155,6 +283,11 @@ const closeMenu = () => isMenuOpen.value = false
 const handleClickOutside = (event: MouseEvent) => {
     if (headerRef.value && !headerRef.value.contains(event.target as Node)) {
         isMenuOpen.value = false
+
+        // 关闭所有下拉菜单
+        Object.keys(dropdownStates).forEach(key => {
+            dropdownStates[key] = false;
+        });
     }
 }
 
@@ -163,6 +296,14 @@ onMounted(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
     document.addEventListener('click', handleClickOutside)
     handleScroll()
+
+    // 初始化下拉菜单状态
+    navLinks.forEach(link => {
+        if (link.children) {
+            dropdownStates[link.path] = false;
+            mobileDropdownStates[link.path] = false;
+        }
+    });
 
     // 标题浮现动画
     setTimeout(() => {
@@ -191,6 +332,9 @@ header {
     color: inherit;
     transition: color 0.3s ease;
     position: relative;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    display: inline-block;
 }
 
 .nav-link:hover {
@@ -249,5 +393,43 @@ header {
 
 .dark button:hover {
     color: var(--color-primary-300);
+}
+
+.group:hover .absolute.top-full {
+    pointer-events: auto;
+}
+
+.group:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: transparent;
+    z-index: 60;
+}
+
+.dark .absolute>div {
+    background-color: #1f2937;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .absolute>div a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .absolute>div a:hover {
+    background-color: rgba(55, 65, 81, 0.8);
+    color: white;
+}
+
+.dark .absolute>div a.bg-gray-100 {
+    background-color: rgba(55, 65, 81, 0.8);
+    color: var(--color-primary-300);
+}
+
+.dark .pl-4 a.mobile-active-link {
+    color: var(--color-primary-400);
 }
 </style>
