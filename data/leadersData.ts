@@ -15,7 +15,7 @@ export const leadersData = [
         year: "2024",
         message: "寄语",
         achievements: [
-            "ISCC", "ISCC", "ISCC", "ISCC"
+            "成就"
         ],
         avatar: 'http://47.99.92.213/images/excellent_member/xzy.png'
     },
