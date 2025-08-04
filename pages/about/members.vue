@@ -11,6 +11,7 @@
                     :contact="member.contact" />
             </div>
         </div>
+        <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 仍在建设中 ⇈</h2>
     </main>
 </template>
 
