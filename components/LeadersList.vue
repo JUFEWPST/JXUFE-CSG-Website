@@ -1,6 +1,10 @@
 <template>
     <div class="flex flex-col justify-center">
-        <LeaderCard v-for="(leader, index) in leaders" :key="index" :leader="leader" />
+        <template v-for="(leader, index) in leaders" :key="index">
+            <LeaderCard :leader="leader" />
+            <hr class="h-[0.5px] bg-gray-400"></hr>
+        </template>
+
     </div>
 </template>
 
