@@ -56,7 +56,7 @@
             </div>
         </section>
         <section
-            class="relative min-h-screen bg-gradient-to-b flex flex-col md:flex-row items-center justify-center p-8 gap-8 scroll-section">
+            class="relative min-h-screen bg-gradient-to-b flex flex-col md:flex-row items-center justify-center gap-8 scroll-section">
             <div class="w-full md:w-1/3 flex justify-center">
                 <h3
                     class="text-4xl md:text-5xl font-bold p-4 border-b-4 text-gray-800 dark:text-white border-[var(--color-primary)]">
@@ -68,7 +68,7 @@
                     <AnimationLoadingSpinner size="xl2" color="[var(--color-accent-hover)]">
                     </AnimationLoadingSpinner>
                 </div>
-                <ul v-else-if="archives" class="space-y-4">
+                <ul v-else-if="archives">
                     <ArticleBlock v-for="archive in archives" :key="archive.id"
                         :datetime="new Date(archive.createdAt).toLocaleString()"
                         :linkto="`/archive/${archive.documentId}`" :title="archive.title" :tags="archive.tags?.tags" />
