@@ -2,15 +2,15 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-center mb-6">
             <div class="inline-flex rounded-md shadow-sm" role="group">
-                <button v-for="year in Object.keys(members)" :key="year" @click="selectYear(year)" :class="[
+                <button v-for="item in membersArray" :key="item.year" @click="selectYear(item.year)" :class="[
                     'px-4 py-2 text-sm font-medium border',
                     'first:rounded-l-lg last:rounded-r-md',
                     'focus:z-10 focus:ring-2 focus:ring-indigo-500 focus:outline-none',
-                    selectedYear === year
+                    selectedYear === item.year
                         ? 'bg-indigo-600 text-white border-indigo-600'
                         : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-600'
                 ]">
-                    {{ year }}届
+                    {{ item.year }}届
                 </button>
             </div>
         </div>
@@ -19,9 +19,9 @@
         <div class="relative">
             <BaseCarousel :item-count="getGroupCount()">
                 <div v-for="(group, groupIndex) in getGroups()" :key="groupIndex" class="flex justify-center gap-4 p-2">
-                    <MemberCard v-for="(member, index) in group" :key="`${groupIndex}-${index}`" :name="member.name"
-                        :position="member.position" :avatar="member.avatar" :message="member.message"
-                        :contact="member.contact" />
+                    <MemberCard v-for="(member, index) in group" :key="`${groupIndex}-${index}`"
+                        :name="member.display || 'XXX'" :position="member.position" :avatar="member.avatar"
+                        :message="member.message" :contact="member.contact" />
                 </div>
             </BaseCarousel>
         </div>
@@ -32,14 +32,20 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import BaseCarousel from './BaseCarousel.vue';
 import MemberCard from './MemberCard.vue';
+import type { Member, MemberGroup } from '~/data/membersData';
+
 
 const props = defineProps<{
-    membersData: Record<string, any[]>
+    membersArray: MemberGroup[];
 }>();
 
-const members = ref(props.membersData);
-const selectedYear = ref(Object.keys(props.membersData)[0]);
-const perPage = ref(4); 
+const selectedYear = ref<string | number>(props.membersArray[0]?.year || '');
+const perPage = ref(4);
+
+const currentMembers = computed(() => {
+    const group = props.membersArray.find(g => g.year === selectedYear.value);
+    return group ? group.members : [];
+});
 
 const updatePerPage = () => {
     const width = window.innerWidth;
@@ -50,28 +56,29 @@ const updatePerPage = () => {
 };
 
 const getGroupCount = () => {
-    return Math.ceil(members.value[selectedYear.value].length / perPage.value);
+    return Math.ceil(currentMembers.value.length / perPage.value);
 };
 
-// 将当前年份的成员分成多个组
 const getGroups = () => {
-    const currentMembers = members.value[selectedYear.value];
     const groups = [];
-    for (let i = 0; i < currentMembers.length; i += perPage.value) {
-        groups.push(currentMembers.slice(i, i + perPage.value));
+    for (let i = 0; i < currentMembers.value.length; i += perPage.value) {
+        groups.push(currentMembers.value.slice(i, i + perPage.value));
     }
     return groups;
 };
 
-// 选择年份
-const selectYear = (year: string) => {
+const selectYear = (year: string | number) => {
     selectedYear.value = year;
 };
 
-// 监听窗口大小变化
 onMounted(() => {
     updatePerPage();
     window.addEventListener('resize', updatePerPage);
+
+    // 确保默认选中第一个年份
+    if (props.membersArray.length > 0 && !selectedYear.value) {
+        selectedYear.value = props.membersArray[0].year;
+    }
 });
 
 onUnmounted(() => {

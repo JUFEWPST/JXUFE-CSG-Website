@@ -1,6 +1,6 @@
 <template>
-    <div class="member-card flex p-4 rounded-xl shadow-md transition-all duration-300 bg-white dark:bg-gray-800 hover:shadow-lg border border-gray-200 dark:border-gray-700
-              w-[300px] h-[180px] min-w-[300px] min-h-[180px]">
+    <div
+        class="member-card flex p-4 rounded shadow-md transition-all duration-300 bg-white dark:bg-gray-800 hover:shadow-lg w-[300px] h-[180px] min-w-[300px] min-h-[180px] border border-gray-200 dark:border-gray-700">
         <div class="flex-shrink-0 mr-4 flex items-center">
             <div class="w-20 h-20 rounded-full overflow-hidden shadow-lg">
                 <img v-if="avatar" :src="avatar" :alt="name" class="w-full h-full object-cover">

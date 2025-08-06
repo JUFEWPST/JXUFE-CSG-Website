@@ -2,7 +2,7 @@
 import FlipToggle from '~/components/FlipToggle.vue';
 import { onMounted, ref } from 'vue';
 import { leadersData } from '~/data/leadersData';
-import membersData from '~/data/membersData';
+import {membersArray} from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
 
@@ -147,7 +147,7 @@ onMounted(() => {
                 <NuxtLink to="/about/members" class="ml-5"><span
                         class="text-md font-bold text-gray-400 hover:text-black transition-colors duration-300">>>
                         列表形式</span></NuxtLink>
-                <MembersCarousel :members-data="membersData" />
+                <MembersCarousel :membersArray="membersArray" />
             </section>
             <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 数据努力收集中 ⇈</h2>
             <section
