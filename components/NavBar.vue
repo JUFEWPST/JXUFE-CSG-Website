@@ -10,12 +10,10 @@
 
         <div class="container mx-auto px-4 py-4 relative z-10">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
-                <div class="text-xl font-bold hover:text-primary-500 items-center flex">
+                <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
                     <img src="/favicon.svg" class="h-8 mr-2">
-                    <span class="relative">
+                    <span>
                         江西财经大学网络安全协会
-                        <span
-                            class="absolute right-0 top-1/2 -translate-y-1/2 text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">✦</span>
                     </span>
                     <ToggleTheme class="ml-1"></ToggleTheme>
                 </div>
@@ -111,10 +109,10 @@
 
                 <!-- 移动菜单按钮 -->
                 <button
-                    class="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
+                    class="md:hidden rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
                     aria-label="打开菜单" @click.stop="toggleMenu">
-                    <Bars3Icon v-if="!isMenuOpen" class="w-8 h-8"></Bars3Icon>
-                    <XMarkIcon v-else class="w-8 h-8"></XMarkIcon>
+                    <Bars3Icon v-if="!isMenuOpen" class="w-7 h-7"></Bars3Icon>
+                    <XMarkIcon v-else class="w-7 h-7"></XMarkIcon>
                     <span class="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-75"
                         v-if="isMenuOpen"></span>
                 </button>
