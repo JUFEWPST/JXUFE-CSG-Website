@@ -108,8 +108,7 @@
                 </div>
 
                 <!-- 移动菜单按钮 -->
-                <button
-                    class="md:hidden rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
+                <button class="md:hidden rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
                     aria-label="打开菜单" @click.stop="toggleMenu">
                     <Bars3Icon v-if="!isMenuOpen" class="w-7 h-7"></Bars3Icon>
                     <XMarkIcon v-else class="w-7 h-7"></XMarkIcon>
@@ -200,7 +199,8 @@ const navLinks = [
         children: [
             { path: '/about', label: '协会简介' },
             { path: '/about/leaders', label: '历届负责人' },
-            { path: '/about/members', label: '历届成员' }
+            { path: '/about/members', label: '历届成员' },
+            { path: '/about/excellent', label: '优秀成员' }
         ]
     },
     { path: '/links', label: '相关链接', icon: '✦', color: 'yellow' }
