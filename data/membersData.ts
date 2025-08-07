@@ -85,7 +85,9 @@ const member2024: Member[] =
             "name": "谢智屹",
             display: '秋雨样',
             "position": "会长",
-            "avatar": '/avatar/qyy.avif'
+            "avatar": '/avatar/qyy.avif',
+            message:'Hack For Fun!',
+            contact:'https://amqyy.cn/'
         },
         {
             "name": "吴沁沁",
