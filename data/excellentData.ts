@@ -9,7 +9,7 @@ export const excellentData: person[] = [
         name: '谢智屹',
         avatar: '/avatar/qyy.avif',
         className: '23网络空间安全1班',
-        honors: ['江财网安全能神']
+        honors: ['第21、22届全国大学生信息安全与对抗技术竞赛国家一等奖', '2024睿抗机器人开发者大赛(RAICOM)全国总决赛网络安全竞赛项目国家二等奖', '第十八届全国大学生信息安全竞赛（创新实践能力赛）暨第二届“长城杯”铁人三项赛（防护赛）半决赛三等奖', '2024睿抗机器人开发者大赛(RAICOM)江西省网络安全竞赛项目二等奖', '蓝桥杯网安赛道省级二等奖', '江财网安全能神']
     },
     {
         name: '高钧睿',
@@ -27,12 +27,12 @@ export const excellentData: person[] = [
         name: '盛德云龙',
         avatar: '/avatar/SDYL.avif',
         className: '24物联网4班',
-        honors: ['现处于大一升大二阶段','当前学年专业排名第二、年级第六','“五一杯”数学建模竞赛三等奖']
+        honors: ['现处于大一升大二阶段', '当前学年专业排名第二、年级第六', '“五一杯”数学建模竞赛三等奖']
     },
     {
-        name: '潘钰楷',
+        name: 'Jack Pan',
         avatar: '/avatar/Little Pan_2025-08-04 21.27.51_菜阿姨.avif',
         className: '24网络空间安全1班',
-        honors: ['专业3、4名', '中国机器人及人工智能大赛 省二等奖']
+        honors: ['专业前5名', '中国机器人及人工智能大赛 省二等奖']
     },
 ]

@@ -17,11 +17,17 @@
                 <p class="font-semibold">荣誉：</p>
                 <ul class="mt-1 space-y-1">
                     <li v-for="(honor, index) in person.honors" :key="index"
-                        class="flex items-center text-gray-600 dark:text-gray-300">
-                        <span class="h-1.5 w-1.5 rounded-full bg-blue-300 mr-2"></span>
-                        {{ honor }}
+                        class="flex items-start text-gray-600 dark:text-gray-300">
+                        <div class="relative mr-2 mt-1.5">
+                            <div class="absolute bg-blue-300 w-2 h-2 rounded-full"></div>
+                            <div class="w-2 h-2"></div>
+                        </div>
+                        <div class="flex-1">
+                            {{ honor }}
+                        </div>
                     </li>
                 </ul>
+
             </div>
         </div>
     </div>
