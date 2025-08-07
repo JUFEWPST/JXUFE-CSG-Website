@@ -4,7 +4,6 @@
         <LeadersList :leaders="leadersData" />
         <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 数据努力收集中 ⇈</h2>
     </main>
-
 </template>
 <script setup lang="ts">
 import LeadersList from '~/components/LeadersList.vue';
