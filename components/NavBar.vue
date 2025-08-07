@@ -51,7 +51,7 @@
                             <div class="flex items-center">
                                 <!-- 主链接 - 点击跳转到默认路由 -->
                                 <NuxtLink :to="link.defaultPath || link.path" class="nav-link"
-                                    :class="{ 'active-link': isActive(link) }">
+                                    :class="{ 'active-link': isActive(link) }" @click.stop.prevent="() => { }">
                                     <span class="relative">
                                         {{ link.label }}
                                         <span v-if="isActive(link)"
@@ -62,7 +62,7 @@
                                 <!-- 下拉菜单触发按钮 -->
                                 <button @click="toggleDropdown(link.path)"
                                     class="ml-1 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                    :class="{ 'rotate-180': dropdownStates[link.path] }">
+                                    :class="{ 'rotate-180': dropdownStates[link.path] }" type="button">
                                     <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -126,14 +126,18 @@
                     <template v-for="link in navLinks" :key="`mobile-${link.path}`">
                         <!-- 移动端有子菜单的项 -->
                         <div v-if="link.children" class="mb-1">
-                            <NuxtLink :to="link.defaultPath || link.path"
-                                class="mobile-nav-link flex items-center justify-between w-full"
+                            <div class="mobile-nav-link flex items-center justify-between w-full"
                                 :class="{ 'mobile-active-link': isActive(link) }">
-                                <span>
-                                    {{ link.label }}
-                                    <span v-if="isActive(link)"
-                                        :class="`ml-2 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
-                                </span>
+                                <!-- 文本部分单独使用NuxtLink -->
+                                <NuxtLink :to="link.defaultPath || link.path" class="flex-1" @click="closeMenu">
+                                    <span>
+                                        {{ link.label }}
+                                        <span v-if="isActive(link)"
+                                            :class="`ml-2 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
+                                    </span>
+                                </NuxtLink>
+
+                                <!-- 展开按钮独立出来 -->
                                 <button @click.stop="toggleMobileSubmenu(link.path)"
                                     class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <svg class="w-4 h-4 transition-transform"
@@ -143,7 +147,7 @@
                                             d="M19 9l-7 7-7-7"></path>
                                     </svg>
                                 </button>
-                            </NuxtLink>
+                            </div>
 
                             <!-- 移动端子菜单 -->
                             <div v-if="mobileDropdownStates[link.path]" class="pl-4 mt-1 space-y-1">
