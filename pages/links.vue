@@ -24,12 +24,13 @@
                             <h3 class="font-semibold text-lg mb-2">
                                 {{ link.name }}
                             </h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-1">
-                                {{ link.url }}
+                            <p v-if="link.desc" class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                                {{ link.desc }}
                             </p>
                             <div
                                 class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <span class="text-sm text-gray-500 dark:text-gray-400 mr-2">访问</span>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-gray-400 mr-2">{{ link.droptext || '访问' }}</span>
                                 <ArrowRightIcon class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                             </div>
                         </div>
@@ -89,7 +90,9 @@ const Links = [
     { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学计算机与人工智能学院', url: 'http://cai.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学本科招生网', url: 'https://zsjy.jxufe.edu.cn/', icon: official_icon },
-    { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon }
+    { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon }, {
+        name: '江西财经大学程序设计竞赛协会', url: 'http://47.99.92.213/index.html', icon: '/avatar/程协图标.webp', droptext: '程协欢迎你！', desc: '写码码，拿奖奖，加分分，领钱钱'
+    }
 ];
 const fLinks = [
     { name: '秋雨样大人', url: 'https://amqyy.cn/', icon: '/avatar/qyy.avif' },
