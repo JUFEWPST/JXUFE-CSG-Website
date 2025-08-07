@@ -39,7 +39,7 @@
                         个人成就
                     </h4>
                     <ul
-                        class="space-y-2 bg-white/50 dark:bg-gray-700/30 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+                        class="space-y-2 bg-white/50 dark:bg-gray-700/30 p-4 rounded-lg border border-gray-200 dark:border-gray-600 max-h-50 overflow-scroll">
                         <li v-for="(achievement, i) in leader.achievements" :key="i" class="flex items-start">
                             <span
                                 class="inline-block w-2 h-2 rounded-full bg-gray-600 dark:bg-gray-400 mt-2 mr-3 flex-shrink-0"></span>

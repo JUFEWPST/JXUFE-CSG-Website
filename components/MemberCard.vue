@@ -1,8 +1,8 @@
 <template>
     <div
-        class="member-card flex p-4 rounded shadow-md transition-all duration-300 bg-white dark:bg-gray-800 hover:shadow-lg w-[300px] h-[180px] min-w-[300px] min-h-[180px] border border-gray-200 dark:border-gray-700">
+        class="member-card flex p-4 rounded shadow-md transition-all duration-300 bg-white dark:bg-gray-800 hover:shadow-lg w-[340px] h-[190px] min-w-[300px] min-h-[180px] border border-gray-200 dark:border-gray-700">
         <div class="flex-shrink-0 mr-4 flex items-center">
-            <div class="w-20 h-20 rounded-full overflow-hidden shadow-lg">
+            <div class="w-28 h-28 rounded-full overflow-hidden shadow-lg">
                 <img v-if="avatar" :src="avatar" :alt="name" class="w-full h-full object-cover">
                 <div v-else class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                     <span class="text-2xl font-bold text-gray-500 dark:text-gray-400">
@@ -22,11 +22,6 @@
                 </div>
             </div>
             <div v-if="contact" class="mt-1 flex items-center">
-                <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
                 <span class="text-sm text-gray-600 dark:text-gray-400 truncate">{{ contact }}</span>
             </div>
         </div>
