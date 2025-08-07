@@ -92,7 +92,7 @@ const Links = [
     { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon }
 ];
 const fLinks = [
-    { name: '秋雨样大人', url: 'https://amqyy.cn/', icon: 'https://avatars.githubusercontent.com/u/60593418?v=4' },
+    { name: '秋雨样大人', url: 'https://amqyy.cn/', icon: '/avatar/qyy.avif' },
     { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.jpg' }, {
         name: 'woodfish', url: 'https://www.woodfishhhh.xyz/', icon: 'https://pic1.imgdb.cn/item/682f3d1658cb8da5c807b704.jpg', droptext: '我喜欢你', tags: ['我喜欢喝雪碧', '全栈开发（with AI）']
     }
