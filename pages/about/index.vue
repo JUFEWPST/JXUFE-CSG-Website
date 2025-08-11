@@ -32,6 +32,7 @@ onMounted(() => {
 <template>
     <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 flex justify-center">
+            <h1 class="hidden">关于协会</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
                 <template #front>
                     <div class="font-bold mx-auto text-center text-3xl md:text-4xl lg:text-5xl  relative"
