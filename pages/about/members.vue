@@ -3,7 +3,8 @@
         <h1 class="font-bold text-4xl text-center">历届成员</h1>
         <div v-for="item in members" :key="item.year" class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 border-l-4 border-yellow-400 pl-3">
-                {{ item.year }} 届成员
+                <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
+                <template v-if="typeof item.year === 'number'">{{ item.year }} 届</template>
             </h2>
             <div class="flex flex-wrap gap-4 justify-around">
                 <MemberCard v-for="(member,index) in item.members" :key="`${item.year}-${index}`"

@@ -24,9 +24,9 @@
                             <h3 class="font-semibold text-lg mb-2">
                                 {{ link.name }}
                             </h3>
-                            <p v-if="link.desc" class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                            <div v-if="link.desc" class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
                                 {{ link.desc }}
-                            </p>
+                            </div>
                             <div
                                 class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <span
@@ -90,8 +90,17 @@ const Links = [
     { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学计算机与人工智能学院', url: 'http://cai.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学本科招生网', url: 'https://zsjy.jxufe.edu.cn/', icon: official_icon },
-    { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon }, {
+    { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon },
+    {
         name: '江西财经大学程序设计竞赛协会', url: 'http://47.99.92.213/index.html', icon: '/avatar/程协图标.webp', droptext: '程协欢迎你！', desc: '写码码，拿奖奖，加分分，领钱钱'
+    },
+    {
+        name: '江西财经大学计算机协会',
+        url: 'https://qm.qq.com/q/QPvPyzxfk6',
+        icon: '/avatar/jsjxh.webp',
+        droptext: '即刻入群',
+        desc: '计算机协会是面向新手小白教学的，激起学计算机的兴趣，教会大家如何学好计算机，还会涉及一些AI、脚本、插件等实用的电脑小技巧。计协分为5个部门宣传部、维修部、软件部、量化部、办公室，但教学是统一教学，所以在这你会学到基础但实用的计算机技巧。由于是面向小白教学，所以会带大家一步一步学好计算机。跟上计协的教学，期末高分so easy。来加入计协，让你感受什么是科技的力量。',
+        tooltip: '计算机协会是面向新手小白教学的，激起学计算机的兴趣，教会大家如何学好计算机，还会涉及一些AI、脚本、插件等实用的电脑小技巧。计协分为5个部门宣传部、维修部、软件部、量化部、办公室，但教学是统一教学，所以在这你会学到基础但实用的计算机技巧。由于是面向小白教学，所以会带大家一步一步学好计算机。跟上计协的教学，期末高分so easy。来加入计协，让你感受什么是科技的力量。'
     }
 ];
 const fLinks = [

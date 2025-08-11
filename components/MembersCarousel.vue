@@ -10,7 +10,8 @@
                         ? 'bg-indigo-600 text-white border-indigo-600'
                         : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-600'
                 ]">
-                    {{ item.year }}届
+                    <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
+                    <template v-if="typeof item.year === 'number'">{{ item.year }}届</template>
                 </button>
             </div>
         </div>
