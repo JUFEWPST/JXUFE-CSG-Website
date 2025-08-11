@@ -11,7 +11,7 @@
         <div class="container mx-auto px-4 py-4 relative z-10">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
-                    <img src="/favicon.svg" class="h-8 mr-2">
+                    <img src="/favicon.svg" class="h-8 mr-2" alt="江财网安协会logo">
                     <span>
                         江西财经大学网络安全协会
                     </span>
@@ -62,7 +62,8 @@
                                 <!-- 下拉菜单触发按钮 -->
                                 <button @click="toggleDropdown(link.path)"
                                     class="ml-1 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                    :class="{ 'rotate-180': dropdownStates[link.path] }" type="button">
+                                    :class="{ 'rotate-180': dropdownStates[link.path] }" type="button"
+                                    aria-label="关于协会栏子菜单">
                                     <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -139,7 +140,8 @@
 
                                 <!-- 展开按钮独立出来 -->
                                 <button @click.stop="toggleMobileSubmenu(link.path)"
-                                    class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    aria-label="关于协会栏子菜单">
                                     <svg class="w-4 h-4 transition-transform"
                                         :class="{ 'rotate-180': mobileDropdownStates[link.path] }" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
