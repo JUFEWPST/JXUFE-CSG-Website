@@ -8,4 +8,14 @@
 <script setup lang="ts">
 import LeadersList from '~/components/LeadersList.vue';
 import { leadersData } from '~/data/leadersData';
+useHead({
+    title: '历届负责人 - 江西财经大学网络安全协会',
+    meta: [
+        {
+            name: 'description',
+            content: '江西财经大学网络安全协会归档页，在此可查阅江财网安协会历届负责人.'
+        }
+    ]
+})
+
 </script>
