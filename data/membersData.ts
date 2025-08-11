@@ -16,6 +16,12 @@ export interface MemberGroup {
     year: string | number;
     members: Member[];
 }
+const founder: Member[] = [{
+    name: '乐晨阳',
+    display: 'leshier',
+    position: '创始人',
+    message: '希望网安协会越来越好'
+}]
 const member2025: Member[] = [
     {
         name: '邱挺',
@@ -86,8 +92,8 @@ const member2024: Member[] =
             display: '秋雨样',
             "position": "会长",
             "avatar": '/avatar/qyy.avif',
-            message:'Hack For Fun!',
-            contact:'https://amqyy.cn/'
+            message: 'Hack For Fun!',
+            contact: 'https://amqyy.cn/'
         },
         {
             "name": "吴沁沁",
@@ -238,12 +244,44 @@ const member2024: Member[] =
             "position": "宣传部成员"
         }
     ]
-
+const member2022 = [{
+    name: '钟金龙',
+    display: '钟金龙',
+    position: '会长',
+    message: '请永远的相信自己，努力终将会有收获',
+    contact: '2272704942@qq.com',
+}
+]
+const member2021: Member[] = [
+    {
+        name: '孔令健',
+        display: 'King Is Not Geek',
+        position: '学习部成员',
+        message: '希望网安协会蒸蒸日上',
+        avatar: '/avatar/King Is Not a Geek!.avif',
+    },
+    {
+        name: '钟金龙',
+        display: '钟金龙',
+        position: '学习部成员',
+        message: '请永远的相信自己，努力终将会有收获',
+        contact: '2272704942@qq.com',
+    },
+    {
+        name: '王舒',
+        display: '梦泽',
+        position: '学习部成员',
+        message: '失败总是贯穿人生始终',
+        avatar: '/avatar/万花筒.avif'
+    },]
 // export const membersData: MemberCollection = {
 //     ...member2025, ...member2024
 // };
 export const membersArray: MemberGroup[] = [
+    { year: '创始人', members: founder },
     { year: 2025, members: member2025 },
-    { year: 2024, members: member2024 }
+    { year: 2024, members: member2024 },
+    { year: 2022, members: member2022 },
+    { year: 2021, members: member2021 },
 ];
 
