@@ -19,4 +19,14 @@
 <script setup lang="ts">
 import {membersArray} from '~/data/membersData';
 const members = ref(membersArray);
+useHead({
+    title: '历届成员 - 江西财经大学网络安全协会',
+    meta: [
+        {
+            name: 'description',
+            content: '江西财经大学网络安全协会历届成员页，在此可查阅江财网安协会历届成员.'
+        }
+    ]
+})
+
 </script>

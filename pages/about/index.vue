@@ -2,7 +2,7 @@
 import FlipToggle from '~/components/FlipToggle.vue';
 import { onMounted, ref } from 'vue';
 import { leadersData } from '~/data/leadersData';
-import {membersArray} from '~/data/membersData';
+import { membersArray } from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
 
@@ -12,7 +12,13 @@ const quotes = [
     "是我喜欢的协会"
 ];
 useHead({
-    title: "关于协会 - 江西财经大学网络安全协会"
+    title: "关于协会 - 江西财经大学网络安全协会",
+    meta: [
+        {
+            name: 'description',
+            content: '江西财经大学网络安全协会成立于2016年，致力于普及网络安全知识、培养技术人才。下设技术部、组织部、宣传部，拥有弱口令安全团队(WPST)，组织竞赛与交流活动，欢迎感兴趣的同学加入。'
+        }
+    ]
 })
 onMounted(() => {
     isMounted.value = true;
@@ -26,6 +32,7 @@ onMounted(() => {
 <template>
     <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 flex justify-center">
+            <h1 class="hidden">关于协会</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
                 <template #front>
                     <div class="font-bold mx-auto text-center text-3xl md:text-4xl lg:text-5xl  relative"

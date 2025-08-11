@@ -41,7 +41,13 @@ import { useApi } from '~/composables/useapi';
 import type { Archive } from '~/types/archives';
 
 useHead({
-    title: '归档 - 江西财经大学网络安全协会'
+    title: '归档 - 江西财经大学网络安全协会',
+    meta: [
+        {
+            name: 'description',
+            content: '江西财经大学网络安全协会官方网站归档页，在此可查阅协会发布的归档.'
+        }
+    ]
 })
 
 const route = useRoute();

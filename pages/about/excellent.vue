@@ -9,4 +9,14 @@
 <script setup lang="ts">
 import MemberHonorCard from '~/components/MemberHonorCard.vue';
 import { excellentData } from '~/data/excellentData';
+useHead({
+    title: '优秀成员 - 江西财经大学网络安全协会',
+    meta: [
+        {
+            name: 'description',
+            content: '江西财经大学网络安全协会优秀成员页，在此可查阅协会优秀成员.'
+        }
+    ]
+})
+
 </script>
