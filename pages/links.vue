@@ -92,7 +92,7 @@ const Links = [
     { name: '江西财经大学本科招生网', url: 'https://zsjy.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon },
     {
-        name: '江西财经大学程序设计竞赛协会', url: 'http://47.99.92.213/index.html', icon: '/avatar/程协图标.webp', droptext: '程协欢迎你！', desc: '写码码，拿奖奖，加分分，领钱钱'
+        name: '江西财经大学程序设计竞赛协会', url: 'https://jxufe-acm.cn/', icon: '/avatar/程协图标.webp', droptext: '程协欢迎你！', desc: '写码码，拿奖奖，加分分，领钱钱'
     },
     {
         name: '江西财经大学计算机协会',
