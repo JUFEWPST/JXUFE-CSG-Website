@@ -2,7 +2,9 @@
     <main class="mt-15 mb-2 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-bold text-4xl text-center">历届负责人</h1>
         <LeadersList :leaders="leadersData" />
-        <h2 class="text-xl font-bold text-amber-500 text-center">⇈ 数据努力收集中 ⇈</h2>
+        <h2 class="text-xl font-bold text-blue-400 text-center">数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink
+                class="text-green-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">[历届成员档案共建邀请]</NuxtLink>
+        </h2>
     </main>
 </template>
 <script setup lang="ts">

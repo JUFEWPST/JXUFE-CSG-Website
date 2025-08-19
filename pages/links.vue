@@ -15,9 +15,10 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     <a v-for="link in Links" :key="link.url" :href="link.url" target="_blank"
-                        class="group relative bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-md MAOutlined">
+                        class="group relative bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-md MAOutlined"
+                        :title="link.desc">
                         <div class="p-5 flex flex-col h-full">
-                            <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-900 mb-4 overflow-hidden">
+                            <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-900 mb-4 overflow-hidden">
                                 <img :src="link.icon || `${link.url}/favicon.ico`" :alt="`${link.name} 图标`"
                                     class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-95" />
                             </div>
@@ -124,7 +125,7 @@ useHead({
 <style scoped>
 .MAOutlined {
     outline: 0px solid #f7317364;
-    transition: outline 0.15s ease-in-out;
+    transition: outline 0.1s ease-in-out;
 }
 
 .MAOutlined:hover {
