@@ -125,7 +125,7 @@ useHead({
 <style scoped>
 .MAOutlined {
     outline: 0px solid #f7317364;
-    transition: outline 0.15s ease-in-out;
+    transition: outline 0.1s ease-in-out;
 }
 
 .MAOutlined:hover {
