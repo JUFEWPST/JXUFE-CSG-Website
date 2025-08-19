@@ -19,4 +19,13 @@ export const leadersData = [
         ],
         avatar: '/avatar/qyy.avif'
     },
+    {
+        name: "钟金龙",
+        class: "21计算机科学与技术1班",
+        year: "2021",
+        achievements: [
+            '第十三届蓝桥杯大赛全国一等奖', '第十四届蓝桥杯大赛全国一等奖', 'GLPT团体程序设计天梯赛全国二等奖'
+        ],
+        message: '请永远的相信自己，努力终将会有收获'
+    },
 ]
