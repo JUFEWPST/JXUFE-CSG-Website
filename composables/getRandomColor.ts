@@ -13,7 +13,7 @@ export function getRandomColor(tag: string): string {
     // 随机选择一个鲜艳色相范围
     const hueRange = VIBRANT_HUES[Math.floor(Math.random() * VIBRANT_HUES.length)];
     const hue = Math.floor(Math.random() * (hueRange[1] - hueRange[0])) + hueRange[0];
-    const saturation = Math.floor(Math.random() * 30) +62; // 70-100%
+    const saturation = Math.floor(Math.random() * 30) + 20; // 70-100%
     const lightness = Math.floor(Math.random() * 15) + 45;  // 25-40%
 
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
