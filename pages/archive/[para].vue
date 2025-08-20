@@ -66,7 +66,7 @@ const pageTitle = computed(() => {
   ` : '加载中...'
 })
 function handleTocUpdate(items: TocItem[]) {
-  console.log('Received TOC items:', items);
+  // console.log('Received TOC items:', items);
   tocItems.value = items;
 }
 useHead({

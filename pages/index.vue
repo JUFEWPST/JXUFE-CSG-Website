@@ -111,7 +111,7 @@ const {
 // 获取文章列表
 const loadArticles = async (page = 1) => {
     await get(`/archives?pagination[page]=1&pagination[pageSize]=4&filters[type][$eq]=announcement`)
-    console.log(archives.value)
+    // console.log(archives.value)
 }
 
 loadArticles()

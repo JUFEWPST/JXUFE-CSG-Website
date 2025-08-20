@@ -8,10 +8,10 @@
                 :style="{ opacity: currentBgOpacity }">♡</div>
         </div>
 
-        <div class="container mx-auto px-4 py-4 relative z-10">
+        <div class="container mx-auto px-4 my-4 relative z-10">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
-                    <img src="/favicon.svg" class="h-8 mr-2" alt="江财网安协会logo">
+                    <img src="/favicon.svg" class="h-10 mr-2" alt="江财网安协会logo">
                     <span>
                         江西财经大学网络安全协会
                     </span>

@@ -10,16 +10,14 @@
                 <template v-if="typeof item.year === 'number'">{{ item.year }} 届</template>
             </h2>
             <div class="flex flex-wrap gap-4 justify-around">
-                <MemberCard v-for="(member,index) in item.members" :key="`${item.year}-${index}`"
-                    :name="member.display || 'XXX'" :position="member.position" :avatar="member.avatar"
-                    :message="member.message" :contact="member.contact" />
+                <MemberCard v-for="(member, index) in item.members" :key="`${item.year}-${index}`" :member="member" />
             </div>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-import {membersArray} from '~/data/membersData';
+import { membersArray } from '~/data/membersData';
 const members = ref(membersArray);
 useHead({
     title: '历届成员 - 江西财经大学网络安全协会',

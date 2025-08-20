@@ -4,10 +4,10 @@
             <div class="inline-flex rounded-md shadow-sm" role="group">
                 <button v-for="item in membersArray" :key="item.year" @click="selectYear(item.year)" :class="[
                     'px-4 py-2 text-sm font-medium border',
-                    'first:rounded-l-lg last:rounded-r-md',
-                    'focus:z-10 focus:ring-2 focus:ring-indigo-500 focus:outline-none',
+                    'first:rounded-l-md last:rounded-r-md',
+                    'focus:z-10 focus:outline-none',
                     selectedYear === item.year
-                        ? 'bg-indigo-600 text-white border-indigo-600'
+                        ? 'bg-blue-400 text-white border-blue-600'
                         : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-600'
                 ]">
                     <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
@@ -20,9 +20,7 @@
         <div class="relative">
             <BaseCarousel :item-count="getGroupCount()">
                 <div v-for="(group, groupIndex) in getGroups()" :key="groupIndex" class="flex justify-center gap-4 p-2">
-                    <MemberCard v-for="(member, index) in group" :key="`${groupIndex}-${index}`"
-                        :name="member.display || 'XXX'" :position="member.position" :avatar="member.avatar"
-                        :message="member.message" :contact="member.contact" />
+                    <MemberCard v-for="(member, index) in group" :key="`${groupIndex}-${index}`" :member="member" />
                 </div>
             </BaseCarousel>
         </div>
