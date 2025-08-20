@@ -257,7 +257,7 @@ onMounted(() => {
                                 无论您是否是本校学生，都可扫描<span class="md:hidden">下方</span><span
                                     class="hidden md:inline">右方</span>的二维码加入2025年江财网安协会招新群与我们互动
                             </p>
-                            <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg border-l-4 border-pink-400">
+                            <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg border-pink-400">
                                 <div
                                     class="text-sm italic text-pink-700 dark:text-pink-300 transition-opacity duration-500 min-h-12">
                                     「{{ quotes[currentQuote] }}」

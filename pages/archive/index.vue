@@ -64,10 +64,10 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 
 const loadArchives = async (page: number = 1) => {
-    console.log("加载分页数据:", page);
+    // console.log("加载分页数据:", page);
     await getArchives(`/archives?pagination[page]=${page}`);
     if (archives.value) {
-        console.log("文章数据:", archives.value);
+        // console.log("文章数据:", archives.value);
         if (meta.value?.pagination) {
             totalPages.value = meta.value.pagination.pageCount;
             currentPage.value = meta.value.pagination.page;

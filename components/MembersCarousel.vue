@@ -20,9 +20,7 @@
         <div class="relative">
             <BaseCarousel :item-count="getGroupCount()">
                 <div v-for="(group, groupIndex) in getGroups()" :key="groupIndex" class="flex justify-center gap-4 p-2">
-                    <MemberCard v-for="(member, index) in group" :key="`${groupIndex}-${index}`"
-                        :name="member.display || 'XXX'" :position="member.position" :avatar="member.avatar"
-                        :message="member.message" :contact="member.contact" />
+                    <MemberCard v-for="(member, index) in group" :key="`${groupIndex}-${index}`" :member="member" />
                 </div>
             </BaseCarousel>
         </div>
