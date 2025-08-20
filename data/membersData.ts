@@ -250,7 +250,13 @@ const member2022 = [{
     position: '会长',
     message: '请永远的相信自己，努力终将会有收获',
     contact: '2272704942@qq.com',
-}
+
+},
+{
+    name: '严慧婷',
+    display: '一一',
+    position: '宣传部部长',
+},
 ]
 const member2021: Member[] = [
     {
@@ -273,6 +279,11 @@ const member2021: Member[] = [
         position: '学习部成员',
         message: '失败总是贯穿人生始终',
         avatar: '/avatar/万花筒.avif'
+    },
+    {
+        name: '严慧婷',
+        display: '一一',
+        position: '组织部成员',
     },]
 // export const membersData: MemberCollection = {
 //     ...member2025, ...member2024
