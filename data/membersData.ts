@@ -1,4 +1,4 @@
-// src/data/membersData.ts
+// 能翻到这查真名的应该都是自己人吧（
 
 export interface Member {
     name: string;
