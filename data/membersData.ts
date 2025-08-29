@@ -27,7 +27,7 @@ const member2025: Member[] = [
         name: '邱挺',
         display: '糖糖毬',
         position: '会长',
-        avatar: 'https://tantanchugasuki.cn/76721863_p0_お願いごと、ひとつ.avif',
+        avatar: 'https://pan.tantanchugasuki.cn/d/local/avatar.avif',
         contact: 'tangtangchugasuki@qq.com'
     },
     {
@@ -108,12 +108,13 @@ const member2024: Member[] =
             "position": "学习部成员"
         },
         {
-            "name": "邱挺",
-            "position": "学习部成员"
-        },
-        {
             "name": "孙苒栋",
             "position": "宣传部成员"
+        },
+        {
+            name: '潘钰楷',
+            position: '学习部成员',
+            avatar: '/avatar/Little Pan_2025-08-04 21.27.51_菜阿姨.avif'
         },
         {
             "name": "喻菲",
@@ -145,10 +146,18 @@ const member2024: Member[] =
         },
         {
             "name": "刘若华",
+            display: '刘若华',
             "position": "宣传部成员"
         },
         {
-            "name": "吴欣宇",
+            name: '吴欣宇',
+            display: 'Kay',
+            position: '学习部成员',
+        },
+        {
+            "name": "邱挺",
+            "display": "糖糖毬",
+            "avatar": "https://pan.tantanchugasuki.cn/d/local/avatar.avif",
             "position": "学习部成员"
         },
         {
@@ -194,6 +203,12 @@ const member2024: Member[] =
         {
             "name": "胡天伟",
             "position": "学习部成员"
+        },
+        {
+            name: '涂紫妍',
+            display: '不退让',
+            position: '学习部成员',
+            avatar: '/avatar/不退让._2025-08-04 21.46.05_picture-0.avif'
         },
         {
             "name": "杨昊哲",
@@ -244,6 +259,10 @@ const member2024: Member[] =
             "position": "宣传部成员"
         }
     ]
+const member2023 = [{
+    name: '陈永盛',
+    position: '会长'
+}]
 const member2022 = [{
     name: '钟金龙',
     display: '钟金龙',
@@ -292,6 +311,7 @@ export const membersArray: MemberGroup[] = [
     { year: '创始人', members: founder },
     { year: 2025, members: member2025 },
     { year: 2024, members: member2024 },
+    { year: 2023, members: member2023 },
     { year: 2022, members: member2022 },
     { year: 2021, members: member2021 },
 ];
