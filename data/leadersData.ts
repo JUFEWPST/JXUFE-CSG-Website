@@ -7,7 +7,7 @@ export const leadersData = [
         achievements: [
             "成就"
         ],
-        avatar: 'https://tantanchugasuki.cn/76721863_p0_お願いごと、ひとつ.avif'
+        avatar: 'https://pan.tantanchugasuki.cn/d/local/avatar.avif'
     },
     {
         name: "秋雨样",
@@ -18,6 +18,14 @@ export const leadersData = [
             '第21、22届全国大学生信息安全与对抗技术竞赛国家一等奖', '2024睿抗机器人开发者大赛(RAICOM)全国总决赛网络安全竞赛项目国家二等奖', '第十八届全国大学生信息安全竞赛（创新实践能力赛）暨第二届“长城杯”铁人三项赛（防护赛）半决赛三等奖', '2024睿抗机器人开发者大赛(RAICOM)江西省网络安全竞赛项目二等奖', '蓝桥杯网安赛道省级二等奖', '江财网安全能神'
         ],
         avatar: '/avatar/qyy.avif'
+    },
+    {
+        name: "陈永盛",
+        class: "22计算机科学与技术2班",
+        year: "2023",
+        achievements: [
+            '收集中'
+        ],
     },
     {
         name: "钟金龙",
