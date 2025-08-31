@@ -17,6 +17,10 @@ useHead({
         {
             name: 'description',
             content: '江西财经大学网络安全协会成立于2016年，致力于普及网络安全知识、培养技术人才。下设技术部、组织部、宣传部，拥有弱口令安全团队(WPST)，组织竞赛与交流活动，欢迎感兴趣的同学加入。'
+        },
+        {
+            name: "keywords",
+            content: "协会简介,发展历程,组织架构,协会宗旨,加入协会"
         }
     ]
 })
@@ -64,7 +68,7 @@ onMounted(() => {
                 </template>
                 <template #back>
                     <div class="relative w-full h-full">
-                        <img src="~/assets/images/网安领域.webp" class="object-contain w-full h-full" alt="" />
+                        <img src="~/assets/images/网安领域.webp" class="object-contain w-full h-full" alt="网安*领域" />
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3 text-sm">
                             <p>「欢迎来到网络安全的世界...」</p>
                         </div>

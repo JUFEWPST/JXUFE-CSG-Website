@@ -18,6 +18,10 @@ useHead({
         {
             name: 'description',
             content: '江西财经大学网络安全协会优秀成员页，在此可查阅协会优秀成员.'
+        },
+        {
+            name: "keywords",
+            content: "优秀成员,成员风采,技术大神,荣誉榜,江财网安协会优秀成员"
         }
     ]
 })

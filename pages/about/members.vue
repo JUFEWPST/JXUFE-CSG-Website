@@ -25,6 +25,10 @@ useHead({
         {
             name: 'description',
             content: '江西财经大学网络安全协会历届成员页，在此可查阅江财网安协会历届成员.'
+        },
+        {
+            name: "keywords",
+            content: "历届成员,协会成员,成员档案,江财网安协会历届成员"
         }
     ]
 })
