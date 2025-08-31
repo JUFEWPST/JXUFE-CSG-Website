@@ -16,6 +16,10 @@ useHead({
         {
             name: 'description',
             content: '江西财经大学网络安全协会历届负责人展示页，在此可查阅江财网安协会历届负责人.'
+        },
+        {
+            name:"keywords",
+            content:"历届负责人,历届会长,历任会长,江财网安协会会长"
         }
     ]
 })

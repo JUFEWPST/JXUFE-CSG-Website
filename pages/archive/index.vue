@@ -46,6 +46,10 @@ useHead({
         {
             name: 'description',
             content: '江西财经大学网络安全协会官方网站归档页，在此可查阅协会发布的归档.'
+        },
+        {
+            name: "keywords",
+            content: "文章归档,博客,协会资讯"
         }
     ]
 })

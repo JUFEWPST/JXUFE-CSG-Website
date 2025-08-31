@@ -117,6 +117,10 @@ useHead({
         {
             name: 'description',
             content: '江西财经大学网络安全协会官方网站友链页.提供江财官方网站/校内社团链接及其他个人网站链接跳转.'
+        },
+        {
+            name: "keywords",
+            content: "友情链接,相关链接"
         }
     ]
 });
