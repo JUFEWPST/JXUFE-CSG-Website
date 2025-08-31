@@ -92,7 +92,7 @@
 <script lang="ts" setup>
 import type { Archive } from '~/types/archives'
 useHead({
-    title: '江西财经大学网络安全协会',
+    title: '江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线',
     meta: [
         {
             name: 'description',

@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: '江西财经大学网络安全协会',
+      title: '江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线',
       link: [
         { rel: 'icon', href: '/favicon.svg' },
       ],
