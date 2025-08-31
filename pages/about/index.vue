@@ -68,7 +68,7 @@ onMounted(() => {
                 </template>
                 <template #back>
                     <div class="relative w-full h-full">
-                        <img src="~/assets/images/网安领域.webp" class="object-contain w-full h-full" alt="" />
+                        <img src="~/assets/images/网安领域.webp" class="object-contain w-full h-full" alt="网安*领域" />
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3 text-sm">
                             <p>「欢迎来到网络安全的世界...」</p>
                         </div>
