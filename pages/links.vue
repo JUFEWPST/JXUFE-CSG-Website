@@ -120,7 +120,7 @@ useHead({
         },
         {
             name: "keywords",
-            content: "友情链接,相关链接"
+            content: "友情链接,相关链接,学校官网,社团网站,个人网站"
         }
     ]
 });
