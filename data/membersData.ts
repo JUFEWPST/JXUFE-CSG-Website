@@ -56,7 +56,8 @@ const member2025: Member[] = [
     },
     {
         name: '吴欣宇',
-        display: 'Kay',
+        display: 'WKayyy',
+        avatar: "/avatar/WKayyy.avif",
         position: '学习部成员',
     },
     {
@@ -151,7 +152,8 @@ const member2024: Member[] =
         },
         {
             name: '吴欣宇',
-            display: 'Kay',
+            display: 'WKayyy',
+            avatar:"/avatar/WKayyy.avif",
             position: '学习部成员',
         },
         {
