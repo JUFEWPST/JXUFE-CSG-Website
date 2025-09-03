@@ -131,7 +131,7 @@ const member2024: Member[] =
         },
         {
             "name": "秦柯",
-            "position": "宣传部成员"
+            "position": "宣传部部长"
         },
         {
             "name": "陈岩松",
@@ -218,7 +218,7 @@ const member2024: Member[] =
         },
         {
             "name": "潘雪",
-            "position": "组织部成员"
+            "position": "组织部部长"
         },
         {
             "name": "谢雨伸",

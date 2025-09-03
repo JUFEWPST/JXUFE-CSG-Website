@@ -13,12 +13,12 @@
       </div>
       <article v-if="archive" class="mt-15 mb-2 mx-auto box-border p-2 max-w-screen">
         <div class="mb-1">
-          <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center leading-tight">
+          <h1 class="text-2xl md:text-3xl lg:text-4xl sm:mx-20 md:mx-30 lg:mx-40 font-bold text-center leading-tight">
             {{ archive?.title }}
           </h1>
-          <div class=" text-sm text-gray-400 dark:text-gray-200 font-light flex justify-center flex-wrap mx-1 gap-x-2">
+          <div class=" text-sm text-gray-400 dark:text-gray-200 font-light flex justify-center flex-wrap mx-1 gap-x-4">
             <span>创建于:{{ new Date(archive.createdAt).toLocaleString() }}</span>
-            <span>最后更新:{{ new Date(archive.updatedAt).toLocaleString() }}</span>
+            <span>更新于:{{ new Date(archive.updatedAt).toLocaleString() }}</span>
             <span v-if="archive.publisher">发布者:{{ archive.publisher }} </span>
             <div v-if="archive.tags?.tags?.length">
               <TagList :tags="archive.tags.tags"></TagList>
@@ -27,7 +27,7 @@
         </div>
         <hr class="text-gray-200">
         </hr>
-        <div class="flex flex-row box-border ml-0 md:ml-10 max-w-screen mt-1">
+        <div class="flex flex-row box-border ml-0 sm:ml-5 md:ml-20 max-w-screen mt-1">
           <!-- 文章内容 -->
           <MarkdownRender ref="markdownRender" :content="archive.content" @toc-updated="handleTocUpdate"
             class="flex-1 max-w-[calc(100%-18rem)] overflow-hidden box-border">
