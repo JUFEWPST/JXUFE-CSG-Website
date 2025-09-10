@@ -1,13 +1,6 @@
 <template>
     <header ref="headerRef" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out"
         :style="headerStyles">
-        <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
-            <div class="absolute -right-10 -top-10 text-blue-100/70 dark:text-gray-700/80 text-9xl transition-opacity duration-500"
-                :style="{ opacity: currentBgOpacity }">✧</div>
-            <div class="absolute -left-5 -bottom-5 text-pink-100/70 dark:text-gray-700/80 text-7xl transition-opacity duration-500"
-                :style="{ opacity: currentBgOpacity }">♡</div>
-        </div>
-
         <div class="mx-3 sm:mx-6 my-4 relative z-10">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
