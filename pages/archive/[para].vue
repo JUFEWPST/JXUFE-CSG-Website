@@ -77,26 +77,24 @@ onMounted(() => {
 })
 
 // 联动标题相关
-const navArticleInfo = useState('navArticleInfo', () => ({
+const navTitleBox = useState('navTitleBox', () => ({
   title: '',
-  updatedAt: '',
-  publisher: ''
+  subtitle: ''
 }))
 
 // 在获取数据后更新信息
 watch(archive, (newVal) => {
   if (newVal) {
-    navArticleInfo.value = {
+    navTitleBox.value = {
       title: newVal.title,
-      updatedAt: new Date(newVal.publishedAt).toLocaleString(),
-      publisher: newVal.publisher || ''
+      subtitle: `更新于:${new Date(newVal.publishedAt).toLocaleString()} 发布者:${newVal.publisher || ''}`
     }
   }
 }, { immediate: true })
 
 // 离开页面时清除数据
 onUnmounted(() => {
-  navArticleInfo.value = { title: '', updatedAt: '', publisher: '' }
+  navTitleBox.value = { title: '', subtitle: '' }
 })
 </script>
 
