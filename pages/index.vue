@@ -12,7 +12,7 @@
                 </h2>
             </div>
             <div class="absolute bottom-10 flex flex-col items-center">
-                <p class="text-xl font-bold mb-2 animate-pulse">共筑网络安全 坚守网络防线</p>
+                <p class="text-xl font-bold mb-2">共筑网络安全 坚守网络防线</p>
                 <AnimationScrollDown />
             </div>
         </section>
