@@ -12,6 +12,8 @@
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
     "@tailwindcss/vite": "^4.1.10",
+    "@tsparticles/slim": "^3.9.1",
+    "@tsparticles/vue3": "^3.0.1",
     "dompurify": "^3.2.6",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
