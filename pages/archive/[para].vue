@@ -11,23 +11,26 @@
       <div v-if="error" class="m-2 flex justify-center">
         <ErrorDisplay :error-data="error"></ErrorDisplay>
       </div>
-      <article v-if="archive" class="mt-15 mb-2 mx-auto box-border p-2 max-w-screen">
-        <div class="mb-1">
-          <h1 class="text-2xl md:text-3xl lg:text-4xl sm:mx-20 md:mx-30 lg:mx-40 font-bold text-center leading-tight">
+      <article v-if="archive" class="mt-15 mb-2 mx-5 sm:mx-10 md:mx-15 box-border p-2 max-w-screen">
+        <header class="mb-8">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-white leading-tight mb-2">
             {{ archive?.title }}
           </h1>
-          <div class=" text-sm text-gray-400 dark:text-gray-200 font-light flex justify-center flex-wrap mx-1 gap-x-4">
-            <span>创建于:{{ new Date(archive.createdAt).toLocaleString() }}</span>
-            <span>更新于:{{ new Date(archive.updatedAt).toLocaleString() }}</span>
-            <span v-if="archive.publisher">发布者:{{ archive.publisher }} </span>
-            <div v-if="archive.tags?.tags?.length">
-              <TagList :tags="archive.tags.tags"></TagList>
+
+          <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
+            <div v-if="archive.publisher" class="flex items-center">
+              {{ archive.publisher }}
+            </div>
+            <div class="flex items-center">
+              {{ new Date(archive.createdAt).toLocaleString() }}
             </div>
           </div>
-        </div>
-        <hr class="text-gray-200">
-        </hr>
-        <div class="flex flex-row box-border ml-0 sm:ml-5 md:ml-20 max-w-screen mt-1">
+          <div v-if="archive.tags?.tags?.length" class="flex justify-center flex-wrap gap-2 mb-6">
+            <TagList :tags="archive.tags.tags"></TagList>
+          </div>
+          <hr class="border-gray-200 dark:border-gray-700 mb-6">
+        </header>
+        <div class="flex flex-row box-border max-w-screen mt-1">
           <!-- 文章内容 -->
           <MarkdownRender ref="markdownRender" :content="archive.content" @toc-updated="handleTocUpdate"
             class="flex-1 max-w-[calc(100%-18rem)] overflow-hidden box-border">
@@ -87,7 +90,7 @@ watch(archive, (newVal) => {
   if (newVal) {
     navTitleBox.value = {
       title: newVal.title,
-      subtitle: `更新于:${new Date(newVal.publishedAt).toLocaleString()} 发布者:${newVal.publisher || ''}`
+      subtitle: `${newVal.publisher || ''}   ${new Date(newVal.publishedAt).toLocaleString()}`
     }
   }
 }, { immediate: true })
