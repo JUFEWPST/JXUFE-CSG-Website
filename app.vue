@@ -1,73 +1,67 @@
 <template>
-  <vue-particles id="tsparticles-instance" :options="particlesOptions" @particles-loaded="onParticlesLoaded"
-    class="particles-container" />
+  <ClientOnly>
+    <nuxt-particles class="particles-bg" id="app-particles" :options="particlesOptions" />
+  </ClientOnly>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-const { isDark } = useTheme();
 const particlesOptions = {
-  background: {
-    color: {
-      value: "transparent",
-    },
-  },
-  fpsLimit: 120,
   particles: {
+    number: { value: 15 }, // 粒子数量
     color: {
-      value: ["#ffffff", "#ff6b6b", "#4ecdc4", "#45b7d1", "#ffda79", "#a77dc2"],
+      value: [
+        "#ffffff", "#ff6b6b", "#4ecdc4", "#45b7d1", "#ffda79", "#a77dc2"
+      ]
     },
-    // links: {
-    //   color: "random",
-    //   distance: 150,
-    //   enable: true,
-    //   opacity: 0.5,
-    //   width: 1,
-    // },
     move: {
-      direction: "none",
-      enable: true,
-      outModes: {
-        default: "bounce",
+      enable: true,        // 启用运动
+      speed: 3,            // 运动速度
+      direction: 'none' as const,   // 运动方向
+      random: true,        // 随机方向
+      straight: false,     // 是否直线运动
+      outModes: {          // 粒子超出画布的行为
+        default: 'bounce' as const, // 反弹
+        left: 'out' as const,       // 左侧超出时消失
+        right: 'out' as const,      // 右侧超出时消失
       },
-      random: false,
-      speed: 2,
-      straight: false,
-    },
-    number: {
-      density: {
-        enable: true,
-        area: 800,
-      },
-      value: 30,
     },
     opacity: {
-      value: { min: 0.3, max: 0.8 },
-    },
-    shape: {
-      type: "circle",
+      value: 0.7,
+      // 启用随机透明度
+      random: true,
+      min: 0.3,  
+      max: 1,    
     },
     size: {
-      value: { min: 1, max: 7 },
+      value: 6,
+      random: true,
+      min: 5,  // 最小尺寸
+      max: 8, // 最大尺
+      anim: {
+        enable: true,      // 启用大小变化动画
+        speed: 6,          // 变化速度
+        size_min: 1,       // 最小尺寸
+        sync: false        // 是否同步变化
+      }
     },
   },
-  detectRetina: true,
+  background: {
+    color: 'transparent'
+  }
 };
 
-const onParticlesLoaded = async (container: any) => {
-  console.log("Particles container loaded", container);
-};
 </script>
 
 <style>
-.particles-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.particles-bg {
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: -999;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

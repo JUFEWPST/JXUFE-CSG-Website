@@ -4,11 +4,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
+
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
+
   app: {
     head: {
       title: '江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线',
@@ -29,5 +31,7 @@ export default defineNuxtConfig({
         }
       ],
     }
-  }
+  },
+
+  modules: ['nuxt-particles']
 })
