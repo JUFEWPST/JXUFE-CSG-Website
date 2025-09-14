@@ -1,9 +1,9 @@
 <template>
     <main ref="scrollContainer" class="snap-container">
         <section
-            class="min-h-screen relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-[#121212] dark:to-[#181919] flex flex-col items-center justify-center px-4 scroll-section">
+            class="min-h-screen relative bg-gradient-to-br from-blue-50 to-blue-100 dark:bg-none flex flex-col items-center justify-center px-4 scroll-section">
             <div class="text-center space-y-4 transform transition-all duration-500 hover:scale-105">
-                <h1 class="text-5xl md:text-6xl text-gray-900 dark:text-white font-bold tracking-wide">
+                <h1 class="text-5xl md:text-6xl font-bold tracking-wide">
                     <AnimationTypingCursor text="江西财经大学" :blink-cursor="false" :show-cursor="false" :start-delay="100">
                     </AnimationTypingCursor>
                 </h1>
@@ -12,12 +12,12 @@
                 </h2>
             </div>
             <div class="absolute bottom-10 flex flex-col items-center">
-                <p class="text-xl font-bold mb-2 animate-pulse">共筑网络安全 坚守网络防线</p>
+                <p class="text-xl font-bold mb-2">共筑网络安全 坚守网络防线</p>
                 <AnimationScrollDown />
             </div>
         </section>
         <section
-            class="sm:h-auto md:min-h-screen bg-gradient-to-br relative from-blue-50 to-white dark:from-[#121212] dark:to-[#181919] flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 lg:py-10 gap-4 sm:gap-6 md:gap-8 md:flex-row box-border scroll-section">
+            class="sm:h-auto md:min-h-screen bg-gradient-to-br relative from-blue-50 to-white dark:bg-none flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 lg:py-10 gap-4 sm:gap-6 md:gap-8 md:flex-row box-border scroll-section">
             <div class="w-full max-w-screen-sm md:max-w-none md:w-1/3 flex justify-center">
                 <h3
                     class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 dark:text-white p-3 sm:p-4 border-b-4 border-[var(--color-primary)]">
@@ -56,7 +56,7 @@
             </div>
         </section>
         <section
-            class="relative min-h-screen bg-gradient-to-b flex flex-col md:flex-row items-center justify-center gap-8 scroll-section">
+            class="relative min-h-screen flex flex-col md:flex-row items-center justify-center gap-8 scroll-section bg-white dark:bg-transparent">
             <div class="w-full md:w-1/3 flex justify-center">
                 <h3
                     class="text-4xl md:text-5xl font-bold p-4 border-b-4 text-gray-800 dark:text-white border-[var(--color-primary)]">

@@ -46,16 +46,13 @@
                             </div>
                             <span class="text-gray-600 dark:text-gray-400">江西财经大学麦庐园校区</span>
                         </li>
-                        <!--
-<li class="flex items-center group">
+                        <li class="flex items-center group">
                             <div
                                 class="w-8 h-8 rounded-full bg-pink-100 dark:bg-gray-700 flex items-center justify-center mr-3 group-hover:bg-pink-200 dark:group-hover:bg-gray-600 transition-colors">
                                 <EnvelopeIcon class="h-5 w-5 text-pink-500 dark:text-pink-400" />
                             </div>
-                            <span class="text-gray-600 dark:text-gray-400">email</span>
+                            <span class="text-gray-600 dark:text-gray-400">1834488130@qq.com</span>
                         </li>
-                        -->
-
                     </ul>
                 </div>
             </div>

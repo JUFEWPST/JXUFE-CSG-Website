@@ -18,13 +18,13 @@
             </div>
             <div class="md:w-2/3 md:pl-8">
                 <div class="mb-4">
-                    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">
+                    <h3 class="text-2xl font-bold mb-1">
                         {{ leader.name }}
-                        <span class="text-lg text-gray-600 dark:text-gray-400 ml-1"
+                        <span class="text-lg text-gray-600 dark:text-gray-300 ml-1"
                             v-if="leader.class">({{ leader.class }})</span>
                     </h3>
                     <div
-                        class="inline-block bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm font-medium">
+                        class="inline-block bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm font-medium">
                         {{ leader.year }} 届会长
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     </p>
                 </div>
                 <div v-if="leader.achievements && leader.achievements.length > 0">
-                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                    <h4 class="text-lg font-semibold mb-3">
                         个人成就
                     </h4>
                     <ul

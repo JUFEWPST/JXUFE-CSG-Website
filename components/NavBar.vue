@@ -1,13 +1,6 @@
 <template>
     <header ref="headerRef" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out"
         :style="headerStyles">
-        <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
-            <div class="absolute -right-10 -top-10 text-blue-100/70 dark:text-gray-700/80 text-9xl transition-opacity duration-500"
-                :style="{ opacity: currentBgOpacity }">✧</div>
-            <div class="absolute -left-5 -bottom-5 text-pink-100/70 dark:text-gray-700/80 text-7xl transition-opacity duration-500"
-                :style="{ opacity: currentBgOpacity }">♡</div>
-        </div>
-
         <div class="mx-3 sm:mx-6 my-4 relative z-10">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
@@ -81,22 +74,21 @@
                         </template>
                     </div>
                     <!-- 归档标题部分 -->
-                    <div v-if="route.path.startsWith('/archive/') && navArticleInfo.title"
+                    <div v-if="route.path.startsWith('/archive/') && navTitleBox.title"
                         class="absolute top-0 left-0 w-full transition-all duration-300"
                         :class="{ 'opacity-0 invisible': !showArticleTitle || scrollDirection === 'up' }">
                         <div class="text-lg font-semibold leading-tight transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis"
                             :class="{
-                            'translate-y-2 opacity-0': !titleVisible,
-                            'translate-y-0 opacity-100': titleVisible
-                        }">
-                            {{ navArticleInfo.title }}
+                                'translate-y-2 opacity-0': !titleVisible,
+                                'translate-y-0 opacity-100': titleVisible
+                            }">
+                            {{ navTitleBox.title }}
                         </div>
                         <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 transition-all duration-500" :class="{
                             'translate-y-2 opacity-0': !subtitleVisible,
                             'translate-y-0 opacity-70': subtitleVisible
                         }">
-                            <span v-if="navArticleInfo.updatedAt" class="mr-2">更新于:{{ navArticleInfo.updatedAt }}</span>
-                            <span v-if="navArticleInfo.publisher">发布者:{{ navArticleInfo.publisher }}</span>
+                            <span v-if="navTitleBox.subtitle" class="mr-2">{{ navTitleBox.subtitle }}</span>
                         </div>
                     </div>
                 </div>
@@ -174,10 +166,9 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const navArticleInfo = useState('navArticleInfo', () => ({
+const navTitleBox = useState('navTitleBox', () => ({
     title: '',
-    updatedAt: '',
-    publisher: ''
+    subtitle: ''
 }))
 
 // 导航链接配置
@@ -221,9 +212,9 @@ const headerStyles = computed(() => {
     const showBlurEffect = opacity.value > 0.1 || isMenuOpen.value
     return {
         backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
-        backdropFilter: `blur(${isMenuOpen.value ? 10 : Math.min(opacity.value * 12, 10)}px)`,
-        boxShadow: showBlurEffect ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none',
-        borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.2)' : 'none'
+        backdropFilter: `blur(${isMenuOpen.value ? 16 : Math.min(opacity.value * 16, 16)}px) saturate(180%)`,
+        boxShadow: showBlurEffect ? '0 4px 12px -1px rgba(0, 0, 0, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.2)' : 'none',
+        borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.12)' : 'none'
     }
 })
 
@@ -372,8 +363,16 @@ header {
 }
 
 .dark header {
-    --nav-bg-rgb: 17, 24, 39;
-    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    --nav-bg-rgb: 15, 15, 15;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(var(--nav-bg-rgb), 0.85) !important;
+}
+
+.dark .absolute.top-full.left-0.mt-2.w-48 {
+    background-color: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .dark .mobile-nav-link:hover {
@@ -421,5 +420,4 @@ header {
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 </style>

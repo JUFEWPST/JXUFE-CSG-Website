@@ -9,7 +9,7 @@
                 <ErrorDisplay :errorData="error"></ErrorDisplay>
             </div>
             <template v-else>
-                <ul class="box-border p-2 w-full md:w-1/2">
+                <ul class="box-border p-2 w-full lg:w-1/2">
                     <ArticleBlock v-for="archive in topArchives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
                         :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []"
@@ -18,7 +18,7 @@
                 </ul>
                 <hr
                     class="box-border p-2 mx-auto w-4/5 md:w-2/5 border-t-2 border-blue-300 transition-colors duration-300 hover:border-blue-500" />
-                <ul class="box-border p-2 w-full md:w-1/2">
+                <ul class="box-border p-2 w-full lg:w-1/2">
                     <ArticleBlock v-for="archive in archives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
                         :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []">

@@ -1,7 +1,7 @@
 <template>
     <li class="list-none">
         <NuxtLink :to="linkto"
-            class="transition-all rounded-xl duration-200 ease-out before:absolute before:inset-y-0 before:z-[-1] before:scale-[0.92] before:rounded-2xl before:opacity-0 before:backdrop-blur before:transition-all before:duration-200 before:[transform-origin:var(--origin-x)_var(--origin-y)] hover:before:scale-100 hover:before:opacity-100 before:bg-blue-200/40 dark:before:bg-blue-700/20 relative flex !cursor-pointer flex-col py-6 px-8 before:-inset-0  focus-visible:!shadow-none hover:translate-x-2"
+            class="transition-all rounded-xl duration-200 ease-out before:absolute before:inset-y-0 before:z-[-1] before:scale-[0.92] before:rounded-2xl before:opacity-0 before:backdrop-blur before:transition-all before:duration-200 before:[transform-origin:var(--origin-x)_var(--origin-y)] hover:before:scale-100 hover:before:opacity-100 before:bg-blue-200/40 dark:before:bg-blue-400/70 relative flex !cursor-pointer flex-col py-6 px-8 before:-inset-0  focus-visible:!shadow-none hover:translate-x-2"
             :style="`--origin-x: ${Math.random() * 100}%; --origin-y: ${Math.random() * 30}%`">
             <h2 class="relative break-words text-2xl font-medium">
                 <div class="w-[calc(100%-2rem)] text-gray-800 dark:text-gray-100">{{ title }}</div>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div
-                class="post-meta-bar flex select-none flex-wrap items-center justify-end gap-4 text-gray-500 dark:text-gray-400 mt-4">
+                class="post-meta-bar flex select-none flex-wrap items-center justify-end gap-4 text-gray-500 dark:text-gray-300 mt-4">
                 <div class="flex min-w-0 shrink grow flex-wrap gap-2 text-sm">
                     <div class="flex min-w-0 items-center space-x-1">
                         <svg width="1em" height="1em" viewBox="0 0 24 24" class="text-[var(--color-primary)]">

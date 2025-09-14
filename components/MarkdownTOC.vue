@@ -1,22 +1,23 @@
 <template>
     <div class="relative">
         <button v-if="isCollapsed" @click="toggleToc"
-            class="fixed md:sticky top-5 left-0 md:left-auto z-30 p-2 bg-white dark:bg-black  rounded-r-md shadow-md border border-l-0 border-gray-200 dark:border-gray-700 hover:bg-gray-50 transition-colors"
+            class="fixed md:sticky top-5 left-0 md:left-auto z-30 p-2 bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-md shadow-md transition-colors duration-200"
             aria-label="展开目录" title="展开目录" aria-expanded="false" aria-controls="toc-container">
             <Bars3Icon class="w-5 h-5" />
         </button>
 
         <!-- 目录内容 -->
         <div v-show="!isCollapsed"
-            class="sticky top-5 max-h-[calc(100vh-40px)] overflow-y-auto p-4 border-l bg-white dark:bg-[#1E1E1E] border-gray-200 transition-all duration-300 ease-in-out min-w-[250px]"
+            class="sticky top-5 max-h-[calc(100vh-40px)] overflow-y-auto p-4 border-l border-gray-200 transition-all duration-300 ease-in-out min-w-[250px]"
             :class="{
                 'fixed top-0 left-0 w-72 h-screen bg-white z-40 shadow-lg p-5': isMobile,
                 'ml-8': !isMobile
             }" :aria-hidden="isCollapsed" id="toc-container" aria-labelledby="toc-title" role="navigation">
             <div v-if="items.length" class="flex items-center justify-between mb-4">
                 <h2 id="toc-title" class="font-bold text-lg">目录</h2>
-                <button @click="toggleToc" class="p-1 rounded-md hover:bg-gray-100 transition-colors" aria-label="关闭目录"
-                    aria-expanded="true" aria-controls="toc-container" title="关闭目录">
+                <button @click="toggleToc"
+                    class="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700  transition-colors"
+                    aria-label="关闭目录" aria-expanded="true" aria-controls="toc-container" title="关闭目录">
                     <XMarkIcon class="w-5 h-5" />
                 </button>
             </div>

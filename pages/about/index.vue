@@ -301,7 +301,7 @@ onMounted(() => {
 @custom-variant dark (&:where(.dark, .dark *));
 
 .card {
-    @apply bg-white dark: bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden;
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden;
 }
 
 @keyframes float {
