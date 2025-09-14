@@ -1,9 +1,10 @@
 <template>
     <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-bold text-4xl text-center">历届成员</h1>
-        <h2 class="text-xl font-bold text-blue-400 text-center my-2">数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink
-                class="text-green-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">[历届成员档案共建邀请]</NuxtLink>
-        </h2>
+        <AnzuAlert type="info" class="my-4">
+            数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink class="text-blue-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
+                [历届成员档案共建邀请]</NuxtLink>
+        </AnzuAlert>
         <div v-for="item in members" :key="item.year" class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 border-l-4 border-yellow-400 pl-3">
                 <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
