@@ -13,7 +13,7 @@
       </div>
       <article v-if="archive" class="mt-15 mb-2 mx-5 sm:mx-10 md:mx-15 box-border p-2 max-w-screen">
         <header class="mb-8">
-          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-white leading-tight mb-2">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-2">
             {{ archive?.title }}
           </h1>
 
