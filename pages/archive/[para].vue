@@ -1,5 +1,5 @@
 <template>
-  <main class=" relative">
+  <main class="relative min-h-[70vh]">
     <div v-if="archive" style="--to-height: 200px"
       class="absolute top-0 left-0 right-0 dark:hidden
               bg-gradient-to-b from-purple-200 to-transparent opacity-70 z-[-2] h-50 animate-[expand_0.5s_ease-in-out_forwards]">
