@@ -212,9 +212,9 @@ const headerStyles = computed(() => {
     const showBlurEffect = opacity.value > 0.1 || isMenuOpen.value
     return {
         backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
-        backdropFilter: `blur(${isMenuOpen.value ? 10 : Math.min(opacity.value * 12, 10)}px)`,
-        boxShadow: showBlurEffect ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none',
-        borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.2)' : 'none'
+        backdropFilter: `blur(${isMenuOpen.value ? 16 : Math.min(opacity.value * 16, 16)}px) saturate(180%)`,
+        boxShadow: showBlurEffect ? '0 4px 12px -1px rgba(0, 0, 0, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.2)' : 'none',
+        borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.12)' : 'none'
     }
 })
 
@@ -363,8 +363,16 @@ header {
 }
 
 .dark header {
-    --nav-bg-rgb: 17, 24, 39;
-    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    --nav-bg-rgb: 15, 15, 15;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(var(--nav-bg-rgb), 0.85) !important;
+}
+
+.dark .absolute.top-full.left-0.mt-2.w-48 {
+    background-color: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .dark .mobile-nav-link:hover {
