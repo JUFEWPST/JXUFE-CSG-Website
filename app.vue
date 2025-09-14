@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <nuxt-particles class="particles-bg" id="app-particles" :options="particlesOptions" />
+    <nuxt-particles v-show="isDark" class="particles-bg" id="app-particles" :options="particlesOptions" />
   </ClientOnly>
   <NuxtLayout>
     <NuxtPage />
@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+const { isDark } = useTheme();
 const particlesOptions = {
   particles: {
     number: { value: 15 }, // 粒子数量
@@ -32,8 +33,8 @@ const particlesOptions = {
       value: 0.7,
       // 启用随机透明度
       random: true,
-      min: 0.3,  
-      max: 1,    
+      min: 0.3,
+      max: 1,
     },
     size: {
       value: 6,
