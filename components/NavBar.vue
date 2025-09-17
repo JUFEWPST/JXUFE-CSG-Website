@@ -209,10 +209,12 @@ const mobileDropdownStates = reactive<Record<string, boolean>>({})
 const currentBgOpacity = computed(() => isMenuOpen.value ? 0.8 : opacity.value * 0.8)
 
 const headerStyles = computed(() => {
-    const showBlurEffect = opacity.value > 0.1 || isMenuOpen.value
+    const showBlurEffect = (opacity.value > 0.1 || isMenuOpen.value)
+    const blurAmount = isMenuOpen.value ? 16 : Math.min(opacity.value * 16, 16)
     return {
         backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
-        backdropFilter: `blur(${isMenuOpen.value ? 16 : Math.min(opacity.value * 16, 16)}px) saturate(180%)`,
+        backdropFilter: showBlurEffect && blurAmount > 0 ?
+            `blur(${blurAmount}px) saturate(180%)` : 'none',
         boxShadow: showBlurEffect ? '0 4px 12px -1px rgba(0, 0, 0, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.2)' : 'none',
         borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.12)' : 'none'
     }
@@ -336,7 +338,7 @@ header {
 }
 
 .active-link {
-    color: var(--color-primary-500);
+    color: var(--color-primary);
     font-weight: 500;
     position: relative;
 }
@@ -358,22 +360,15 @@ header {
 }
 
 .mobile-active-link {
-    color: var(--color-primary-500);
+    color: var(--color-primary);
     font-weight: 500;
 }
 
 .dark header {
     --nav-bg-rgb: 15, 15, 15;
     border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-    backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(var(--nav-bg-rgb), 0.85) !important;
 }
 
-.dark .absolute.top-full.left-0.mt-2.w-48 {
-    background-color: rgba(20, 20, 20, 0.95) !important;
-    backdrop-filter: blur(20px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-}
 
 .dark .mobile-nav-link:hover {
     background-color: rgba(31, 41, 55, 0.8);
@@ -413,7 +408,7 @@ header {
 }
 
 .dark .pl-4 a.mobile-active-link {
-    color: var(--color-primary-400);
+    color: var(--color-primary);
 }
 
 .transition-all {
