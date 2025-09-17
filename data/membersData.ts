@@ -262,8 +262,11 @@ const member2024: Member[] =
         }
     ]
 const member2023 = [{
-    name: '陈永盛',
-    position: '会长'
+    display: '静我凡心',
+    name:'陈永盛',
+    position: '会长',
+    message: '前途漫漫，当克己，当慎独，磨棱角，退优越，沉下心！',
+    avatar: '/avatar/cys.avif'
 }]
 const member2022 = [{
     name: '钟金龙',
