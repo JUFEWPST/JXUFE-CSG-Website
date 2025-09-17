@@ -20,12 +20,12 @@ export const leadersData = [
         avatar: '/avatar/qyy.avif'
     },
     {
-        name: "陈永盛",
+        name: "静我凡心",
         class: "22计算机科学与技术2班",
         year: "2023",
-        achievements: [
-            '收集中'
-        ],
+        message: '前途漫漫，当克己，当慎独，磨棱角，退优越，沉下心！',
+        avatar: '/avatar/cys.avif'
+        
     },
     {
         name: "钟金龙",
