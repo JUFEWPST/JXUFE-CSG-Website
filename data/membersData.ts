@@ -37,7 +37,9 @@ const member2025: Member[] = [
         avatar: '/avatar/不退让._2025-08-04 21.46.05_picture-0.avif'
     },
     {
+        display: 'Heaven',
         name: '柯善璐',
+        avatar: 'https://pic-bed.dearheaven.cn/img/touxiang.webp',
         position: '学习部部长',
     },
     {
@@ -153,7 +155,7 @@ const member2024: Member[] =
         {
             name: '吴欣宇',
             display: 'WKayyy',
-            avatar:"/avatar/WKayyy.avif",
+            avatar: "/avatar/WKayyy.avif",
             position: '学习部成员',
         },
         {
@@ -263,7 +265,7 @@ const member2024: Member[] =
     ]
 const member2023 = [{
     display: '静我凡心',
-    name:'陈永盛',
+    name: '陈永盛',
     position: '会长',
     message: '前途漫漫，当克己，当慎独，磨棱角，退优越，沉下心！',
     avatar: '/avatar/cys.avif'
