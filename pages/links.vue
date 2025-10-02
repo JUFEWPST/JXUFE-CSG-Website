@@ -61,7 +61,7 @@
                             </h3>
                             <div class="flex flex-wrap gap-1">
                                 <div v-for="(tag, index) in link.tags" :key="index"
-                                    class="px-2 py-1 rounded text-xs font-medium whitespace-nowrap"
+                                    class="px-2 py-1 rounded text-xs font-medium whitespace-nowrap text-white"
                                     :style="{ backgroundColor: getRandomColor(tag) }">
                                     {{ tag }}
                                 </div>
