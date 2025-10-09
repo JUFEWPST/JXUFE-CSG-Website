@@ -107,7 +107,7 @@ onMounted(() => {
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div
                                     class="bg-blue-50/80 dark:bg-gray-600 p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-blue-700 dark:text-blue-300">技术部</h4>
+                                    <h4 class="font-medium text-blue-700 dark:text-blue-300">学习部</h4>
                                     <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">负责技术研究、培训和比赛指导</p>
                                 </div>
                                 <div
