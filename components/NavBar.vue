@@ -215,7 +215,7 @@ const headerStyles = computed(() => {
         backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
         backdropFilter: showBlurEffect && blurAmount > 0 ?
             `blur(${blurAmount}px) saturate(180%)` : 'none',
-        boxShadow: showBlurEffect ? '0 4px 12px -1px rgba(0, 0, 0, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.2)' : 'none',
+        boxShadow: showBlurEffect ? '0 1px 2px 0px rgba(0, 0, 0, 0.25)' : 'none',
         borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.12)' : 'none'
     }
 })
