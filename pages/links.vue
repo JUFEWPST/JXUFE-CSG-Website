@@ -109,9 +109,13 @@ const Links = [
 ];
 const fLinks = [
     { name: '秋雨样大人', url: 'https://amqyy.cn/', icon: '/avatar/qyy.avif' },
-    { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.webp' }, {
+    { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.webp' }, 
+    {
         name: 'woodfish', url: 'https://www.woodfishhhh.xyz/', icon: 'https://pic1.imgdb.cn/item/682f3d1658cb8da5c807b704.jpg', droptext: '我喜欢你', tags: ['我喜欢喝雪碧', '全栈开发（with AI）']
-    }
+    },
+    {
+        name: 'piterの小屋', url: 'https://npiter.de/', icon: 'https://i1.wp.com/dev.ruom.top/i/2025/04/13/612493.webp',
+    },
 ];
 
 useHead({
