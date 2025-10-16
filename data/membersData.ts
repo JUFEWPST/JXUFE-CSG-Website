@@ -65,6 +65,7 @@ const member2025: Member[] = [
     {
         name: '杨昊哲',
         position: '学习部成员',
+        avatar: '/avatar/yhz.avif'
     },
     {
         name: '潘钰楷',
@@ -216,7 +217,8 @@ const member2024: Member[] =
         },
         {
             "name": "杨昊哲",
-            "position": "学习部成员"
+            "position": "学习部成员",
+            avatar: '/avatar/yhz.avif'
         },
         {
             "name": "潘雪",
