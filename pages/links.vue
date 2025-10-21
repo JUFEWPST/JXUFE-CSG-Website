@@ -104,12 +104,12 @@ const Links = [
         tooltip: '计算机协会是面向新手小白教学的，激起学计算机的兴趣，教会大家如何学好计算机，还会涉及一些AI、脚本、插件等实用的电脑小技巧。计协分为5个部门宣传部、维修部、软件部、量化部、办公室，但教学是统一教学，所以在这你会学到基础但实用的计算机技巧。由于是面向小白教学，所以会带大家一步一步学好计算机。跟上计协的教学，期末高分so easy。来加入计协，让你感受什么是科技的力量。'
     },
     {
-        name: '江西财经大学数智技术协会', url: 'www.jxufe-tech.top', icon: '/avatar/数智技术协会.avif', droptext: '数智技术协会欢迎你！', desc: '《赛博孔子的故事》'
+        name: '江西财经大学数智技术协会', url: 'http://www.jxufe-tech.top', icon: '/avatar/数智技术协会.avif', droptext: '数智技术协会欢迎你！', desc: '《赛博孔子的故事》'
     },
 ];
 const fLinks = [
     { name: '秋雨样大人', url: 'https://amqyy.cn/', icon: '/avatar/qyy.avif' },
-    { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.webp' }, 
+    { name: 'Heaven', url: 'https://dearheaven.cn', icon: 'https://pic-bed.dearheaven.cn/img/touxiang.webp' },
     {
         name: 'woodfish', url: 'https://www.woodfishhhh.xyz/', icon: 'https://pic1.imgdb.cn/item/682f3d1658cb8da5c807b704.jpg', droptext: '我喜欢你', tags: ['我喜欢喝雪碧', '全栈开发（with AI）']
     },
