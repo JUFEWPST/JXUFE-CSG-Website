@@ -9,7 +9,8 @@ const currentQuote = ref(0);
 const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
     "放弃的话就到此为止了，但是，你可以改变命运()",
-    "是我喜欢的协会"
+    "是我喜欢的协会",
+    "协会可能会倒闭，但一定不会变质！（笑"
 ];
 useHead({
     title: "关于协会 - 江西财经大学网络安全协会",
@@ -187,8 +188,18 @@ onMounted(() => {
                             <ul class="space-y-4">
                                 <li class="flex items-start group">
                                     <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">第22届ISCC竞赛博弈对抗赛</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
+                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
+                                    <span class="text-gray-700 dark:text-gray-300">第10届全国高校密码数学挑战赛</span>
+                                </li>
+                                <li class="flex items-start group">
+                                    <span
                                         class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
-                                    <span class="text-gray-700 dark:text-gray-300">22届ISCC全国大学生信息安全竞赛</span>
+                                    <span class="text-gray-700 dark:text-gray-300">第22届ISCC竞赛</span>
                                 </li>
                                 <li class="flex items-start group">
                                     <span
@@ -292,7 +303,36 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
+                :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
+                style="transition-delay: 200ms">
+                <div
+                    class="absolute -right-5 top-1/2 transform -translate-y-1/2 text-pink-100/70 dark:text-gray-700/80 text-8xl z-0">
+                    ★</div>
+                <div class="absolute -left-4 bottom-4 text-yellow-300/60 text-4xl z-0">☆</div>
 
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
+                        <span class="w-2 h-8 bg-pink-500 mr-3 rounded-full"></span>
+                        Contributors
+                    </h2>
+                    <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">本网站的完成离不开以下小伙伴的贡献，感谢他们的付出。</div>
+                    <br>
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website/graphs/contributors"><img src="https://contrib.rocks/image?repo=JUFEWPST/JXUFE-CSG-Website&columns=15"/></a>
+                    </div>
+                    <br>
+                    <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                            欢迎加入我们与我们共同建设江财网安协会
+                        </div>
+                    <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                        访问本项目点击<a href="https://github.com/JUFEWPST/JXUFE-CSG-Website" style="color: red;text-decoration: underline;">这里</a>
+                    </div>
+
+                </div>
+            </section>
+        
         </div>
     </main>
 </template>
