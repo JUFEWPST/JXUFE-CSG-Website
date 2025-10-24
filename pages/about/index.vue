@@ -308,31 +308,33 @@ onMounted(() => {
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
                 style="transition-delay: 200ms">
                 <div
-                    class="absolute -right-5 top-1/2 transform -translate-y-1/2 text-pink-100/70 dark:text-gray-700/80 text-8xl z-0">
-                    ★</div>
-                <div class="absolute -left-4 bottom-4 text-yellow-300/60 text-4xl z-0">☆</div>
+                    class="absolute right-20 top-5 transform -translate-y-1/2 text-green-100/70 dark:text-gray-700/80 text-8xl z-0">
+                    ☍</div>
+                <div class="absolute left-30 -bottom-3 text-blue-300/60 text-4xl z-0">❁</div>
 
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
-                        <span class="w-2 h-8 bg-pink-500 mr-3 rounded-full"></span>
+                        <span class="w-2 h-8 bg-orange-400 mr-3 rounded-full"></span>
                         Contributors
                     </h2>
-                    <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">本网站的完成离不开以下小伙伴的贡献，感谢他们的付出。</div>
-                    <br>
-                    <div class="flex flex-col md:flex-row items-center gap-8">
-                        <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website/graphs/contributors"><img src="https://contrib.rocks/image?repo=JUFEWPST/JXUFE-CSG-Website&columns=15"/></a>
+                    <div class="text-lg leading-relaxed">本网站的完成离不开以下小伙伴的贡献，感谢他们的付出
                     </div>
-                    <br>
-                    <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            欢迎加入我们与我们共同建设江财网安协会
-                        </div>
-                    <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                        访问本项目点击<a href="https://github.com/JUFEWPST/JXUFE-CSG-Website" style="color: red;text-decoration: underline;">这里</a>
+                    <div class="my-2">
+                        <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website/graphs/contributors">
+                            <img src="https://contrib.rocks/image?repo=JUFEWPST/JXUFE-CSG-Website&columns=15" />
+                        </a>
+                    </div>
+                    <div class="text-lg leading-relaxed">
+                        欢迎加入我们与我们共同建设江财网安协会
+                    </div>
+                    <div class="text-lg leading-relaxed">
+                        访问本项目点击<a href="https://github.com/JUFEWPST/JXUFE-CSG-Website"
+                            class="text-pink-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">这里</a>
                     </div>
 
                 </div>
             </section>
-        
+
         </div>
     </main>
 </template>
