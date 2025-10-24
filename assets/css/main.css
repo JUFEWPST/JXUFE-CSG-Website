@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
 @layer utilities {
     .text-shadow-glow {
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
@@ -9,10 +10,11 @@
         text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6;
     }
 }
+
 @layer utilities {
     :root {
         --color-text: #333333;
-        --color-bg:#FFFFFF;
+        --color-bg: #FFFFFF;
         --color-primary: #6bb9f0;
         --color-primary-bg: #f0f8ff;
         --color-primary-hover: #8ac8f8;
@@ -73,4 +75,16 @@ body {
     to {
         height: var(--to-height, 100px);
     }
+}
+
+@font-face {
+    font-family: HarmonyOS_Sans_SC_Medium;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/font/HarmonyOS_Sans_SC_Medium.woff2') format('woff2'),
+        url('/assets/font/HarmonyOS_Sans_SC_Medium.woff2') format('woff');
+}
+
+* {
+    font-family: HarmonyOS_Sans_SC_Medium;
 }
