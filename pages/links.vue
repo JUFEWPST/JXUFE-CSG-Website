@@ -62,7 +62,7 @@
                             <div class="flex flex-wrap gap-1">
                                 <div v-for="(tag, index) in link.tags" :key="index"
                                     class="px-2 py-1 rounded text-xs font-medium whitespace-nowrap text-white"
-                                    :style="{ backgroundColor: getRandomColor(tag) }">
+                                    :style="{ backgroundColor: useRandomColor(tag) }">
                                     {{ tag }}
                                 </div>
                             </div>
@@ -85,7 +85,7 @@ import {
     HeartIcon,
     ArrowRightIcon
 } from '@heroicons/vue/24/outline';
-import { getRandomColor } from '@/composables/getRandomColor';
+import { useRandomColor } from '@/composables/useRandomColor';
 const official_icon = '/jxufe-logo.svg';
 const Links = [
     { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
