@@ -313,6 +313,13 @@ const member2021: Member[] = [
         display: '一一',
         position: '组织部成员',
     },]
+const member2020:Member[]=[{
+    name:'宗梦洁',
+    display:'zmj',
+    position:'会长',
+    message:'漏洞是隐藏的数字彩蛋，攻防是烧脑的真人剧本杀～欢迎大家加入网安协会，一起打怪升级呀！',
+    avatar: '/avatar/zmj.avif'
+}]
 // export const membersData: MemberCollection = {
 //     ...member2025, ...member2024
 // };
@@ -323,5 +330,6 @@ export const membersArray: MemberGroup[] = [
     { year: 2023, members: member2023 },
     { year: 2022, members: member2022 },
     { year: 2021, members: member2021 },
+    { year: 2020, members: member2020 },
 ];
 
