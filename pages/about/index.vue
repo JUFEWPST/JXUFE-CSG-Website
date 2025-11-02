@@ -279,14 +279,10 @@ onMounted(() => {
                                 </div>
                             </div>
                             <div class="flex space-x-3 mt-4">
-                                <a class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm"
-                                    href="https://qm.qq.com/q/v7pD9BL4Lm" target="_blank">
-                                    加入群聊
-                                </a>
-                                <a class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition-colors text-sm"
-                                    href="#" @click.prevent="currentQuote = (currentQuote + 1) % quotes.length">
-                                    换一句
-                                </a>
+                                <AnzuButton class="h-10" href="https://qm.qq.com/q/v7pD9BL4Lm"
+                                    primary-color="oklch(62.3% 0.214 259.815)" target="_blank">加入群聊</AnzuButton>
+                                <AnzuButton @click="currentQuote = (currentQuote + 1) % quotes.length"
+                                    primary-color="oklch(65.6% 0.241 354.308)">换一句</AnzuButton>
                             </div>
                         </div>
                         <div class="md:w-1/2 flex justify-center">
