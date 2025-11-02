@@ -2,6 +2,7 @@
 import FlipToggle from '~/components/FlipToggle.vue';
 import { onMounted, ref } from 'vue';
 import { leadersData } from '~/data/leadersData';
+import { honorsData, getLevelColor, getYearColor } from '~/data/honors'
 import { membersArray } from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
@@ -179,69 +180,22 @@ onMounted(() => {
                         协会成员荣誉
                     </h2>
                     <div class="space-y-8">
-                        <div>
+                        <div v-for="yearData in honorsData" :key="yearData.year">
                             <h3
                                 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-200 dark:border-gray-700 flex items-center">
-                                <span class="w-1.5 h-6 bg-pink-500 mr-2 rounded-full"></span>
-                                2025年
+                                <span class="w-1.5 h-6 mr-2 rounded-full" :class="getYearColor(yearData.year)"></span>
+                                {{ yearData.year }}
                             </h3>
                             <ul class="space-y-4">
-                                <li class="flex items-start group">
+                                <li v-for="(honor, index) in yearData.honors" :key="index"
+                                    class="flex items-start group">
                                     <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第22届ISCC竞赛博弈对抗赛</span>
+                                        class="px-2 py-1 mr-3 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform"
+                                        :class="`bg-gradient-to-r ${getLevelColor(honor.level)}`">
+                                        {{ honor.level }}
+                                    </span>
+                                    <span class="text-gray-700 dark:text-gray-300">{{ honor.description }}</span>
                                 </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第10届全国高校密码数学挑战赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第22届ISCC竞赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">十六届蓝桥杯网络安全赛道</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省三</span>
-                                    <span class="text-gray-700 dark:text-gray-300">十八届CISCN广东赛区</span>
-                                </li>
-
-                            </ul>
-                        </div>
-                        <div>
-                            <h3
-                                class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-200 dark:border-gray-700 flex items-center">
-                                <span class="w-1.5 h-6 bg-blue-500 mr-2 rounded-full"></span>
-                                2024年
-                            </h3>
-                            <ul class="space-y-4">
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
-                                    <span class="text-gray-700 dark:text-gray-300">21届ISCC全国大学生信息安全竞赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">2024睿抗机器人开发者大赛(RAICOM)全国总决赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">十五届蓝桥杯网络安全赛道</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第九届全国密码挑战赛</span>
-                                </li>
-
                             </ul>
                         </div>
                     </div>
