@@ -247,7 +247,7 @@ const member2025: Member[] = [
         name: '李名辉',
         position: '学习部成员',
         display: '神瑛辉',
-        avatar: '/avatar/lmh.avif',
+        avatar: '/avatar/LMH.avif',
         message: '一切都是命运石之门的安排'
     },
     {
@@ -275,13 +275,13 @@ const member2025: Member[] = [
         name: '张笠彬',
         position: '学习部成员',
         display: 'jlb',
-        avatar: '/avatar/jlb.avif',
+        avatar: '/avatar/JLB.avif',
     },
     {
         name: '廖宇馨',
         position: '学习部成员',
         display: 'haris',
-        avatar: '/avatar/iris.avif',
+        avatar: '/avatar/Iris.avif',
     },
     {
         name: '曾梦鸽',
