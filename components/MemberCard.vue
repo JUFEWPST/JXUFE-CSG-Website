@@ -6,8 +6,7 @@
                 :src="member.avatar" alt="背景图" />
             <div v-else class="absolute top-0 left-0 z-1 w-full h-full bg-blue-200/10" />
             <div class="absolute top-0 left-0 z-2 w-full h-full p-2 box-border flex gap-2">
-                <div
-                    class="relative -bottom-10 w-20 h-20 rounded-full shadow-sm overflow-hidden">
+                <div class="relative -bottom-10 w-20 h-20 rounded-full shadow-sm overflow-hidden">
                     <img v-if="member.avatar" :src="member.avatar" :alt="(member.display || 'fakename') + '的头像'"
                         class="w-full h-full object-cover">
                     <div v-else class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-500">
@@ -16,8 +15,7 @@
                 </div>
                 <div class="flex-1 relative">
                     <div class="flex-1 absolute bottom-0">
-                        <h2 class="text-2xl font-bold"
-                            :class="{ 'blur-sm opacity-35': !member.display }">
+                        <h2 class="text-2xl font-bold" :class="{ 'blur-sm opacity-35': !member.display }">
                             {{ member.display || 'fakename' }}
                         </h2>
                         <span
@@ -29,7 +27,7 @@
         </div>
         <div v-if="member.message" class="flex-1 w-full mt-1">
             <p class="w-full pl-22 box-border text-sm text-gray-600 dark:text-white/90">
-                {{ member.message }}
+                <span class="">「</span>{{ member.message }}<span class="">」</span>
             </p>
         </div>
     </div>
