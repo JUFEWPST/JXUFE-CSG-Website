@@ -6,7 +6,7 @@
                     <div
                         class="w-55 h-55 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg">
                         <img :src="leader.avatar" :alt="leader.name + '的头像'"
-                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                            class="w-full h-full object-cover"
                             v-if="leader.avatar" />
                         <div v-else class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                             <div class="text-4xl font-bold text-gray-500 dark:text-gray-400">

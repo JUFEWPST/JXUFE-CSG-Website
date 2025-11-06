@@ -63,9 +63,9 @@
 }
 
 .pagination-button.active {
-    background-color: var(--color-primary);
+    background-color: var(--anzu-primary);
     color: white;
-    border-color: var(--color-primary);
+    border-color: var(--anzu-primary);
 }
 
 .pagination-button.disabled {
@@ -109,7 +109,7 @@
 .jump-button {
     padding: 4px 12px;
     border-radius: 4px;
-    background-color: var(--color-primary);
+    background-color: var(--anzu-primary);
     color: #ffffff;
     font-size: 0.875rem;
     cursor: pointer;

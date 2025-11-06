@@ -3,7 +3,7 @@
         <h1 class="font-bold text-4xl text-center">归档</h1>
         <div class="flex justify-center items-center mt-1 flex-col">
             <div v-if="loading" class="text-center py-8">
-                <AnimationLoadingSpinner size="xl2" color="[var(--color-accent-hover)]"></AnimationLoadingSpinner>
+                <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>
             </div>
             <div v-else-if="error">
                 <ErrorDisplay :errorData="error"></ErrorDisplay>

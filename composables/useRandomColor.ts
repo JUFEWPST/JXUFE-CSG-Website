@@ -7,7 +7,7 @@ const VIBRANT_HUES = [
     [120, 140],  // 绿
     [180, 200]   // 青
 ];
-export function getRandomColor(tag: string): string {
+export function useRandomColor(tag: string): string {
     if (colorMap.has(tag)) return colorMap.get(tag)!;
 
     // 随机选择一个鲜艳色相范围

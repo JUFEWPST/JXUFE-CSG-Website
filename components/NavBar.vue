@@ -210,12 +210,12 @@ const currentBgOpacity = computed(() => isMenuOpen.value ? 0.8 : opacity.value *
 
 const headerStyles = computed(() => {
     const showBlurEffect = (opacity.value > 0.1 || isMenuOpen.value)
-    const blurAmount = isMenuOpen.value ? 16 : Math.min(opacity.value * 16, 16)
+    const blurAmount = isMenuOpen.value ? 12 : Math.min(opacity.value * 12, 12)
     return {
         backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
         backdropFilter: showBlurEffect && blurAmount > 0 ?
             `blur(${blurAmount}px) saturate(180%)` : 'none',
-        boxShadow: showBlurEffect ? '0 1px 2px 0px rgba(0, 0, 0, 0.25)' : 'none',
+        boxShadow: showBlurEffect ? '0 1px 2px 0px rgba(0, 0, 0, 0.1)' : 'none',
         borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.12)' : 'none'
     }
 })
@@ -334,11 +334,11 @@ header {
 }
 
 .nav-link:hover {
-    color: var(--color-primary-pressed);
+    color: var(--anzu-primary-pressed);
 }
 
 .active-link {
-    color: var(--color-primary);
+    color: var(--anzu-primary);
     font-weight: 500;
     position: relative;
 }
@@ -356,11 +356,11 @@ header {
 
 .mobile-nav-link:hover {
     background-color: rgba(243, 244, 246, 0.8);
-    color: var(--color-primary-pressed);
+    color: var(--anzu-primary-pressed);
 }
 
 .mobile-active-link {
-    color: var(--color-primary);
+    color: var(--anzu-primary);
     font-weight: 500;
 }
 
@@ -376,12 +376,12 @@ header {
 
 .dark .nav-link:hover,
 .dark .mobile-nav-link:hover {
-    color: var(--color-primary-300);
+    color: var(--anzu-primary-300);
 }
 
 .dark .active-link,
 .dark .mobile-active-link {
-    color: var(--color-primary-400);
+    color: var(--anzu-primary-400);
 }
 
 .dark button {
@@ -389,7 +389,7 @@ header {
 }
 
 .dark button:hover {
-    color: var(--color-primary-300);
+    color: var(--anzu-primary-300);
 }
 
 .group:hover .absolute.top-full {
@@ -408,7 +408,7 @@ header {
 }
 
 .dark .pl-4 a.mobile-active-link {
-    color: var(--color-primary);
+    color: var(--anzu-primary);
 }
 
 .transition-all {

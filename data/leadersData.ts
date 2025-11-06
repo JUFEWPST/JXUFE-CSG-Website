@@ -34,4 +34,12 @@ export const leadersData = [
         ],
         message: '请永远的相信自己，努力终将会有收获'
     },
+    {
+        name: "zmj",
+        class: "信管191",
+        year: "2020",
+        message: '漏洞是隐藏的数字彩蛋，攻防是烧脑的真人剧本杀～欢迎大家加入网安协会，一起打怪升级呀！',
+        avatar: '/avatar/zmj.avif'
+
+    },
 ]

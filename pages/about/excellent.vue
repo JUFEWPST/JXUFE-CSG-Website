@@ -1,11 +1,11 @@
 <template>
-    <main class="mt-15 mb-2 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+    <main class="mt-15 mb-3 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-bold text-4xl text-center">协会优秀成员</h1>
         <AnzuAlert type="info">
             数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink class="text-blue-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
                 [历届成员档案共建邀请]</NuxtLink>
         </AnzuAlert>
-        <section class="flex flex-wrap justify-between gap-4 my-3">
+        <section class="mt-3 grid grid-cols-auto-fill gap-4">
             <MemberHonorCard v-for="(person, index) in excellentData" :key="index" :person="person"></MemberHonorCard>
         </section>
     </main>
@@ -29,4 +29,8 @@ useHead({
 
 </script>
 <style scoped>
+.grid-cols-auto-fill {
+    --min-col-size: 360px;
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-col-size), 1fr));
+}
 </style>

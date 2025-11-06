@@ -6,11 +6,11 @@
                 [历届成员档案共建邀请]</NuxtLink>
         </AnzuAlert>
         <div v-for="item in members" :key="item.year" class="mb-12">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 border-l-4 border-yellow-400 pl-3">
+            <h2 class="text-2xl font-bold mb-6 border-l-4 border-blue-400 pl-3">
                 <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
                 <template v-if="typeof item.year === 'number'">{{ item.year }} 届</template>
             </h2>
-            <div class="flex flex-wrap gap-4 justify-around">
+            <div class="grid grid-cols-auto-fill gap-4">
                 <MemberCard v-for="(member, index) in item.members" :key="`${item.year}-${index}`" :member="member" />
             </div>
         </div>
@@ -35,3 +35,13 @@ useHead({
 })
 
 </script>
+
+<style scoped>
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@layer utilities {
+    .grid-cols-auto-fill {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+</style>

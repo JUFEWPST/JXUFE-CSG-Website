@@ -13,26 +13,26 @@
 
 @layer utilities {
     :root {
-        --color-text: #333333;
-        --color-bg: #FFFFFF;
-        --color-primary: #6bb9f0;
-        --color-primary-bg: #f0f8ff;
-        --color-primary-hover: #8ac8f8;
-        --color-primary-pressed: #4da8e0;
-        --color-primary-focus: rgba(107, 185, 240, 0.2);
-        --color-accent-text: #FF8A65;
-        --color-accent-hover: #FF6E40;
+        --anzu-text: #333333;
+        --anzu-bg: #FFFFFF;
+        --anzu-primary: #6bb9f0;
+        --anzu-primary-bg: #f0f8ff;
+        --anzu-primary-hover: #8ac8f8;
+        --anzu-primary-pressed: #4da8e0;
+        --anzu-primary-focus: rgba(107, 185, 240, 0.2);
+        --anzu-accent-text: #FF8A65;
+        --anzu-accent-hover: #FF6E40;
     }
 
     .dark {
-        --color-text: #E1E4E8;
-        --color-bg: #121212;
+        --anzu-text: #E1E4E8;
+        --anzu-bg: #121212;
     }
 }
 
 body {
-    color: var(--color-text);
-    background-color: var(--color-bg);
+    color: var(--anzu-text);
+    background-color: var(--anzu-bg);
     position: relative;
     z-index: 1;
 }
@@ -54,12 +54,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
+    background: var(--anzu-primary);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary-hover);
+    background: var(--anzu-primary-hover);
 }
 
 ::-webkit-scrollbar-track-piece {

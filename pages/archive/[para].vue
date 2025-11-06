@@ -6,7 +6,7 @@
     </div>
     <div class="pt-15 min-h-1/2 box-border">
       <div v-if="loading" class="flex justify-center h-1/2 items-center">
-        <AnimationLoadingSpinner size="xl2" color="[var(--color-accent-hover)]"></AnimationLoadingSpinner>
+        <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>
       </div>
       <div v-if="error" class="m-2 flex justify-center">
         <ErrorDisplay :error-data="error"></ErrorDisplay>

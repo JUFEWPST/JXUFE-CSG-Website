@@ -2,10 +2,11 @@
 import FlipToggle from '~/components/FlipToggle.vue';
 import { onMounted, ref } from 'vue';
 import { leadersData } from '~/data/leadersData';
+import { honorsData, getLevelColor, getYearColor } from '~/data/honors'
 import { membersArray } from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
-
+const selectedTab = ref('tab1')
 const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
     "放弃的话就到此为止了，但是，你可以改变命运()",
@@ -40,7 +41,7 @@ onMounted(() => {
             <h1 class="hidden">关于协会</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
                 <template #front>
-                    <div class="font-bold mx-auto text-center text-3xl md:text-4xl lg:text-5xl  relative"
+                    <div class="font-bold mx-auto text-center text-4xl md:text-5xl  relative"
                         aria-label="江西财经大学网络安全协会 - 关于协会">
                         <client-only>
                             <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -94,11 +95,11 @@ onMounted(() => {
                     <div class="space-y-6">
                         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                             <span
-                                class="font-bold text-[var(--color-accent-hover)]">江西财经大学网络安全协会</span>成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。
+                                class="font-bold text-[var(--anzu-accent-hover)]">江西财经大学网络安全协会</span>成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。
                         </p>
                         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                             本社创立的初衷是为了一起<span
-                                class="font-semibold text-[var(--color-accent-hover)]">学习交流网络安全知识，教授同学们有关网络安全的知识</span>，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。
+                                class="font-semibold text-[var(--anzu-accent-hover)]">学习交流网络安全知识，教授同学们有关网络安全的知识</span>，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。
                         </p>
                         <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-inner">
                             <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white flex items-center">
@@ -129,6 +130,10 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
+            <AnzuAlert type="info">
+                数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink class="text-blue-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
+                    [历届成员档案共建邀请]</NuxtLink>
+            </AnzuAlert>
             <section
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden">
                 <div class="absolute top-1/5 right-1/6 text-4xl text-purple-300 opacity-50">✭</div>
@@ -161,9 +166,6 @@ onMounted(() => {
                         列表形式</span></NuxtLink>
                 <MembersCarousel :membersArray="membersArray" />
             </section>
-            <h2 class="text-xl font-bold text-blue-400 text-center">数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink
-                    class="text-green-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">[历届成员档案共建邀请]</NuxtLink>
-            </h2>
             <section
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
@@ -179,69 +181,22 @@ onMounted(() => {
                         协会成员荣誉
                     </h2>
                     <div class="space-y-8">
-                        <div>
+                        <div v-for="yearData in honorsData" :key="yearData.year">
                             <h3
                                 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-200 dark:border-gray-700 flex items-center">
-                                <span class="w-1.5 h-6 bg-pink-500 mr-2 rounded-full"></span>
-                                2025年
+                                <span class="w-1.5 h-6 mr-2 rounded-full" :class="getYearColor(yearData.year)"></span>
+                                {{ yearData.year }}
                             </h3>
                             <ul class="space-y-4">
-                                <li class="flex items-start group">
+                                <li v-for="(honor, index) in yearData.honors" :key="index"
+                                    class="flex items-start group">
                                     <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第22届ISCC竞赛博弈对抗赛</span>
+                                        class="px-2 py-1 mr-3 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform"
+                                        :class="`bg-gradient-to-r ${getLevelColor(honor.level)}`">
+                                        {{ honor.level }}
+                                    </span>
+                                    <span class="text-gray-700 dark:text-gray-300">{{ honor.description }}</span>
                                 </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第10届全国高校密码数学挑战赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第22届ISCC竞赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">十六届蓝桥杯网络安全赛道</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省三</span>
-                                    <span class="text-gray-700 dark:text-gray-300">十八届CISCN广东赛区</span>
-                                </li>
-
-                            </ul>
-                        </div>
-                        <div>
-                            <h3
-                                class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-200 dark:border-gray-700 flex items-center">
-                                <span class="w-1.5 h-6 bg-blue-500 mr-2 rounded-full"></span>
-                                2024年
-                            </h3>
-                            <ul class="space-y-4">
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国一</span>
-                                    <span class="text-gray-700 dark:text-gray-300">21届ISCC全国大学生信息安全竞赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">国二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">2024睿抗机器人开发者大赛(RAICOM)全国总决赛</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">十五届蓝桥杯网络安全赛道</span>
-                                </li>
-                                <li class="flex items-start group">
-                                    <span
-                                        class="px-2 py-1 mr-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform">省二</span>
-                                    <span class="text-gray-700 dark:text-gray-300">第九届全国密码挑战赛</span>
-                                </li>
-
                             </ul>
                         </div>
                     </div>
@@ -279,14 +234,10 @@ onMounted(() => {
                                 </div>
                             </div>
                             <div class="flex space-x-3 mt-4">
-                                <a class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm"
-                                    href="https://qm.qq.com/q/v7pD9BL4Lm" target="_blank">
-                                    加入群聊
-                                </a>
-                                <a class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition-colors text-sm"
-                                    href="#" @click.prevent="currentQuote = (currentQuote + 1) % quotes.length">
-                                    换一句
-                                </a>
+                                <AnzuButton class="h-10" href="https://qm.qq.com/q/v7pD9BL4Lm"
+                                    primary-color="oklch(62.3% 0.214 259.815)" target="_blank">加入群聊</AnzuButton>
+                                <AnzuButton @click="currentQuote = (currentQuote + 1) % quotes.length"
+                                    primary-color="oklch(65.6% 0.241 354.308)">换一句</AnzuButton>
                             </div>
                         </div>
                         <div class="md:w-1/2 flex justify-center">
@@ -334,7 +285,6 @@ onMounted(() => {
 
                 </div>
             </section>
-
         </div>
     </main>
 </template>
