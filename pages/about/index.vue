@@ -6,7 +6,7 @@ import { honorsData, getLevelColor, getYearColor } from '~/data/honors'
 import { membersArray } from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
-
+const selectedTab = ref('tab1')
 const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
     "放弃的话就到此为止了，但是，你可以改变命运()",
@@ -41,7 +41,7 @@ onMounted(() => {
             <h1 class="hidden">关于协会</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
                 <template #front>
-                    <div class="font-bold mx-auto text-center text-3xl md:text-4xl lg:text-5xl  relative"
+                    <div class="font-bold mx-auto text-center text-4xl md:text-5xl  relative"
                         aria-label="江西财经大学网络安全协会 - 关于协会">
                         <client-only>
                             <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -95,11 +95,11 @@ onMounted(() => {
                     <div class="space-y-6">
                         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                             <span
-                                class="font-bold text-[var(--color-accent-hover)]">江西财经大学网络安全协会</span>成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。
+                                class="font-bold text-[var(--anzu-accent-hover)]">江西财经大学网络安全协会</span>成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。
                         </p>
                         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                             本社创立的初衷是为了一起<span
-                                class="font-semibold text-[var(--color-accent-hover)]">学习交流网络安全知识，教授同学们有关网络安全的知识</span>，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。
+                                class="font-semibold text-[var(--anzu-accent-hover)]">学习交流网络安全知识，教授同学们有关网络安全的知识</span>，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。
                         </p>
                         <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-inner">
                             <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white flex items-center">
@@ -130,6 +130,10 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
+            <AnzuAlert type="info">
+                数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink class="text-blue-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
+                    [历届成员档案共建邀请]</NuxtLink>
+            </AnzuAlert>
             <section
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden">
                 <div class="absolute top-1/5 right-1/6 text-4xl text-purple-300 opacity-50">✭</div>
@@ -162,9 +166,6 @@ onMounted(() => {
                         列表形式</span></NuxtLink>
                 <MembersCarousel :membersArray="membersArray" />
             </section>
-            <h2 class="text-xl font-bold text-blue-400 text-center">数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink
-                    class="text-green-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">[历届成员档案共建邀请]</NuxtLink>
-            </h2>
             <section
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden"
                 :class="{ 'opacity-0 translate-y-4': !isMounted, 'opacity-100 translate-y-0': isMounted }"
@@ -284,7 +285,6 @@ onMounted(() => {
 
                 </div>
             </section>
-
         </div>
     </main>
 </template>

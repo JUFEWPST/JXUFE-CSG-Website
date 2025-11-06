@@ -334,11 +334,11 @@ header {
 }
 
 .nav-link:hover {
-    color: var(--color-primary-pressed);
+    color: var(--anzu-primary-pressed);
 }
 
 .active-link {
-    color: var(--color-primary);
+    color: var(--anzu-primary);
     font-weight: 500;
     position: relative;
 }
@@ -356,11 +356,11 @@ header {
 
 .mobile-nav-link:hover {
     background-color: rgba(243, 244, 246, 0.8);
-    color: var(--color-primary-pressed);
+    color: var(--anzu-primary-pressed);
 }
 
 .mobile-active-link {
-    color: var(--color-primary);
+    color: var(--anzu-primary);
     font-weight: 500;
 }
 
@@ -376,12 +376,12 @@ header {
 
 .dark .nav-link:hover,
 .dark .mobile-nav-link:hover {
-    color: var(--color-primary-300);
+    color: var(--anzu-primary-300);
 }
 
 .dark .active-link,
 .dark .mobile-active-link {
-    color: var(--color-primary-400);
+    color: var(--anzu-primary-400);
 }
 
 .dark button {
@@ -389,7 +389,7 @@ header {
 }
 
 .dark button:hover {
-    color: var(--color-primary-300);
+    color: var(--anzu-primary-300);
 }
 
 .group:hover .absolute.top-full {
@@ -408,7 +408,7 @@ header {
 }
 
 .dark .pl-4 a.mobile-active-link {
-    color: var(--color-primary);
+    color: var(--anzu-primary);
 }
 
 .transition-all {
