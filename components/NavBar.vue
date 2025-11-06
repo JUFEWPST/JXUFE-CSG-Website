@@ -210,12 +210,12 @@ const currentBgOpacity = computed(() => isMenuOpen.value ? 0.8 : opacity.value *
 
 const headerStyles = computed(() => {
     const showBlurEffect = (opacity.value > 0.1 || isMenuOpen.value)
-    const blurAmount = isMenuOpen.value ? 16 : Math.min(opacity.value * 16, 16)
+    const blurAmount = isMenuOpen.value ? 12 : Math.min(opacity.value * 12, 12)
     return {
         backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
         backdropFilter: showBlurEffect && blurAmount > 0 ?
             `blur(${blurAmount}px) saturate(180%)` : 'none',
-        boxShadow: showBlurEffect ? '0 1px 2px 0px rgba(0, 0, 0, 0.25)' : 'none',
+        boxShadow: showBlurEffect ? '0 1px 2px 0px rgba(0, 0, 0, 0.1)' : 'none',
         borderBottom: showBlurEffect ? '1px solid rgba(255, 255, 255, 0.12)' : 'none'
     }
 })
