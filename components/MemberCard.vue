@@ -1,5 +1,5 @@
 <template>
-    <div class="member-card flex p-4  w-[340px] h-32 min-w-[300px]" :title="member.message">
+    <div class="member-card flex p-4 w-full h-32 min-w-[300px]" :title="member.message">
         <div class="flex-shrink-0 mr-4 flex items-center">
             <div class="w-24 h-24 rounded-full overflow-hidden border-1 border-gray-100 dark:border-gray-700">
                 <img v-if="member.avatar" :src="member.avatar" :alt="member.display || '头像'"
@@ -48,12 +48,12 @@ const nameInitial = computed(() => {
 <style scoped>
 @custom-variant dark (&:where(.dark, .dark *));
 .member-card {
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
     position: relative;
     overflow: hidden;
-    border: 0.1px solid rgba(89, 83, 83, 0.3);
+    border: 0.1px solid rgba(89, 83, 83, 0.2);
     border-radius: 18px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.05);
 }
 
 .dark .member-card {
@@ -61,6 +61,6 @@ const nameInitial = computed(() => {
 }
 
 .member-card:hover {
-    border-color: rgba(89, 83, 83, 0.7);
+    box-shadow: 0px 0px 7px rgba(89, 0, 77, 0.15);
 }
 </style>
