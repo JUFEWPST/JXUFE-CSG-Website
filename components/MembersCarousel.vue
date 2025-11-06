@@ -1,19 +1,12 @@
 <template>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-center mb-6">
-            <div class="inline-flex rounded-md shadow-sm" role="group">
-                <button v-for="item in membersArray" :key="item.year" @click="selectYear(item.year)" :class="[
-                    'px-4 py-2 text-sm font-medium border',
-                    'first:rounded-l-md last:rounded-r-md',
-                    'focus:z-10 focus:outline-none',
-                    selectedYear === item.year
-                        ? 'bg-blue-400 text-white border-blue-600'
-                        : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-600'
-                ]">
+            <AnzuButtonGroup v-model="selectedYear" gap="none" class="h-10">
+                <AnzuButton v-for="item in membersArray" :key="item.year" :value="item.year" primary-color="#50a2ff">
                     <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
-                    <template v-if="typeof item.year === 'number'">{{ item.year }}届</template>
-                </button>
-            </div>
+                    <template v-else>{{ item.year }}届</template>
+                </AnzuButton>
+            </AnzuButtonGroup>
         </div>
 
         <!-- 轮播组件 -->
@@ -32,7 +25,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import BaseCarousel from './BaseCarousel.vue';
 import MemberCard from './MemberCard.vue';
 import type { Member, MemberGroup } from '~/data/membersData';
-
 
 const props = defineProps<{
     membersArray: MemberGroup[];
@@ -66,15 +58,9 @@ const getGroups = () => {
     return groups;
 };
 
-const selectYear = (year: string | number) => {
-    selectedYear.value = year;
-};
-
 onMounted(() => {
     updatePerPage();
     window.addEventListener('resize', updatePerPage);
-
-    // 确保默认选中第一个年份
     if (props.membersArray.length > 0 && !selectedYear.value) {
         selectedYear.value = props.membersArray[0].year;
     }
@@ -86,7 +72,19 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
+
 .carousel-container {
     min-height: 220px;
+}
+
+@media (max-width: 640px) {
+    :deep(.anzu-button-group) {
+        @apply flex-wrap justify-center;
+    }
+
+    :deep(.anzu-button-group .anzu-button) {
+        @apply flex-1 min-w-0 px-3 py-2 text-xs;
+    }
 }
 </style>
