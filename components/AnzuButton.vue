@@ -67,8 +67,6 @@ const isSelected = computed(() => {
     const selected = buttonGroupContext.selectedValue?.value
     const isSelected = selected === props.value
 
-    debugLog.value = `Button value: ${props.value}, Selected: ${selected}, IsSelected: ${isSelected}`
-    console.log(debugLog.value)
 
     return isSelected
 })
@@ -171,12 +169,9 @@ const computedStyles = computed(() => {
 })
 
 function handleClick(event: MouseEvent): void {
-    console.log('Button clicked, value:', props.value)
-
     if (!isDisabled.value && props.status !== 'loading') {
         // 如果在按钮组中且有值，则通知组选择
         if (buttonGroupContext && props.value !== undefined) {
-            console.log('Calling buttonGroupContext.select with:', props.value)
             buttonGroupContext.select(props.value)
         }
         emit('click', event)
@@ -195,11 +190,6 @@ watch(
     },
     { immediate: true }
 )
-
-// 监听选中状态变化
-watch(isSelected, (newVal) => {
-    console.log('Button selection state changed:', newVal, 'for value:', props.value)
-})
 </script>
 
 <style scoped>
