@@ -89,6 +89,7 @@ import { useRandomColor } from '@/composables/useRandomColor';
 const official_icon = '/jxufe-logo.svg';
 const Links = [
     { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
+    { name: '江西财经大学科技与信息化中心', url: 'https://nic.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学计算机与人工智能学院', url: 'https://cai.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学本科招生网', url: 'https://zsjy.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学迎新网', url: 'http://hello.jxufe.edu.cn/', icon: official_icon },
