@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center rounded-xl overflow-hidden shadow-lg bg-white dark:bg-gray-800 transition-all duration-300 w-90 h-100">
+        class="flex flex-col items-center rounded-xl overflow-hidden shadow-lg bg-white dark:bg-gray-800 transition-all duration-300 min-w-90 h-100">
         <div class="relative h-35 w-full">
             <img class="absolute top-0 left-0 z-1 object-cover w-full h-full opacity-30" :src="person.avatar" alt="背景图"/>
             <div class="absolute top-0 left-0 z-2 w-full h-full p-2 box-border flex gap-2">
