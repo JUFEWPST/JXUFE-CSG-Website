@@ -53,6 +53,9 @@ const member2025: Member[] = [
     {
         name: '陈家炜',
         position: '组织部部长',
+        display: '定夏汐',
+        message: '记得好好吃饭',
+        avatar: '/avatar/昵称..avif'
     },
     {
         name: '余俊康',
