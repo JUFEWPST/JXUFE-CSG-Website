@@ -51,16 +51,9 @@ const emit = defineEmits<{
     (e: 'click', event: MouseEvent): void
 }>()
 
-// 获取按钮组上下文
 const buttonGroupContext = inject('buttonGroup', null)
-
-// 调试日志
-const debugLog = ref('')
-
-// 计算是否选中 - 修复响应式问题
 const isSelected = computed(() => {
     if (!buttonGroupContext || props.value === undefined) {
-        debugLog.value = 'No button group context or value'
         return false
     }
 
@@ -71,17 +64,13 @@ const isSelected = computed(() => {
     return isSelected
 })
 
-// 计算有效变体 - 修复逻辑
 const effectiveVariant = computed(() => {
-    // 如果在按钮组中且有值，根据选中状态决定变体
     if (buttonGroupContext && props.value !== undefined) {
         return isSelected.value ? 'filled' : 'outlined'
     }
-    // 不在按钮组中，使用自身的 variant
     return props.variant
 })
 
-// 简化按钮组类名计算
 const buttonGroupClasses = computed(() => {
     if (!buttonGroupContext) return ''
     return `anzu-button--in-group-${buttonGroupContext.direction?.value}`
@@ -169,16 +158,21 @@ const computedStyles = computed(() => {
 })
 
 function handleClick(event: MouseEvent): void {
-    if (!isDisabled.value && props.status !== 'loading') {
-        // 如果在按钮组中且有值，则通知组选择
-        if (buttonGroupContext && props.value !== undefined) {
-            buttonGroupContext.select(props.value)
-        }
-        emit('click', event)
-        if (tag.value === 'a' && isDisabled.value) {
-            event.preventDefault()
-        }
+    const isAnchor = tag.value === 'a'
+
+    if (isAnchor && (isDisabled.value || props.status === 'loading')) {
+        event.preventDefault()
     }
+
+    if (isDisabled.value || props.status === 'loading') {
+        return
+    }
+
+    if (buttonGroupContext && props.value !== undefined) {
+        buttonGroupContext.select(props.value)
+    }
+
+    emit('click', event)
 }
 
 watch(
@@ -213,7 +207,6 @@ watch(
     @apply relative z-10 flex-shrink-0;
 }
 
-/* 组内按钮样式 - 简化逻辑 */
 .anzu-button--in-group-horizontal {
     @apply rounded-none border-r-0;
 }
@@ -244,7 +237,6 @@ watch(
     border-bottom-width: 1px;
 }
 
-/* 移动端适配 */
 @media (max-width: 600px) {
     .anzu-button {
         @apply min-h-10 px-3 py-2.5 text-sm;
