@@ -160,10 +160,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, computed, reactive } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import ToggleTheme from './ToggleTheme.vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
+import { useNavLinks, type NavLink, type NavLinkWithChildren } from '~/composables/useNavLinks'
+import { useDropdownController } from '~/composables/useDropdownController'
 
 const route = useRoute()
 const navTitleBox = useState('navTitleBox', () => ({
@@ -171,25 +173,10 @@ const navTitleBox = useState('navTitleBox', () => ({
     subtitle: ''
 }))
 
-// 导航链接配置
-const navLinks = [
-    { path: '/', label: '首页', icon: '✧', color: 'pink' },
-    { path: '/archive', label: '归档', icon: '✦', color: 'blue' },
-    {
-        path: '/about',
-        defaultPath: '/about',
-        label: '关于协会',
-        icon: '✧',
-        color: 'purple',
-        children: [
-            { path: '/about', label: '协会简介' },
-            { path: '/about/leaders', label: '历届负责人' },
-            { path: '/about/members', label: '历届成员' },
-            { path: '/about/excellent', label: '优秀成员' }
-        ]
-    },
-    { path: '/links', label: '相关链接', icon: '✦', color: 'yellow' }
-]
+const navLinks = useNavLinks()
+const dropdownLinks = navLinks.filter((link): link is NavLinkWithChildren => 'children' in link)
+const desktopDropdown = useDropdownController(dropdownLinks)
+const mobileDropdown = useDropdownController(dropdownLinks)
 
 // 响应式状态
 const titleVisible = ref(false)
@@ -200,10 +187,6 @@ const isMenuOpen = ref(false)
 const showArticleTitle = ref(false)
 const lastScrollY = ref(0)
 const scrollDirection = ref<'up' | 'down'>('up')
-
-// 下拉菜单状态
-const dropdownStates = reactive<Record<string, boolean>>({})
-const mobileDropdownStates = reactive<Record<string, boolean>>({})
 
 // 计算属性
 const currentBgOpacity = computed(() => isMenuOpen.value ? 0.8 : opacity.value * 0.8)
@@ -222,29 +205,17 @@ const headerStyles = computed(() => {
 // 工具函数
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3)
 
-const isActive = (link: any) => {
-    if (link.children) {
-        return link.children.some((child: any) => route.path === child.path);
+const isActive = (link: NavLink) => {
+    if ('children' in link) {
+        return link.children.some((child) => route.path === child.path)
     }
-    return route.path === link.path;
-};
+    return route.path === link.path
+}
 
 // 下拉菜单操作
-const openDropdown = (path: string) => {
-    dropdownStates[path] = true;
-};
+const { states: dropdownStates, open: openDropdown, close: closeDropdown, toggle: toggleDropdown, closeAll: closeAllDropdowns } = desktopDropdown
 
-const closeDropdown = (path: string) => {
-    dropdownStates[path] = false;
-};
-
-const toggleDropdown = (path: string) => {
-    dropdownStates[path] = !dropdownStates[path];
-};
-
-const toggleMobileSubmenu = (path: string) => {
-    mobileDropdownStates[path] = !mobileDropdownStates[path];
-};
+const { states: mobileDropdownStates, toggle: toggleMobileSubmenu, closeAll: closeAllMobileDropdowns } = mobileDropdown
 
 // 滚动处理
 const handleScroll = () => {
@@ -273,16 +244,18 @@ const handleScroll = () => {
 
 // 菜单操作
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value
-const closeMenu = () => isMenuOpen.value = false
+const closeMenu = () => {
+    isMenuOpen.value = false
+    closeAllMobileDropdowns()
+}
 
 const handleClickOutside = (event: MouseEvent) => {
     if (headerRef.value && !headerRef.value.contains(event.target as Node)) {
         isMenuOpen.value = false
 
         // 关闭所有下拉菜单
-        Object.keys(dropdownStates).forEach(key => {
-            dropdownStates[key] = false;
-        });
+        closeAllDropdowns()
+        closeAllMobileDropdowns()
     }
 }
 
@@ -292,14 +265,6 @@ onMounted(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
     document.addEventListener('click', handleClickOutside)
     handleScroll()
-
-    // 初始化下拉菜单状态
-    navLinks.forEach(link => {
-        if (link.children) {
-            dropdownStates[link.path] = false;
-            mobileDropdownStates[link.path] = false;
-        }
-    });
 
     // 标题浮现动画
     setTimeout(() => {
