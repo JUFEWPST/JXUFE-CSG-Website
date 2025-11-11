@@ -40,7 +40,7 @@ const sizeMap = {
     md: 'w-20 h-20',
     lg: 'w-30 h-30',
     xl: 'w-40 h-40',
-    xl2: 'w-50 h-50'
+    '2xl': 'w-50 h-50'
 }
 
 const sizeClass = computed(() => {
