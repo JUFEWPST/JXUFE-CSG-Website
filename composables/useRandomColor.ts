@@ -13,8 +13,8 @@ export function useRandomColor(tag: string): string {
     // 随机选择一个鲜艳色相范围
     const hueRange = VIBRANT_HUES[Math.floor(Math.random() * VIBRANT_HUES.length)];
     const hue = Math.floor(Math.random() * (hueRange[1] - hueRange[0])) + hueRange[0];
-    const saturation = Math.floor(Math.random() * 30) + 20; // 70-100%
-    const lightness = Math.floor(Math.random() * 15) + 45;  // 25-40%
+    const saturation = Math.floor(Math.random() * 30) + 20; // 20-49%
+    const lightness = Math.floor(Math.random() * 15) + 45;  // 45-59%
 
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     colorMap.set(tag, color);
