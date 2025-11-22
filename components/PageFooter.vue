@@ -66,7 +66,7 @@
                     ✦</div>
                 <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 md:mb-0">
                     © {{ new Date().getFullYear() === 2025 ? `2025` : `2025-${new Date().getFullYear()}` }}
-                    江西财经大学网络安全协会
+                    江西财经大学网络安全协会 All Rights Reserved.
                 </p>
             </div>
         </div>
