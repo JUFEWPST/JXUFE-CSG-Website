@@ -33,5 +33,5 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['nuxt-particles']
+  modules: ['@nuxtjs/i18n']
 })
