@@ -1,5 +1,14 @@
 # 规范
 
+## 开发
+
+```bash
+git clone https://github.com/xxxxx/jxufe-csg-website.git # 你fork的或者哪里的
+cd jxufe-csg-website
+pnpm install # 安装依赖
+pnpm dev # 预览
+```
+
 ## 代码提交
 
 ### 如果你是项目成员
@@ -30,19 +39,19 @@ git push origin feature/xxx
 
 ### 如果你不是项目成员
 
-请先 fork 本项目，然后在你自的 fork 下进行开发，开发完成后同步到自己仓库，在仓库页面的 Compare & pull request 提交 PR.
+请先 fork 本项目，然后在你自的 fork 下开分支进行开发，开发完成后同步到自己仓库，在仓库页面的 Compare & pull request 提交 PR.
 
 记得与本项目同步
 
 ## 项目开发规范
 
-请先仔细阅读[Nuxt 文档](https://nuxt.com.cn/docs/getting-started/introduction)、[Vue.js 文档](https://cn.vuejs.org/)、[Tailwind CSS 文档](https://tailwind.org.cn/blog/tailwindcss-v4)
+请先仔细阅读[Nuxt 文档](https://nuxtjs.org.cn/docs/4.x/getting-started/introduction)、[Vue.js 文档](https://cn.vuejs.org/)、[Tailwind CSS 文档](https://tailwind.org.cn/blog/tailwindcss-v4)
 推荐阅读[阮一峰的 TypeScript 教程](https://wangdoc.com/typescript/)
 
 - 使用 pnpm 包管理器
 - 使用`组合式 API`开发组件/页面
 - 组件的命名遵循 PascalCase 命名法，即所有单词的首字母大写
-- 遇事不决问 AI，记得让 AI 详细解释代码为什么要这么写，要自己判断下，有些 AI 就是很会胡编.要记得这是可以增长项目经验的，别过分依赖 AI
+- 遇事不决问 AI，记得让 AI 详细解释代码为什么要这么写，要自己判断下
 
 ### 基本具体目录结构
 
@@ -61,6 +70,4 @@ git push origin feature/xxx
 
 ## 美学规范
 
-利用 Tailwind CSS 的断点自适应电脑端和移动端（简单来说就是屏幕横着还是竖着）并提供亮暗两种样式
-
-其他的想不出来了，来点 Issue 或者 PR
+利用 Tailwind CSS 的断点自适应电脑端和移动端，然后就是**相信的心就是你的魔法**
