@@ -1,23 +1,17 @@
-# 江西财经大学网络安全协会网站建设项目
+# 江西财经大学网络安全协会网站项目
 
-## 概述
+> [!NOTE]
+>
+> 本协会官方网站地址为：[https://csec.jxufe.edu.cn/](https://csec.jxufe.edu.cn/)
+>
+> 原始域名 [https://wpst.top](https://wpst.top) 曾用于托管网站，现已配置 **301 永久重定向** 至官方主站。
+> 由 Vercel 托管的测试站点 [https://jxufe-csg-website.vercel.app/](https://jxufe-csg-website.vercel.app/) 仍可访问。该站点基于 [TangTangChu](https://github.com/TangTangChu) Fork 的仓库构建。
+> 自定义域名 [https://jxufe.tech](https://jxufe.tech) 目前指向上述 Vercel 测试站点。
 
-本项目用于开发协会的网站，采用基于 [Nuxt.js](<(https://nuxt.com.cn)>) 的现代化技术栈
+本网站基于 [Nuxt: The Progressive Web Framework](https://nuxt.com/) 开发（v4.2），项目目录结构与官方指导保持一致
 
-目前网站计划建设如下板块
+截至目前，网站建设项目已告一段落，剩下的就是一些UI美化、细节打磨与规范化……以及给现任会长留点“发挥空间”加点私货
 
-- 首页（狠狠给协会打 cool，然后简略介绍协会现状）
-  举例：从上往下分别是 大大的网安协会字样、近期动态、协会简介
-- 具体介绍页
-  包含协会荣誉、历届成员、成员荣誉等
-- 博客页
-  用于发布协会的新闻/技术博客
-- 加入我们
-  贴个二维码也不是不行
-- 某个不知名角落的致谢
+欢迎提交 Issue 吐槽，也欢迎直接甩 PR 过来
 
-如有更多建议请提交 Issue 或者直接来 PR
-
-目前该项目已经搭了个实例页面，有请大家 PR 吧
-
-关于项目规范，请移步[至此](/GUIDE/GUIDE.md)，请不断提出 Issue 或 PR 协助项目成长
+另附一个简单的[指导](/GUIDE/GUIDE.md)
