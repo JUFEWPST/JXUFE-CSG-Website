@@ -10,6 +10,16 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  i18n: {
+    strategy: 'no_prefix',
+    locales: [
+      { code: 'zh', iso: 'zh-CN', name: '简体中文', file: 'zh.json' },
+      { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'ja', iso: 'ja-JP', name: '日本語', file: 'ja.json' },
+      { code: 'ko', iso: 'ko-KR', name: '한국어', file: 'ko.json' },
+    ],
+    defaultLocale: 'zh',
+  },
 
   app: {
     head: {

@@ -1,0 +1,189 @@
+{
+    "meta": {
+        "school": "江西财经大学",
+        "guild": "网络安全协会",
+        "fullName": "江西财经大学网络安全协会"
+    },
+    "nav": {
+        "home": "首页",
+        "archive": "归档",
+        "about": "关于协会",
+        "links": "相关链接",
+        "aboutChildren": {
+            "index": "协会简介",
+            "leaders": "历届负责人",
+            "members": "历届成员",
+            "excellent": "优秀成员"
+        }
+    },
+    "pages": {
+        "home": {
+            "meta": {
+                "title": "江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线",
+                "description": "江西财经大学网络安全协会成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。"
+            },
+            "slogan": "共筑网络安全 坚守网络防线",
+            "aboutUs": {
+                "title": "关于我们",
+                "more": "更多"
+            },
+            "participate": {
+                "title": "参与比赛:",
+                "iscc": "ISCC",
+                "joint": "联合比赛",
+                "campusVuln": "校园挖洞活动"
+            },
+            "recentNews": {
+                "title": "近期动态",
+                "more": "查看更多动态 >>"
+            }
+        },
+        "links": {
+            "meta": {
+                "title": "相关链接 - 江西财经大学网络安全协会",
+                "description": "江西财经大学网络安全协会官方网站友链页。提供江财官方网站/校内社团链接及其他个人网站链接跳转。",
+                "keywords": "友情链接,相关链接,学校官网,社团网站,个人网站"
+            },
+            "title": "相关链接",
+            "sections": {
+                "official": "江财官方",
+                "intranet": "内网服务",
+                "intranetTip": "架设于校园网内部",
+                "friends": "友情链接"
+            },
+            "disclaimer": "本页面提供的个人网站链接仅作信息分享，其内容与责任均由网站所有者自行承担，与本社团及学校官方无关。请注意甄别信息来源。",
+            "items": {
+                "jxufe": "江西财经大学官网",
+                "college": "江西财经大学计算机与人工智能学院",
+                "nic": "江西财经大学科技与信息化中心",
+                "ctfplatform": "CTF 平台",
+                "cloud": "云盘资源"
+            }
+        },
+        "archive": {
+            "meta": {
+                "title": "归档 - 江西财经大学网络安全协会",
+                "description": "江西财经大学网络安全协会官方网站归档页，在此可查阅协会发布的归档.",
+                "keywords": "文章归档,博客,协会资讯"
+            },
+            "title": "归档",
+            "para": {
+                "title": "归档详情"
+            }
+        },
+        "about": {
+            "index": {
+                "meta": {
+                    "title": "关于协会 - 江西财经大学网络安全协会",
+                    "description": "江西财经大学网络安全协会成立于2016年，致力于普及网络安全知识、培养技术人才。下设技术部、组织部、宣传部，拥有弱口令安全团队(WPST)，组织竞赛与交流活动，欢迎感兴趣的同学加入。",
+                    "keywords": "协会简介,发展历程,组织架构,协会宗旨,加入协会"
+                },
+                "title": "关于协会",
+                "listmode": "列表形式",
+                "intro": {
+                    "title": "协会简介",
+                    "p1": "{0}成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。",
+                    "p2": "本社创立的初衷是为了一起{highlighted}，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。",
+                    "highlightedText": "学习交流网络安全知识，教授同学们有关网络安全的知识",
+                    "wpstIntro": "同时，我们网安协会还有一支精湛的安全团队——弱口令安全团队(WPST)。这支团队深耕网络安全领域，在漏洞挖掘、攻防、安全策略等方面积累了丰富经验。"
+                },
+                "departments": {
+                    "title": "协会下设部门",
+                    "study": {
+                        "name": "学习部",
+                        "desc": "负责技术研究、培训和比赛指导"
+                    },
+                    "organization": {
+                        "name": "组织部",
+                        "desc": "负责活动策划和组织协调"
+                    },
+                    "publicity": {
+                        "name": "宣传部",
+                        "desc": "负责协会形象宣传和内容制作"
+                    }
+                },
+                "members": {
+                    "leaders": "历届负责人",
+                    "members": "历届成员",
+                    "honors": "协会成员荣誉"
+                },
+                "joinUs": {
+                    "title": "加入我们",
+                    "joinGroup": "加入群聊",
+                    "changeQuote": "换一句",
+                    "qrLabel": "2025年江财网安协会招新群二维码",
+                    "scan_qr": "无论您是否是本校学生，都可扫描{0}的二维码加入2025年江财网安协会招新群与我们互动",
+                    "idolLine": "一起成为学院偶像！"
+                },
+                "contributors": {
+                    "title": "本网站的完成离不开以下小伙伴的贡献，感谢他们的付出",
+                    "invite": "欢迎加入我们，与我们共同建设江财网安协会。",
+                    "projectLink": "想了解或参与本项目，请点击 {0}。"
+                }
+            },
+            "leaders": {
+                "meta": {
+                    "title": "历届负责人 - 江西财经大学网络安全协会",
+                    "description": "江西财经大学网络安全协会历届负责人展示页，在此可查阅江财网安协会历届负责人.",
+                    "keywords": "历届负责人,历届会长,历任会长,江财网安协会会长"
+                },
+                "title": "历届负责人",
+                "dataCollectTip": "数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表",
+                "archiveInvite": "历届成员档案共建邀请"
+            },
+            "members": {
+                "meta": {
+                    "title": "历届成员 - 江西财经大学网络安全协会",
+                    "description": "江西财经大学网络安全协会历届成员页，在此可查阅江财网安协会历届成员.",
+                    "keywords": "历届成员,协会成员,成员档案,江财网安协会历届成员"
+                },
+                "title": "历届成员",
+                "dataCollectTip": "数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表",
+                "archiveInvite": "历届成员档案共建邀请",
+                "suffix": "届"
+            },
+            "excellent": {
+                "meta": {
+                    "title": "优秀成员 - 江西财经大学网络安全协会",
+                    "description": "江西财经大学网络安全协会优秀成员页，在此可查阅协会优秀成员",
+                    "keywords": "优秀成员,成员风采,技术大神,荣誉榜,江财网安协会优秀成员"
+                },
+                "title": "协会优秀成员",
+                "dataCollectTip": "数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表",
+                "archiveInvite": "历届成员档案共建邀请"
+            }
+        }
+    },
+    "common": {
+        "actions": {
+            "more": "更多",
+            "viewDetail": "查看详情",
+            "paginationPrevious": "上一页",
+            "paginationNext": "下一页",
+            "paginationJumpTo": "跳至",
+            "paginationPageUnit": "页",
+            "paginationTargetPageNumber": "目标页数",
+            "paginationJumpToPage": "跳转至 {page} 页",
+            "paginationGoButton": "跳转"
+        },
+        "direction": {
+            "left1": "左方",
+            "right1": "右方",
+            "up1": "上方",
+            "down1": "下方"
+        },
+        "items":{
+            "toc":"目录",
+            "Warning": "警告",
+            "Info": "信息",
+            "Tip": "提示",
+            "Error": "错误",
+            "Success":"成功"
+        }
+    },
+    "footer": {
+        "quickNav": "快速导航",
+        "contact": "联系我们",
+        "address": "江西财经大学麦庐园校区"
+    }
+}

@@ -1,0 +1,189 @@
+{
+    "meta": {
+        "school": "JXUFE",
+        "guild": "Cybersecurity Guild",
+        "fullName": "Cybersecurity Guild of JXUFE"
+    },
+    "nav": {
+        "home": "Home",
+        "archive": "Archive",
+        "about": "About the Guild",
+        "links": "Useful Links",
+        "aboutChildren": {
+            "index": "Guild Overview",
+            "leaders": "Past Leaders",
+            "members": "Past Members",
+            "excellent": "Outstanding Members"
+        }
+    },
+    "pages": {
+        "home": {
+            "meta": {
+                "title": "Cybersecurity Guild of Jiangxi University of Finance and Economics - Building Cybersecurity Together, Guarding the Digital Frontier",
+                "description": "Founded in September 2016, the Cybersecurity Guild of Jiangxi University of Finance and Economics aims to popularize cybersecurity knowledge among students and staff, cultivate technical talent, promote mutual exchange, and grow together."
+            },
+            "slogan": "Building Cybersecurity Together, Guarding the Digital Frontier",
+            "aboutUs": {
+                "title": "About Us",
+                "more": "More"
+            },
+            "participate": {
+                "title": "Competitions We Join:",
+                "iscc": "ISCC",
+                "joint": "Joint Competitions",
+                "campusVuln": "Campus Bug-Hunting Activities"
+            },
+            "recentNews": {
+                "title": "Lastest Updates",
+                "more": "View More Updates >>"
+            }
+        },
+        "links": {
+            "meta": {
+                "title": "Useful Links - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                "description": "Friend links page of the official website of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Provides links to the university's official site, on-campus organizations, and personal websites.",
+                "keywords": "friend links,useful links,university official site,organization sites,personal websites"
+            },
+            "title": "Useful Links",
+            "sections": {
+                "official": "JXUFE Official",
+                "intranet": "Intranet Services",
+                "intranetTip": "Hosted within the campus network",
+                "friends": "Friend Links"
+            },
+            "disclaimer": "The personal website links provided on this page are for information sharing only. Their content and responsibility are borne solely by the website owners and are not related to this guild or the university. Please evaluate sources carefully.",
+            "items": {
+                "jxufe": "JXUFE Official Website",
+                "college": "School of Computer Science and Artificial Intelligence, JXUFE",
+                "nic": "Technology and Information Center, JXUFE",
+                "ctfplatform": "CTF Platform",
+                "cloud": "Cloud Drive Resources"
+            }
+        },
+        "archive": {
+            "meta": {
+                "title": "Archive - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                "description": "Archive page of the official website of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse archived posts here.",
+                "keywords": "post archive,blog,guild news"
+            },
+            "title": "Archive",
+            "para": {
+                "title": "Archive Details"
+            }
+        },
+        "about": {
+            "index": {
+                "meta": {
+                    "title": "About the Guild - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                    "description": "Founded in 2016, the Cybersecurity Guild of Jiangxi University of Finance and Economics is dedicated to popularizing cybersecurity knowledge and cultivating technical talent. It includes a Technical Department, Organization Department, and Publicity Department, and has an elite security team (WPST). We organize competitions and exchange activities and welcome interested students to join.",
+                    "keywords": "guild overview,history,organization structure,mission,join the guild"
+                },
+                "title": "About the Guild",
+                "listmode": "List View",
+                "intro": {
+                    "title": "Guild Overview",
+                    "p1": "{0} was founded in September 2016. Its mission is to popularize cybersecurity knowledge among students and staff, cultivate cybersecurity technical talent, promote mutual exchange, and grow together.",
+                    "p2": "The guild was created so we could {highlighted}. We organize everyone to participate in competitions, and promote and run activities to deepen students’ interest in cybersecurity. At the same time, as a technical discussion platform, we provide a community for students who are interested and capable to communicate and improve.",
+                    "highlightedText": "learn and exchange cybersecurity knowledge together, and teach students about cybersecurity",
+                    "wpstIntro": "Meanwhile, our guild also has an elite security team — the Weak Password Security Team (WPST). The team has long focused on cybersecurity and accumulated rich experience in vulnerability discovery, offense and defense, and security strategy."
+                },
+                "departments": {
+                    "title": "Guild Departments",
+                    "study": {
+                        "name": "Learning Department",
+                        "desc": "Responsible for technical research, training, and competition guidance"
+                    },
+                    "organization": {
+                        "name": "Organization Department",
+                        "desc": "Responsible for event planning and coordination"
+                    },
+                    "publicity": {
+                        "name": "Publicity Department",
+                        "desc": "Responsible for guild branding and content production"
+                    }
+                },
+                "members": {
+                    "leaders": "Past Leaders",
+                    "members": "Past Members",
+                    "honors": "Member Honors"
+                },
+                "joinUs": {
+                    "title": "Join Us",
+                    "joinGroup": "Join the Group Chat",
+                    "changeQuote": "Change Quote",
+                    "qrLabel": "QR Code for the 2025 JXUFE Cybersecurity Guild Recruitment Group",
+                    "scan_qr": "Whether you are a JXUFE student or not, you can scan the QR code at {0} to join the 2025 JXUFE Cybersecurity Guild recruitment group and interact with us.",
+                    "idolLine": "Let’s become the school’s idols together!"
+                },
+                "contributors": {
+                    "title": "This website wouldn’t be possible without contributions from these friends — thank you for your effort!",
+                    "invite": "You’re welcome to join us and help build the JXUFE Cybersecurity Guild together.",
+                    "projectLink": "To learn more about or contribute to this project, click {0}."
+                }
+            },
+            "leaders": {
+                "meta": {
+                    "title": "Past Leaders - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                    "description": "Past leaders page of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse past leaders here.",
+                    "keywords": "past leaders,past presidents,former presidents,JXUFE cybersecurity guild presidents"
+                },
+                "title": "Past Leaders",
+                "dataCollectTip": "Data is still being collected. If you are a related member of the guild, please help by filling out our collection form.",
+                "archiveInvite": "Invitation to Co-build Past Members Archive"
+            },
+            "members": {
+                "meta": {
+                    "title": "Past Members - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                    "description": "Past members page of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse past members here.",
+                    "keywords": "past members,guild members,member archive,JXUFE cybersecurity guild past members"
+                },
+                "title": "Past Members",
+                "dataCollectTip": "Data is still being collected. If you are a related member of the guild, please help by filling out our collection form.",
+                "archiveInvite": "Invitation to Co-build Past Members Archive",
+                "suffix": "Cohort"
+            },
+            "excellent": {
+                "meta": {
+                    "title": "Outstanding Members - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                    "description": "Outstanding members page of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse outstanding members here.",
+                    "keywords": "outstanding members,member highlights,security experts,honor roll,JXUFE cybersecurity guild outstanding members"
+                },
+                "title": "Outstanding Members",
+                "dataCollectTip": "Data is still being collected. If you are a related member of the guild, please help by filling out our collection form.",
+                "archiveInvite": "Invitation to Co-build Past Members Archive"
+            }
+        }
+    },
+    "common": {
+        "actions": {
+            "more": "More",
+            "viewDetail": "View Details",
+            "paginationPrevious": "Previous page",
+            "paginationNext": "Next page",
+            "paginationJumpTo": "Jump to",
+            "paginationPageUnit": "Page",
+            "paginationTargetPageNumber": "Target page number",
+            "paginationJumpToPage": "Jump to page {page}",
+            "paginationGoButton": "GO"
+        },
+        "direction": {
+            "left1": "Left",
+            "right1": "Right",
+            "up1": "Up",
+            "down1": "Down"
+        },
+        "items": {
+            "toc": "Contents",
+            "Warning": "Warning",
+            "Info": "Info",
+            "Tip": "Tip",
+            "Error": "Error",
+            "Success": "Success"
+        }
+    },
+    "footer": {
+        "quickNav": "Quick Navigation",
+        "contact": "Contact Us",
+        "address": "Jiangxi University of Finance and Economics, Mailu Campus"
+    }
+}

@@ -2,12 +2,12 @@
     <main class="mt-15 mb-10">
         <div class="max-w-5xl mx-auto px-4">
             <h1 class="font-bold text-4xl text-center">
-                相关链接
+                {{ t('pages.links.title') }}
             </h1>
             <div class="space-y-8 mt-2">
                 <section>
                     <h2 class="text-3xl font-semibold flex items-center gap-2">
-                        江财官方
+                        {{ t('pages.links.sections.official') }}
                     </h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mt-1">
                         <LinkBlock v-for="link in Links" :key="link.name" :link="link" />
@@ -15,22 +15,22 @@
                 </section>
                 <section>
                     <h2 class="text-3xl font-semibold flex items-center gap-2">
-                        内网服务
+                        {{ t('pages.links.sections.intranet') }}
                     </h2>
                     <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed my-1">
-                        架设于校园网内部
+                        {{ t('pages.links.sections.intranetTip') }}
                     </p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                         <LinkBlock v-for="link in iLinks" :key="link.name" :link="link" />
                     </div>
                 </section>
                 <section>
-                        <h2 class="text-3xl font-semibold flex items-center gap-2">
-                            友情链接
-                        </h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed my-1">
-                            本页面提供的个人网站链接仅作信息分享，其内容与责任均由网站所有者自行承担，与本社团及学校官方无关。请注意甄别信息来源。
-                        </p>
+                    <h2 class="text-3xl font-semibold flex items-center gap-2">
+                        {{ t('pages.links.sections.friends') }}
+                    </h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed my-1">
+                        {{ t('pages.links.disclaimer') }}
+                    </p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                         <LinkBlock v-for="link in fLinks" :key="link.name" :link="link" />
                     </div>
@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import type { Link } from '~/types/link';
 const official_icon = '/jxufe-logo.svg';
-
+const { t } = useI18n()
 const Links: Link[] = [
     { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/', icon: official_icon },
     { name: '江西财经大学科技与信息化中心', url: 'https://nic.jxufe.edu.cn/', icon: official_icon },
@@ -98,19 +98,13 @@ const fLinks: Link[] = [
     }
 ];
 
-useHead({
-    title: '相关链接 - 江西财经大学网络安全协会',
+useHead(() => ({
+    title: t('pages.links.meta.title'),
     meta: [
-        {
-            name: 'description',
-            content: '江西财经大学网络安全协会官方网站友链页。提供江财官方网站/校内社团链接及其他个人网站链接跳转。'
-        },
-        {
-            name: 'keywords',
-            content: '友情链接,相关链接,学校官网,社团网站,个人网站'
-        }
+        { name: 'description', content: t('pages.links.meta.description') },
+        { name: 'keywords', content: t('pages.links.meta.keywords') }
     ]
-});
+}))
 </script>
 
 <style scoped></style>

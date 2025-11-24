@@ -14,7 +14,7 @@
                 'ml-8': !isMobile
             }" :aria-hidden="isCollapsed" id="toc-container" aria-labelledby="toc-title" role="navigation">
             <div v-if="items.length" class="flex items-center justify-between mb-4">
-                <h2 id="toc-title" class="font-bold text-lg">目录</h2>
+                <h2 id="toc-title" class="font-bold text-lg">{{ t("common.items.toc") }}</h2>
                 <button @click="toggleToc"
                     class="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700  transition-colors"
                     aria-label="关闭目录" aria-expanded="true" aria-controls="toc-container" title="关闭目录">
@@ -32,7 +32,7 @@
                 </li>
             </ul>
             <div v-if="items.length === 0" class="text-gray-500 dark:text-gray-200 text-sm italic">
-                暂无目录项
+                NULL
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@ import slugify from 'slugify';
 import type { TocItem } from '~/types/tocitems';
 const HEADING_SELECTOR = 'h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]';
 const ALL_HEADINGS_SELECTOR = 'h1, h2, h3, h4, h5, h6';
-
+const { t } = useI18n()
 const props = defineProps<{
     items: TocItem[]
     markdownRenderRef: { $el: HTMLElement };

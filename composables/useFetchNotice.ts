@@ -1,12 +1,13 @@
 import type { Notice } from "~/types/notice";
-import { useApi } from '#imports'
-import { useNotification } from "#imports";
+import { useApi } from '~/composables/useapi'
+import { useNotification } from "~/composables/useNotification";
 import type {
     NotificationType,
 } from '@/types/notification'
 const { data: notices, get } = useApi<Notice[]>()
 const { notify } = useNotification()
 export const useFetchNotice = async () => {
+    const { t } = useI18n()
     try {
         await get('/notices')
         notices.value?.forEach(notice => {
@@ -15,7 +16,7 @@ export const useFetchNotice = async () => {
                 type: notice.type as NotificationType,
                 timeout: notice.timeout * 1000,
                 actions: notice.route ? [{
-                    text: '查看详情',
+                    text: t("common.actions.viewDetail"),
                     route: notice.route,
                     primary: true
                 }] : undefined

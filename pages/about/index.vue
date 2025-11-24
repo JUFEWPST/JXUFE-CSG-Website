@@ -6,26 +6,21 @@ import { honorsData, getLevelColor, getYearColor } from '~/data/honors'
 import { membersArray } from '~/data/membersData';
 const isMounted = ref(false);
 const currentQuote = ref(0);
-const selectedTab = ref('tab1')
+const { t } = useI18n()
+
 const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
     "放弃的话就到此为止了，但是，你可以改变命运()",
     "是我喜欢的协会",
     "协会可能会倒闭，但一定不会变质！（笑"
 ];
-useHead({
-    title: "关于协会 - 江西财经大学网络安全协会",
+useHead(() => ({
+    title: t('pages.about.index.meta.title'),
     meta: [
-        {
-            name: 'description',
-            content: '江西财经大学网络安全协会成立于2016年，致力于普及网络安全知识、培养技术人才。下设技术部、组织部、宣传部，拥有弱口令安全团队(WPST)，组织竞赛与交流活动，欢迎感兴趣的同学加入。'
-        },
-        {
-            name: "keywords",
-            content: "协会简介,发展历程,组织架构,协会宗旨,加入协会"
-        }
+        { name: 'description', content: t('pages.about.index.meta.description') },
+        { name: 'keywords', content: t('pages.about.index.meta.keywords') }
     ]
-})
+}))
 onMounted(() => {
     isMounted.value = true;
     setInterval(() => {
@@ -38,11 +33,11 @@ onMounted(() => {
 <template>
     <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 flex justify-center">
-            <h1 class="hidden">关于协会</h1>
+            <h1 class="hidden">{{ t('pages.about.index.title') }}</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
                 <template #front>
                     <div class="font-bold mx-auto text-center text-4xl md:text-5xl  relative"
-                        aria-label="江西财经大学网络安全协会 - 关于协会">
+                        :aria-label="t('pages.about.index.meta.title')">
                         <client-only>
                             <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
                                 <template v-for="i in 8" :key="i">
@@ -90,49 +85,71 @@ onMounted(() => {
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
                         <span class="w-2 h-8 bg-blue-500 mr-3 rounded-full"></span>
-                        协会简介
+                        {{ t('pages.about.index.intro.title') }}
                     </h2>
                     <div class="space-y-6">
                         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            <span
-                                class="font-bold text-[var(--anzu-accent-hover)]">江西财经大学网络安全协会</span>成立于2016年9月，协会的宗旨是想全校师生普及网络安全知识、培养网络安全技术人才、互相交流、共同进步。
+                            <i18n-t keypath="pages.about.index.intro.p1" tag="span">
+                                <template #default>
+                                    <span class="font-bold text-(--anzu-accent-hover)">{{ t("meta.fullName") }}</span>
+                                </template>
+                            </i18n-t>
                         </p>
-                        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            本社创立的初衷是为了一起<span
-                                class="font-semibold text-[var(--anzu-accent-hover)]">学习交流网络安全知识，教授同学们有关网络安全的知识</span>，组织大家一起参加比赛，以及宣传和开展活动以增加同学对网络安全的浓厚兴趣。同时作为一个技术讨论的平台，我们为有兴趣和有能力的同学提供技交流方向的圈子。
+                        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                            <i18n-t keypath="pages.about.index.intro.p2" tag="span">
+                                <template #highlighted>
+                                    <span
+                                        class="font-bold text-(--anzu-accent-hover)">{{ t('pages.about.index.intro.highlightedText') }}</span>
+                                </template>
+                            </i18n-t>
                         </p>
                         <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-inner">
                             <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white flex items-center">
                                 <span class="w-1.5 h-6 bg-pink-500 mr-2 rounded-full"></span>
-                                协会下设部门
+                                {{ t('pages.about.index.departments.title') }}
                             </h3>
+
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div
                                     class="bg-blue-50/80 dark:bg-gray-600 p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-blue-700 dark:text-blue-300">学习部</h4>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">负责技术研究、培训和比赛指导</p>
+                                    <h4 class="font-medium text-blue-700 dark:text-blue-300">
+                                        {{ t('pages.about.index.departments.study.name') }}
+                                    </h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                                        {{ t('pages.about.index.departments.study.desc') }}
+                                    </p>
                                 </div>
                                 <div
                                     class="bg-pink-50/80 dark:bg-gray-600 p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-pink-700 dark:text-pink-300">组织部</h4>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">负责活动策划和组织协调</p>
+                                    <h4 class="font-medium text-pink-700 dark:text-pink-300">
+                                        {{ t('pages.about.index.departments.organization.name') }}
+                                    </h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                                        {{ t('pages.about.index.departments.organization.desc') }}
+                                    </p>
                                 </div>
+
                                 <div
                                     class="bg-purple-50/80 dark:bg-gray-600 p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-purple-700 dark:text-purple-300">宣传部</h4>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">负责协会形象宣传和内容制作</p>
+                                    <h4 class="font-medium text-purple-700 dark:text-purple-300">
+                                        {{ t('pages.about.index.departments.publicity.name') }}
+                                    </h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                                        {{ t('pages.about.index.departments.publicity.desc') }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            同时，我们网安协会还有一支精湛的安全团队——弱口令安全团队(WPST)。这支团队深耕网络安全领域，在漏洞挖掘、攻防、安全策略等方面积累了丰富经验。
+                            {{ t('pages.about.index.intro.wpstIntro') }}
                         </div>
                     </div>
                 </div>
             </section>
             <AnzuAlert type="info">
-                数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表<NuxtLink class="text-blue-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
-                    [历届成员档案共建邀请]</NuxtLink>
+                {{ t('pages.about.members.dataCollectTip') }}<NuxtLink class="text-blue-500"
+                    to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
+                    [{{ t('pages.about.members.archiveInvite') }}]</NuxtLink>
             </AnzuAlert>
             <section
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 transition-all duration-500 relative overflow-hidden">
@@ -143,11 +160,11 @@ onMounted(() => {
                 <div class="absolute top-1/3 left-1/6 text-4xl text-indigo-400 opacity-50">✯</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
                     <span class="w-2 h-8 bg-amber-300 mr-3 rounded-full"></span>
-                    历届负责人
+                    {{ t('pages.about.index.members.leaders') }}
                 </h2>
                 <NuxtLink to="/about/leaders" class="ml-5"><span
                         class="text-md font-bold text-gray-400 hover:text-black transition-colors duration-300">>>
-                        列表形式</span></NuxtLink>
+                        {{ t('pages.about.index.listmode') }}</span></NuxtLink>
                 <LeaderCarousel :leaders="leadersData" />
             </section>
             <section
@@ -159,11 +176,11 @@ onMounted(() => {
                 <div class="absolute top-1/3 left-1/6 text-4xl text-indigo-400 opacity-50">✯</div>
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
                     <span class="w-2 h-8 bg-amber-300 mr-3 rounded-full"></span>
-                    历届成员
+                    {{ t('pages.about.index.members.members') }}
                 </h2>
                 <NuxtLink to="/about/members" class="ml-5"><span
                         class="text-md font-bold text-gray-400 hover:text-black transition-colors duration-300">>>
-                        列表形式</span></NuxtLink>
+                        {{ t('pages.about.index.listmode') }}</span></NuxtLink>
                 <MembersCarousel :membersArray="membersArray" />
             </section>
             <section
@@ -178,7 +195,7 @@ onMounted(() => {
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
                         <span class="w-2 h-8 bg-purple-500 mr-3 rounded-full"></span>
-                        协会成员荣誉
+                        {{ t('pages.about.index.members.honors') }}
                     </h2>
                     <div class="space-y-8">
                         <div v-for="yearData in honorsData" :key="yearData.year">
@@ -191,8 +208,8 @@ onMounted(() => {
                                 <li v-for="(honor, index) in yearData.honors" :key="index"
                                     class="flex items-start group">
                                     <span
-                                        class="px-2 py-1 mr-3 text-white text-xs font-bold rounded-full min-w-[40px] text-center group-hover:scale-110 transition-transform"
-                                        :class="`bg-gradient-to-r ${getLevelColor(honor.level)}`">
+                                        class="px-2 py-1 mr-3 text-white text-xs font-bold rounded-full min-w-10 text-center group-hover:scale-110 transition-transform"
+                                        :class="`bg-linear-to-r ${getLevelColor(honor.level)}`">
                                         {{ honor.level }}
                                     </span>
                                     <span class="text-gray-700 dark:text-gray-300">{{ honor.description }}</span>
@@ -218,14 +235,19 @@ onMounted(() => {
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
                         <span class="w-2 h-8 bg-pink-500 mr-3 rounded-full"></span>
-                        加入我们
+                        {{ t('pages.about.index.joinUs.title') }}
                     </h2>
 
                     <div class="flex flex-col md:flex-row items-center gap-8">
                         <div class="md:w-1/2 space-y-4 text-gray-700 dark:text-gray-300">
                             <p class="text-lg leading-relaxed">
-                                无论您是否是本校学生，都可扫描<span class="md:hidden">下方</span><span
-                                    class="hidden md:inline">右方</span>的二维码加入2025年江财网安协会招新群与我们互动
+                                <i18n-t keypath="pages.about.index.joinUs.scan_qr" tag="span">
+                                    <span>
+                                        <span class="md:hidden">{{ t("common.direction.down1") }}</span>
+                                        <span class="hidden md:inline">{{ t("common.direction.right1") }}</span>
+                                    </span>
+
+                                </i18n-t>
                             </p>
                             <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg border-pink-400">
                                 <div
@@ -235,19 +257,21 @@ onMounted(() => {
                             </div>
                             <div class="flex space-x-3 mt-4">
                                 <AnzuButton class="h-10" href="https://qm.qq.com/q/v7pD9BL4Lm"
-                                    primary-color="oklch(62.3% 0.214 259.815)" target="_blank">加入群聊</AnzuButton>
+                                    primary-color="oklch(62.3% 0.214 259.815)" target="_blank">
+                                    {{ t('pages.about.index.joinUs.joinGroup') }}</AnzuButton>
                                 <AnzuButton @click="currentQuote = (currentQuote + 1) % quotes.length"
-                                    primary-color="oklch(65.6% 0.241 354.308)">换一句</AnzuButton>
+                                    primary-color="oklch(65.6% 0.241 354.308)">
+                                    {{ t('pages.about.index.joinUs.changeQuote') }}</AnzuButton>
                             </div>
                         </div>
                         <div class="md:w-1/2 flex justify-center">
                             <div class="bg-white p-4 rounded-lg shadow-inner relative group">
                                 <img src="/assets/images/2025JXUFECGS.svg"
                                     class="w-48 h-48 object-contain transition-transform group-hover:scale-105"
-                                    alt="2025年江财网安协会招新群二维码" />
+                                    :alt="t('pages.about.index.joinUs.qrLabel')" />
                                 <div
                                     class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                    一起成为学院偶像！
+                                    {{ t('pages.about.index.joinUs.idolLine') }}
                                 </div>
                             </div>
                         </div>
@@ -268,7 +292,7 @@ onMounted(() => {
                         <span class="w-2 h-8 bg-orange-400 mr-3 rounded-full"></span>
                         Contributors
                     </h2>
-                    <div class="text-lg leading-relaxed">本网站的完成离不开以下小伙伴的贡献，感谢他们的付出
+                    <div class="text-lg leading-relaxed">{{ t('pages.about.index.contributors.title') }}
                     </div>
                     <div class="my-2">
                         <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website/graphs/contributors">
@@ -276,12 +300,16 @@ onMounted(() => {
                         </a>
                     </div>
                     <div class="text-lg leading-relaxed">
-                        欢迎加入我们与我们共同建设江财网安协会
+                        {{ t('pages.about.index.contributors.invite') }}
                     </div>
-                    <div class="text-lg leading-relaxed">
-                        访问本项目点击<a href="https://github.com/JUFEWPST/JXUFE-CSG-Website"
-                            class="text-pink-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">这里</a>
-                    </div>
+
+                    <i18n-t keypath="pages.about.index.contributors.projectLink" tag="div"
+                        class="text-lg leading-relaxed">
+                        <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website"
+                            class="text-pink-600 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+                            {{ t('common.actions.viewDetail') }}
+                        </a>
+                    </i18n-t>
 
                 </div>
             </section>
