@@ -54,10 +54,15 @@
             "disclaimer": "본 페이지에서 제공하는 개인 웹사이트 링크는 정보 공유만을 목적으로 하며, 그 내용과 책임은 전적으로 웹사이트 소유자가 부담하며 본 길드나 대학과는 무관합니다. 정보 출처를 신중히 평가해 주십시오.",
             "items": {
                 "jxufe": "JXUFE 공식 웹사이트",
-                "college": "JXUFE 컴퓨터과학·인공지능 대학",
-                "nic": "JXUFE 기술정보센터",
+                "college": "JXUFE 컴퓨팅·인공지능 학원",
+                "nic": "JXUFE 과학기술정보센터",
+                "zsjy": "JXUFE 학부 입학",
+                "hello": "JXUFE 신입생 환영",
                 "ctfplatform": "CTF 플랫폼",
-                "cloud": "클라우드 드라이브 리소스"
+                "cloud": "클라우드 드라이브 리소스",
+                "acm": "JXUFE 프로그래밍 대회 동아리",
+                "ca": "JXUFE 컴퓨터 동아리",
+                "cida": "JXUFE 디지털 지능 기술 동아리"
             }
         },
         "archive": {

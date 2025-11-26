@@ -54,10 +54,15 @@
             "disclaimer": "The personal website links provided on this page are for information sharing only. Their content and responsibility are borne solely by the website owners and are not related to this guild or the university. Please evaluate sources carefully.",
             "items": {
                 "jxufe": "JXUFE Official Website",
-                "college": "School of Computer Science and Artificial Intelligence, JXUFE",
-                "nic": "Technology and Information Center, JXUFE",
+                "college": "School of Computing and Artificial Intelligence, JXUFE",
+                "nic": "Center of Science and Information Technology, JXUFE",
+                "zsjy": "JXUFE Undergraduate Admissions",
+                "hello": "Hello JXUFE",
                 "ctfplatform": "CTF Platform",
-                "cloud": "Cloud Drive Resources"
+                "cloud": "Cloud Drive Resources",
+                "acm":"Association of Programming Contest, JXUFE",
+                "ca":"Computer Association, JXUFE",
+                "cida":"Cyber-Intelligence & Data Association, JXUFE"
             }
         },
         "archive": {

@@ -80,9 +80,9 @@ import {
     EnvelopeIcon,
 } from '@heroicons/vue/24/outline'
 const { t } = useI18n()
-const navLinks = [
-    { name: '江西财经大学官网', url: 'https://www.jxufe.edu.cn/' },
-    { name: '江西财经大学计算机与人工智能学院', url: 'https://cai.jxufe.edu.cn/' },
-    { name: '江西财经大学科技与信息化中心', url: 'https://nic.jxufe.edu.cn/' },
-]
+const navLinks = computed(() => [
+    { name: t("pages.links.items.jxufe"), url: 'https://www.jxufe.edu.cn/' },
+    { name: t("pages.links.items.college"), url: 'https://cai.jxufe.edu.cn/' },
+    { name: t("pages.links.items.nic"), url: 'https://nic.jxufe.edu.cn/' },
+])
 </script>
