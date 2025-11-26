@@ -2,7 +2,7 @@
     <div class="pagination-container">
         <!-- 上一页 -->
         <button class="pagination-button" :class="{ disabled: currentPage <= 1 }" @click="goToPage(currentPage - 1)"
-            :disabled="currentPage <= 1" aria-label="上一页">
+            :disabled="currentPage <= 1" :aria-label="t('common.actions.paginationPrevious')">
             <span class="pagination-arrow">←</span>
         </button>
         <template v-for="page in displayedPages" :key="page">
@@ -16,15 +16,17 @@
         </template>
         <!-- 下一页 -->
         <button class="pagination-button" :class="{ disabled: currentPage >= totalPages }"
-            @click="goToPage(currentPage + 1)" :disabled="currentPage >= totalPages" aria-label="下一页">
+            @click="goToPage(currentPage + 1)" :disabled="currentPage >= totalPages"
+            :aria-label="$t('common.actions.paginationNext')">
             <span class="pagination-arrow">→</span>
         </button>
         <div class="page-jump">
-            <span>跳至</span>
+            <span>{{ t('common.actions.paginationJumpTo') }}</span>
             <input type="number" v-model.number="inputPage" min="1" :max="totalPages" @keyup.enter="jumpToPage"
-                aria-label="目标页数" />
-            <span>页</span>
-            <button class="jump-button" @click="jumpToPage" :aria-label="`跳转至 ${inputPage} 页}`">GO</button>
+                :aria-label="t('common.actions.paginationTargetPageNumber')" />
+            <span>{{ t('common.actions.paginationPageUnit') }}</span>
+            <button class="jump-button" @click="jumpToPage"
+                :aria-label="t('common.actions.paginationJumpToPage', { page: inputPage })">GO</button>
         </div>
     </div>
 </template>
@@ -133,7 +135,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useRouter } from '#imports';
-
+const { t } = useI18n()
 const props = defineProps({
     totalPages: {
         type: Number,

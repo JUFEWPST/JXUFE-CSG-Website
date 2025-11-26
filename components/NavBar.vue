@@ -5,24 +5,25 @@
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
                 <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
                     <img src="/favicon.svg" class="h-10 mr-2" alt="江财网安协会logo">
-                    <span>
-                        江西财经大学网络安全协会
+                    <span class="line-clamp-2">
+                        {{ t("meta.fullName") }}
                     </span>
-                    <ToggleTheme class="ml-1"></ToggleTheme>
+                    <ToggleTheme class="ml-1 shrink-0"></ToggleTheme>
+                    <ToggleLocale class="shrink-0"></ToggleLocale>
                 </div>
 
-                <div class="flex-1 hidden md:flex justify-end items-center mx-4 relative h-[2.5rem]">
-                    <!-- 桌面导航菜单 -->
-                    <div class="flex space-x-6 transition-all duration-300 items-center justify-end"
+                <div class="flex-1 hidden md:flex justify-end items-center mx-4 relative h-10">
+                    <div class="flex space-x-4 md:space-x-6 transition-all duration-300 items-center justify-end"
                         :class="{ 'opacity-0 invisible scale-95': showArticleTitle && scrollDirection === 'down' }">
                         <template v-for="link in navLinks" :key="link.path">
                             <div v-if="link.children" class="relative group" @mouseenter="openDropdown(link.path)"
                                 @mouseleave="closeDropdown(link.path)">
                                 <div class="flex items-center">
-                                    <NuxtLink :to="link.defaultPath || link.path" class="nav-link"
+                                    <NuxtLink :to="link.defaultPath || link.path"
+                                        class="nav-link whitespace-nowrap overflow-hidden text-ellipsis min-w-0"
                                         :class="{ 'active-link': isActive(link) }">
                                         <span class="relative">
-                                            {{ link.label }}
+                                            {{ t(link.label) }}
                                             <span v-if="isActive(link)"
                                                 :class="`absolute -top-2 -right-3 text-${link.color}-400 text-xs`">{{ link.icon }}</span>
                                         </span>
@@ -31,7 +32,7 @@
                                     <button @click="toggleDropdown(link.path)"
                                         class="ml-1 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                         :class="{ 'rotate-180': dropdownStates[link.path] }" type="button"
-                                        aria-label="关于协会栏子菜单">
+                                        aria-label="子菜单">
                                         <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -57,23 +58,23 @@
                                                 'bg-gray-100 dark:bg-gray-700 font-medium': route.path === child.path,
                                                 'text-primary-500 dark:text-primary-400': route.path === child.path
                                             }" @click="closeDropdown(link.path)">
-                                            {{ child.label }}
+                                            {{ t(child.label) }}
                                         </NuxtLink>
                                     </div>
                                 </transition>
                             </div>
 
-                            <NuxtLink v-else :to="link.path" class="nav-link"
+                            <NuxtLink v-else :to="link.path"
+                                class="nav-link whitespace-nowrap overflow-hidden text-ellipsis min-w-0"
                                 :class="{ 'active-link': $route.path === link.path }">
                                 <span class="relative">
-                                    {{ link.label }}
+                                    {{ t(link.label) }}
                                     <span v-if="$route.path === link.path"
                                         :class="`absolute -top-2 -right-3 text-${link.color}-400 text-xs`">{{ link.icon }}</span>
                                 </span>
                             </NuxtLink>
                         </template>
                     </div>
-                    <!-- 归档标题部分 -->
                     <div v-if="route.path.startsWith('/archive/') && navTitleBox.title"
                         class="absolute top-0 left-0 w-full transition-all duration-300"
                         :class="{ 'opacity-0 invisible': !showArticleTitle || scrollDirection === 'up' }">
@@ -93,7 +94,6 @@
                     </div>
                 </div>
 
-                <!-- 移动菜单按钮 -->
                 <button class="md:hidden rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
                     aria-label="打开菜单" @click.stop="toggleMenu">
                     <Bars3Icon v-if="!isMenuOpen" class="w-7 h-7"></Bars3Icon>
@@ -103,7 +103,6 @@
                 </button>
             </nav>
 
-            <!-- 移动导航菜单 -->
             <div class="md:hidden overflow-hidden transition-all duration-300 ease-in-out"
                 :style="{ maxHeight: isMenuOpen ? '500px' : '0' }" :aria-hidden="!isMenuOpen">
                 <div class="mt-4 pb-4 relative">
@@ -115,7 +114,7 @@
                                 :class="{ 'mobile-active-link': isActive(link) }">
                                 <NuxtLink :to="link.defaultPath || link.path" class="flex-1" @click="closeMenu">
                                     <span>
-                                        {{ link.label }}
+                                        {{ t(link.label) }}
                                         <span v-if="isActive(link)"
                                             :class="`ml-2 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
                                     </span>
@@ -139,7 +138,7 @@
                                         'mobile-active-link': route.path === child.path,
                                         'bg-gray-100 dark:bg-gray-700': route.path === child.path
                                     }" @click="closeMenu">
-                                    {{ child.label }}
+                                    {{ t(child.label) }}
                                 </NuxtLink>
                             </div>
                         </div>
@@ -147,7 +146,7 @@
                         <NuxtLink v-else :to="link.path" class="mobile-nav-link"
                             :class="{ 'mobile-active-link': $route.path === link.path }" @click="closeMenu">
                             <span class="relative">
-                                {{ link.label }}
+                                {{ t(link.label) }}
                                 <span v-if="$route.path === link.path"
                                     :class="`absolute -top-1 -right-4 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
                             </span>
@@ -166,7 +165,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
 import { useNavLinks, type NavLink, type NavLinkWithChildren } from '~/composables/useNavLinks'
 import { useDropdownController } from '~/composables/useDropdownController'
-
+import ToggleLocale from './ToggleLocale.vue'
+const { t } = useI18n()
 const route = useRoute()
 const navTitleBox = useState('navTitleBox', () => ({
     title: '',
@@ -178,7 +178,6 @@ const dropdownLinks = navLinks.filter((link): link is NavLinkWithChildren => 'ch
 const desktopDropdown = useDropdownController(dropdownLinks)
 const mobileDropdown = useDropdownController(dropdownLinks)
 
-// 响应式状态
 const titleVisible = ref(false)
 const subtitleVisible = ref(false)
 const opacity = ref(0)
@@ -188,7 +187,6 @@ const showArticleTitle = ref(false)
 const lastScrollY = ref(0)
 const scrollDirection = ref<'up' | 'down'>('up')
 
-// 计算属性
 const currentBgOpacity = computed(() => isMenuOpen.value ? 0.8 : opacity.value * 0.8)
 
 const headerStyles = computed(() => {
@@ -202,7 +200,6 @@ const headerStyles = computed(() => {
     }
 })
 
-// 工具函数
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3)
 
 const isActive = (link: NavLink) => {
@@ -212,26 +209,20 @@ const isActive = (link: NavLink) => {
     return route.path === link.path
 }
 
-// 下拉菜单操作
 const { states: dropdownStates, open: openDropdown, close: closeDropdown, toggle: toggleDropdown, closeAll: closeAllDropdowns } = desktopDropdown
 
 const { states: mobileDropdownStates, toggle: toggleMobileSubmenu, closeAll: closeAllMobileDropdowns } = mobileDropdown
 
-// 滚动处理
 const handleScroll = () => {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop
 
-    // 确定滚动方向
     scrollDirection.value = scrollPosition > lastScrollY.value ? 'down' : 'up'
     lastScrollY.value = scrollPosition
 
-    // 计算透明度
     const rawOpacity = Math.min(scrollPosition / 150, 0.85)
     opacity.value = easeOutCubic(rawOpacity)
 
-    // 控制文章标题显示逻辑
     if (route.path.startsWith('/archive/')) {
-        // 下滑超过100px后，根据滚动方向切换显示
         if (scrollPosition > 100) {
             showArticleTitle.value = true
         } else {
@@ -242,7 +233,6 @@ const handleScroll = () => {
     }
 }
 
-// 菜单操作
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value
 const closeMenu = () => {
     isMenuOpen.value = false
@@ -253,20 +243,17 @@ const handleClickOutside = (event: MouseEvent) => {
     if (headerRef.value && !headerRef.value.contains(event.target as Node)) {
         isMenuOpen.value = false
 
-        // 关闭所有下拉菜单
         closeAllDropdowns()
         closeAllMobileDropdowns()
     }
 }
 
-// 生命周期
 onMounted(() => {
     document.documentElement.style.setProperty('--nav-bg-rgb', '255, 255, 255')
     window.addEventListener('scroll', handleScroll, { passive: true })
     document.addEventListener('click', handleClickOutside)
     handleScroll()
 
-    // 标题浮现动画
     setTimeout(() => {
         titleVisible.value = true
         setTimeout(() => subtitleVisible.value = true, 300)
@@ -332,7 +319,6 @@ header {
     --nav-bg-rgb: 15, 15, 15;
     border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
-
 
 .dark .mobile-nav-link:hover {
     background-color: rgba(31, 41, 55, 0.8);

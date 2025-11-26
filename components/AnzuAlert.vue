@@ -18,7 +18,7 @@ import {
     InformationCircleIcon,
     XCircleIcon,
 } from '@heroicons/vue/24/outline';
-
+const { t } = useI18n()
 interface AlertInfo {
     title?: string
     type?: 'succ' | 'warn' | 'info' | 'error' | 'plain'
@@ -32,10 +32,10 @@ const titleText = computed(() => {
     }
 
     const typeMap: Record<string, string> = {
-        succ: '成功',
-        warn: '警告',
-        info: '信息',
-        error: '错误',
+        succ: t("common.items.Success"),
+        warn: t("common.items.Warning"),
+        info: t("common.items.Info"),
+        error: t("common.items.Error"),
         plain: ''
     };
 

@@ -1,6 +1,6 @@
 <template>
     <main class="mt-15">
-        <h1 class="font-bold text-4xl text-center">归档</h1>
+        <h1 class="font-bold text-4xl text-center">{{ t('pages.archive.title') }}</h1>
         <div class="flex justify-center items-center mt-1 flex-col">
             <div v-if="loading" class="text-center py-8">
                 <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>
@@ -39,20 +39,16 @@ import { ref, watch } from 'vue';
 import { useRoute, useRouter } from '#imports';
 import { useApi } from '~/composables/useapi';
 import type { Archive } from '~/types/archives';
+const { t } = useI18n()
 
-useHead({
-    title: '归档 - 江西财经大学网络安全协会',
+useHead(() => ({
+    title: t('pages.archive.meta.title'),
     meta: [
-        {
-            name: 'description',
-            content: '江西财经大学网络安全协会官方网站归档页，在此可查阅协会发布的归档.'
-        },
-        {
-            name: "keywords",
-            content: "文章归档,博客,协会资讯"
-        }
+        { name: 'description', content: t('pages.archive.meta.description') },
+        { name: 'keywords', content: t('pages.archive.meta.keywords') }
     ]
-})
+}))
+
 
 const route = useRoute();
 const router = useRouter();

@@ -1,3 +1,4 @@
+
 export interface NavChildLink {
     path: string
     label: string
@@ -17,21 +18,23 @@ export interface NavLinkWithChildren extends BaseNavLink {
 
 export type NavLink = BaseNavLink | NavLinkWithChildren
 
-export const useNavLinks = (): NavLink[] => ([
-    { path: '/', label: '首页', icon: '✧', color: 'pink' },
-    { path: '/archive', label: '归档', icon: '✦', color: 'blue' },
-    {
-        path: '/about',
-        defaultPath: '/about',
-        label: '关于协会',
-        icon: '✧',
-        color: 'purple',
-        children: [
-            { path: '/about', label: '协会简介' },
-            { path: '/about/leaders', label: '历届负责人' },
-            { path: '/about/members', label: '历届成员' },
-            { path: '/about/excellent', label: '优秀成员' }
-        ]
-    },
-    { path: '/links', label: '相关链接', icon: '✦', color: 'yellow' }
-])
+export const useNavLinks = (): NavLink[] => {
+    return [
+        { path: '/', label: 'nav.home', icon: '✧', color: 'pink' },
+        { path: '/archive', label: 'nav.archive', icon: '✦', color: 'blue' },
+        {
+            path: '/about',
+            defaultPath: '/about',
+            label: 'nav.about',
+            icon: '✧',
+            color: 'purple',
+            children: [
+                { path: '/about', label: 'nav.aboutChildren.index' },
+                { path: '/about/leaders', label: 'nav.aboutChildren.leaders' },
+                { path: '/about/members', label: 'nav.aboutChildren.members' },
+                { path: '/about/excellent', label: 'nav.aboutChildren.excellent' }
+            ]
+        },
+        { path: '/links', label: 'nav.links', icon: '✦', color: 'yellow' }
+    ]
+}
