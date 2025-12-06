@@ -9,72 +9,124 @@
     .text-shadow-glow-lg {
         text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6;
     }
+
+    .shadow-center-sm {
+        box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.05), 0 0 4px -1px rgba(0, 0, 0, 0.02);
+    }
+    
+    .shadow-center-md {
+        box-shadow: 0 0 12px -2px rgba(0, 0, 0, 0.08), 0 0 6px -1px rgba(0, 0, 0, 0.04);
+    }
 }
 
-@layer utilities {
+@layer base {
     :root {
-        --anzu-text: #333333;
-        --anzu-bg: #FFFFFF;
-        --anzu-primary: #6bb9f0;
-        --anzu-primary-bg: #f0f8ff;
-        --anzu-primary-hover: #8ac8f8;
-        --anzu-primary-pressed: #4da8e0;
-        --anzu-primary-focus: rgba(107, 185, 240, 0.2);
-        --anzu-accent-text: #FF8A65;
-        --anzu-accent-hover: #FF6E40;
+        /* Material Design 3 System Colors - Fallback defaults if JS fails or pre-hydration */
+        /* These will be overwritten by applyThemeToRoot */
+        --md-sys-color-primary: #6750A4;
+        --md-sys-color-on-primary: #FFFFFF;
+        --md-sys-color-primary-container: #EADDFF;
+        --md-sys-color-on-primary-container: #21005D;
+        --md-sys-color-secondary: #625B71;
+        --md-sys-color-on-secondary: #FFFFFF;
+        --md-sys-color-secondary-container: #E8DEF8;
+        --md-sys-color-on-secondary-container: #1D192B;
+        --md-sys-color-tertiary: #7D5260;
+        --md-sys-color-on-tertiary: #FFFFFF;
+        --md-sys-color-tertiary-container: #FFD8E4;
+        --md-sys-color-on-tertiary-container: #31111D;
+        --md-sys-color-error: #B3261E;
+        --md-sys-color-on-error: #FFFFFF;
+        --md-sys-color-error-container: #F9DEDC;
+        --md-sys-color-on-error-container: #410E0B;
+        --md-sys-color-background: #FEF7FF;
+        --md-sys-color-on-background: #1D1B20;
+        --md-sys-color-surface: #FEF7FF;
+        --md-sys-color-on-surface: #1D1B20;
+        --md-sys-color-surface-variant: #E7E0EC;
+        --md-sys-color-on-surface-variant: #49454F;
+        --md-sys-color-outline: #79747E;
+        --md-sys-color-outline-variant: #CAC4D0;
+        --md-sys-color-shadow: #000000;
+        --md-sys-color-scrim: #000000;
+        --md-sys-color-inverse-surface: #322F35;
+        --md-sys-color-inverse-on-surface: #F5EFF7;
+        --md-sys-color-inverse-primary: #D0BCFF;
+        
+        --md-sys-color-surface-dim: #DED8E1;
+        --md-sys-color-surface-bright: #FEF7FF;
+        --md-sys-color-surface-container-lowest: #FFFFFF;
+        --md-sys-color-surface-container-low: #F7F2FA;
+        --md-sys-color-surface-container: #F3EDF7;
+        --md-sys-color-surface-container-high: #ECE6F0;
+        --md-sys-color-surface-container-highest: #E6E1E5;
     }
-
+    
     .dark {
-        --anzu-text: #E1E4E8;
-        --anzu-bg: #121212;
+        --md-sys-color-primary: #D0BCFF;
+        --md-sys-color-on-primary: #381E72;
+        --md-sys-color-primary-container: #4F378B;
+        --md-sys-color-on-primary-container: #EADDFF;
+        --md-sys-color-secondary: #CCC2DC;
+        --md-sys-color-on-secondary: #332D41;
+        --md-sys-color-secondary-container: #4A4458;
+        --md-sys-color-on-secondary-container: #E8DEF8;
+        --md-sys-color-tertiary: #EFB8C8;
+        --md-sys-color-on-tertiary: #492532;
+        --md-sys-color-tertiary-container: #633B48;
+        --md-sys-color-on-tertiary-container: #FFD8E4;
+        --md-sys-color-error: #F2B8B5;
+        --md-sys-color-on-error: #601410;
+        --md-sys-color-error-container: #8C1D18;
+        --md-sys-color-on-error-container: #F9DEDC;
+        --md-sys-color-background: #141218;
+        --md-sys-color-on-background: #E6E1E5;
+        --md-sys-color-surface: #141218;
+        --md-sys-color-on-surface: #E6E1E5;
+        --md-sys-color-surface-variant: #49454F;
+        --md-sys-color-on-surface-variant: #CAC4D0;
+        --md-sys-color-outline: #938F99;
+        --md-sys-color-outline-variant: #49454F;
+        --md-sys-color-shadow: #000000;
+        --md-sys-color-scrim: #000000;
+        --md-sys-color-inverse-surface: #E6E1E5;
+        --md-sys-color-inverse-on-surface: #313033;
+        --md-sys-color-inverse-primary: #6750A4;
+
+        --md-sys-color-surface-dim: #141218;
+        --md-sys-color-surface-bright: #3B383E;
+        --md-sys-color-surface-container-lowest: #0F0D13;
+        --md-sys-color-surface-container-low: #1D1B20;
+        --md-sys-color-surface-container: #211F26;
+        --md-sys-color-surface-container-high: #2B2930;
+        --md-sys-color-surface-container-highest: #36343B;
     }
+
+    body {
+        @apply bg-(--md-sys-color-background) text-(--md-sys-color-on-background) transition-colors duration-300;
+    }
+    
+    /* Override removed to follow MD3 specs as requested */
+    /* :root:not(.dark) { ... } */
 }
 
-body {
-    color: var(--anzu-text);
-    background-color: var(--anzu-bg);
-    position: relative;
-    z-index: 1;
-}
-
-.medium-zoom-overlay,
-.medium-zoom-image--opened {
-    z-index: 999;
-}
-
+/* Scrollbar styling using MD3 colors */
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    opacity: 0;
     background: transparent;
-    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--anzu-primary);
+    background: var(--md-sys-color-outline-variant);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--anzu-primary-hover);
-}
-
-::-webkit-scrollbar-track-piece {
-    background-color: transparent;
-}
-
-
-@keyframes expand {
-    from {
-        height: 0;
-    }
-
-    to {
-        height: var(--to-height, 100px);
-    }
+    background: var(--md-sys-color-outline);
 }
 
 @font-face {

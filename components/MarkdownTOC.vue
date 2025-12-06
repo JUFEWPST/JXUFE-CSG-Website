@@ -71,7 +71,7 @@ function toggleToc() {
 }
 
 const getLinkClasses = (item: TocItem) => {
-    const baseClasses = 'block py-1.5 px-2 no-underline rounded-md transition-colors hover:bg-purple-300 cursor-pointer whitespace-normal break-words overflow-visible';
+    const baseClasses = 'block py-1.5 px-2 no-underline rounded-md transition-colors hover:bg-purple-300 cursor-pointer whitespace-normal wrap-break-word overflow-visible';
     const activeClasses = activeId.value === item.id ? 'text-white font-medium bg-purple-400' : '';
     const levelClasses =
         item.level === 2 ? 'pl-4' :

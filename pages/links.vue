@@ -1,49 +1,52 @@
 <template>
-    <main class="mt-15 mb-10">
-        <div class="max-w-5xl mx-auto px-4">
-            <h1 class="font-bold text-4xl text-center">
-                {{ t('pages.links.title') }}
-            </h1>
-            <div class="space-y-8 mt-2">
-                <section>
-                    <h2 class="text-3xl font-semibold flex items-center gap-2">
-                        {{ t('pages.links.sections.official') }}
-                    </h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mt-1">
-                        <LinkBlock v-for="link in Links" :key="link.name" :link="link" />
-                    </div>
-                </section>
-                <section>
-                    <h2 class="text-3xl font-semibold flex items-center gap-2">
-                        {{ t('pages.links.sections.intranet') }}
-                    </h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed my-1">
-                        {{ t('pages.links.sections.intranetTip') }}
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-                        <LinkBlock v-for="link in iLinks" :key="link.name" :link="link" />
-                    </div>
-                </section>
-                <section>
-                    <h2 class="text-3xl font-semibold flex items-center gap-2">
-                        {{ t('pages.links.sections.friends') }}
-                    </h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed my-1">
-                        {{ t('pages.links.disclaimer') }}
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-                        <LinkBlock v-for="link in fLinks" :key="link.name" :link="link" />
-                    </div>
-                </section>
-            </div>
+    <main class="max-w-5xl mx-auto">
+        <div class="space-y-8">
+            <section>
+                <h2 class="text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
+                    {{ t('pages.links.sections.official') }}
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mt-1">
+                    <LinkBlock v-for="link in Links" :key="link.name" :link="link" />
+                </div>
+            </section>
+            <section>
+                <h2 class="text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
+                    {{ t('pages.links.sections.intranet') }}
+                </h2>
+                <p class="text-sm text-(--md-sys-color-on-surface-variant) leading-relaxed my-1">
+                    {{ t('pages.links.sections.intranetTip') }}
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                    <LinkBlock v-for="link in iLinks" :key="link.name" :link="link" />
+                </div>
+            </section>
+            <section>
+                <h2 class="text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
+                    {{ t('pages.links.sections.friends') }}
+                </h2>
+                <p class="text-sm text-(--md-sys-color-on-surface-variant) leading-relaxed my-1">
+                    {{ t('pages.links.disclaimer') }}
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                    <LinkBlock v-for="link in fLinks" :key="link.name" :link="link" />
+                </div>
+            </section>
         </div>
     </main>
 </template>
 
 <script lang="ts" setup>
 import type { Link } from '~/types/link';
+import { useI18n } from 'vue-i18n'; // Ensure this is imported or auto-imported
+import { computed } from 'vue'; // Ensure this is imported or auto-imported
+import { usePageTitle } from '@/composables/usePageTitle';
+
 const official_icon = '/jxufe-logo.svg';
 const { t } = useI18n()
+const { setPageTitle } = usePageTitle()
+
+setPageTitle('pages.links.title')
+
 const Links = computed(() => [
     { name: t("pages.links.items.jxufe"), url: 'https://www.jxufe.edu.cn/', icon: official_icon },
     { name: t("pages.links.items.nic"), url: 'https://nic.jxufe.edu.cn/', icon: official_icon },

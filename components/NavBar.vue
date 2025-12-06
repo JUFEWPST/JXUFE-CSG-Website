@@ -1,40 +1,40 @@
 <template>
     <header ref="headerRef" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out"
         :style="headerStyles">
-        <div class="mx-3 sm:mx-6 my-4 relative z-10">
+        <div class="mx-3 sm:mx-6 my-4 relative z-10 text-(--md-sys-color-on-surface)">
             <nav class="flex items-center justify-between" role="navigation" aria-label="主导航">
-                <div class="text-md sm:text-xl font-bold hover:text-primary-500 items-center flex">
-                    <img src="/favicon.svg" class="h-10 mr-2" alt="江财网安协会logo">
-                    <span class="line-clamp-2">
-                        {{ t("meta.fullName") }}
-                    </span>
-                    <ToggleTheme class="ml-1 shrink-0"></ToggleTheme>
-                    <ToggleLocale class="shrink-0"></ToggleLocale>
+                <div class="flex items-center shrink-0">
+                    <div class="flex items-center text-md sm:text-lg font-bold hover:text-(--md-sys-color-primary) transition-colors mr-2 cursor-pointer"
+                        @click="$router.push('/')">
+                        <img src="/favicon.svg" class="h-9 mr-2" alt="江财网安协会logo">
+                        <span class="line-clamp-2">
+                            {{ t("meta.fullName") }}
+                        </span>
+                    </div>
                 </div>
 
                 <div class="flex-1 hidden md:flex justify-end items-center mx-4 relative h-10">
-                    <div class="flex space-x-4 md:space-x-6 transition-all duration-300 items-center justify-end"
+                    <div class="flex space-x-2 md:space-x-4 transition-all duration-300 items-center justify-end"
                         :class="{ 'opacity-0 invisible scale-95': showArticleTitle && scrollDirection === 'down' }">
                         <template v-for="link in navLinks" :key="link.path">
-                            <div v-if="link.children" class="relative group" @mouseenter="openDropdown(link.path)"
+                            <div v-if="'children' in link" class="relative group" @mouseenter="openDropdown(link.path)"
                                 @mouseleave="closeDropdown(link.path)">
                                 <div class="flex items-center">
-                                    <NuxtLink :to="link.defaultPath || link.path"
-                                        class="nav-link whitespace-nowrap overflow-hidden text-ellipsis min-w-0"
-                                        :class="{ 'active-link': isActive(link) }">
-                                        <span class="relative">
+                                    <NuxtLink :to="link.defaultPath || link.path" class="nav-link-block" :class="[
+                                        isActive(link) ? 'active-link' : 'text-(--md-sys-color-on-surface-variant)'
+                                    ]"
+                                        :style="`--origin-x: ${Math.random() * 100}%; --origin-y: ${Math.random() * 30}%`">
+                                        <span class="relative z-10 flex items-center font-medium">
                                             {{ t(link.label) }}
-                                            <span v-if="isActive(link)"
-                                                :class="`absolute -top-2 -right-3 text-${link.color}-400 text-xs`">{{ link.icon }}</span>
                                         </span>
                                     </NuxtLink>
 
                                     <button @click="toggleDropdown(link.path)"
-                                        class="ml-1 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                        class="ml-0.5 p-0.5 rounded-full hover:bg-(--md-sys-color-surface-container-high) transition-colors"
                                         :class="{ 'rotate-180': dropdownStates[link.path] }" type="button"
                                         aria-label="子菜单">
-                                        <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                        <svg class="w-3.5 h-3.5 transition-transform text-(--md-sys-color-on-surface-variant)"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M19 9l-7 7-7-7"></path>
                                         </svg>
@@ -51,79 +51,81 @@
                                     leave-from-class="transform translate-y-0 opacity-100"
                                     leave-to-class="transform translate-y-2 opacity-0">
                                     <div v-if="dropdownStates[link.path]"
-                                        class="absolute top-full left-0 mt-2 w-48 rounded shadow-lg bg-white dark:bg-gray-800 ring-1 ring-zinc-900/5 dark:ring-zinc-100/10 ring-opacity-5 z-50 overflow-hidden">
-                                        <NuxtLink v-for="child in link.children" :key="child.path" :to="child.path"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
-                                            :class="{
-                                                'bg-gray-100 dark:bg-gray-700 font-medium': route.path === child.path,
-                                                'text-primary-500 dark:text-primary-400': route.path === child.path
-                                            }" @click="closeDropdown(link.path)">
+                                        class="absolute top-full right-0 mt-2 w-48 rounded-xl shadow-lg bg-(--md-sys-color-surface-container) ring-1 ring-black/5 overflow-hidden p-1.5 z-50">
+                                        <NuxtLink v-for="child in (link as NavLinkWithChildren).children"
+                                            :key="child.path" :to="child.path"
+                                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200"
+                                            :class="[
+                                                route.path === child.path
+                                                    ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container) font-medium'
+                                                    : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)'
+                                            ]" @click="closeDropdown(link.path)">
                                             {{ t(child.label) }}
                                         </NuxtLink>
                                     </div>
                                 </transition>
                             </div>
 
-                            <NuxtLink v-else :to="link.path"
-                                class="nav-link whitespace-nowrap overflow-hidden text-ellipsis min-w-0"
-                                :class="{ 'active-link': $route.path === link.path }">
-                                <span class="relative">
+                            <NuxtLink v-else :to="link.path" class="nav-link-block" :class="[
+                                isActive(link) ? 'active-link' : 'text-(--md-sys-color-on-surface-variant)'
+                            ]" :style="`--origin-x: ${Math.random() * 100}%; --origin-y: ${Math.random() * 30}%`">
+                                <span class="relative z-10 flex items-center font-medium">
                                     {{ t(link.label) }}
-                                    <span v-if="$route.path === link.path"
-                                        :class="`absolute -top-2 -right-3 text-${link.color}-400 text-xs`">{{ link.icon }}</span>
                                 </span>
                             </NuxtLink>
                         </template>
                     </div>
+
                     <div v-if="route.path.startsWith('/archive/') && navTitleBox.title"
-                        class="absolute top-0 left-0 w-full transition-all duration-300"
+                        class="absolute top-0 right-0 w-full px-4 h-full flex flex-col justify-center items-end text-right transition-all duration-300 pointer-events-none"
                         :class="{ 'opacity-0 invisible': !showArticleTitle || scrollDirection === 'up' }">
-                        <div class="text-lg font-semibold leading-tight transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis"
+                        <div class="text-sm md:text-base font-semibold leading-tight transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis text-(--md-sys-color-on-surface) max-w-lg"
                             :class="{
                                 'translate-y-2 opacity-0': !titleVisible,
                                 'translate-y-0 opacity-100': titleVisible
                             }">
                             {{ navTitleBox.title }}
                         </div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 transition-all duration-500" :class="{
-                            'translate-y-2 opacity-0': !subtitleVisible,
-                            'translate-y-0 opacity-70': subtitleVisible
-                        }">
-                            <span v-if="navTitleBox.subtitle" class="mr-2">{{ navTitleBox.subtitle }}</span>
+                        <div class="text-xs text-(--md-sys-color-on-surface-variant) transition-all duration-500"
+                            :class="{
+                                'translate-y-2 opacity-0': !subtitleVisible,
+                                'translate-y-0 opacity-70': subtitleVisible
+                            }">
+                            <span v-if="navTitleBox.subtitle">{{ navTitleBox.subtitle }}</span>
                         </div>
                     </div>
                 </div>
 
-                <button class="md:hidden rounded-md text-gray-700 hover:text-primary-500 focus:outline-none relative"
-                    aria-label="打开菜单" @click.stop="toggleMenu">
-                    <Bars3Icon v-if="!isMenuOpen" class="w-7 h-7"></Bars3Icon>
-                    <XMarkIcon v-else class="w-7 h-7"></XMarkIcon>
-                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-75"
-                        v-if="isMenuOpen"></span>
-                </button>
+                <div class="flex items-center min-w-0 shrink-0 ml-2 sm:ml-4 gap-1 sm:gap-2">
+                    <ThemeColorPicker class="shrink-0" />
+                    <ToggleTheme class="shrink-0"></ToggleTheme>
+                    <ToggleLocale class="shrink-0"></ToggleLocale>
+                    <button
+                        class="md:hidden rounded-full p-2 text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high) transition-colors focus:outline-none relative ml-1"
+                        aria-label="打开菜单" @click.stop="toggleMenu">
+                        <Bars3Icon v-if="!isMenuOpen" class="w-6 h-6"></Bars3Icon>
+                        <XMarkIcon v-else class="w-6 h-6"></XMarkIcon>
+                    </button>
+                </div>
             </nav>
-
             <div class="md:hidden overflow-hidden transition-all duration-300 ease-in-out"
                 :style="{ maxHeight: isMenuOpen ? '500px' : '0' }" :aria-hidden="!isMenuOpen">
-                <div class="mt-4 pb-4 relative">
-                    <div class="absolute -top-4 right-4 text-pink-300 text-xl opacity-70">✧</div>
-                    <div class="absolute -bottom-4 left-4 text-blue-300 text-xl opacity-70">✦</div>
+                <div
+                    class="mt-4 pb-4 relative bg-(--md-sys-color-surface-container) rounded-xl p-3 shadow-lg border border-(--md-sys-color-outline-variant)/50">
                     <template v-for="link in navLinks" :key="`mobile-${link.path}`">
-                        <div v-if="link.children" class="mb-1">
-                            <div class="mobile-nav-link flex items-center justify-between w-full"
-                                :class="{ 'mobile-active-link': isActive(link) }">
-                                <NuxtLink :to="link.defaultPath || link.path" class="flex-1" @click="closeMenu">
-                                    <span>
-                                        {{ t(link.label) }}
-                                        <span v-if="isActive(link)"
-                                            :class="`ml-2 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
-                                    </span>
+                        <div v-if="'children' in link" class="mb-1">
+                            <div class="mobile-nav-link flex items-center justify-between w-full rounded-lg transition-colors p-2"
+                                :class="isActive(link) ? 'bg-(--md-sys-color-surface-container-high) font-medium' : 'hover:bg-(--md-sys-color-surface-container-high)/50'">
+                                <NuxtLink :to="link.defaultPath || link.path" class="flex-1 flex items-center"
+                                    :class="isActive(link) ? 'text-(--md-sys-color-primary) font-medium' : 'text-(--md-sys-color-on-surface)'"
+                                    @click="closeMenu">
+                                    {{ t(link.label) }}
                                 </NuxtLink>
 
                                 <button @click.stop="toggleMobileSubmenu(link.path)"
-                                    class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                                    aria-label="关于协会栏子菜单">
-                                    <svg class="w-4 h-4 transition-transform"
+                                    class="p-1 rounded-full hover:bg-(--md-sys-color-surface-container-highest)"
+                                    aria-label="子菜单">
+                                    <svg class="w-4 h-4 transition-transform text-(--md-sys-color-on-surface-variant)"
                                         :class="{ 'rotate-180': mobileDropdownStates[link.path] }" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -132,23 +134,25 @@
                                 </button>
                             </div>
 
-                            <div v-if="mobileDropdownStates[link.path]" class="pl-4 mt-1 space-y-1">
-                                <NuxtLink v-for="child in link.children" :key="child.path" :to="child.path"
-                                    class="block px-3 py-2 text-sm rounded-md mobile-nav-link" :class="{
-                                        'mobile-active-link': route.path === child.path,
-                                        'bg-gray-100 dark:bg-gray-700': route.path === child.path
+                            <div v-if="mobileDropdownStates[link.path]" class="pl-4 mt-1 space-y-1 mb-2">
+                                <NuxtLink v-for="child in (link as NavLinkWithChildren).children" :key="child.path"
+                                    :to="child.path" class="block px-3 py-2 text-sm rounded-lg transition-colors"
+                                    :class="{
+                                        'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container) font-medium': route.path === child.path,
+                                        'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)': route.path !== child.path
                                     }" @click="closeMenu">
                                     {{ t(child.label) }}
                                 </NuxtLink>
                             </div>
                         </div>
 
-                        <NuxtLink v-else :to="link.path" class="mobile-nav-link"
-                            :class="{ 'mobile-active-link': $route.path === link.path }" @click="closeMenu">
-                            <span class="relative">
+                        <NuxtLink v-else :to="link.path"
+                            class="mobile-nav-link block p-2 mb-1 rounded-lg transition-colors" :class="[
+                                isActive(link) ? 'bg-(--md-sys-color-surface-container-high) font-medium' : 'hover:bg-(--md-sys-color-surface-container-high)/50'
+                            ]" @click="closeMenu">
+                            <span class="flex items-center"
+                                :class="isActive(link) ? 'text-(--md-sys-color-primary) font-medium' : 'text-(--md-sys-color-on-surface)'">
                                 {{ t(link.label) }}
-                                <span v-if="$route.path === link.path"
-                                    :class="`absolute -top-1 -right-4 text-${link.color}-400 text-sm`">{{ link.icon }}</span>
                             </span>
                         </NuxtLink>
                     </template>
@@ -161,17 +165,21 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import ToggleTheme from './ToggleTheme.vue'
+import ThemeColorPicker from './ThemeColorPicker.vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useRoute } from 'vue-router'
 import { useNavLinks, type NavLink, type NavLinkWithChildren } from '~/composables/useNavLinks'
 import { useDropdownController } from '~/composables/useDropdownController'
 import ToggleLocale from './ToggleLocale.vue'
+import { useColorPalette } from '@/composables/useColorPalette'
+
 const { t } = useI18n()
 const route = useRoute()
 const navTitleBox = useState('navTitleBox', () => ({
     title: '',
     subtitle: ''
 }))
+const { currentTheme } = useColorPalette()
 
 const navLinks = useNavLinks()
 const dropdownLinks = navLinks.filter((link): link is NavLinkWithChildren => 'children' in link)
@@ -187,16 +195,16 @@ const showArticleTitle = ref(false)
 const lastScrollY = ref(0)
 const scrollDirection = ref<'up' | 'down'>('up')
 
-const currentBgOpacity = computed(() => isMenuOpen.value ? 0.8 : opacity.value * 0.8)
-
 const headerStyles = computed(() => {
-    const showBlurEffect = (opacity.value > 0.1 || isMenuOpen.value)
-    const blurAmount = isMenuOpen.value ? 12 : Math.min(opacity.value * 12, 12)
+    const bgEffect = isMenuOpen.value || opacity.value > 0.05
+    const alphaValue = isMenuOpen.value ? 0.95 : Math.min(opacity.value, 0.85);
+
     return {
-        backgroundColor: `rgba(var(--nav-bg-rgb), ${currentBgOpacity.value})`,
-        backdropFilter: showBlurEffect && blurAmount > 0 ?
-            `blur(${blurAmount}px) saturate(180%)` : 'none',
-        boxShadow: showBlurEffect ? '0 1px 1px 0px rgba(0, 0, 0, 0.1)' : 'none',
+        backgroundColor: `color-mix(in srgb, var(--md-sys-color-surface) ${alphaValue * 100}%, transparent)`,
+        backdropFilter: bgEffect ? 'blur(16px)' : 'none',
+        WebkitBackdropFilter: bgEffect ? 'blur(16px)' : 'none',
+        borderBottom: bgEffect ? '1px solid color-mix(in srgb, var(--md-sys-color-outline-variant), transparent 80%)' : '1px solid transparent',
+        boxShadow: bgEffect ? '0 4px 20px color-mix(in srgb, var(--md-sys-color-shadow), transparent 95%)' : 'none',
     }
 })
 
@@ -204,7 +212,7 @@ const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3)
 
 const isActive = (link: NavLink) => {
     if ('children' in link) {
-        return link.children.some((child) => route.path === child.path)
+        return link.children.some((child) => route.path === child.path) || route.path === link.defaultPath
     }
     return route.path === link.path
 }
@@ -219,11 +227,12 @@ const handleScroll = () => {
     scrollDirection.value = scrollPosition > lastScrollY.value ? 'down' : 'up'
     lastScrollY.value = scrollPosition
 
-    const rawOpacity = Math.min(scrollPosition / 150, 0.85)
+    // Quicker opacity ramp-up
+    const rawOpacity = Math.min(scrollPosition / 100, 1)
     opacity.value = easeOutCubic(rawOpacity)
 
     if (route.path.startsWith('/archive/')) {
-        if (scrollPosition > 100) {
+        if (scrollPosition > 120) {
             showArticleTitle.value = true
         } else {
             showArticleTitle.value = false
@@ -249,7 +258,6 @@ const handleClickOutside = (event: MouseEvent) => {
 }
 
 onMounted(() => {
-    document.documentElement.style.setProperty('--nav-bg-rgb', '255, 255, 255')
     window.addEventListener('scroll', handleScroll, { passive: true })
     document.addEventListener('click', handleClickOutside)
     handleScroll()
@@ -267,79 +275,28 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
+
 header {
-    will-change: opacity, background-color, backdrop-filter;
-    transition:
-        background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: background-color, backdrop-filter, border-bottom;
 }
 
-.nav-link {
-    color: inherit;
-    transition: color 0.3s ease;
-    position: relative;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    display: inline-block;
-}
-
-.nav-link:hover {
-    color: var(--anzu-primary-pressed);
+.nav-link-block {
+    @apply relative transition-all duration-200 ease-out flex items-center px-4 py-2 rounded-lg cursor-pointer overflow-hidden transform will-change-transform;
+    @apply before:absolute before:inset-0 before:z-[-1] before:scale-[0.8] before:rounded-lg before:opacity-0 before:backdrop-blur before:transition-all before:duration-300 before:ease-out;
+    @apply before:[transform-origin:var(--origin-x)_var(--origin-y)];
+    @apply hover:before:scale-100 hover:before:opacity-100;
+    @apply before:bg-(--md-sys-color-primary-container)/40 dark:before:bg-[var(--md-sys-color-primary-container)]/70;
+    @apply hover:text-[var(--md-sys-color-primary)];
 }
 
 .active-link {
-    color: var(--anzu-primary);
-    font-weight: 500;
+    @apply text-(--md-sys-color-primary) font-semibold bg-[var(--md-sys-color-secondary-container)]/50;
+}
+
+.nav-link-block span {
     position: relative;
-}
-
-.mobile-nav-link {
-    display: block;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    color: inherit;
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
-    position: relative;
-}
-
-.mobile-nav-link:hover {
-    background-color: rgba(243, 244, 246, 0.8);
-    color: var(--anzu-primary-pressed);
-}
-
-.mobile-active-link {
-    color: var(--anzu-primary);
-    font-weight: 500;
-}
-
-.dark header {
-    --nav-bg-rgb: 15, 15, 15;
-    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-.dark .mobile-nav-link:hover {
-    background-color: rgba(31, 41, 55, 0.8);
-}
-
-.dark .nav-link:hover,
-.dark .mobile-nav-link:hover {
-    color: var(--anzu-primary-300);
-}
-
-.dark .active-link,
-.dark .mobile-active-link {
-    color: var(--anzu-primary-400);
-}
-
-.dark button {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.dark button:hover {
-    color: var(--anzu-primary-300);
+    z-index: 1;
 }
 
 .group:hover .absolute.top-full {
@@ -354,15 +311,6 @@ header {
     width: 100%;
     height: 10px;
     background: transparent;
-    z-index: 60;
-}
-
-.dark .pl-4 a.mobile-active-link {
-    color: var(--anzu-primary);
-}
-
-.transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 40;
 }
 </style>

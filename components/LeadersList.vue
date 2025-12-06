@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-center">
         <template v-for="(leader, index) in leaders" :key="index">
             <LeaderCard :leader="leader" />
-            <hr class="h-0.5 border-dashed border-gray-400 my-6">
+            <hr class="h-0.5 border-dashed border-(--md-sys-color-outline-variant) my-6">
         </template>
 
     </div>

@@ -1,6 +1,5 @@
 <template>
-    <main class="mt-15">
-        <h1 class="font-bold text-4xl text-center">{{ t('pages.archive.title') }}</h1>
+    <div>
         <div class="flex justify-center items-center mt-1 flex-col">
             <div v-if="loading" class="text-center py-8">
                 <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>
@@ -9,7 +8,7 @@
                 <ErrorDisplay :errorData="error"></ErrorDisplay>
             </div>
             <template v-else>
-                <ul class="box-border p-2 w-full lg:w-1/2">
+                <ul class="box-border p-2 w-full">
                     <ArticleBlock v-for="archive in topArchives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
                         :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []"
@@ -17,8 +16,8 @@
                     </ArticleBlock>
                 </ul>
                 <hr
-                    class="box-border p-2 mx-auto w-4/5 md:w-2/5 border-t-2 border-blue-300 transition-colors duration-300 hover:border-blue-500" />
-                <ul class="box-border p-2 w-full lg:w-1/2">
+                    class="box-border p-2 mx-auto w-4/5 md:w-2/5 border-t-2 border-(--md-sys-color-primary-container) transition-colors duration-300 hover:border-(--md-sys-color-primary)" />
+                <ul class="box-border p-2 w-full">
                     <ArticleBlock v-for="archive in archives" :key="archive.id" :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
                         :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []">
@@ -29,7 +28,7 @@
                 @page-change="handlePageChange">
             </PageNav>
         </div>
-    </main>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -39,7 +38,11 @@ import { ref, watch } from 'vue';
 import { useRoute, useRouter } from '#imports';
 import { useApi } from '~/composables/useapi';
 import type { Archive } from '~/types/archives';
+import { usePageTitle } from '@/composables/usePageTitle';
 const { t } = useI18n()
+const { setPageTitle } = usePageTitle()
+
+setPageTitle('pages.archive.title')
 
 useHead(() => ({
     title: t('pages.archive.meta.title'),
