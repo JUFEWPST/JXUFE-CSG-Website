@@ -1,55 +1,52 @@
 <template>
-    <div>
-        <section ref="aboutRef" class="mx-auto max-w-7xl px-4 py-16 sm:py-22 md:py-26">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 items-start">
-                <div class="md:col-span-10 md:col-start-2 lg:col-span-8 lg:col-start-3 text-center">
-                    <div class="space-y-5 text-(--md-sys-color-on-surface) leading-relaxed">
-                        <p class="text-base sm:text-lg">
-                            <i18n-t keypath="pages.about.index.intro.p1" tag="span">
-                                <template #default>
-                                    <span class="font-bold text-(--md-sys-color-primary)">
-                                        {{ t("meta.fullName") }}
-                                    </span>
-                                </template>
-                            </i18n-t>
-                        </p>
-
-                        <p class="text-base sm:text-lg">
-                            <i18n-t keypath="pages.about.index.intro.p2" tag="span">
-                                <template #highlighted>
-                                    <span class="font-bold text-(--md-sys-color-primary)">
-                                        {{ t('pages.about.index.intro.highlightedText') }}
-                                    </span>
-                                </template>
-                            </i18n-t>
-                        </p>
+    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+        <section ref="aboutRef">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-(--md-sys-color-on-surface)">
+                {{ t('pages.home.aboutUs.title') }}
+            </h3>
+            <div class="space-y-2 text-(--md-sys-color-on-surface) leading-relaxed">
+                <p class="text-sm sm:text-base md:text-lg">
+                    <i18n-t keypath="pages.about.index.intro.p1" tag="span">
+                        <template #default>
+                            <span class="font-bold text-(--md-sys-color-primary)">
+                                {{ t("meta.fullName") }}
+                            </span>
+                        </template>
+                    </i18n-t>
+                </p>
+                <p class="text-sm sm:text-base md:text-lg">
+                    <i18n-t keypath="pages.about.index.intro.p2" tag="span">
+                        <template #highlighted>
+                            <span class="font-bold text-(--md-sys-color-primary)">
+                                {{ t('pages.about.index.intro.highlightedText') }}
+                            </span>
+                        </template>
+                    </i18n-t>
+                </p>
+                <div class="mt-8">
+                    <h4 class="text-base sm:text-lg font-semibold text-(--md-sys-color-on-surface) mb-3">
+                        {{ t('pages.home.participate.title') }}
+                    </h4>
+                    <div class="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                        <span class="chip">ISCC</span>
+                        <span class="chip bg-(--md-sys-color-surface-container-high)">CISCN</span>
+                        <span class="chip">联合比赛</span>
+                        <span class="chip">校园挖洞活动</span>
                     </div>
+                </div>
 
-                    <div class="mt-8">
-                        <h4 class="text-base sm:text-lg font-semibold text-(--md-sys-color-on-surface) mb-3">
-                            {{ t('pages.home.participate.title') }}
-                        </h4>
-                        <div class="flex flex-wrap gap-2 sm:gap-3 justify-center">
-                            <span class="chip">ISCC</span>
-                            <span class="chip bg-(--md-sys-color-surface-container-high)">CISCN</span>
-                            <span class="chip">联合比赛</span>
-                            <span class="chip">校园挖洞活动</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 flex flex-wrap gap-5 justify-center">
-                        <NuxtLink to="/about"
-                            class="text-sm sm:text-base font-bold text-(--md-sys-color-primary) hover:opacity-80 transition">
-                            {{ t('pages.home.aboutUs.more') }} →
-                        </NuxtLink>
-                    </div>
+                <div class="mt-8 flex flex-wrap gap-5 justify-center">
+                    <NuxtLink to="/about"
+                        class="text-sm sm:text-base font-bold text-(--md-sys-color-primary) hover:opacity-80 transition">
+                        {{ t('pages.home.aboutUs.more') }} →
+                    </NuxtLink>
                 </div>
             </div>
         </section>
 
-        <section ref="newsRef" class="mx-auto max-w-7xl px-4 pb-20 sm:pb-26 md:pb-28">
+        <section ref="newsRef" class="mx-auto">
             <div class="flex items-end justify-between gap-4 mb-7 sm:mb-9">
-                <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-(--md-sys-color-on-surface)">
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-(--md-sys-color-on-surface)">
                     {{ t('pages.home.recentNews.title') }}
                 </h3>
 
@@ -75,11 +72,11 @@
                 </ul>
 
                 <div v-else class="py-12 text-center text-(--md-sys-color-outline)">
-                    暂无公告，去归档页看看吧～
+                    暂无动态，去归档页看看吧～
                 </div>
             </div>
         </section>
-    </div>
+    </main>
 </template>
 
 <script setup lang="ts">
@@ -122,6 +119,6 @@ onMounted(() => {
 @reference "tailwindcss";
 
 .chip {
-    @apply px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-high) border border-(--md-sys-color-outline-variant) dark:border-none text-(--md-sys-color-on-surface-variant)  hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container) hover:border-(--md-sys-color-primary-container) transition-colors;
+    @apply px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-high) border border-(--md-sys-color-outline-variant) dark:border-none text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container) hover:border-(--md-sys-color-primary-container) transition-colors;
 }
 </style>

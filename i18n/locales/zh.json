@@ -177,18 +177,26 @@
             "up1": "上方",
             "down1": "下方"
         },
-        "items":{
-            "toc":"目录",
+        "items": {
+            "toc": "目录",
             "Warning": "警告",
             "Info": "信息",
             "Tip": "提示",
             "Error": "错误",
-            "Success":"成功"
+            "Success": "成功"
         }
     },
     "footer": {
         "quickNav": "快速导航",
         "contact": "联系我们",
         "address": "江西财经大学麦庐园校区"
+    },
+    "themeColorPicker": {
+        "tooltip": "更改主题色",
+        "title": "主题配色",
+        "customColor": "自定义颜色",
+        "colorInputLabel": "选择自定义主题色",
+        "Themes": "主题",
+        "themeItem": "{name} 的主题配色"
     }
 }

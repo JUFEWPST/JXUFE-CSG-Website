@@ -1,7 +1,7 @@
 <template>
     <div ref="root" class="relative inline-flex" @mouseenter="openMenu" @mouseleave="scheduleClose">
         <button
-            class="flex h-[30px] w-[30px] items-center justify-center rounded-full transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+            class="flex h-[30px] w-[30px] items-center justify-center rounded-full transition-colors duration-200 text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)"
             @click="toggleMenu" aria-label="Change language" :aria-expanded="isOpen" aria-haspopup="menu" type="button">
             <LanguageIcon class="box-border p-1" />
         </button>
@@ -11,18 +11,18 @@
             leave-active-class="transition duration-150 ease-in" leave-from-class="transform translate-y-0 opacity-100"
             leave-to-class="transform translate-y-2 opacity-0">
             <div v-if="isOpen"
-                class="ring-opacity-5 absolute top-full right-0 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 mt-2 w-48 overflow-hidden rounded bg-white shadow-lg ring-1 ring-zinc-900/5 dark:bg-gray-800 dark:ring-zinc-100/10 max-w-[calc(100vw-2rem)] sm:mx-4"
+                class="absolute top-full right-0 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 mt-2 w-48 max-w-[calc(100vw-2rem)] sm:mx-4 overflow-hidden rounded-xl bg-(--md-sys-color-surface-container) shadow-center-sm ring-1 ring-black/5"
                 role="menu" @mouseenter="openMenu" @mouseleave="scheduleClose">
                 <button v-for="l in localeList" :key="l.code" type="button" role="menuitem"
                     @click="selectLocale(l.code)"
-                    class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm  transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 font-medium"
+                    class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm font-medium transition-colors"
                     :class="l.code === locale
-                        ? ' bg-gray-100 dark:bg-gray-700 font-black'
-                        : ''
+                        ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
+                        : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)'
                         ">
                     <span class="inline-block h-1.5 w-1.5 rounded-full"
-                        :class="l.code === locale ? 'bg-emerald-500' : 'bg-transparent'" />
-                    <span>{{ l.name ?? l.code }}</span>
+                        :class="l.code === locale ? 'bg-(--md-sys-color-primary)' : 'bg-transparent'" />
+                    <span class="truncate">{{ l.name ?? l.code }}</span>
                 </button>
             </div>
         </transition>
@@ -77,7 +77,7 @@ const toggleMenu = () => {
 }
 
 const selectLocale = (code: string) => {
-    if (code !== locale.value) setLocale(code)
+    if (code !== locale.value) setLocale(code as any)
     clearCloseTimer()
     isOpen.value = false
 }

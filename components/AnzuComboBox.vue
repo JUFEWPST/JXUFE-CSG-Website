@@ -3,9 +3,9 @@
         <slot name="trigger" :open="isOpen" :toggle="toggleMenu" :selected="selectedItem" :selectedLabel="selectedLabel"
             :query="query" :setQuery="setQuery">
             <button type="button"
-                class="flex w-full min-w-40 items-center justify-between gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+                class="flex w-full min-w-40 items-center justify-between gap-2 rounded-full border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface) px-3 py-2 text-sm text-(--md-sys-color-on-surface) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
                 @click="toggleMenu" :aria-label="ariaLabel" :aria-expanded="isOpen" aria-haspopup="listbox">
-                <span class="truncate text-gray-900 dark:text-gray-100">
+                <span class="truncate">
                     {{ selectedLabel || placeholder }}
                 </span>
                 <svg class="h-4 w-4 shrink-0 opacity-60" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -21,22 +21,25 @@
             leave-active-class="transition duration-120 ease-in" leave-from-class="transform translate-y-0 opacity-100"
             leave-to-class="transform translate-y-1 opacity-0">
             <div v-if="isOpen"
-                class="absolute top-full z-50 mt-1 max-w-[calc(100vw-2rem)] overflow-hidden rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+                class="absolute top-full z-50 mt-1 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl bg-(--md-sys-color-surface-container) shadow-center-sm ring-1 ring-black/5"
                 :class="[menuWidthClass, menuAlignClass]" role="listbox" @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave">
-                <div class="border-b border-gray-100 p-2 dark:border-gray-800">
+                <div class="border-b border-(--md-sys-color-outline-variant)/40 p-2">
                     <input v-model="query" type="text"
-                        class="w-full rounded border border-gray-200 bg-white px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-gray-700 dark:bg-gray-950"
+                        class="w-full rounded-full border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface) px-3 py-1.5 text-sm outline-none text-(--md-sys-color-on-surface) focus:ring-2 focus:ring-(--md-sys-color-primary)/20"
                         :placeholder="searchPlaceholder" @keydown.escape.prevent="closeNow" />
                 </div>
 
                 <div class="overflow-auto py-1" :style="menuBodyStyle">
                     <button v-for="it in filteredItems" :key="getKey(it)" type="button" role="option"
                         :aria-selected="isSelected(it)" @click="select(getValue(it))"
-                        class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                        :class="isSelected(it) ? 'bg-gray-50 font-semibold dark:bg-gray-800' : ''">
+                        class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors"
+                        :class="isSelected(it)
+                            ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
+                            : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)'
+                            ">
                         <span class="inline-block h-1.5 w-1.5 rounded-full"
-                            :class="isSelected(it) ? 'bg-emerald-500' : 'bg-transparent'" />
+                            :class="isSelected(it) ? 'bg-(--md-sys-color-primary)' : 'bg-transparent'" />
                         <span class="truncate">
                             <slot name="item" :item="it" :selected="isSelected(it)">
                                 {{ getLabel(it) }}
@@ -44,7 +47,8 @@
                         </span>
                     </button>
 
-                    <div v-if="filteredItems.length === 0" class="px-3 py-3 text-sm text-gray-500 dark:text-gray-400">
+                    <div v-if="filteredItems.length === 0"
+                        class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)">
                         {{ emptyText }}
                     </div>
                 </div>

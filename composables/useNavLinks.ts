@@ -8,7 +8,6 @@ export interface BaseNavLink {
     path: string
     label: string
     defaultPath?: string
-    // Removed icon as per user feedback
 }
 
 export interface NavLinkWithChildren extends BaseNavLink {

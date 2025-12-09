@@ -190,5 +190,13 @@
         "quickNav": "クイックナビゲーション",
         "contact": "お問い合わせ",
         "address": "江西財経大学麦廬園キャンパス"
+    },
+    "themeColorPicker": {
+        "tooltip": "テーマカラーを変更",
+        "title": "テーマカラー",
+        "customColor": "カスタムカラー",
+        "colorInputLabel": "カスタムテーマカラーを選択",
+        "Themes": "テーマ",
+        "themeItem": "{name} のテーマカラー"
     }
 }

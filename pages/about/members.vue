@@ -1,12 +1,12 @@
 <template>
-    <main class="max-w-6xl mx-auto">
+    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
         <AnzuAlert type="info">
             {{ t('pages.about.members.dataCollectTip') }}<NuxtLink class="text-(--md-sys-color-primary)"
                 to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
                 [{{ t('pages.about.members.archiveInvite') }}]</NuxtLink>
         </AnzuAlert>
         <div v-for="item in members" :key="item.year" class="mb-12">
-            <h2 class="text-2xl font-bold mb-6 border-l-4 border-(--md-sys-color-primary) pl-3">
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-6 border-l-4 border-(--md-sys-color-primary) pl-3">
                 <template v-if="typeof item.year === 'string'">{{ item.year }}</template>
                 <template v-if="typeof item.year === 'number'">{{ item.year }} 届</template>
             </h2>

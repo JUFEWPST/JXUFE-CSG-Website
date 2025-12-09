@@ -23,10 +23,10 @@
     :root {
         /* Material Design 3 System Colors - Fallback defaults if JS fails or pre-hydration */
         /* These will be overwritten by applyThemeToRoot */
-        --md-sys-color-primary: #6750A4;
+        --md-sys-color-primary: #A61E33;
         --md-sys-color-on-primary: #FFFFFF;
-        --md-sys-color-primary-container: #EADDFF;
-        --md-sys-color-on-primary-container: #21005D;
+        --md-sys-color-primary-container: #F2CDD2;
+        --md-sys-color-on-primary-container: #3F0012;
         --md-sys-color-secondary: #625B71;
         --md-sys-color-on-secondary: #FFFFFF;
         --md-sys-color-secondary-container: #E8DEF8;
@@ -39,9 +39,9 @@
         --md-sys-color-on-error: #FFFFFF;
         --md-sys-color-error-container: #F9DEDC;
         --md-sys-color-on-error-container: #410E0B;
-        --md-sys-color-background: #FEF7FF;
+        --md-sys-color-background: #FFFFFF;
         --md-sys-color-on-background: #1D1B20;
-        --md-sys-color-surface: #FEF7FF;
+        --md-sys-color-surface: #FFFFFF;
         --md-sys-color-on-surface: #1D1B20;
         --md-sys-color-surface-variant: #E7E0EC;
         --md-sys-color-on-surface-variant: #49454F;
@@ -51,15 +51,15 @@
         --md-sys-color-scrim: #000000;
         --md-sys-color-inverse-surface: #322F35;
         --md-sys-color-inverse-on-surface: #F5EFF7;
-        --md-sys-color-inverse-primary: #D0BCFF;
+        --md-sys-color-inverse-primary: #F2CDD2;
         
-        --md-sys-color-surface-dim: #DED8E1;
-        --md-sys-color-surface-bright: #FEF7FF;
+        --md-sys-color-surface-dim: #F3EDF7;
+        --md-sys-color-surface-bright: #FFFFFF;
         --md-sys-color-surface-container-lowest: #FFFFFF;
-        --md-sys-color-surface-container-low: #F7F2FA;
-        --md-sys-color-surface-container: #F3EDF7;
-        --md-sys-color-surface-container-high: #ECE6F0;
-        --md-sys-color-surface-container-highest: #E6E1E5;
+        --md-sys-color-surface-container-low: #FFF4F6;
+        --md-sys-color-surface-container: #FFECEE;
+        --md-sys-color-surface-container-high: #FBDDE2;
+        --md-sys-color-surface-container-highest: #F2CDD2;
     }
     
     .dark {
@@ -91,7 +91,7 @@
         --md-sys-color-scrim: #000000;
         --md-sys-color-inverse-surface: #E6E1E5;
         --md-sys-color-inverse-on-surface: #313033;
-        --md-sys-color-inverse-primary: #6750A4;
+        --md-sys-color-inverse-primary: #A61E33;
 
         --md-sys-color-surface-dim: #141218;
         --md-sys-color-surface-bright: #3B383E;
@@ -106,11 +106,8 @@
         @apply bg-(--md-sys-color-background) text-(--md-sys-color-on-background) transition-colors duration-300;
     }
     
-    /* Override removed to follow MD3 specs as requested */
-    /* :root:not(.dark) { ... } */
 }
 
-/* Scrollbar styling using MD3 colors */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

@@ -35,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="mt-15 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
         <div class="mb-12 flex justify-center">
             <h1 class="hidden">{{ t('pages.about.index.title') }}</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">
@@ -96,12 +96,13 @@ onMounted(() => {
 
                 <div class="relative z-10">
                     <h2
-                        class="text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
+                        class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
                         <span class="w-2 h-8 bg-(--md-sys-color-primary) mr-3 rounded-full"></span>
                         {{ t('pages.about.index.intro.title') }}
                     </h2>
                     <div class="space-y-6">
-                        <p class="text-lg text-(--md-sys-color-on-surface-variant) leading-relaxed">
+                        <p
+                            class="text-base sm:text-lg md:text-xl text-(--md-sys-color-on-surface-variant) leading-relaxed">
                             <i18n-t keypath="pages.about.index.intro.p1" tag="span">
                                 <template #default>
                                     <span
@@ -109,7 +110,8 @@ onMounted(() => {
                                 </template>
                             </i18n-t>
                         </p>
-                        <p class="text-lg text-(--md-sys-color-on-surface-variant) leading-relaxed mb-4">
+                        <p
+                            class="text-base sm:text-lg md:text-xl text-(--md-sys-color-on-surface-variant) leading-relaxed mb-4">
                             <i18n-t keypath="pages.about.index.intro.p2" tag="span">
                                 <template #highlighted>
                                     <span
@@ -120,7 +122,7 @@ onMounted(() => {
                         <div
                             class="bg-(--md-sys-color-surface-container-low) dark:bg-(--md-sys-color-surface-container-high) p-4 rounded-lg shadow-inner">
                             <h3
-                                class="text-xl font-semibold mb-3 text-(--md-sys-color-on-surface) flex items-center">
+                                class="text-xl sm:text-2xl font-semibold mb-3 text-(--md-sys-color-on-surface) flex items-center">
                                 <span class="w-1.5 h-6 bg-(--md-sys-color-tertiary) mr-2 rounded-full"></span>
                                 {{ t('pages.about.index.departments.title') }}
                             </h3>
@@ -128,35 +130,36 @@ onMounted(() => {
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div
                                     class="bg-(--md-sys-color-primary-container)/30 dark:bg-(--md-sys-color-secondary-container) p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-(--md-sys-color-on-surface)">
+                                    <h4 class="text-base sm:text-lg font-medium text-(--md-sys-color-on-surface)">
                                         {{ t('pages.about.index.departments.study.name') }}
                                     </h4>
-                                    <p class="text-sm text-(--md-sys-color-on-surface-variant) mt-1">
+                                    <p class="text-sm sm:text-base text-(--md-sys-color-on-surface-variant) mt-1">
                                         {{ t('pages.about.index.departments.study.desc') }}
                                     </p>
                                 </div>
                                 <div
                                     class="bg-(--md-sys-color-tertiary-container)/30 dark:bg-(--md-sys-color-secondary-container) p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-(--md-sys-color-on-surface)">
+                                    <h4 class="text-base sm:text-lg font-medium text-(--md-sys-color-on-surface)">
                                         {{ t('pages.about.index.departments.organization.name') }}
                                     </h4>
-                                    <p class="text-sm text-(--md-sys-color-on-surface-variant) mt-1">
+                                    <p class="text-sm sm:text-base text-(--md-sys-color-on-surface-variant) mt-1">
                                         {{ t('pages.about.index.departments.organization.desc') }}
                                     </p>
                                 </div>
 
                                 <div
                                     class="bg-(--md-sys-color-secondary-container)/30 dark:bg-(--md-sys-color-secondary-container) p-3 rounded-lg hover:shadow-md transition-shadow">
-                                    <h4 class="font-medium text-(--md-sys-color-on-surface)">
+                                    <h4 class="text-base sm:text-lg font-medium text-(--md-sys-color-on-surface)">
                                         {{ t('pages.about.index.departments.publicity.name') }}
                                     </h4>
-                                    <p class="text-sm text-(--md-sys-color-on-surface-variant) mt-1">
+                                    <p class="text-sm sm:text-base text-(--md-sys-color-on-surface-variant) mt-1">
                                         {{ t('pages.about.index.departments.publicity.desc') }}
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-lg text-(--md-sys-color-on-surface-variant) leading-relaxed">
+                        <div
+                            class="text-base sm:text-lg md:text-xl text-(--md-sys-color-on-surface-variant) leading-relaxed">
                             {{ t('pages.about.index.intro.wpstIntro') }}
                         </div>
                     </div>
@@ -175,12 +178,13 @@ onMounted(() => {
                 <div class="absolute top-1/2 right-1/4 text-5xl text-(--md-sys-color-primary) opacity-40">✦</div>
                 <div class="absolute bottom-1/6 left-1/3 text-2xl text-(--md-sys-color-error) opacity-70">☆</div>
                 <div class="absolute top-1/3 left-1/6 text-4xl text-(--md-sys-color-secondary) opacity-50">✯</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
+                <h2
+                    class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
                     <span class="w-2 h-8 bg-(--md-sys-color-secondary) mr-3 rounded-full"></span>
                     {{ t('pages.about.index.members.leaders') }}
                 </h2>
                 <NuxtLink to="/about/leaders" class="ml-5"><span
-                        class="text-md font-bold text-(--md-sys-color-outline) hover:text-(--md-sys-color-on-surface) transition-colors duration-300">>>
+                        class="text-sm sm:text-base font-bold text-(--md-sys-color-outline) hover:text-(--md-sys-color-on-surface) transition-colors duration-300">>>
                         {{ t('pages.about.index.listmode') }}</span></NuxtLink>
                 <LeaderCarousel :leaders="leadersData" />
             </section>
@@ -192,12 +196,13 @@ onMounted(() => {
                 <div class="absolute top-1/2 right-1/4 text-5xl text-(--md-sys-color-primary) opacity-40">✦</div>
                 <div class="absolute bottom-1/6 left-1/3 text-2xl text-(--md-sys-color-error) opacity-70">☆</div>
                 <div class="absolute top-1/3 left-1/6 text-4xl text-(--md-sys-color-secondary) opacity-50">✯</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
+                <h2
+                    class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
                     <span class="w-2 h-8 bg-(--md-sys-color-secondary) mr-3 rounded-full"></span>
                     {{ t('pages.about.index.members.members') }}
                 </h2>
                 <NuxtLink to="/about/members" class="ml-5"><span
-                        class="text-md font-bold text-(--md-sys-color-outline) hover:text-(--md-sys-color-on-surface) transition-colors duration-300">>>
+                        class="text-sm sm:text-base font-bold text-(--md-sys-color-outline) hover:text-(--md-sys-color-on-surface) transition-colors duration-300">>>
                         {{ t('pages.about.index.listmode') }}</span></NuxtLink>
                 <MembersCarousel :membersArray="membersArray" />
             </section>
@@ -216,14 +221,14 @@ onMounted(() => {
 
                 <div class="relative z-10">
                     <h2
-                        class="text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
+                        class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
                         <span class="w-2 h-8 bg-(--md-sys-color-secondary) mr-3 rounded-full"></span>
                         {{ t('pages.about.index.members.honors') }}
                     </h2>
                     <div class="space-y-8">
                         <div v-for="yearData in honorsData" :key="yearData.year">
                             <h3
-                                class="text-xl font-semibold mb-4 text-(--md-sys-color-on-surface-variant) border-b pb-2 border-(--md-sys-color-outline-variant) flex items-center">
+                                class="text-lg sm:text-xl font-semibold mb-4 text-(--md-sys-color-on-surface-variant) border-b pb-2 border-(--md-sys-color-outline-variant) flex items-center">
                                 <span class="w-1.5 h-6 mr-2 rounded-full" :class="getYearColor(yearData.year)"></span>
                                 {{ yearData.year }}
                             </h3>
@@ -231,7 +236,7 @@ onMounted(() => {
                                 <li v-for="(honor, index) in yearData.honors" :key="index"
                                     class="flex items-start group">
                                     <span
-                                        class="px-2 py-1 mr-3 text-white text-xs font-bold rounded-full min-w-10 text-center group-hover:scale-110 transition-transform"
+                                        class="px-2 py-1 mr-3 text-white text-xs sm:text-sm font-bold rounded-full min-w-10 text-center group-hover:scale-110 transition-transform"
                                         :class="`bg-linear-to-r ${getLevelColor(honor.level)}`">
                                         {{ honor.level }}
                                     </span>
@@ -242,7 +247,7 @@ onMounted(() => {
                         </div>
                     </div>
                     <div
-                        class="mt-6 pt-4 border-t border-(--md-sys-color-outline-variant) text-center text-sm text-(--md-sys-color-on-surface-variant)">
+                        class="mt-6 pt-4 border-t border-(--md-sys-color-outline-variant) text-center text-xs sm:text-sm text-(--md-sys-color-on-surface-variant)">
                         <p class="mt-1"> 我认为奇迹与魔法对谁都会带来幸福，是十分美好的事物。</p>
                     </div>
                 </div>
@@ -259,14 +264,14 @@ onMounted(() => {
 
                 <div class="relative z-10">
                     <h2
-                        class="text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
+                        class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
                         <span class="w-2 h-8 bg-(--md-sys-color-tertiary) mr-3 rounded-full"></span>
                         {{ t('pages.about.index.joinUs.title') }}
                     </h2>
 
                     <div class="flex flex-col md:flex-row items-center gap-8">
                         <div class="md:w-1/2 space-y-4 text-(--md-sys-color-on-surface-variant)">
-                            <p class="text-lg leading-relaxed">
+                            <p class="text-base sm:text-lg md:text-xl leading-relaxed">
                                 <i18n-t keypath="pages.about.index.joinUs.scan_qr" tag="span">
                                     <span>
                                         <span class="md:hidden">{{ t("common.direction.down1") }}</span>
@@ -278,7 +283,7 @@ onMounted(() => {
                             <div
                                 class="bg-(--md-sys-color-tertiary-container)/30 dark:bg-(--md-sys-color-surface-container-high) p-4 rounded-lg border-(--md-sys-color-tertiary)">
                                 <div
-                                    class="text-sm italic text-(--md-sys-color-tertiary) dark:text-(--md-sys-color-tertiary) transition-opacity duration-500 min-h-12">
+                                    class="text-sm sm:text-base italic text-(--md-sys-color-tertiary) dark:text-(--md-sys-color-tertiary) transition-opacity duration-500 min-h-12">
                                     「{{ quotes[currentQuote] }}」
                                 </div>
                             </div>
@@ -317,23 +322,24 @@ onMounted(() => {
 
                 <div class="relative z-10">
                     <h2
-                        class="text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
+                        class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-(--md-sys-color-on-surface) flex items-center">
                         <span class="w-2 h-8 bg-(--md-sys-color-secondary) mr-3 rounded-full"></span>
                         Contributors
                     </h2>
-                    <div class="text-lg leading-relaxed">{{ t('pages.about.index.contributors.title') }}
+                    <div class="text-base sm:text-lg md:text-xl leading-relaxed">
+                        {{ t('pages.about.index.contributors.title') }}
                     </div>
                     <div class="my-2">
                         <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website/graphs/contributors">
                             <img src="https://contrib.rocks/image?repo=JUFEWPST/JXUFE-CSG-Website&columns=15" />
                         </a>
                     </div>
-                    <div class="text-lg leading-relaxed">
+                    <div class="text-base sm:text-lg md:text-xl leading-relaxed">
                         {{ t('pages.about.index.contributors.invite') }}
                     </div>
 
                     <i18n-t keypath="pages.about.index.contributors.projectLink" tag="div"
-                        class="text-lg leading-relaxed">
+                        class="text-base sm:text-lg md:text-xl leading-relaxed">
                         <a href="https://github.com/JUFEWPST/JXUFE-CSG-Website"
                             class="text-(--md-sys-color-primary) hover:text-(--md-sys-color-tertiary) transition-colors">
                             {{ t('common.actions.viewDetail') }}

@@ -1,7 +1,11 @@
 <template>
     <div class="w-full rounded-xl flex flex-col p-4 my-1" :class="bgColorClass">
         <div v-if="titleText" class="font-bold mb-2 flex items-start">
-            <component :is="iconComponent" class="w-5 h-5 mt-0.5 mr-2 shrink-0" :class="iconColorClass" />
+            <component
+                :is="iconComponent"
+                class="w-5 h-5 mt-0.5 mr-2 shrink-0"
+                :class="iconColorClass"
+            />
             {{ titleText }}
         </div>
         <div>
@@ -18,7 +22,9 @@ import {
     InformationCircleIcon,
     XCircleIcon,
 } from '@heroicons/vue/24/outline';
+
 const { t } = useI18n()
+
 interface AlertInfo {
     title?: string
     type?: 'succ' | 'warn' | 'info' | 'error' | 'plain'

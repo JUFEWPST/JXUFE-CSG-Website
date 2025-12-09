@@ -1,8 +1,9 @@
 <template>
-    <main class="max-w-5xl mx-auto">
+    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
         <div class="space-y-8">
             <section>
-                <h2 class="text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
+                <h2
+                    class="text-xl sm:text-2xl md:text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
                     {{ t('pages.links.sections.official') }}
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mt-1">
@@ -10,10 +11,11 @@
                 </div>
             </section>
             <section>
-                <h2 class="text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
+                <h2
+                    class="text-xl sm:text-2xl md:text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
                     {{ t('pages.links.sections.intranet') }}
                 </h2>
-                <p class="text-sm text-(--md-sys-color-on-surface-variant) leading-relaxed my-1">
+                <p class="text-xs sm:text-sm md:text-base text-(--md-sys-color-on-surface-variant) leading-relaxed my-1">
                     {{ t('pages.links.sections.intranetTip') }}
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
@@ -21,10 +23,11 @@
                 </div>
             </section>
             <section>
-                <h2 class="text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
+                <h2
+                    class="text-xl sm:text-2xl md:text-3xl font-semibold flex items-center gap-2 text-(--md-sys-color-on-surface)">
                     {{ t('pages.links.sections.friends') }}
                 </h2>
-                <p class="text-sm text-(--md-sys-color-on-surface-variant) leading-relaxed my-1">
+                <p class="text-xs sm:text-sm md:text-base text-(--md-sys-color-on-surface-variant) leading-relaxed my-1">
                     {{ t('pages.links.disclaimer') }}
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
@@ -37,8 +40,8 @@
 
 <script lang="ts" setup>
 import type { Link } from '~/types/link';
-import { useI18n } from 'vue-i18n'; // Ensure this is imported or auto-imported
-import { computed } from 'vue'; // Ensure this is imported or auto-imported
+import { useI18n } from 'vue-i18n';
+import { computed } from 'vue'; 
 import { usePageTitle } from '@/composables/usePageTitle';
 
 const official_icon = '/jxufe-logo.svg';

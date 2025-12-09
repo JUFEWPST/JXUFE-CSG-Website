@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="flex justify-center items-center mt-1 flex-col">
+    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+        <div class="flex justify-center items-center flex-col">
             <div v-if="loading" class="text-center py-8">
                 <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>
             </div>
@@ -28,7 +28,7 @@
                 @page-change="handlePageChange">
             </PageNav>
         </div>
-    </div>
+    </main>
 </template>
 
 <script setup lang="ts">
@@ -67,10 +67,8 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 
 const loadArchives = async (page: number = 1) => {
-    // console.log("加载分页数据:", page);
     await getArchives(`/archives?pagination[page]=${page}`);
     if (archives.value) {
-        // console.log("文章数据:", archives.value);
         if (meta.value?.pagination) {
             totalPages.value = meta.value.pagination.pageCount;
             currentPage.value = meta.value.pagination.page;

@@ -1,37 +1,37 @@
 <template>
     <div class="relative">
-        <button v-if="isCollapsed" @click="toggleToc"
-            class="fixed md:sticky top-5 left-0 md:left-auto z-30 p-2 bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-md shadow-md transition-colors duration-200"
-            aria-label="展开目录" title="展开目录" aria-expanded="false" aria-controls="toc-container">
-            <Bars3Icon class="w-5 h-5" />
-        </button>
-
-        <!-- 目录内容 -->
-        <div v-show="!isCollapsed"
-            class="sticky top-5 max-h-[calc(100vh-40px)] overflow-y-auto p-4 border-l border-gray-200 transition-all duration-300 ease-in-out min-w-[250px]"
-            :class="{
-                'fixed top-0 left-0 w-72 h-screen bg-white z-40 shadow-lg p-5': isMobile,
-                'ml-8': !isMobile
-            }" :aria-hidden="isCollapsed" id="toc-container" aria-labelledby="toc-title" role="navigation">
-            <div v-if="items.length" class="flex items-center justify-between mb-4">
-                <h2 id="toc-title" class="font-bold text-lg">{{ t("common.items.toc") }}</h2>
-                <button @click="toggleToc"
-                    class="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700  transition-colors"
-                    aria-label="关闭目录" aria-expanded="true" aria-controls="toc-container" title="关闭目录">
-                    <XMarkIcon class="w-5 h-5" />
-                </button>
+        <div
+            class="max-h-[calc(100vh-7rem)] overflow-y-auto p-2 md:p-3 transition-all duration-300 ease-in-out text-(--md-sys-color-on-surface-variant)"
+            id="toc-container"
+            aria-labelledby="toc-title"
+            role="navigation"
+        >
+            <div v-if="items.length" class="flex items-center mb-2">
+                <h2
+                    id="toc-title"
+                    class="font-bold text-lg text-(--md-sys-color-primary)"
+                >
+                    {{ t("common.items.toc") }}
+                </h2>
             </div>
 
             <ul class="list-none p-0 m-0 space-y-1">
-                <li v-for="item in items" :key="item.id" :style="{ paddingLeft: `${(item.level - 1)}rem` }"
-                    class="my-1 leading-snug overflow-hidden text-ellipsis transition-colors min-w-0">
-                    <a @click="scrollTo(item.id)" :class="getLinkClasses(item)" :title="item.text"
-                        :aria-current="activeId === item.id ? 'location' : undefined">
+                <li
+                    v-for="item in items"
+                    :key="item.id"
+                    class="my-0.5 leading-snug overflow-hidden text-ellipsis min-w-0"
+                >
+                    <a
+                        @click="scrollTo(item.id)"
+                        :class="getLinkClasses(item)"
+                        :title="item.text"
+                        :aria-current="activeId === item.id ? 'location' : undefined"
+                    >
                         {{ item.text }}
                     </a>
                 </li>
             </ul>
-            <div v-if="items.length === 0" class="text-gray-500 dark:text-gray-200 text-sm italic">
+            <div v-if="items.length === 0" class="text-(--md-sys-color-on-surface-variant) text-sm italic mt-2">
                 NULL
             </div>
         </div>
@@ -39,46 +39,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ref, onMounted, onUnmounted } from 'vue'
 import slugify from 'slugify';
 import type { TocItem } from '~/types/tocitems';
+
 const HEADING_SELECTOR = 'h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]';
 const ALL_HEADINGS_SELECTOR = 'h1, h2, h3, h4, h5, h6';
 const { t } = useI18n()
+
 const props = defineProps<{
     items: TocItem[]
     markdownRenderRef: { $el: HTMLElement };
 }>()
+
 function getHeadingSelector() {
     if (!props.markdownRenderRef) {
-        // console.log("没有ReF")
         return [];
     }
     return props.markdownRenderRef.$el.querySelectorAll(
-        'h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]'
+        HEADING_SELECTOR
     );
 }
+
 const activeId = ref('')
-const isCollapsed = ref(false)
-const windowWidth = ref(window.innerWidth)
-
-const isMobile = computed(() => windowWidth.value < 768)
-const initialCollapseState = computed(() => isMobile.value);
-
-function toggleToc() {
-    isCollapsed.value = !isCollapsed.value
-}
 
 const getLinkClasses = (item: TocItem) => {
-    const baseClasses = 'block py-1.5 px-2 no-underline rounded-md transition-colors hover:bg-purple-300 cursor-pointer whitespace-normal wrap-break-word overflow-visible';
-    const activeClasses = activeId.value === item.id ? 'text-white font-medium bg-purple-400' : '';
-    const levelClasses =
-        item.level === 2 ? 'pl-4' :
-            item.level === 3 ? 'pl-8' :
-                item.level >= 4 ? 'pl-12' : '';
+    const baseClasses = 'block py-1.5 px-2 md:px-3 no-underline rounded-full text-sm transition-colors cursor-pointer whitespace-normal break-words';
+    const activeClasses = activeId.value === item.id
+        ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-medium'
+        : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)';
 
-    return `${baseClasses} ${activeClasses} ${levelClasses}`;
+    return `${baseClasses} ${activeClasses}`;
 }
 
 async function scrollTo(idOrText: string) {
@@ -119,9 +110,6 @@ async function scrollTo(idOrText: string) {
         });
 
         activeId.value = element.id;
-        if (isMobile.value) {
-            isCollapsed.value = true;
-        }
     } else {
         console.warn(`无法定位到目标元素: ${idOrText}`);
     }
@@ -147,25 +135,14 @@ function handleScroll() {
     }
 }
 
-function handleResize() {
-    windowWidth.value = window.innerWidth;
-    if (isMobile.value === false) {
-        isCollapsed.value = false;
-    }
-}
-
 const scrollHandler = () => handleScroll();
-const resizeHandler = () => handleResize();
 
 onMounted(() => {
     window.addEventListener('scroll', scrollHandler, { passive: true });
-    window.addEventListener('resize', resizeHandler);
-    isCollapsed.value = initialCollapseState.value;
     handleScroll();
 });
 
 onUnmounted(() => {
     window.removeEventListener('scroll', scrollHandler);
-    window.removeEventListener('resize', resizeHandler);
 });
 </script>

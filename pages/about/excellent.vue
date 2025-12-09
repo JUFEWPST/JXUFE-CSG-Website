@@ -1,7 +1,8 @@
 <template>
-    <main class="mb-3 max-w-7xl mx-auto">
+    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
         <AnzuAlert type="info">
-            {{ t('pages.about.excellent.dataCollectTip') }}<NuxtLink class="text-(--md-sys-color-primary)" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
+            {{ t('pages.about.excellent.dataCollectTip') }}<NuxtLink class="text-(--md-sys-color-primary)"
+                to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
                 [{{ t('pages.about.excellent.archiveInvite') }}]</NuxtLink>
         </AnzuAlert>
         <section class="mt-3 grid grid-cols-auto-fill gap-4">

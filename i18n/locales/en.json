@@ -60,9 +60,9 @@
                 "hello": "Hello JXUFE",
                 "ctfplatform": "CTF Platform",
                 "cloud": "Cloud Drive Resources",
-                "acm":"Association of Programming Contest, JXUFE",
-                "ca":"Computer Association, JXUFE",
-                "cida":"Cyber-Intelligence & Data Association, JXUFE"
+                "acm": "Association of Programming Contest, JXUFE",
+                "ca": "Computer Association, JXUFE",
+                "cida": "Cyber-Intelligence & Data Association, JXUFE"
             }
         },
         "archive": {
@@ -190,5 +190,13 @@
         "quickNav": "Quick Navigation",
         "contact": "Contact Us",
         "address": "Jiangxi University of Finance and Economics, Mailu Campus"
+    },
+    "themeColorPicker": {
+        "tooltip": "Change theme color",
+        "title": "Theme color",
+        "customColor": "Custom color",
+        "colorInputLabel": "Pick a custom theme color",
+        "Themes": "Themes",
+        "themeItem": "Theme color of {name}"
     }
 }
