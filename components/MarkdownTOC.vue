@@ -64,7 +64,7 @@ function getHeadingSelector() {
 const activeId = ref('')
 
 const getLinkClasses = (item: TocItem) => {
-    const baseClasses = 'block py-1.5 px-2 md:px-3 no-underline rounded-full text-sm transition-colors cursor-pointer whitespace-normal break-words';
+    const baseClasses = 'block py-1.5 px-2 md:px-3 no-underline rounded-full text-sm transition-colors cursor-pointer whitespace-normal wrap-break-word';
     const activeClasses = activeId.value === item.id
         ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-medium'
         : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)';

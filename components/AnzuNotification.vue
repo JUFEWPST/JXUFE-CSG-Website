@@ -113,7 +113,7 @@ defineExpose({
                 }"
             >
                 <div class="p-4 pb-3 pr-10 flex items-start gap-3">
-                    <div class="mt-0.5 flex-shrink-0">
+                    <div class="mt-0.5 shrink-0">
                         <component
                             :is="getTypeIcon(notification.type)"
                             class="w-5 h-5"
