@@ -17,7 +17,7 @@
 
 ```vue
 <div class="w-full max-w-[1600px] mx-auto px-2">
-  <div class="grid grid-cols-1 lg:grid-cols-10 gap-4 items-start">
+  <div class="grid grid-cols-1 lg:grid-cols-10 gap-4">
     <!-- 左列：lg:col-span-2 lg:col-start-1 -->
     <!-- 中列：lg:col-span-6 lg:col-start-3 -->
     <!-- 右列：lg:col-span-2 lg:col-start-9 -->
@@ -162,47 +162,53 @@ const rightCards = computed(() =>
 
 ### 3.2 sticky 渲染方式
 
-在 `layouts/default.vue` 中，左右两侧都拆成“上半部分 + 下半部分”两个 `<aside>`，看起来是一列，实际上是两段组合：
+在 `layouts/default.vue` 中，左右两侧各自只有一个 `<aside>` 容器，内部包含非 sticky 和 sticky 卡片，sticky 卡片使用 `lg:sticky lg:top-32` 确保在距离视口顶部 8rem (128px) 时固定：
 
 ```vue
 <!-- 左侧：非 sticky 在上，sticky 在下 -->
-<aside v-if="showLeft && leftNonStickyCards.length"
-  class="hidden lg:block lg:col-span-2 lg:col-start-1 self-start">
-  <div v-for="card in leftNonStickyCards" :key="card.id"
-    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
-    <div class="p-6">
-      <component :is="card.component" v-bind="card.props || {}" />
+<aside v-if="showLeft && (leftNonStickyCards.length || leftStickyCards.length)"
+  class="hidden lg:block lg:col-span-2 lg:col-start-1">
+  <!-- 非 sticky 卡片 -->
+  <div v-if="leftNonStickyCards.length">
+    <div v-for="card in leftNonStickyCards" :key="card.id"
+      class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+      <div class="p-6">
+        <component :is="card.component" v-bind="card.props || {}" />
+      </div>
     </div>
   </div>
-</aside>
-
-<aside v-if="showLeft && leftStickyCards.length"
-  class="hidden lg:block lg:col-span-2 lg:col-start-1 self-start lg:sticky lg:top-24">
-  <div v-for="card in leftStickyCards" :key="card.id"
-    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
-    <div class="p-6">
-      <component :is="card.component" v-bind="card.props || {}" />
+  
+  <!-- sticky 卡片 -->
+  <div v-if="leftStickyCards.length" class="lg:sticky lg:top-32">
+    <div v-for="card in leftStickyCards" :key="card.id"
+      class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+      <div class="p-6">
+        <component :is="card.component" v-bind="card.props || {}" />
+      </div>
     </div>
   </div>
 </aside>
 
 <!-- 右侧：非 sticky 在上，sticky 在下（例如 TOC） -->
-<aside v-if="showRight && rightNonStickyCards.length"
-  class="hidden lg:block lg:col-span-2 lg:col-start-9 self-start">
-  <div v-for="card in rightNonStickyCards" :key="card.id"
-    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
-    <div class="p-6">
-      <component :is="card.component" v-bind="card.props || {}" />
+<aside v-if="showRight && (rightNonStickyCards.length || rightStickyCards.length)"
+  class="hidden lg:block lg:col-span-2 lg:col-start-9">
+  <!-- 非 sticky 卡片 -->
+  <div v-if="rightNonStickyCards.length">
+    <div v-for="card in rightNonStickyCards" :key="card.id"
+      class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+      <div class="p-6">
+        <component :is="card.component" v-bind="card.props || {}" />
+      </div>
     </div>
   </div>
-</aside>
-
-<aside v-if="showRight && rightStickyCards.length"
-  class="hidden lg:block lg:col-span-2 lg:col-start-9 self-start lg:sticky lg:top-24">
-  <div v-for="card in rightStickyCards" :key="card.id"
-    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
-    <div class="p-6">
-      <component :is="card.component" v-bind="card.props || {}" />
+  
+  <!-- sticky 卡片 -->
+  <div v-if="rightStickyCards.length" class="lg:sticky lg:top-32">
+    <div v-for="card in rightStickyCards" :key="card.id"
+      class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+      <div class="p-6">
+        <component :is="card.component" v-bind="card.props || {}" />
+      </div>
     </div>
   </div>
 </aside>
