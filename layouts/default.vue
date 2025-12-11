@@ -14,6 +14,7 @@ import { useRightSidebar } from "@/composables/useRightSidebar"
 import { useSidebarLayout } from '@/composables/useSidebarLayout'
 import SiteInfoCard from '@/components/sidebars/SiteInfoCard.vue'
 import CalendarCard from '@/components/sidebars/CalendarCard.vue'
+import CTFEventsCard from '@/components/sidebars/CTFEventsCard.vue'
 
 const { t } = useI18n()
 const { hasContent } = useRightSidebar()
@@ -23,6 +24,11 @@ const { titleKey } = usePageTitle()
 const hasPageTitle = computed(() => !!titleKey.value)
 
 const { leftCards, rightCards, mobileBottomCards, registerCard, unregisterCard } = useSidebarLayout()
+
+const leftNonStickyCards = computed(() => leftCards.value.filter(card => !card.sticky))
+const leftStickyCards = computed(() => leftCards.value.filter(card => card.sticky))
+const rightNonStickyCards = computed(() => rightCards.value.filter(card => !card.sticky))
+const rightStickyCards = computed(() => rightCards.value.filter(card => card.sticky))
 
 useColorPalette()
 
@@ -34,6 +40,16 @@ registerCard({
     sticky: false,
     showOnMobileBottom: true,
     component: SiteInfoCard,
+})
+
+// 注册默认右侧 CTF 赛事卡片
+registerCard({
+    id: 'ctf-events',
+    side: 'right',
+    order: 20,
+    sticky: false,
+    showOnMobileBottom: true,
+    component: CTFEventsCard,
 })
 
 const route = useRoute()
@@ -64,7 +80,7 @@ if (import.meta.client) {
 }
 
 const slots = useSlots()
-const isHome = computed(() => route.path === "/")
+const isHome = computed(() => route.path === "/" || route.path === "")
 const showLeft = computed(() => {
     if (route.meta?.showLeftSidebar !== undefined) return route.meta.showLeftSidebar
     return true
@@ -76,11 +92,44 @@ const showRight = computed(() => {
     return true
 })
 
+
+const showMahouBg = ref(false)
+const mahouHeaderStyle = computed(() => (isHome.value && showMahouBg.value)
+    ? {
+        backgroundImage: "url('/MahouCsg.svg')",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        backgroundPosition: 'center bottom',
+        minHeight: '10rem',
+    }
+    : {},
+)
+
+// 路由切回首页时，自动恢复为“文字模式”（只在从非首页跳转回首页时触发）
+watch(
+    () => route.path,
+    (path, oldPath) => {
+        const wasHome = oldPath === "/" || oldPath === ""
+        const nowHome = path === "/" || path === ""
+        if (nowHome && !wasHome) {
+            showMahouBg.value = false
+        }
+    },
+)
+
+const toggleMahou = () => {
+    if (!isHome.value) {
+        showMahouBg.value = false
+        return
+    }
+    showMahouBg.value = !showMahouBg.value
+}
+
 </script>
 
 <template>
     <div
-        class="min-h-screen transition-colors duration-300 bg-(--md-sys-color-background) text-(--md-sys-color-on-background)">
+        class="min-h-screen transition-colors duration-300 bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-background)">
         <NavBar />
         <!-- banner -->
         <header
@@ -99,12 +148,12 @@ const showRight = computed(() => {
                     </path>
                 </svg>
             </div>
-            <div class="relative z-10 w-full max-w-6xl px-4 text-center">
+            <div class="relative z-10 w-full max-w-6xl px-4 text-center" :style="mahouHeaderStyle" @click="toggleMahou">
                 <transition enter-active-class="transition duration-700 delay-300 ease-out"
                     enter-from-class="opacity-0 translate-y-8" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition duration-300 ease-in" leave-from-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-4">
-                    <div v-if="isHome" class="flex flex-col items-center gap-6 sm:gap-8">
+                    <div v-if="isHome && !showMahouBg" class="flex flex-col items-center gap-6 sm:gap-8">
                         <div class="space-y-2 sm:space-y-4">
                             <h1
                                 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-(--md-sys-color-on-surface)">
@@ -121,24 +170,37 @@ const showRight = computed(() => {
                         </p>
                     </div>
 
-                    <div v-else class="flex flex-col items-center gap-4 text-center">
+                    <div v-else-if="!isHome" class="flex flex-col items-center gap-4 text-center">
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide text-(--md-sys-color-primary)">
                             {{ titleKey ? t(titleKey) : '' }}
                         </h1>
                     </div>
+
+                    <div v-else class="flex flex-col items-center gap-4 text-center">
+                    </div>
                 </transition>
             </div>
         </header>
         <!-- 三列布局 -->
-        <div class="grow w-full bg-(--md-sys-color-surface-container)">
+        <div class="grow w-full bg-transparent">
             <div class="w-full max-w-[1600px] mx-auto px-2">
                 <div class="grid grid-cols-1 lg:grid-cols-10 gap-4 items-start">
-                    <!-- left -->
-                    <aside v-if="showLeft"
+                    <!-- left: 非 sticky 在上，sticky 在下 -->
+                    <aside v-if="showLeft && leftNonStickyCards.length"
                         class="hidden lg:block lg:col-span-2 lg:col-start-1 self-start">
-                        <div v-for="card in leftCards" :key="card.id"
-                            :class="['mt-0', 'rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)', card.sticky ? 'lg:sticky lg:top-24' : 'mt-4']">
+                        <div v-for="card in leftNonStickyCards" :key="card.id"
+                            class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+                            <div class="p-6">
+                                <component :is="card.component" v-bind="card.props || {}" />
+                            </div>
+                        </div>
+                    </aside>
+
+                    <aside v-if="showLeft && leftStickyCards.length"
+                        class="hidden lg:block lg:col-span-2 lg:col-start-1 self-start lg:sticky lg:top-24">
+                        <div v-for="card in leftStickyCards" :key="card.id"
+                            class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
                             <div class="p-6">
                                 <component :is="card.component" v-bind="card.props || {}" />
                             </div>
@@ -148,32 +210,27 @@ const showRight = computed(() => {
                     <!-- Page Content -->
                     <main
                         :class="['lg:col-span-6 lg:col-start-3', 'rounded-xl overflow-hidden', !isHome ? 'shadow-center-sm' : '']"
-                        class="min-w-0 mb-2 md:mb-10">
+                        class="min-w-0 mt-4 mb-2 md:mb-10">
                         <slot />
                     </main>
 
-                    <!-- Right Sidebar-->
-                    <aside v-if="showRight"
+                    <!-- Right Sidebar: 非 sticky 在上，sticky 在下 -->
+                    <aside v-if="showRight && rightNonStickyCards.length"
                         class="hidden lg:block lg:col-span-2 lg:col-start-9 self-start">
-                        <div v-for="card in rightCards" :key="card.id"
-                            :class="['mt-0', 'rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)', card.sticky ? 'lg:sticky lg:top-24' : 'mt-4']">
+                        <div v-for="card in rightNonStickyCards" :key="card.id"
+                            class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
                             <div class="p-6">
                                 <component :is="card.component" v-bind="card.props || {}" />
                             </div>
                         </div>
+                    </aside>
 
-                        <div
+                    <aside v-if="showRight && rightStickyCards.length"
+                        class="hidden lg:block lg:col-span-2 lg:col-start-9 self-start lg:sticky lg:top-24">
+                        <div v-for="card in rightStickyCards" :key="card.id"
                             class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
-                            <div class="p-6 max-h-[calc(100vh-7rem)] overflow-y-auto">
-                                <div id="right-sidebar-target">
-                                    <ClientOnly>
-                                        <div v-show="!hasContent">
-                                            Ciallo
-                                        </div>
-                                    </ClientOnly>
-                                </div>
-                                <slot name="right-sidebar">
-                                </slot>
+                            <div class="p-6">
+                                <component :is="card.component" v-bind="card.props || {}" />
                             </div>
                         </div>
                     </aside>

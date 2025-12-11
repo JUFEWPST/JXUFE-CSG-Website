@@ -198,5 +198,55 @@
         "colorInputLabel": "选择自定义主题色",
         "Themes": "主题",
         "themeItem": "{name} 的主题配色"
+    },
+    "ctf": {
+        "title": "近期 CTF 赛事",
+        "status": {
+            "oncoming": "未开始",
+            "running": "进行中",
+            "finished": "已结束",
+            "unknown": "状态未知"
+        },
+        "reload": "刷新",
+        "error": "赛事数据加载失败，请稍后重试",
+        "empty": "暂时没有可显示的赛事",
+        "sourceLabel": "数据来源：{source}"
+    },
+    "calendar": {
+        "monthSuffix": "月",
+        "actions": {
+            "prevMonth": "上一月",
+            "nextMonth": "下一月"
+        },
+        "weekdays": {
+            "mon": "一",
+            "tue": "二",
+            "wed": "三",
+            "thu": "四",
+            "fri": "五",
+            "sat": "六",
+            "sun": "日"
+        },
+        "legend": {
+            "holiday": "节假日",
+            "workdayAdjusted": "调休上课",
+            "today": "今天",
+            "examWeek": "期末周",
+            "event": "活动"
+        },
+        "todayPrefix": "今天：",
+        "status": {
+            "holiday": "节假日",
+            "examWeekClass": "期末周上课",
+            "vacation": "寒假",
+            "workdayAdjusted": "调休上课",
+            "weekend": "周末",
+            "classDay": "上课日"
+        },
+        "tags": {
+            "examWeek": "期末周",
+            "holiday": "节假日",
+            "workdayAdjusted": "调休"
+        }
     }
 }

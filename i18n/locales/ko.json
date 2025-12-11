@@ -194,9 +194,59 @@
     "themeColorPicker": {
         "tooltip": "테마 색상 변경",
         "title": "테마 색상",
-        "customColor": "사용자 지정 색상",
-        "colorInputLabel": "사용자 지정 테마 색상 선택",
+        "customColor": "사용자 정의 색상",
+        "colorInputLabel": "사용자 정의 테마 색상 선택",
         "Themes": "테마",
         "themeItem": "{name}의 테마 색상"
+    },
+    "ctf": {
+        "title": "최근 CTF 대회",
+        "status": {
+            "oncoming": "시작 전",
+            "running": "진행 중",
+            "finished": "종료",
+            "unknown": "상태 불명"
+        },
+        "reload": "새로고침",
+        "error": "CTF 대회 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        "empty": "현재 표시할 대회가 없습니다.",
+        "sourceLabel": "데이터 출처: {source}"
+    },
+    "calendar": {
+        "monthSuffix": "월",
+        "actions": {
+            "prevMonth": "이전 달",
+            "nextMonth": "다음 달"
+        },
+        "weekdays": {
+            "mon": "월",
+            "tue": "화",
+            "wed": "수",
+            "thu": "목",
+            "fri": "금",
+            "sat": "토",
+            "sun": "일"
+        },
+        "legend": {
+            "holiday": "휴일",
+            "workdayAdjusted": "대체 근무일",
+            "today": "오늘",
+            "examWeek": "기말 주간",
+            "event": "행사"
+        },
+        "todayPrefix": "오늘: ",
+        "status": {
+            "holiday": "휴일",
+            "examWeekClass": "기말 주간 수업일",
+            "vacation": "방학",
+            "workdayAdjusted": "대체 근무일",
+            "weekend": "주말",
+            "classDay": "수업일"
+        },
+        "tags": {
+            "examWeek": "기말 주간",
+            "holiday": "휴일",
+            "workdayAdjusted": "대체"
+        }
     }
 }

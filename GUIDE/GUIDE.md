@@ -1,22 +1,50 @@
-# JXUFE-CSG 网站开发指南
+# JXUFE-CSG 布局与侧边栏开发指南
 
-> 仅摘录与当前改动相关的核心规范，原有内容保留在下方。
 
-## 三列布局与侧边栏规范
 
-布局文件：`layouts/default.vue`
+## 1. 默认布局结构（`layouts/default.vue`）
 
-### 1. 总体结构
+### 1.1 顶层与背景
 
-- 使用 `lg:grid-cols-10` 的三列布局：
-  - 左列：`lg:col-span-2 lg:col-start-1` —— 站点级 / 全局信息。
-  - 中列：`lg:col-span-6 lg:col-start-3` —— 主内容区（各页面内容）。
-  - 右列：`lg:col-span-2 lg:col-start-9` —— 当前页面上下文工具（目录、日历等）。
-- 移动端（< lg）：只展示主内容；左右列通过“移动端底部卡片”展示需要在手机上也可见的信息。
+- 顶层容器：
+  - 使用 `min-h-screen`，全站背景色为 `--md-sys-color-surface-container`。
+- Banner：
+  - 使用 `bg-(--md-sys-color-background)` 作为 Banner 背景色。
+- Banner 下方是三列布局区域：
+  - 三列区域容器 `bg-transparent`，让全局背景色透出。
 
-### 2. 侧边栏卡片模型（SidebarCard）
+### 1.2 三列布局
 
-统一通过 `useSidebarLayout` 组合式管理左右列的卡片：
+```vue
+<div class="w-full max-w-[1600px] mx-auto px-2">
+  <div class="grid grid-cols-1 lg:grid-cols-10 gap-4 items-start">
+    <!-- 左列：lg:col-span-2 lg:col-start-1 -->
+    <!-- 中列：lg:col-span-6 lg:col-start-3 -->
+    <!-- 右列：lg:col-span-2 lg:col-start-9 -->
+  </div>
+</div>
+```
+
+- 左列 / 右列：用于放侧边卡片（站点信息、日历、目录等）。
+- 中列 `<main>`：页面主体内容。
+- 移动端（< lg）：只显示中列内容；侧边卡片通过“移动端底部卡片”统一渲染在主体下方。
+
+中列在三列区内的类：
+
+```vue
+<main
+  :class="['lg:col-span-6 lg:col-start-3', 'rounded-xl overflow-hidden', !isHome ? 'shadow-center-sm' : '']"
+  class="min-w-0 mt-4 mb-2 md:mb-10"
+>
+  <slot />
+</main>
+```
+
+---
+
+## 2. 侧边栏卡片系统：`useSidebarLayout`
+
+### 2.1 组合式 API
 
 ```ts
 import { useSidebarLayout } from '@/composables/useSidebarLayout'
@@ -32,23 +60,28 @@ const {
 } = useSidebarLayout()
 ```
 
-#### 2.1 卡片配置类型
+### 2.2 卡片配置类型
 
 ```ts
 export interface SidebarCardConfig {
   id: string                     // 唯一 ID
   side: 'left' | 'right'         // 左侧 or 右侧
-  order?: number                 // 排序，数值越小越靠上（同侧）
-  sticky?: boolean               // 是否在桌面端吸顶
-  showOnMobileBottom?: boolean   // 是否在移动端底部显示
-  component: any                 // 要渲染的组件（不会进入 Nuxt state）
-  props?: Record<string, any>    // 组件 props
+  order?: number                 // 排序：数值越小越靠前（同一侧、同 sticky 状态内）
+  sticky?: boolean               // 是否在桌面端固定在视窗口（右侧目录等）
+  showOnMobileBottom?: boolean   // 是否在移动端以“底部卡片”形式展示
+  component: any                 // 要渲染的组件
+  props?: Record<string, any>    // 传入组件的 props
 }
 ```
 
-#### 2.2 使用约定
+内部实现要点（开发时一般不用关心）：
 
-- **注册卡片**：
+- 使用 `useState` 存储 **纯数据**（id / side / order / sticky / props 等）。
+- 使用本地 `componentRegistry` 存放组件引用，避免 `useState` 序列化组件函数导致 SSR 报错。
+
+### 2.3 注册 / 更新 / 移除卡片
+
+#### 注册卡片
 
 ```ts
 registerCard({
@@ -61,79 +94,13 @@ registerCard({
 })
 ```
 
-- **移除卡片**：
-
-```ts
-unregisterCard('site-info')
-```
-
-- **清空某一侧所有卡片**：
-
-```ts
-clearSide('left')
-```
-
-- **更新卡片选项**（顺序 / sticky / 移动端显示 / props）：
+#### 更新卡片选项（顺序 / sticky / 移动端显示 / props）
 
 ```ts
 setCardOptions('archive-toc', {
   order: 50,
   sticky: true,
   showOnMobileBottom: true,
-  props: { /* 新的 props */ },
-})
-```
-
-> 注意：`useSidebarLayout` 内部通过本地 `componentRegistry` 存储组件引用，`useState` 里只保存纯数据，避免 SSR 序列化函数导致 `Cannot stringify a function`。
-
-### 3. 左右列职责
-
-#### 3.1 左侧栏（Left Sidebar）
-
-- 职责：展示**站点级 / 协会级信息**，例如：
-  - 协会名称、联系方式（当前由 `SiteInfoCard` 承担）。
-  - 其它与“整个协会/网站”相关，而非某个具体页面的内容。
-- 默认行为（在 `layouts/default.vue` 中）：
-
-```ts
-registerCard({
-  id: 'site-info',
-  side: 'left',
-  order: 10,             // 非 sticky 卡片在上方
-  sticky: false,
-  showOnMobileBottom: true,
-  component: SiteInfoCard,
-})
-```
-
-- 可以在特定路由下通过页面逻辑调整：
-  - 某些页面隐藏左侧栏：`clearSide('left')` 或 `route.meta.showLeftSidebar = false`。
-  - 某些页面增加额外站点信息卡片：再注册新的 `id` 为 `side: 'left'` 的卡片。
-
-#### 3.2 右侧栏（Right Sidebar）
-
-- 职责：展示**当前页面上下文相关工具**，例如：
-  - 目录（TOC，MarkdownTOC）。
-  - 日历、相关文章、页面内导航等。
-- 示例：归档阅读页（`pages/archive/[para].vue`）注册 TOC 卡片：
-
-```ts
-registerCard({
-  id: 'archive-toc',
-  side: 'right',
-  order: 50,                 // sticky 卡片建议放在同列较后位置
-  sticky: true,              // 吸顶，滚动时始终可见
-  showOnMobileBottom: true,  
-  component: MarkdownTOC,
-  props: {
-    items: tocItems.value,
-    markdownRenderRef: markdownRender.value,
-  },
-})
-
-// TOC 更新时同步 props
-tocItems.value = items
-setCardOptions('archive-toc', {
   props: {
     items,
     markdownRenderRef: markdownRender.value,
@@ -141,82 +108,237 @@ setCardOptions('archive-toc', {
 })
 ```
 
-- 右侧仍保留一个兼容旧逻辑的容器：
-  - `#right-sidebar-target` 作为 Teleport 目标；
-  - `<slot name="right-sidebar">` 用于自定义右侧内容。
-
-### 4. 卡片样式规范（MD3 风格）
-
-所有侧边栏卡片应使用统一的卡片样式：
-
-```vue
-<div
-  class="rounded-xl bg-(--md-sys-color-surface-container-lowest)
-         dark:bg-(--md-sys-color-surface-container-lowest)
-         shadow-center-sm text-(--md-sys-color-on-surface)"
->
-  <div class="p-6">
-    <!-- 卡片内容组件 -->
-  </div>
-</div>
-```
-
-- 左侧/右侧卡片在 `layouts/default.vue` 中统一包装：
-
-```vue
-<div
-  v-for="card in leftCards"
-  :key="card.id"
-  :class="[
-    'mt-0',
-    'rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)',
-    card.sticky ? 'lg:sticky lg:top-24' : 'mt-4',
-  ]"
->
-  <div class="p-6">
-    <component :is="card.component" v-bind="card.props || {}" />
-  </div>
-</div>
-```
-
-### 5. sticky 与排序策略
-
-- 默认排序规则：`order` 数值越小，卡片越靠上。
-- 建议：
-  - **非 sticky 卡片（普通信息）放在上方**，例如左侧的站点信息卡：`order: 10, sticky: false`。
-  - **sticky 卡片（例如 TOC）放在同列较后位置**（更大的 order），避免滚动时 sticky 卡片覆盖其它卡片。
-- 示例：
+#### 移除 / 清空
 
 ```ts
-// 左侧：普通信息
-registerCard({ id: 'site-info', side: 'left', order: 10, sticky: false, ... })
-
-// 右侧：TOC，吸顶
-registerCard({ id: 'archive-toc', side: 'right', order: 50, sticky: true, ... })
+unregisterCard('archive-toc')
+clearSide('right') // 清空某一侧所有卡片
 ```
 
-### 6. 移动端（竖屏）展示规则
+---
 
-- 默认：左右侧栏在 < lg 屏幕尺寸下隐藏；
-- 对于需要在移动端底部也展示的卡片，设置 `showOnMobileBottom: true`：
+## 3. 排序与 sticky 规则（最新逻辑）
+
+### 3.1 排序策略
+
+在 `useSidebarLayout.ts` 中：
 
 ```ts
+const leftCards = computed(() =>
+  state.value.cards
+    .filter((c) => c.side === 'left')
+    .slice()
+    // 先按 sticky 分组：非 sticky 在前，sticky 在后
+    // 同组内部按 order 从小到大排序
+    .sort((a, b) => {
+      const stickyA = a.sticky ? 1 : 0
+      const stickyB = b.sticky ? 1 : 0
+      if (stickyA !== stickyB) return stickyA - stickyB
+      return (a.order ?? 100) - (b.order ?? 100)
+    })
+    .map((c) => ({ ...c, component: componentRegistry[c.id] })),
+)
+
+const rightCards = computed(() =>
+  state.value.cards
+    .filter((c) => c.side === 'right')
+    .slice()
+    .sort((a, b) => {
+      const stickyA = a.sticky ? 1 : 0
+      const stickyB = b.sticky ? 1 : 0
+      if (stickyA !== stickyB) return stickyA - stickyB
+      return (a.order ?? 100) - (b.order ?? 100)
+    })
+    .map((c) => ({ ...c, component: componentRegistry[c.id] })),
+)
+```
+
+**含义：**
+
+- 同一侧中：
+  - 先渲染所有 `sticky: false` 的卡片；
+  - 再渲染所有 `sticky: true` 的卡片（固定卡片自然位于该列底部）。
+- 在各自分组内部，用 `order` 决定上下顺序。
+
+### 3.2 sticky 渲染方式
+
+在 `layouts/default.vue` 中，左右两侧都拆成“上半部分 + 下半部分”两个 `<aside>`，看起来是一列，实际上是两段组合：
+
+```vue
+<!-- 左侧：非 sticky 在上，sticky 在下 -->
+<aside v-if="showLeft && leftNonStickyCards.length"
+  class="hidden lg:block lg:col-span-2 lg:col-start-1 self-start">
+  <div v-for="card in leftNonStickyCards" :key="card.id"
+    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+    <div class="p-6">
+      <component :is="card.component" v-bind="card.props || {}" />
+    </div>
+  </div>
+</aside>
+
+<aside v-if="showLeft && leftStickyCards.length"
+  class="hidden lg:block lg:col-span-2 lg:col-start-1 self-start lg:sticky lg:top-24">
+  <div v-for="card in leftStickyCards" :key="card.id"
+    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+    <div class="p-6">
+      <component :is="card.component" v-bind="card.props || {}" />
+    </div>
+  </div>
+</aside>
+
+<!-- 右侧：非 sticky 在上，sticky 在下（例如 TOC） -->
+<aside v-if="showRight && rightNonStickyCards.length"
+  class="hidden lg:block lg:col-span-2 lg:col-start-9 self-start">
+  <div v-for="card in rightNonStickyCards" :key="card.id"
+    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+    <div class="p-6">
+      <component :is="card.component" v-bind="card.props || {}" />
+    </div>
+  </div>
+</aside>
+
+<aside v-if="showRight && rightStickyCards.length"
+  class="hidden lg:block lg:col-span-2 lg:col-start-9 self-start lg:sticky lg:top-24">
+  <div v-for="card in rightStickyCards" :key="card.id"
+    class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
+    <div class="p-6">
+      <component :is="card.component" v-bind="card.props || {}" />
+    </div>
+  </div>
+</aside>
+```
+
+开发者只需要：
+
+- 通过 `sticky: true | false` 决定某个卡片是否固定在视口；
+- 通过 `order` 调整同组内部顺序；
+- 不需要关心 `leftNonStickyCards` / `rightStickyCards` 等计算属性的具体实现细节。
+
+---
+
+## 4. 默认卡片与页面示例
+
+### 4.1 默认注册的全局卡片
+
+在 `layouts/default.vue` 中：
+
+```ts
+// 左侧：站点信息卡
 registerCard({
-  id: 'archive-toc',
-  side: 'right',
+  id: 'site-info',
+  side: 'left',
+  order: 10,
+  sticky: false,
   showOnMobileBottom: true,
-  ...
+  component: SiteInfoCard,
+})
+
+// 右侧：日历卡（除归档详情页外显示）
+watch(
+  () => route.path,
+  (path) => {
+    if (!path.startsWith('/archive/')) {
+      registerCard({
+        id: 'site-calendar',
+        side: 'right',
+        order: 10,
+        sticky: false,
+        showOnMobileBottom: true,
+        component: CalendarCard,
+      })
+    } else {
+      unregisterCard('site-calendar')
+    }
+  },
+  { immediate: true },
+)
+```
+
+### 4.2 归档详情页 TOC 卡片
+
+文件：`pages/archive/[para].vue`
+
+```ts
+import MarkdownTOC from '~/components/MarkdownTOC.vue'
+import { useSidebarLayout } from '@/composables/useSidebarLayout'
+import { useRightSidebar } from '@/composables/useRightSidebar'
+
+const markdownRender = ref()
+const tocItems = ref<TocItem[]>([])
+
+const { setHasContent, clearRightSidebar } = useRightSidebar()
+const { registerCard, unregisterCard, setCardOptions } = useSidebarLayout()
+
+function handleTocUpdate(items: TocItem[]) {
+  tocItems.value = items
+  setHasContent(items.length > 0)
+
+  setCardOptions('archive-toc', {
+    props: {
+      items,
+      markdownRenderRef: markdownRender.value,
+    },
+  })
+}
+
+onMounted(() => {
+  // 注册右侧 TOC 卡片
+  registerCard({
+    id: 'archive-toc',
+    side: 'right',
+    order: 50,
+    sticky: true,              // 固定在视窗口
+    showOnMobileBottom: true,  // 在移动端底部展示
+    component: MarkdownTOC,
+    props: {
+      items: tocItems.value,
+      markdownRenderRef: markdownRender.value,
+    },
+  })
+})
+
+onUnmounted(() => {
+  clearRightSidebar()
+  unregisterCard('archive-toc')
 })
 ```
 
-布局中统一渲染：
+效果：
+
+- 桌面端：TOC 出现在右列底部，并固定在视窗口（sticky）。
+- 移动端：TOC 以底部卡片形式展示在正文之后。
+
+---
+
+## 5. 移动端底部卡片
+
+所有设置了 `showOnMobileBottom: true` 的卡片，会在 < lg 屏幕下统一渲染在页面底部：
 
 ```vue
 <div class="mt-4 space-y-4 lg:hidden">
-  <div v-for="card in mobileBottomCards" :key="card.id" class="rounded-xl ...">
+  <div v-for="card in mobileBottomCards" :key="card.id"
+    class="rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)">
     <div class="p-6">
       <component :is="card.component" v-bind="card.props || {}" />
     </div>
   </div>
 </div>
 ```
+
+---
+
+## 6. 快速实践小结
+
+1. **要在任意页面左侧或右侧加一张卡片**：
+   - 在该页面的 `setup` 中调用 `registerCard`；
+   - 设定 `side`、`order`、`sticky`、`showOnMobileBottom` 和 `component`；
+   - 页面卸载时用 `unregisterCard` 清理。
+
+2. **要做一个“会跟随滚动固定在视窗”的卡片（如 TOC）**：
+   - `sticky: true`；
+   - 适当调大 `order`，让它在该列底部出现。
+
+3. **要控制移动端显示**：
+   - `showOnMobileBottom: true` 时，该卡片会在移动端统一渲染到页面底部。
+
+上述就是当前三列布局和侧边栏系统的最新逻辑，其他与旧实现相关的说明已移除。

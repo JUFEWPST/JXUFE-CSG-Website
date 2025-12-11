@@ -6,7 +6,7 @@
                 <div class="flex items-center shrink-0">
                     <NuxtLink to="/" class="nav-link-block !py-1 flex items-center shrink-0 text-md sm:text-lg font-bold hover:text-(--md-sys-color-primary) transition-colors mr-2 cursor-pointer">
                         <img src="/favicon.svg" class="h-9 mr-2" alt="江财网安协会logo">
-                        <span class="line-clamp-2">
+                        <span class="line-clamp-2 whitespace-normal break-words">
                             {{ t("meta.fullName") }}
                         </span>
                     </NuxtLink>
@@ -88,12 +88,12 @@
                     </div>
                 </div>
 
-                <div class="flex items-center min-w-0 shrink-0 ml-2 sm:ml-4 gap-1 sm:gap-2">
+                <div class="flex items-center min-w-0 ml-2 sm:ml-4 gap-1 sm:gap-2">
                     <ThemeColorPicker class="shrink-0" />
                     <ToggleTheme class="shrink-0"></ToggleTheme>
                     <ToggleLocale class="shrink-0"></ToggleLocale>
                     <button
-                        class="md:hidden rounded-full p-2 text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high) transition-colors focus:outline-none relative ml-1"
+                        class="md:hidden shrink-0 rounded-full p-2 text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high) transition-colors focus:outline-none relative ml-1"
                         aria-label="打开菜单" @click.stop="toggleMenu">
                         <Bars3Icon v-if="!isMenuOpen" class="w-6 h-6"></Bars3Icon>
                         <XMarkIcon v-else class="w-6 h-6"></XMarkIcon>

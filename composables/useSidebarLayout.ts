@@ -91,7 +91,13 @@ export const useSidebarLayout = () => {
     state.value.cards
       .filter((c) => c.side === 'left')
       .slice()
-      .sort((a, b) => (a.order ?? 100) - (b.order ?? 100))
+      // 非 sticky 卡片在前，sticky 卡片在后；同类型再按 order 排序
+      .sort((a, b) => {
+        const stickyA = a.sticky ? 1 : 0
+        const stickyB = b.sticky ? 1 : 0
+        if (stickyA !== stickyB) return stickyA - stickyB
+        return (a.order ?? 100) - (b.order ?? 100)
+      })
       .map((c) => ({ ...c, component: componentRegistry[c.id] })),
   )
 
@@ -99,7 +105,13 @@ export const useSidebarLayout = () => {
     state.value.cards
       .filter((c) => c.side === 'right')
       .slice()
-      .sort((a, b) => (a.order ?? 100) - (b.order ?? 100))
+      // 非 sticky 卡片在前，sticky 卡片在后；同类型再按 order 排序
+      .sort((a, b) => {
+        const stickyA = a.sticky ? 1 : 0
+        const stickyB = b.sticky ? 1 : 0
+        if (stickyA !== stickyB) return stickyA - stickyB
+        return (a.order ?? 100) - (b.order ?? 100)
+      })
       .map((c) => ({ ...c, component: componentRegistry[c.id] })),
   )
 

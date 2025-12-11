@@ -198,5 +198,55 @@
         "colorInputLabel": "Pick a custom theme color",
         "Themes": "Themes",
         "themeItem": "Theme color of {name}"
+    },
+    "ctf": {
+        "title": "Upcoming CTF Events",
+        "status": {
+            "oncoming": "Not started",
+            "running": "Ongoing",
+            "finished": "Finished",
+            "unknown": "Unknown status"
+        },
+        "reload": "Reload",
+        "error": "Failed to load CTF events. Please try again later.",
+        "empty": "No events to display at the moment.",
+        "sourceLabel": "Data source: {source}"
+    },
+    "calendar": {
+        "monthSuffix": "",
+        "actions": {
+            "prevMonth": "Previous month",
+            "nextMonth": "Next month"
+        },
+        "weekdays": {
+            "mon": "Mon",
+            "tue": "Tue",
+            "wed": "Wed",
+            "thu": "Thu",
+            "fri": "Fri",
+            "sat": "Sat",
+            "sun": "Sun"
+        },
+        "legend": {
+            "holiday": "Holiday",
+            "workdayAdjusted": "Adjusted workday",
+            "today": "Today",
+            "examWeek": "Exam week",
+            "event": "Event"
+        },
+        "todayPrefix": "Today: ",
+        "status": {
+            "holiday": "Holiday",
+            "examWeekClass": "Exam-week class day",
+            "vacation": "Vacation",
+            "workdayAdjusted": "Adjusted workday",
+            "weekend": "Weekend",
+            "classDay": "Class day"
+        },
+        "tags": {
+            "examWeek": "Exam week",
+            "holiday": "Holiday",
+            "workdayAdjusted": "Adjusted"
+        }
     }
 }
