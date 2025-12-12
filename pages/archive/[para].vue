@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+  <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-2 box-border">
     <div class="min-h-1/2 box-border">
       <div v-if="loading" class="flex justify-center h-1/2 items-center">
         <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>

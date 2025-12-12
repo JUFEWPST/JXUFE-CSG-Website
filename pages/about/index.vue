@@ -35,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+    <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-2 box-border">
         <div class="mb-12 flex justify-center">
             <h1 class="hidden">{{ t('pages.about.index.title') }}</h1>
             <FlipToggle class="w-4/5 md:w-60 max-w-60 aspect-square hover:scale-110 transition-transform duration-300">

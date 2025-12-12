@@ -211,8 +211,7 @@ const toggleMahou = () => {
                     </aside>
 
                     <!-- Page Content -->
-                    <main
-                        :class="['lg:col-span-6 lg:col-start-3', 'rounded-xl overflow-hidden', !isHome ? 'shadow-center-sm' : '']"
+                    <main :class="['lg:col-span-6 lg:col-start-3', 'rounded-xl overflow-hidden', 'shadow-center-sm']"
                         class="min-w-0 mt-4 mb-2 md:mb-10">
                         <slot />
                     </main>

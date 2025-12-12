@@ -1,5 +1,5 @@
 <template>
-    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+    <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-2 box-border">
         <div class="space-y-8">
             <section>
                 <h2

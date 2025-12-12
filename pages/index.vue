@@ -1,5 +1,5 @@
 <template>
-    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+    <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-2 box-border">
         <section ref="aboutRef">
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-(--md-sys-color-on-surface)">
                 {{ t('pages.home.aboutUs.title') }}

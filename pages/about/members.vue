@@ -1,5 +1,5 @@
 <template>
-    <main class="bg-white dark:bg-(--md-sys-color-surface) px-4 py-2 box-border">
+    <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-2 box-border">
         <AnzuAlert type="info">
             {{ t('pages.about.members.dataCollectTip') }}<NuxtLink class="text-(--md-sys-color-primary)"
                 to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
