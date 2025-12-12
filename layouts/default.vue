@@ -94,16 +94,8 @@ const showRight = computed(() => {
 
 
 const showMahouBg = ref(false)
-const mahouHeaderStyle = computed(() => (isHome.value && showMahouBg.value)
-    ? {
-        backgroundImage: "url('/MahouCsg.svg')",
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'contain',
-        backgroundPosition: 'center bottom',
-        minHeight: '10rem',
-    }
-    : {},
-)
+
+const mahouVisible = computed(() => isHome.value && showMahouBg.value)
 
 // 路由切回首页时，自动恢复为“文字模式”（只在从非首页跳转回首页时触发）
 watch(
@@ -140,7 +132,22 @@ const toggleMahou = () => {
                     : hasPageTitle
                         ? 'h-[20vh]'
                         : 'h-[14vh] sm:h-[16vh]'
-            ]" style="padding-top: 64px;">
+            ]"
+            style="padding-top: 64px;"
+            @click="toggleMahou">
+            <div class="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
+                <div
+                    class="w-full max-w-6xl px-4 h-full transition-opacity duration-500"
+                    :class="mahouVisible ? 'opacity-100' : 'opacity-0'"
+                    style="
+                        background-image: url('/MahouCsg.svg');
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        background-position: center;
+                    "
+                />
+            </div>
+
             <div class="absolute bottom-0 w-full z-0 text-(--md-sys-color-surface-container)">
                 <svg viewBox="0 0 1440 320" class="w-full h-12 sm:h-20 block" preserveAspectRatio="none">
                     <path fill="currentColor"
@@ -148,7 +155,7 @@ const toggleMahou = () => {
                     </path>
                 </svg>
             </div>
-            <div class="relative z-10 w-full max-w-6xl px-4 text-center" :style="mahouHeaderStyle" @click="toggleMahou">
+            <div class="relative z-10 w-full max-w-6xl px-4 text-center">
                 <transition enter-active-class="transition duration-700 delay-300 ease-out"
                     enter-from-class="opacity-0 translate-y-8" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition duration-300 ease-in" leave-from-class="opacity-100 translate-y-0"
@@ -198,7 +205,6 @@ const toggleMahou = () => {
                                 </div>
                             </div>
                         </div>
-                        
                         <!-- sticky 卡片 -->
                         <div v-if="leftStickyCards.length" class="lg:sticky lg:top-32">
                             <div v-for="card in leftStickyCards" :key="card.id"
@@ -228,7 +234,7 @@ const toggleMahou = () => {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- sticky 卡片 -->
                         <div v-if="rightStickyCards.length" class="lg:sticky lg:top-32">
                             <div v-for="card in rightStickyCards" :key="card.id"
