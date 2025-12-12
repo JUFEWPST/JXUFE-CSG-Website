@@ -4,15 +4,10 @@
       <h3 class="text-base sm:text-lg font-semibold text-(--md-sys-color-on-surface)">
         {{ t('ctf.title') }}
       </h3>
-      <button
-        type="button"
+      <button type="button"
         class="inline-flex items-center gap-1 text-xs text-(--md-sys-color-primary) hover:text-(--md-sys-color-primary-container) transition-colors"
-        @click="refresh"
-      >
-        <ArrowPathIcon
-          class="h-4 w-4"
-          :class="{ 'animate-spin-slow': loading }"
-        />
+        @click="refresh">
+        <ArrowPathIcon class="h-4 w-4" :class="{ 'animate-spin-slow': loading }" />
         <span v-if="!loading">{{ t('ctf.reload') }}</span>
       </button>
     </div>
@@ -31,48 +26,32 @@
     </div>
 
     <div v-else class="space-y-2">
-      <a
-        v-for="event in events"
-        :key="event.比赛ID + event.比赛名称"
-        :href="event.比赛链接"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="group block rounded-xl border border-(--md-sys-color-outline-variant)
+      <a v-for="event in events" :key="event.比赛ID + event.比赛名称" :href="event.比赛链接" target="_blank"
+        rel="noopener noreferrer" class="group block rounded-xl border border-(--md-sys-color-outline-variant)
                bg-(--md-sys-color-surface-container-lowest)
                hover:bg-(--md-sys-color-primary-container)
-               transition-colors px-3 py-2.5"
-      >
+               transition-colors px-3 py-2.5">
         <div class="flex items-center gap-3">
           <div class="shrink-0">
-            <component
-              :is="iconForStatus(statusKey(event))"
-              class="h-5 w-5"
-              :class="iconColorClass(statusKey(event))"
-              :title="t(`ctf.status.${statusKey(event)}`)"
-            />
+            <component :is="iconForStatus(statusKey(event))" class="h-5 w-5" :class="iconColorClass(statusKey(event))"
+              :title="t(`ctf.status.${statusKey(event)}`)" />
           </div>
 
           <div class="min-w-0 flex-1">
-            <p
-              class="text-sm font-medium truncate
+            <p class="text-sm font-medium truncate
                      text-(--md-sys-color-on-surface)
-                     group-hover:text-(--md-sys-color-on-primary-container)"
-            >
+                     group-hover:text-(--md-sys-color-on-primary-container)">
               {{ event.比赛名称 }}
             </p>
-            <p
-              class="mt-0.5 text-[11px] truncate
+            <p class="mt-0.5 text-[11px] truncate
                      text-(--md-sys-color-on-surface-variant)
-                     group-hover:text-(--md-sys-color-on-primary-container)"
-            >
+                     group-hover:text-(--md-sys-color-on-primary-container)">
               {{ formatStartTime(event.比赛时间) }}
             </p>
           </div>
 
-          <ArrowTopRightOnSquareIcon
-            class="h-4 w-4 shrink-0 text-(--md-sys-color-on-surface-variant)
-                   group-hover:text-(--md-sys-color-on-primary-container)"
-          />
+          <ArrowTopRightOnSquareIcon class="h-4 w-4 shrink-0 text-(--md-sys-color-on-surface-variant)
+                   group-hover:text-(--md-sys-color-on-primary-container)" />
         </div>
       </a>
     </div>
@@ -80,12 +59,8 @@
     <p class="mt-2 text-[11px] text-(--md-sys-color-on-surface-variant)">
       <i18n-t keypath="ctf.sourceLabel" tag="span">
         <template #source>
-          <a
-            href="https://github.com/ProbiusOfficial/Hello-CTFtime"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="underline hover:text-(--md-sys-color-primary)"
-          >
+          <a href="https://github.com/ProbiusOfficial/Hello-CTFtime" target="_blank" rel="noopener noreferrer"
+            class="underline hover:text-(--md-sys-color-primary)">
             Hello-CTFTime
           </a>
         </template>
@@ -175,7 +150,7 @@ const fetchEvents = async () => {
     }
     const json = await res.json()
     if (Array.isArray(json)) {
-      events.value = json.slice(0, 8)
+      events.value = json.slice(0, 5)
     } else {
       events.value = []
     }
@@ -212,6 +187,7 @@ onMounted(() => {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
