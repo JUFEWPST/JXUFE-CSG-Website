@@ -1,57 +1,76 @@
 <template>
-    <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-2 box-border">
-        <div class="flex justify-center items-center flex-col">
-            <div v-if="loading" class="text-center py-8">
-                <AnimationLoadingSpinner size="xl2" color="[var(--anzu-accent-hover)]"></AnimationLoadingSpinner>
+    <main
+        class="box-border bg-(--md-sys-color-surface-container-lowest) px-4 py-2"
+    >
+        <div class="flex flex-col items-center justify-center">
+            <div v-if="loading" class="py-8 text-center">
+                <AnimationLoadingSpinner
+                    size="xl2"
+                    color="[var(--anzu-accent-hover)]"
+                ></AnimationLoadingSpinner>
             </div>
             <div v-else-if="error">
                 <ErrorDisplay :errorData="error"></ErrorDisplay>
             </div>
             <template v-else>
-                <ul class="box-border p-2 w-full">
-                    <ArticleBlock v-for="archive in topArchives" :key="archive.id" :title="archive.title"
+                <ul class="box-border w-full p-2">
+                    <ArticleBlock
+                        v-for="archive in topArchives"
+                        :key="archive.id"
+                        :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []"
-                        :istop="true">
+                        :datetime="new Date(archive.createdAt).toLocaleString()"
+                        :tags="archive.tags?.tags || []"
+                        :istop="true"
+                    >
                     </ArticleBlock>
                 </ul>
                 <hr
-                    class="box-border p-2 mx-auto w-4/5 md:w-2/5 border-t-2 border-(--md-sys-color-primary-container) transition-colors duration-300 hover:border-(--md-sys-color-primary)" />
-                <ul class="box-border p-2 w-full">
-                    <ArticleBlock v-for="archive in archives" :key="archive.id" :title="archive.title"
+                    class="mx-auto box-border w-4/5 border-t-2 border-(--md-sys-color-primary-container) p-2 transition-colors duration-300 hover:border-(--md-sys-color-primary) md:w-2/5"
+                />
+                <ul class="box-border w-full p-2">
+                    <ArticleBlock
+                        v-for="archive in archives"
+                        :key="archive.id"
+                        :title="archive.title"
                         :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.createdAt).toLocaleString()" :tags="archive.tags?.tags || []">
+                        :datetime="new Date(archive.createdAt).toLocaleString()"
+                        :tags="archive.tags?.tags || []"
+                    >
                     </ArticleBlock>
                 </ul>
             </template>
-            <PageNav v-if="totalPages >= 1" :totalPages="totalPages" :currentPage="currentPage"
-                @page-change="handlePageChange">
+            <PageNav
+                v-if="totalPages >= 1"
+                :totalPages="totalPages"
+                :currentPage="currentPage"
+                @page-change="handlePageChange"
+            >
             </PageNav>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-import PageNav from '~/components/PageNav.vue';
-import ArticleBlock from '~/components/ArticleBlock.vue';
-import { ref, watch } from 'vue';
-import { useRoute, useRouter } from '#imports';
-import { useApi } from '~/composables/useapi';
-import type { Archive } from '~/types/archives';
-import { usePageTitle } from '@/composables/usePageTitle';
-const { t } = useI18n()
-const { setPageTitle } = usePageTitle()
+import PageNav from "~/components/PageNav.vue";
+import ArticleBlock from "~/components/ArticleBlock.vue";
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "#imports";
+import { useApi } from "~/composables/useapi";
+import type { Archive } from "~/types/archives";
+import { usePageTitle } from "@/composables/usePageTitle";
+const { t } = useI18n();
+const { setPageTitle } = usePageTitle();
 
-setPageTitle('pages.archive.title')
+setPageTitle("pages.archive.title");
 
 useHead(() => ({
-    title: t('pages.archive.meta.title'),
+    title: t("pages.archive.meta.title"),
     meta: [
-        { name: 'description', content: t('pages.archive.meta.description') },
-        { name: 'keywords', content: t('pages.archive.meta.keywords') }
-    ]
-}))
-
+        { name: "description", content: t("pages.archive.meta.description") },
+        { name: "keywords", content: t("pages.archive.meta.keywords") },
+    ],
+}));
 
 const route = useRoute();
 const router = useRouter();
@@ -60,9 +79,9 @@ const {
     meta,
     loading,
     error,
-    get: getArchives
+    get: getArchives,
 } = useApi<Archive[]>();
-const { data: topArchives, get: getTopArchives } = useApi<Archive[]>()
+const { data: topArchives, get: getTopArchives } = useApi<Archive[]>();
 const currentPage = ref(1);
 const totalPages = ref(1);
 
@@ -79,9 +98,9 @@ const loadArchives = async (page: number = 1) => {
 };
 
 const loadTopArchives = async () => {
-    getTopArchives('/archives?filters[isTop][$eq]=true')
-}
-loadTopArchives()
+    getTopArchives("/archives?filters[isTop][$eq]=true");
+};
+loadTopArchives();
 watch(
     () => route.query.page,
     (newPage) => {
@@ -89,7 +108,7 @@ watch(
         currentPage.value = pageNum;
         loadArchives(pageNum);
     },
-    { immediate: true }
+    { immediate: true },
 );
 
 const handlePageChange = (page: number) => {
@@ -97,8 +116,8 @@ const handlePageChange = (page: number) => {
     router.push({
         query: {
             ...route.query,
-            page: page > 1 ? page : undefined
-        }
+            page: page > 1 ? page : undefined,
+        },
     });
 };
 </script>

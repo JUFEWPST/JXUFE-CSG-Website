@@ -1,49 +1,57 @@
 <template>
-  <div>
-    <div class="flex items-center mb-4 group">
-      <h3 class="text-xl font-bold">
-        {{ t('meta.fullName') }}
-      </h3>
-      <span
-        class="ml-2 text-(--md-sys-color-tertiary) opacity-0 group-hover:opacity-100 transition-opacity">✧</span>
-    </div>
+    <div class="space-y-4">
+        <!--<div class="relative w-full overflow-hidden rounded-lg bg-transparent" style="aspect-ratio: 3 / 2">
+      <img
+        src="/MahouCsg.svg"
+        alt="MahouCsg"
+        class="h-full w-full object-contain"
+        draggable="false"
+      />
+    </div>-->
+        <div class="space-y-2">
+            <div
+                class="text-xs font-medium tracking-wide text-(--md-sys-color-on-surface-variant)"
+            >
+                {{ t("footer.contact") }}
+            </div>
 
-    <div>
-      <h4 class="text-(--md-sys-color-on-surface) font-bold mb-2 flex items-center">
-        {{ t('footer.contact') }}
-      </h4>
-      <ul class="space-y-3">
-        <li class="flex items-center group">
-          <div
-            class="w-8 h-8 rounded-lg bg-(--md-sys-color-secondary-container) flex items-center justify-center mr-3 group-hover:bg-(--md-sys-color-primary-container) transition-colors shrink-0"
-          >
-            <MapPinIcon
-              class="shrink-0 h-5 w-5 text-(--md-sys-color-on-secondary-container) group-hover:text-(--md-sys-color-on-primary-container)"
-            />
-          </div>
-          <span class="text-(--md-sys-color-on-surface-variant) wrap-break-word flex-1 min-w-0">
-            {{ t('footer.address') }}
-          </span>
-        </li>
-        <li class="flex items-center group">
-          <div
-            class="w-8 h-8 rounded-lg bg-(--md-sys-color-secondary-container) flex items-center justify-center mr-3 group-hover:bg-(--md-sys-color-primary-container) transition-colors shrink-0"
-          >
-            <EnvelopeIcon
-              class="shrink-0 h-5 w-5 text-(--md-sys-color-on-secondary-container) group-hover:text-(--md-sys-color-on-primary-container)"
-            />
-          </div>
-          <span class="text-(--md-sys-color-on-surface-variant) wrap-break-word flex-1 min-w-0">
-            1834488130@qq.com
-          </span>
-        </li>
-      </ul>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2">
+                    <div
+                        class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
+                    >
+                        <MapPinIcon
+                            class="h-4 w-4 text-(--md-sys-color-on-secondary-container)"
+                        />
+                    </div>
+                    <span
+                        class="min-w-0 flex-1 text-sm leading-relaxed wrap-break-word text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ t("footer.address") }}
+                    </span>
+                </li>
+
+                <li class="flex items-start gap-2">
+                    <div
+                        class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
+                    >
+                        <EnvelopeIcon
+                            class="h-4 w-4 text-(--md-sys-color-on-secondary-container)"
+                        />
+                    </div>
+                    <span
+                        class="min-w-0 flex-1 text-sm leading-relaxed break-all text-(--md-sys-color-on-surface-variant)"
+                    >
+                        1834488130@qq.com
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { MapPinIcon, EnvelopeIcon } from '@heroicons/vue/24/outline'
+import { MapPinIcon, EnvelopeIcon } from "@heroicons/vue/24/outline";
 
-const { t } = useI18n()
+const { t } = useI18n();
 </script>

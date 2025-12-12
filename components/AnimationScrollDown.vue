@@ -1,9 +1,21 @@
 <template>
-    <div class="flex flex-col items-center justify-center h-10">
+    <div class="flex h-10 flex-col items-center justify-center">
         <div class="relative h-10 w-6">
-            <div class="absolute top-0 left-1/2 w-0.5 h-2 -translate-x-1/2 animate-arrow">⏑</div>
-            <div class="absolute top-2 left-1/2 w-0.5 h-2 -translate-x-1/2 animate-arrow animation-delay-200">⏑</div>
-            <div class="absolute top-4 left-1/2 w-0.5 h-2 -translate-x-1/2 animate-arrow animation-delay-400">⏑</div>
+            <div
+                class="animate-arrow absolute top-0 left-1/2 h-2 w-0.5 -translate-x-1/2"
+            >
+                ⏑
+            </div>
+            <div
+                class="animate-arrow animation-delay-200 absolute top-2 left-1/2 h-2 w-0.5 -translate-x-1/2"
+            >
+                ⏑
+            </div>
+            <div
+                class="animate-arrow animation-delay-400 absolute top-4 left-1/2 h-2 w-0.5 -translate-x-1/2"
+            >
+                ⏑
+            </div>
         </div>
     </div>
 </template>

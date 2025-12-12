@@ -1,347 +1,405 @@
 <template>
-  <div class="flex flex-col gap-3">
-    <!-- Header: 当前月份与切换 -->
-    <div class="flex items-center justify-between">
-      <div class="flex flex-col items-start">
-        <span class="text-xs text-(--md-sys-color-on-surface-variant)">
-          {{ currentYear }}
-        </span>
-        <span class="text-lg font-semibold text-(--md-sys-color-on-surface)">
-          {{ currentMonth + 1 }} {{ t('calendar.monthSuffix') }}
-        </span>
-      </div>
-      <div class="flex items-center gap-1">
-        <button type="button"
-          class="w-7 h-7 rounded-full flex items-center justify-center text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high) transition-colors"
-          @click="gotoPrevMonth" :aria-label="t('calendar.actions.prevMonth')">
-          ‹
-        </button>
-        <button type="button"
-          class="w-7 h-7 rounded-full flex items-center justify-center text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high) transition-colors"
-          @click="gotoNextMonth" :aria-label="t('calendar.actions.nextMonth')">
-          ›
-        </button>
-      </div>
-    </div>
-
-    <!-- 星期标题 -->
-    <div class="grid grid-cols-7 text-center text-xs text-(--md-sys-color-on-surface-variant)">
-      <div v-for="w in weekdays" :key="w" class="py-1">
-        {{ w }}
-      </div>
-    </div>
-
-    <!-- 日期栅格 -->
-    <div class="grid grid-cols-7 text-xs gap-y-1">
-      <div v-for="(cell, index) in calendarCells" :key="index" class="h-9 flex items-center justify-center">
-        <div v-if="cell" :class="dayClasses(cell)" :title="dayTitle(cell)">
-          <span>{{ cell.date.getDate() }}</span>
-          <span v-if="cell.events.length"
-            class="ml-0.5 w-1.5 h-1.5 rounded-full bg-(--md-sys-color-primary) inline-block" />
+    <div class="flex flex-col gap-3">
+        <!-- Header: 当前月份与切换 -->
+        <div class="flex items-center justify-between">
+            <div class="flex flex-col items-start">
+                <span class="text-xs text-(--md-sys-color-on-surface-variant)">
+                    {{ currentYear }}
+                </span>
+                <span
+                    class="text-lg font-semibold text-(--md-sys-color-on-surface)"
+                >
+                    {{ currentMonth + 1 }} {{ t("calendar.monthSuffix") }}
+                </span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button
+                    type="button"
+                    class="flex h-7 w-7 items-center justify-center rounded-full text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                    @click="gotoPrevMonth"
+                    :aria-label="t('calendar.actions.prevMonth')"
+                >
+                    ‹
+                </button>
+                <button
+                    type="button"
+                    class="flex h-7 w-7 items-center justify-center rounded-full text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                    @click="gotoNextMonth"
+                    :aria-label="t('calendar.actions.nextMonth')"
+                >
+                    ›
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- 图例 -->
-    <div class="flex flex-wrap gap-2 mt-1 text-[11px] text-(--md-sys-color-on-surface-variant)">
-      <div class="flex items-center gap-1">
-        <span class="w-3 h-3 rounded bg-(--md-sys-color-primary-container) border border-(--md-sys-color-primary)/40" />
-        <span>{{ t('calendar.legend.holiday') }}</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <span class="w-3 h-3 rounded border border-(--md-sys-color-primary)/60" />
-        <span>{{ t('calendar.legend.workdayAdjusted') }}</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <span class="w-3 h-3 rounded bg-(--md-sys-color-primary-container)" />
-        <span>{{ t('calendar.legend.today') }}</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <span class="w-3 h-3 rounded border border-dashed border-(--md-sys-color-secondary)/70" />
-        <span>{{ t('calendar.legend.examWeek') }}</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <span class="w-3 h-3 rounded-full bg-(--md-sys-color-primary)" />
-        <span>{{ t('calendar.legend.event') }}</span>
-      </div>
-    </div>
+        <!-- 星期标题 -->
+        <div
+            class="grid grid-cols-7 text-center text-xs text-(--md-sys-color-on-surface-variant)"
+        >
+            <div v-for="w in weekdays" :key="w" class="py-1">
+                {{ w }}
+            </div>
+        </div>
 
-    <!-- 今日状态卡片 -->
-    <div
-      class="mt-1 rounded-lg bg-(--md-sys-color-surface-container-lowest) border border-(--md-sys-color-outline-variant)/60 px-3 py-2 text-xs text-(--md-sys-color-on-surface-variant)">
-      <div class="flex items-center justify-between">
-        <span class="font-medium text-(--md-sys-color-on-surface)">
-          {{ t('calendar.todayPrefix') }}{{ todayStatus.label }}
-        </span>
-        <span class="text-(--md-sys-color-primary) text-[11px]">
-          {{ formatDateDisplay(today) }}
-        </span>
-      </div>
-      <div v-if="todayStatus.detail" class="mt-0.5 text-[11px] truncate">
-        {{ todayStatus.detail }}
-      </div>
+        <!-- 日期栅格 -->
+        <div class="grid grid-cols-7 gap-y-1 text-xs">
+            <div
+                v-for="(cell, index) in calendarCells"
+                :key="index"
+                class="flex h-9 items-center justify-center"
+            >
+                <div
+                    v-if="cell"
+                    :class="dayClasses(cell)"
+                    :title="dayTitle(cell)"
+                >
+                    <span>{{ cell.date.getDate() }}</span>
+                    <span
+                        v-if="cell.events.length"
+                        class="ml-0.5 inline-block h-1.5 w-1.5 rounded-full bg-(--md-sys-color-primary)"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- 图例 -->
+        <div
+            class="mt-1 flex flex-wrap gap-2 text-[11px] text-(--md-sys-color-on-surface-variant)"
+        >
+            <div class="flex items-center gap-1">
+                <span
+                    class="h-3 w-3 rounded border border-(--md-sys-color-primary)/40 bg-(--md-sys-color-primary-container)"
+                />
+                <span>{{ t("calendar.legend.holiday") }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <span
+                    class="h-3 w-3 rounded border border-(--md-sys-color-primary)/60"
+                />
+                <span>{{ t("calendar.legend.workdayAdjusted") }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <span
+                    class="h-3 w-3 rounded bg-(--md-sys-color-primary-container)"
+                />
+                <span>{{ t("calendar.legend.today") }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <span
+                    class="h-3 w-3 rounded border border-dashed border-(--md-sys-color-secondary)/70"
+                />
+                <span>{{ t("calendar.legend.examWeek") }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <span
+                    class="h-3 w-3 rounded-full bg-(--md-sys-color-primary)"
+                />
+                <span>{{ t("calendar.legend.event") }}</span>
+            </div>
+        </div>
+
+        <!-- 今日状态卡片 -->
+        <div
+            class="mt-1 rounded-lg border border-(--md-sys-color-outline-variant)/60 bg-(--md-sys-color-surface-container-lowest) px-3 py-2 text-xs text-(--md-sys-color-on-surface-variant)"
+        >
+            <div class="flex items-center justify-between">
+                <span class="font-medium text-(--md-sys-color-on-surface)">
+                    {{ t("calendar.todayPrefix") }}{{ todayStatus.label }}
+                </span>
+                <span class="text-[11px] text-(--md-sys-color-primary)">
+                    {{ formatDateDisplay(today) }}
+                </span>
+            </div>
+            <div v-if="todayStatus.detail" class="mt-0.5 truncate text-[11px]">
+                {{ todayStatus.detail }}
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import {
-  calendarConfig as defaultCalendarConfig,
-  type CalendarConfig,
-  type CalendarOverride,
-  type CalendarExamWeek,
-} from '@/data/calendarConfig'
+    calendarConfig as defaultCalendarConfig,
+    type CalendarConfig,
+    type CalendarOverride,
+    type CalendarExamWeek,
+} from "@/data/calendarConfig";
 
 interface CalendarDayMeta {
-  date: Date
-  isToday: boolean
-  isWeekend: boolean
-  isHoliday: boolean
-  isOfficialHoliday: boolean
-  isWorkdayOverride: boolean
-  isExamWeek: boolean
-  events: CalendarOverride[]
+    date: Date;
+    isToday: boolean;
+    isWeekend: boolean;
+    isHoliday: boolean;
+    isOfficialHoliday: boolean;
+    isWorkdayOverride: boolean;
+    isExamWeek: boolean;
+    events: CalendarOverride[];
 }
 
 const props = defineProps<{
-  config?: CalendarConfig
-}>()
+    config?: CalendarConfig;
+}>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 
-const config = computed<CalendarConfig>(() => props.config ?? defaultCalendarConfig)
+const config = computed<CalendarConfig>(
+    () => props.config ?? defaultCalendarConfig,
+);
 
 // 当前展示的年月
-const today = new Date()
-const currentYear = ref(today.getFullYear())
-const currentMonth = ref(today.getMonth()) // 0-11
+const today = new Date();
+const currentYear = ref(today.getFullYear());
+const currentMonth = ref(today.getMonth()); // 0-11
 
 function formatDateDisplay(d: Date): string {
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${m}-${day}`
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${m}-${day}`;
 }
 
 const weekdays = computed(() => [
-  t('calendar.weekdays.mon'),
-  t('calendar.weekdays.tue'),
-  t('calendar.weekdays.wed'),
-  t('calendar.weekdays.thu'),
-  t('calendar.weekdays.fri'),
-  t('calendar.weekdays.sat'),
-  t('calendar.weekdays.sun'),
-])
+    t("calendar.weekdays.mon"),
+    t("calendar.weekdays.tue"),
+    t("calendar.weekdays.wed"),
+    t("calendar.weekdays.thu"),
+    t("calendar.weekdays.fri"),
+    t("calendar.weekdays.sat"),
+    t("calendar.weekdays.sun"),
+]);
 
 function formatDate(d: Date): string {
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
 }
 
-function getOverridesMap(overrides: CalendarOverride[]): Record<string, CalendarOverride[]> {
-  const map: Record<string, CalendarOverride[]> = {}
-  for (const o of overrides) {
-    if (!map[o.date]) map[o.date] = []
-    map[o.date].push(o)
-  }
-  return map
-}
-
-const overridesMap = computed(() => getOverridesMap(config.value.overrides))
-
-function isInExamWeeks(dateStr: string, examWeeks?: CalendarExamWeek[]): boolean {
-  if (!examWeeks || examWeeks.length === 0) return false
-  return examWeeks.some((week) => dateStr >= week.start && dateStr <= week.end)
-}
-
-function buildMonthCells(year: number, month: number): (CalendarDayMeta | null)[] {
-  const firstDay = new Date(year, month, 1)
-  const daysInMonth = new Date(year, month + 1, 0).getDate()
-
-  const jsWeekDay = firstDay.getDay() // 0=Sun
-  const mondayFirstIndex = jsWeekDay === 0 ? 6 : jsWeekDay - 1 // 0..6, 0=Mon
-
-  const cells: (CalendarDayMeta | null)[] = []
-
-  // 前置空格
-  for (let i = 0; i < mondayFirstIndex; i++) {
-    cells.push(null)
-  }
-
-  const todayStr = formatDate(today)
-
-  for (let d = 1; d <= daysInMonth; d++) {
-    const date = new Date(year, month, d)
-    const dateStr = formatDate(date)
-    const overrides = overridesMap.value[dateStr] ?? []
-
-    const jsDay = date.getDay() // 0=Sun,6=Sat
-    const isWeekend = jsDay === 0 || jsDay === 6
-
-    let isHoliday = false
-    let isOfficialHoliday = false
-    let isWorkdayOverride = false
-
-    const isWeekendHoliday = config.value.defaultWeekendIsHoliday && isWeekend
-    if (isWeekendHoliday) {
-      isHoliday = true
-    }
-
+function getOverridesMap(
+    overrides: CalendarOverride[],
+): Record<string, CalendarOverride[]> {
+    const map: Record<string, CalendarOverride[]> = {};
     for (const o of overrides) {
-      if (o.type === 'holiday') {
-        isHoliday = true
-        isOfficialHoliday = true
-        isWorkdayOverride = false
-      } else if (o.type === 'workday') {
-        isHoliday = false
-        isWorkdayOverride = true
-      }
+        if (!map[o.date]) map[o.date] = [];
+        map[o.date].push(o);
     }
-
-    const events = overrides.filter((o) => o.type === 'event')
-    const isExamWeek = isInExamWeeks(dateStr, config.value.examWeeks)
-
-    cells.push({
-      date,
-      isToday: dateStr === todayStr,
-      isWeekend,
-      isHoliday,
-      isOfficialHoliday,
-      isWorkdayOverride,
-      isExamWeek,
-      events,
-    })
-  }
-
-  while (cells.length < 42) {
-    cells.push(null)
-  }
-
-  return cells
+    return map;
 }
 
-const calendarCells = computed(() => buildMonthCells(currentYear.value, currentMonth.value))
+const overridesMap = computed(() => getOverridesMap(config.value.overrides));
+
+function isInExamWeeks(
+    dateStr: string,
+    examWeeks?: CalendarExamWeek[],
+): boolean {
+    if (!examWeeks || examWeeks.length === 0) return false;
+    return examWeeks.some(
+        (week) => dateStr >= week.start && dateStr <= week.end,
+    );
+}
+
+function buildMonthCells(
+    year: number,
+    month: number,
+): (CalendarDayMeta | null)[] {
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const jsWeekDay = firstDay.getDay(); // 0=Sun
+    const mondayFirstIndex = jsWeekDay === 0 ? 6 : jsWeekDay - 1; // 0..6, 0=Mon
+
+    const cells: (CalendarDayMeta | null)[] = [];
+
+    // 前置空格
+    for (let i = 0; i < mondayFirstIndex; i++) {
+        cells.push(null);
+    }
+
+    const todayStr = formatDate(today);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month, d);
+        const dateStr = formatDate(date);
+        const overrides = overridesMap.value[dateStr] ?? [];
+
+        const jsDay = date.getDay(); // 0=Sun,6=Sat
+        const isWeekend = jsDay === 0 || jsDay === 6;
+
+        let isHoliday = false;
+        let isOfficialHoliday = false;
+        let isWorkdayOverride = false;
+
+        const isWeekendHoliday =
+            config.value.defaultWeekendIsHoliday && isWeekend;
+        if (isWeekendHoliday) {
+            isHoliday = true;
+        }
+
+        for (const o of overrides) {
+            if (o.type === "holiday") {
+                isHoliday = true;
+                isOfficialHoliday = true;
+                isWorkdayOverride = false;
+            } else if (o.type === "workday") {
+                isHoliday = false;
+                isWorkdayOverride = true;
+            }
+        }
+
+        const events = overrides.filter((o) => o.type === "event");
+        const isExamWeek = isInExamWeeks(dateStr, config.value.examWeeks);
+
+        cells.push({
+            date,
+            isToday: dateStr === todayStr,
+            isWeekend,
+            isHoliday,
+            isOfficialHoliday,
+            isWorkdayOverride,
+            isExamWeek,
+            events,
+        });
+    }
+
+    while (cells.length < 42) {
+        cells.push(null);
+    }
+
+    return cells;
+}
+
+const calendarCells = computed(() =>
+    buildMonthCells(currentYear.value, currentMonth.value),
+);
 
 interface TodayStatus {
-  label: string
-  detail?: string
+    label: string;
+    detail?: string;
 }
 
 const todayStatus = computed<TodayStatus>(() => {
-  const todayStr = formatDate(today)
-  const overrides = overridesMap.value[todayStr] ?? []
-  const jsDay = today.getDay()
-  const isWeekend = jsDay === 0 || jsDay === 6
+    const todayStr = formatDate(today);
+    const overrides = overridesMap.value[todayStr] ?? [];
+    const jsDay = today.getDay();
+    const isWeekend = jsDay === 0 || jsDay === 6;
 
-  let isHoliday = false
-  let isOfficialHoliday = false
-  let isWorkdayOverride = false
+    let isHoliday = false;
+    let isOfficialHoliday = false;
+    let isWorkdayOverride = false;
 
-  const isWeekendHoliday = config.value.defaultWeekendIsHoliday && isWeekend
-  if (isWeekendHoliday) {
-    isHoliday = true
-  }
-
-  for (const o of overrides) {
-    if (o.type === 'holiday') {
-      isHoliday = true
-      isOfficialHoliday = true
-      isWorkdayOverride = false
-    } else if (o.type === 'workday') {
-      isHoliday = false
-      isWorkdayOverride = true
+    const isWeekendHoliday = config.value.defaultWeekendIsHoliday && isWeekend;
+    if (isWeekendHoliday) {
+        isHoliday = true;
     }
-  }
 
-  const events = overrides.filter((o) => o.type === 'event')
-  const inExamWeek = isInExamWeeks(todayStr, config.value.examWeeks)
+    for (const o of overrides) {
+        if (o.type === "holiday") {
+            isHoliday = true;
+            isOfficialHoliday = true;
+            isWorkdayOverride = false;
+        } else if (o.type === "workday") {
+            isHoliday = false;
+            isWorkdayOverride = true;
+        }
+    }
 
-  const examWeeks = config.value.examWeeks ?? []
-  const lastExamEnd = examWeeks.length ? examWeeks[examWeeks.length - 1].end : undefined
+    const events = overrides.filter((o) => o.type === "event");
+    const inExamWeek = isInExamWeeks(todayStr, config.value.examWeeks);
 
-  let label = ''
-  const tags: string[] = []
+    const examWeeks = config.value.examWeeks ?? [];
+    const lastExamEnd = examWeeks.length
+        ? examWeeks[examWeeks.length - 1].end
+        : undefined;
 
-  if (isHoliday && !isWorkdayOverride) {
-    label = t('calendar.status.holiday')
-  } else if (inExamWeek) {
-    label = t('calendar.status.examWeekClass')
-  } else if (lastExamEnd && todayStr > lastExamEnd) {
-    label = t('calendar.status.vacation')
-  } else if (isWorkdayOverride) {
-    label = t('calendar.status.workdayAdjusted')
-  } else if (isWeekend) {
-    label = t('calendar.status.weekend')
-  } else {
-    label = t('calendar.status.classDay')
-  }
+    let label = "";
+    const tags: string[] = [];
 
-  if (inExamWeek) tags.push(t('calendar.tags.examWeek'))
-  if (isHoliday && !isWorkdayOverride) tags.push(t('calendar.tags.holiday'))
-  if (isWorkdayOverride) tags.push(t('calendar.tags.workdayAdjusted'))
-  for (const e of events) {
-    if (e.name) tags.push(e.name)
-  }
+    if (isHoliday && !isWorkdayOverride) {
+        label = t("calendar.status.holiday");
+    } else if (inExamWeek) {
+        label = t("calendar.status.examWeekClass");
+    } else if (lastExamEnd && todayStr > lastExamEnd) {
+        label = t("calendar.status.vacation");
+    } else if (isWorkdayOverride) {
+        label = t("calendar.status.workdayAdjusted");
+    } else if (isWeekend) {
+        label = t("calendar.status.weekend");
+    } else {
+        label = t("calendar.status.classDay");
+    }
 
-  return {
-    label,
-    detail: tags.join(' / '),
-  }
-})
+    if (inExamWeek) tags.push(t("calendar.tags.examWeek"));
+    if (isHoliday && !isWorkdayOverride) tags.push(t("calendar.tags.holiday"));
+    if (isWorkdayOverride) tags.push(t("calendar.tags.workdayAdjusted"));
+    for (const e of events) {
+        if (e.name) tags.push(e.name);
+    }
+
+    return {
+        label,
+        detail: tags.join(" / "),
+    };
+});
 
 function dayClasses(day: CalendarDayMeta): string {
-  const classes = [
-    'w-8 h-8 rounded-lg flex items-center justify-center text-[13px] select-none transition-colors duration-150',
-  ]
+    const classes = [
+        "w-8 h-8 rounded-lg flex items-center justify-center text-[13px] select-none transition-colors duration-150",
+    ];
 
-  if (day.isExamWeek && !day.isOfficialHoliday) {
-    classes.push('border border-dashed border-(--md-sys-color-secondary)/70 text-(--md-sys-color-on-surface)')
-  } else if (day.isHoliday) {
-    classes.push('bg-(--md-sys-color-primary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-on-primary-container)')
-  } else if (day.isWorkdayOverride) {
-    classes.push('border border-(--md-sys-color-primary)/60 text-(--md-sys-color-on-surface)')
-  } else {
-    classes.push('text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)')
-  }
+    if (day.isExamWeek && !day.isOfficialHoliday) {
+        classes.push(
+            "border border-dashed border-(--md-sys-color-secondary)/70 text-(--md-sys-color-on-surface)",
+        );
+    } else if (day.isHoliday) {
+        classes.push(
+            "bg-(--md-sys-color-primary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-on-primary-container)",
+        );
+    } else if (day.isWorkdayOverride) {
+        classes.push(
+            "border border-(--md-sys-color-primary)/60 text-(--md-sys-color-on-surface)",
+        );
+    } else {
+        classes.push(
+            "text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)",
+        );
+    }
 
-  if (day.isToday) {
-    classes.push('border-2 border-(--md-sys-color-primary) font-semibold')
-  }
+    if (day.isToday) {
+        classes.push("border-2 border-(--md-sys-color-primary) font-semibold");
+    }
 
-  return classes.join(' ')
+    return classes.join(" ");
 }
 
 function dayTitle(day: CalendarDayMeta): string {
-  const parts: string[] = []
+    const parts: string[] = [];
 
-  if (day.isHoliday) parts.push(t('calendar.tags.holiday'))
-  if (day.isWorkdayOverride) parts.push(t('calendar.tags.workdayAdjusted'))
-  if (day.isExamWeek) parts.push(t('calendar.tags.examWeek'))
-  for (const e of day.events) {
-    if (e.name) parts.push(e.name)
-  }
+    if (day.isHoliday) parts.push(t("calendar.tags.holiday"));
+    if (day.isWorkdayOverride) parts.push(t("calendar.tags.workdayAdjusted"));
+    if (day.isExamWeek) parts.push(t("calendar.tags.examWeek"));
+    for (const e of day.events) {
+        if (e.name) parts.push(e.name);
+    }
 
-  return parts.join(' / ')
+    return parts.join(" / ");
 }
 
 function gotoPrevMonth() {
-  if (currentMonth.value === 0) {
-    currentMonth.value = 11
-    currentYear.value -= 1
-  } else {
-    currentMonth.value -= 1
-  }
+    if (currentMonth.value === 0) {
+        currentMonth.value = 11;
+        currentYear.value -= 1;
+    } else {
+        currentMonth.value -= 1;
+    }
 }
 
 function gotoNextMonth() {
-  if (currentMonth.value === 11) {
-    currentMonth.value = 0
-    currentYear.value += 1
-  } else {
-    currentMonth.value += 1
-  }
+    if (currentMonth.value === 11) {
+        currentMonth.value = 0;
+        currentYear.value += 1;
+    } else {
+        currentMonth.value += 1;
+    }
 }
 </script>

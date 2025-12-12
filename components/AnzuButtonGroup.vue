@@ -1,43 +1,49 @@
 <template>
-    <div class="anzu-button-group" :class="[`anzu-button-group--${direction}`, `anzu-button-group--gap-${gap}`]">
+    <div
+        class="anzu-button-group"
+        :class="[
+            `anzu-button-group--${direction}`,
+            `anzu-button-group--gap-${gap}`,
+        ]"
+    >
         <slot />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide, watch } from 'vue'
+import { computed, provide, watch } from "vue";
 
 interface Props {
-    modelValue?: string | number
-    direction?: 'horizontal' | 'vertical'
-    gap?: 'none' | 'sm' | 'md' | 'lg'
+    modelValue?: string | number;
+    direction?: "horizontal" | "vertical";
+    gap?: "none" | "sm" | "md" | "lg";
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    direction: 'horizontal',
-    gap: 'none',
-    modelValue: undefined
-})
+    direction: "horizontal",
+    gap: "none",
+    modelValue: undefined,
+});
 
 const emit = defineEmits<{
-    (e: 'update:modelValue', value: string | number): void
-}>()
+    (e: "update:modelValue", value: string | number): void;
+}>();
 
 const selectedValue = computed({
     get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value)
-})
+    set: (value) => emit("update:modelValue", value),
+});
 
 function select(value: string | number) {
-    selectedValue.value = value
+    selectedValue.value = value;
 }
 
-provide('buttonGroup', {
+provide("buttonGroup", {
     selectedValue,
     select,
     direction: computed(() => props.direction),
-    gap: computed(() => props.gap)
-})
+    gap: computed(() => props.gap),
+});
 </script>
 
 <style scoped>

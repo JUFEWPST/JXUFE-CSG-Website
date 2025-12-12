@@ -1,32 +1,60 @@
 <template>
     <div class="pagination-container">
         <!-- 上一页 -->
-        <button class="pagination-button" :class="{ disabled: currentPage <= 1 }" @click="goToPage(currentPage - 1)"
-            :disabled="currentPage <= 1" :aria-label="t('common.actions.paginationPrevious')">
+        <button
+            class="pagination-button"
+            :class="{ disabled: currentPage <= 1 }"
+            @click="goToPage(currentPage - 1)"
+            :disabled="currentPage <= 1"
+            :aria-label="t('common.actions.paginationPrevious')"
+        >
             <span class="pagination-arrow">←</span>
         </button>
         <template v-for="page in displayedPages" :key="page">
-            <button class="pagination-button" :class="{
-                active: page === currentPage,
-                'dots': page === '...',
-                'disabled-item': page === '...'
-            }" @click="page !== '...' ? goToPage(page) : null">
+            <button
+                class="pagination-button"
+                :class="{
+                    active: page === currentPage,
+                    dots: page === '...',
+                    'disabled-item': page === '...',
+                }"
+                @click="page !== '...' ? goToPage(page) : null"
+            >
                 {{ page }}
             </button>
         </template>
         <!-- 下一页 -->
-        <button class="pagination-button" :class="{ disabled: currentPage >= totalPages }"
-            @click="goToPage(currentPage + 1)" :disabled="currentPage >= totalPages"
-            :aria-label="$t('common.actions.paginationNext')">
+        <button
+            class="pagination-button"
+            :class="{ disabled: currentPage >= totalPages }"
+            @click="goToPage(currentPage + 1)"
+            :disabled="currentPage >= totalPages"
+            :aria-label="$t('common.actions.paginationNext')"
+        >
             <span class="pagination-arrow">→</span>
         </button>
         <div class="page-jump">
-            <span>{{ t('common.actions.paginationJumpTo') }}</span>
-            <input type="number" v-model.number="inputPage" min="1" :max="totalPages" @keyup.enter="jumpToPage"
-                :aria-label="t('common.actions.paginationTargetPageNumber')" />
-            <span>{{ t('common.actions.paginationPageUnit') }}</span>
-            <button class="jump-button" @click="jumpToPage"
-                :aria-label="t('common.actions.paginationJumpToPage', { page: inputPage })">GO</button>
+            <span>{{ t("common.actions.paginationJumpTo") }}</span>
+            <input
+                type="number"
+                v-model.number="inputPage"
+                min="1"
+                :max="totalPages"
+                @keyup.enter="jumpToPage"
+                :aria-label="t('common.actions.paginationTargetPageNumber')"
+            />
+            <span>{{ t("common.actions.paginationPageUnit") }}</span>
+            <button
+                class="jump-button"
+                @click="jumpToPage"
+                :aria-label="
+                    t('common.actions.paginationJumpToPage', {
+                        page: inputPage,
+                    })
+                "
+            >
+                GO
+            </button>
         </div>
     </div>
 </template>
@@ -51,7 +79,8 @@
     height: 32px;
     box-sizing: border-box;
     border-radius: 0.75rem;
-    border: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 80%, transparent);
+    border: 1px solid
+        color-mix(in srgb, var(--md-sys-color-outline) 80%, transparent);
     background-color: var(--md-sys-color-surface);
     color: var(--md-sys-color-on-surface);
     font-size: 0.875rem;
@@ -61,7 +90,12 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
 }
 
 .pagination-button::after {
@@ -100,7 +134,11 @@
 .pagination-button.disabled {
     cursor: not-allowed;
     border-color: transparent;
-    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    background-color: color-mix(
+        in srgb,
+        var(--md-sys-color-on-surface) 12%,
+        transparent
+    );
     color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
 }
 
@@ -137,19 +175,24 @@
     width: 3.25rem;
     padding: 4px 8px;
     border-radius: 0.5rem;
-    border: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 80%, transparent);
+    border: 1px solid
+        color-mix(in srgb, var(--md-sys-color-outline) 80%, transparent);
     background-color: var(--md-sys-color-surface-container-low);
     color: var(--md-sys-color-on-surface);
     text-align: center;
     font-size: 0.875rem;
     line-height: 1;
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
 }
 
 .page-jump input:focus-visible {
     border-color: var(--md-sys-color-primary);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--md-sys-color-primary) 40%, transparent);
+    box-shadow: 0 0 0 1px
+        color-mix(in srgb, var(--md-sys-color-primary) 40%, transparent);
 }
 
 .jump-button {
@@ -167,7 +210,9 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .jump-button::after {
@@ -181,7 +226,11 @@
 }
 
 .jump-button:hover {
-    background-color: color-mix(in srgb, var(--md-sys-color-secondary-container) 90%, var(--md-sys-color-on-surface) 10%);
+    background-color: color-mix(
+        in srgb,
+        var(--md-sys-color-secondary-container) 90%,
+        var(--md-sys-color-on-surface) 10%
+    );
 }
 
 .jump-button:hover::after {
@@ -194,30 +243,30 @@
 </style>
 
 <script setup>
-import { computed, ref } from 'vue';
-import { useRouter } from '#imports';
-const { t } = useI18n()
+import { computed, ref } from "vue";
+import { useRouter } from "#imports";
+const { t } = useI18n();
 const props = defineProps({
     totalPages: {
         type: Number,
         required: true,
-        validator: value => value > 0
+        validator: (value) => value > 0,
     },
     currentPage: {
         type: Number,
         required: true,
-        validator: value => value > 0
+        validator: (value) => value > 0,
     },
     baseUrl: {
         type: String,
-        default: ''
-    }
+        default: "",
+    },
 });
 
-const emit = defineEmits(['pageChanged']);
+const emit = defineEmits(["pageChanged"]);
 
 const router = useRouter();
-const inputPage = ref('');
+const inputPage = ref("");
 
 const displayedPages = computed(() => {
     const pages = [];
@@ -244,7 +293,7 @@ const displayedPages = computed(() => {
         if (start > 1) {
             pages.push(1);
             if (start > 2) {
-                pages.push('...');
+                pages.push("...");
             }
         }
 
@@ -254,7 +303,7 @@ const displayedPages = computed(() => {
 
         if (end < totalPages) {
             if (end < totalPages - 1) {
-                pages.push('...');
+                pages.push("...");
             }
             pages.push(totalPages);
         }
@@ -264,18 +313,22 @@ const displayedPages = computed(() => {
 });
 
 const goToPage = (page) => {
-    if (page < 1 || page > props.totalPages || page === props.currentPage) return;
+    if (page < 1 || page > props.totalPages || page === props.currentPage)
+        return;
 
     const query = { ...router.currentRoute.value.query, page };
-    router.push({ path: props.baseUrl || router.currentRoute.value.path, query });
-    emit('pageChanged', page);
+    router.push({
+        path: props.baseUrl || router.currentRoute.value.path,
+        query,
+    });
+    emit("pageChanged", page);
 };
 
 const jumpToPage = () => {
     const page = parseInt(inputPage.value);
     if (!isNaN(page) && page >= 1 && page <= props.totalPages) {
         goToPage(page);
-        inputPage.value = '';
+        inputPage.value = "";
     }
 };
 </script>
