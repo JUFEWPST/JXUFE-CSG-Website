@@ -189,6 +189,13 @@
         "contact": "联系我们",
         "address": "江西财经大学麦庐园校区"
     },
+    "themeMenu": {
+        "tooltip": "主题设置",
+        "title": "主题设置",
+        "mode": "主题模式",
+        "light": "浅色",
+        "dark": "深色"
+    },
     "themeColorPicker": {
         "tooltip": "更改主题色",
         "title": "主题配色",

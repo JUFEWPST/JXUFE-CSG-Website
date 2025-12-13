@@ -189,6 +189,13 @@
         "contact": "お問い合わせ",
         "address": "江西財経大学麦廬園キャンパス"
     },
+    "themeMenu": {
+        "tooltip": "テーマ設定",
+        "title": "テーマ設定",
+        "mode": "テーマモード",
+        "light": "ライト",
+        "dark": "ダーク"
+    },
     "themeColorPicker": {
         "tooltip": "テーマカラーを変更",
         "title": "テーマカラー",

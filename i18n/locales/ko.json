@@ -189,6 +189,13 @@
         "contact": "연락처",
         "address": "장시 재경대학교 메이루 캠퍼스"
     },
+    "themeMenu": {
+        "tooltip": "테마 설정",
+        "title": "테마 설정",
+        "mode": "테마 모드",
+        "light": "라이트",
+        "dark": "다크"
+    },
     "themeColorPicker": {
         "tooltip": "테마 색상 변경",
         "title": "테마 색상",

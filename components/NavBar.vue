@@ -140,104 +140,90 @@
                         }"
                     >
                         <template v-for="link in visibleLinks" :key="link.path">
-                            <div
+                            <AnzuDropdown
                                 v-if="'children' in link"
-                                class="group relative"
-                                @mouseenter="
-                                    moreOpen = false;
-                                    openDropdown(link.path);
+                                :model-value="dropdownStates[link.path]"
+                                @update:modelValue="
+                                    (v) => (dropdownStates[link.path] = !!v)
                                 "
-                                @mouseleave="closeDropdown(link.path)"
+                                width-class="w-48"
+                                panel-class="p-1.5"
+                                open-on-hover
+                                :hover-close-delay="180"
+                                @mouseenter="moreOpen = false"
                             >
-                                <div class="flex items-center">
-                                    <NuxtLink
-                                        :to="link.defaultPath || link.path"
-                                        class="nav-link-block"
-                                        :class="[
-                                            isActive(link)
-                                                ? 'active-link'
-                                                : 'text-(--md-sys-color-on-surface-variant)',
-                                        ]"
-                                    >
-                                        <span
-                                            class="relative z-10 flex items-center font-bold"
-                                        >
-                                            <component
-                                                :is="iconMap[link.path]"
-                                                v-if="iconMap[link.path]"
-                                                class="mr-1.5 h-5 w-5"
-                                            />
-                                            {{ t(link.label) }}
-                                        </span>
-                                    </NuxtLink>
-
-                                    <button
-                                        @click.stop="
-                                            moreOpen = false;
-                                            toggleDropdown(link.path);
-                                        "
-                                        class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-(--md-sys-color-surface-container-high)"
-                                        :class="{
-                                            'rotate-180':
-                                                dropdownStates[link.path],
-                                        }"
-                                        type="button"
-                                        aria-label="子菜单"
-                                    >
-                                        <svg
-                                            class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant) transition-transform"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M19 9l-7 7-7-7"
-                                            ></path>
-                                        </svg>
-                                    </button>
-                                </div>
-
-                                <div
-                                    class="absolute top-full left-0 h-2 w-full"
-                                    :class="{
-                                        invisible: !dropdownStates[link.path],
-                                    }"
-                                ></div>
-
-                                <transition
-                                    enter-active-class="transition duration-200 ease-out"
-                                    enter-from-class="transform translate-y-2 opacity-0"
-                                    enter-to-class="transform translate-y-0 opacity-100"
-                                    leave-active-class="transition duration-150 ease-in"
-                                    leave-from-class="transform translate-y-0 opacity-100"
-                                    leave-to-class="transform translate-y-2 opacity-0"
-                                >
-                                    <div
-                                        v-if="dropdownStates[link.path]"
-                                        class="absolute top-full right-0 z-50 mt-2 w-48 overflow-hidden rounded-xl bg-(--md-sys-color-surface-container) p-1.5 shadow-lg ring-1 ring-black/5"
-                                    >
+                                <template #trigger>
+                                    <div class="flex items-center">
                                         <NuxtLink
-                                            v-for="child in (
-                                                link as NavLinkWithChildren
-                                            ).children"
-                                            :key="child.path"
-                                            :to="child.path"
-                                            class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
+                                            :to="link.defaultPath || link.path"
+                                            class="nav-link-block"
                                             :class="[
-                                                route.path === child.path
-                                                    ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
-                                                    : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                                isActive(link)
+                                                    ? 'active-link'
+                                                    : 'text-(--md-sys-color-on-surface-variant)',
                                             ]"
-                                            @click="closeDropdown(link.path)"
                                         >
-                                            {{ t(child.label) }}
+                                            <span
+                                                class="relative z-10 flex items-center font-bold"
+                                            >
+                                                <component
+                                                    :is="iconMap[link.path]"
+                                                    v-if="iconMap[link.path]"
+                                                    class="mr-1.5 h-5 w-5"
+                                                />
+                                                {{ t(link.label) }}
+                                            </span>
                                         </NuxtLink>
+
+                                        <button
+                                            @click.stop="
+                                                moreOpen = false;
+                                                toggleDropdown(link.path);
+                                            "
+                                            class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                                            :class="{
+                                                'rotate-180':
+                                                    dropdownStates[link.path],
+                                            }"
+                                            type="button"
+                                            aria-label="子菜单"
+                                        >
+                                            <svg
+                                                class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant) transition-transform"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M19 9l-7 7-7-7"
+                                                ></path>
+                                            </svg>
+                                        </button>
                                     </div>
-                                </transition>
-                            </div>
+                                </template>
+
+                                <template #menu>
+                                    <NuxtLink
+                                        v-for="child in (
+                                            link as NavLinkWithChildren
+                                        ).children"
+                                        :key="child.path"
+                                        :to="child.path"
+                                        class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
+                                        :class="[
+                                            route.path === child.path
+                                                ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
+                                                : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                        ]"
+                                        @click="closeDropdown(link.path)"
+                                    >
+                                        {{ t(child.label) }}
+                                    </NuxtLink>
+                                </template>
+                            </AnzuDropdown>
 
                             <NuxtLink
                                 v-else
@@ -262,107 +248,48 @@
                                 </span>
                             </NuxtLink>
                         </template>
-                        <div
+                        <AnzuDropdown
                             v-if="overflowLinks.length"
-                            class="relative"
+                            v-model="moreOpen"
+                            width-class="w-56"
+                            panel-class="p-1.5"
                             @mouseenter="closeAllDropdowns()"
                         >
-                            <button
-                                type="button"
-                                class="nav-link-block"
-                                :class="
-                                    moreOpen
-                                        ? 'active-link'
-                                        : 'text-(--md-sys-color-on-surface-variant)'
-                                "
-                                @click.stop="moreOpen = !moreOpen"
-                                aria-label="更多菜单"
-                            >
-                                <span
-                                    class="relative z-10 flex items-center font-bold"
+                            <template #trigger>
+                                <button
+                                    type="button"
+                                    class="nav-link-block"
+                                    :class="
+                                        moreOpen
+                                            ? 'active-link'
+                                            : 'text-(--md-sys-color-on-surface-variant)'
+                                    "
+                                    @click.stop="moreOpen = !moreOpen"
+                                    aria-label="更多菜单"
                                 >
-                                    <EllipsisHorizontalIcon
-                                        class="mr-1.5 h-5 w-5"
-                                    />
-                                    {{ t("common.actions.more") }}
-                                </span>
-                            </button>
-
-                            <transition
-                                enter-active-class="transition duration-200 ease-out"
-                                enter-from-class="transform translate-y-2 opacity-0"
-                                enter-to-class="transform translate-y-0 opacity-100"
-                                leave-active-class="transition duration-150 ease-in"
-                                leave-from-class="transform translate-y-0 opacity-100"
-                                leave-to-class="transform translate-y-2 opacity-0"
-                            >
-                                <div
-                                    v-if="moreOpen"
-                                    class="absolute top-full right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl bg-(--md-sys-color-surface-container) p-1.5 shadow-lg ring-1 ring-black/5"
-                                >
-                                    <template
-                                        v-for="link in overflowLinks"
-                                        :key="`more-${link.path}`"
+                                    <span
+                                        class="relative z-10 flex items-center font-bold"
                                     >
-                                        <div
-                                            v-if="'children' in link"
-                                            class="p-1"
-                                        >
-                                            <NuxtLink
-                                                :to="
-                                                    link.defaultPath ||
-                                                    link.path
-                                                "
-                                                class="block rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200"
-                                                :class="[
-                                                    isActive(link)
-                                                        ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
-                                                        : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
-                                                ]"
-                                                @click="moreOpen = false"
-                                            >
-                                                <span class="flex items-center">
-                                                    <component
-                                                        :is="iconMap[link.path]"
-                                                        v-if="
-                                                            iconMap[link.path]
-                                                        "
-                                                        class="mr-2 h-5 w-5"
-                                                    />
-                                                    {{ t(link.label) }}
-                                                </span>
-                                            </NuxtLink>
+                                        <EllipsisHorizontalIcon
+                                            class="mr-1.5 h-5 w-5"
+                                        />
+                                        {{ t("common.actions.more") }}
+                                    </span>
+                                </button>
+                            </template>
 
-                                            <div
-                                                class="mt-1 border-l border-(--md-sys-color-outline-variant)/50 pl-2"
-                                            >
-                                                <NuxtLink
-                                                    v-for="child in (
-                                                        link as NavLinkWithChildren
-                                                    ).children"
-                                                    :key="child.path"
-                                                    :to="child.path"
-                                                    class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
-                                                    :class="[
-                                                        route.path ===
-                                                        child.path
-                                                            ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
-                                                            : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
-                                                    ]"
-                                                    @click="moreOpen = false"
-                                                >
-                                                    {{ t(child.label) }}
-                                                </NuxtLink>
-                                            </div>
-                                        </div>
-
+                            <template #menu>
+                                <template
+                                    v-for="link in overflowLinks"
+                                    :key="`more-${link.path}`"
+                                >
+                                    <div v-if="'children' in link" class="p-1">
                                         <NuxtLink
-                                            v-else
-                                            :to="link.path"
-                                            class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
+                                            :to="link.defaultPath || link.path"
+                                            class="block rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200"
                                             :class="[
                                                 isActive(link)
-                                                    ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
+                                                    ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
                                                     : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
                                             ]"
                                             @click="moreOpen = false"
@@ -376,10 +303,52 @@
                                                 {{ t(link.label) }}
                                             </span>
                                         </NuxtLink>
-                                    </template>
-                                </div>
-                            </transition>
-                        </div>
+
+                                        <div
+                                            class="mt-1 border-l border-(--md-sys-color-outline-variant)/50 pl-2"
+                                        >
+                                            <NuxtLink
+                                                v-for="child in (
+                                                    link as NavLinkWithChildren
+                                                ).children"
+                                                :key="child.path"
+                                                :to="child.path"
+                                                class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
+                                                :class="[
+                                                    route.path === child.path
+                                                        ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
+                                                        : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                                ]"
+                                                @click="moreOpen = false"
+                                            >
+                                                {{ t(child.label) }}
+                                            </NuxtLink>
+                                        </div>
+                                    </div>
+
+                                    <NuxtLink
+                                        v-else
+                                        :to="link.path"
+                                        class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
+                                        :class="[
+                                            isActive(link)
+                                                ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
+                                                : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                        ]"
+                                        @click="moreOpen = false"
+                                    >
+                                        <span class="flex items-center">
+                                            <component
+                                                :is="iconMap[link.path]"
+                                                v-if="iconMap[link.path]"
+                                                class="mr-2 h-5 w-5"
+                                            />
+                                            {{ t(link.label) }}
+                                        </span>
+                                    </NuxtLink>
+                                </template>
+                            </template>
+                        </AnzuDropdown>
                     </div>
                     <div
                         v-if="
@@ -410,9 +379,8 @@
                 <div
                     class="ml-2 flex min-w-0 items-center gap-1 sm:ml-4 sm:gap-2"
                 >
-                    <ThemeColorPicker class="shrink-0" />
-                    <ToggleTheme class="shrink-0"></ToggleTheme>
-                    <ToggleLocale class="shrink-0"></ToggleLocale>
+                    <ToggleTheme class="shrink-0" />
+                    <ToggleLocale class="shrink-0" />
                     <button
                         class="relative ml-1 shrink-0 rounded-full p-2 text-(--md-sys-color-on-surface) transition-colors hover:bg-(--md-sys-color-surface-container-high) focus:outline-none md:hidden"
                         aria-label="打开菜单"
@@ -555,7 +523,8 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from "vue";
 import ToggleTheme from "./ToggleTheme.vue";
-import ThemeColorPicker from "./ThemeColorPicker.vue";
+import AnzuDropdown from "@/components/AnzuDropdown.vue";
+import { useClickAway } from "@/composables/useClickAway";
 import {
     Bars3Icon,
     XMarkIcon,
@@ -575,7 +544,6 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useDropdownController } from "~/composables/useDropdownController";
 import ToggleLocale from "./ToggleLocale.vue";
-import { useColorPalette } from "@/composables/useColorPalette";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -583,7 +551,6 @@ const navTitleBox = useState("navTitleBox", () => ({
     title: "",
     subtitle: "",
 }));
-const { currentTheme } = useColorPalette();
 
 const navLinks = useNavLinks();
 
@@ -671,6 +638,25 @@ const showArticleTitle = ref(false);
 const lastScrollY = ref(0);
 const scrollDirection = ref<"up" | "down">("up");
 
+const anyPopupOpen = computed(() => {
+    const desktopAny = Object.values(dropdownStates).some(Boolean);
+    const mobileAny = Object.values(mobileDropdownStates).some(Boolean);
+    return isMenuOpen.value || moreOpen.value || desktopAny || mobileAny;
+});
+
+useClickAway(
+    headerRef,
+    () => {
+        isMenuOpen.value = false;
+        moreOpen.value = false;
+        closeAllDropdowns();
+        closeAllMobileDropdowns();
+    },
+    {
+        enabled: () => anyPopupOpen.value,
+    },
+);
+
 const headerStyles = computed(() => {
     const bgEffect = isMenuOpen.value || opacity.value > 0.2;
     const alphaValue = isMenuOpen.value ? 0.95 : Math.min(opacity.value, 0.8);
@@ -743,19 +729,8 @@ const closeMenu = () => {
     closeAllMobileDropdowns();
 };
 
-const handleClickOutside = (event: MouseEvent) => {
-    if (headerRef.value && !headerRef.value.contains(event.target as Node)) {
-        isMenuOpen.value = false;
-        moreOpen.value = false;
-
-        closeAllDropdowns();
-        closeAllMobileDropdowns();
-    }
-};
-
 onMounted(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-    document.addEventListener("click", handleClickOutside);
 
     window.addEventListener("resize", scheduleRecompute);
 
@@ -779,7 +754,6 @@ onMounted(() => {
 
 onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
-    document.removeEventListener("click", handleClickOutside);
 
     window.removeEventListener("resize", scheduleRecompute);
     ro?.disconnect();
@@ -799,12 +773,12 @@ header {
     @apply before:absolute before:inset-0 before:z-[-1] before:scale-[0.8] before:rounded-lg before:opacity-0 before:backdrop-blur before:transition-all before:duration-300 before:ease-out;
     @apply before:origin-center;
     @apply hover:before:scale-100 hover:before:opacity-100;
-    @apply before:bg-(--md-sys-color-primary-container)/40 dark:before:bg-[var(--md-sys-color-primary-container)]/70;
-    @apply hover:text-[var(--md-sys-color-primary)];
+    @apply before:bg-(--md-sys-color-primary-container)/40 dark:before:bg-(--md-sys-color-primary-container)/70;
+    @apply hover:text-(--md-sys-color-primary);
 }
 
 .active-link {
-    @apply bg-[var(--md-sys-color-secondary-container)]/50 font-semibold text-(--md-sys-color-primary);
+    @apply bg-(--md-sys-color-secondary-container)/50 font-semibold text-(--md-sys-color-primary);
 }
 
 .nav-link-block span {

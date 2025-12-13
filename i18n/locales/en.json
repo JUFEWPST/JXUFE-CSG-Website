@@ -189,6 +189,13 @@
         "contact": "Contact Us",
         "address": "Jiangxi University of Finance and Economics, Mailu Campus"
     },
+    "themeMenu": {
+        "tooltip": "Theme settings",
+        "title": "Theme settings",
+        "mode": "Theme mode",
+        "light": "Light",
+        "dark": "Dark"
+    },
     "themeColorPicker": {
         "tooltip": "Change theme color",
         "title": "Theme color",

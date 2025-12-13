@@ -6,7 +6,7 @@
         @mouseleave="scheduleClose"
     >
         <button
-            class="flex h-[30px] w-[30px] items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high)"
+            class="flex h-7.5 w-7.5 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high)"
             @click="toggleMenu"
             aria-label="Change language"
             :aria-expanded="isOpen"
