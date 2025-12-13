@@ -1,133 +1,182 @@
 <template>
-    <div class="error-container w-full max-w-2xl" v-if="errorData">
+    <div
+        v-if="errorData"
+        class="w-full max-w-2xl"
+    >
         <div
-            class="error-shadow overflow-hidden rounded-xl bg-white transition-all duration-500 hover:scale-[1.01]"
+            class="overflow-hidden rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) p-6 shadow-sm"
         >
-            <div class="flex items-center bg-red-400 p-6 text-white">
-                <i
-                    class="fa fa-exclamation-triangle error-glow mr-4 text-4xl"
-                ></i>
-                <div>
-                    <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold">
+            <!-- Header -->
+            <div class="flex items-start gap-4">
+                <div
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--md-sys-color-error-container) text-(--md-sys-color-on-error-container)"
+                >
+                    <ExclamationTriangleIcon class="h-6 w-6" />
+                </div>
+                <div class="min-w-0 flex-1">
+                    <h1
+                        class="text-[clamp(1.25rem,2.2vw,1.75rem)] font-bold text-(--md-sys-color-on-surface)"
+                    >
                         请求失败
                     </h1>
-                    <p class="mt-1 opacity-90">服务器返回了一个错误</p>
+                    <p class="mt-1 text-sm text-(--md-sys-color-on-surface-variant)">
+                        服务器返回了一个错误
+                    </p>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <div class="bg-error-light rounded-lg p-4">
-                        <h3
-                            class="text-error mb-2 flex items-center font-semibold"
-                        >
-                            状态码
-                        </h3>
-                        <p class="font-mono text-lg font-bold text-gray-800">
-                            {{ errorData?.status || "未知" }}
-                        </p>
-                    </div>
-                    <div class="bg-error-light rounded-lg p-4">
-                        <h3
-                            class="text-error mb-2 flex items-center font-semibold"
-                        >
-                            错误类型
-                        </h3>
-                        <p class="font-mono text-lg font-bold text-gray-800">
-                            {{ errorData?.name || "未知" }}
-                        </p>
-                    </div>
-                    <div class="bg-error-light rounded-lg p-4 md:col-span-2">
-                        <h3
-                            class="text-error mb-2 flex items-center font-semibold"
-                        >
-                            错误信息
-                        </h3>
-                        <p class="font-mono text-lg font-bold text-gray-800">
-                            {{ errorData?.message || "未知错误" }}
-                        </p>
-                    </div>
-                </div>
 
-                <div class="mt-6 rounded-lg bg-gray-50 p-4">
+            <!-- Summary blocks -->
+            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div
+                    class="rounded-lg bg-(--md-sys-color-surface-container-highest) p-4"
+                >
                     <h3
-                        class="mb-2 flex items-center font-semibold text-gray-700"
+                        class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
                     >
-                        错误详情
+                        状态码
                     </h3>
-                    <pre
-                        class="overflow-x-auto rounded bg-gray-100 p-3 font-mono text-sm text-gray-600"
+                    <p
+                        class="mt-1 font-mono text-lg font-bold text-(--md-sys-color-on-surface)"
                     >
-  {{ formattedErrorData }}
-            </pre
-                    >
+                        {{ errorData?.status || "未知" }}
+                    </p>
                 </div>
 
-                <div class="mt-6 flex items-center justify-between">
-                    <button
-                        class="flex items-center rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition-colors duration-300 hover:bg-gray-300"
-                        @click="retryRequest"
+                <div
+                    class="rounded-lg bg-(--md-sys-color-surface-container-highest) p-4"
+                >
+                    <h3
+                        class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
                     >
-                        重试
-                    </button>
-                    <div class="text-sm text-gray-500">
-                        错误发生时间: {{ errorTime }}
-                    </div>
+                        错误类型
+                    </h3>
+                    <p
+                        class="mt-1 font-mono text-lg font-bold text-(--md-sys-color-on-surface)"
+                    >
+                        {{ errorData?.name || "未知" }}
+                    </p>
+                </div>
+
+                <div
+                    class="rounded-lg bg-(--md-sys-color-surface-container-highest) p-4 sm:col-span-2"
+                >
+                    <h3
+                        class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
+                    >
+                        错误信息
+                    </h3>
+                    <p
+                        class="mt-1 font-mono text-sm font-semibold text-(--md-sys-color-on-surface) wrap-break-word"
+                    >
+                        {{ errorData?.message || "未知错误" }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <details
+                class="mt-6 rounded-lg border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-low) p-4"
+            >
+                <summary
+                    class="cursor-pointer select-none text-sm font-semibold text-(--md-sys-color-primary) outline-none"
+                >
+                    错误详情
+                </summary>
+                <pre
+                    class="mt-3 overflow-x-auto rounded-lg bg-(--md-sys-color-surface-container-highest) p-3 font-mono text-xs text-(--md-sys-color-on-surface-variant)"
+                >{{ formattedErrorData }}</pre
+                >
+            </details>
+
+            <!-- Actions -->
+            <div
+                class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+                <AnzuButton
+                    variant="tonal"
+                    @click="retryRequest"
+                >
+                    重试
+                </AnzuButton>
+                <div class="text-xs text-(--md-sys-color-on-surface-variant)">
+                    错误发生时间: {{ errorTime || "-" }}
                 </div>
             </div>
         </div>
     </div>
-    <div v-else class="p-8 text-center text-gray-500">
-        <i class="fa fa-check-circle mb-2 text-3xl text-green-500"></i>
-        <p>请求成功，没有错误发生</p>
+
+    <div
+        v-else
+        class="w-full max-w-2xl rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) p-6"
+    >
+        <div class="flex items-start gap-4">
+            <div
+                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container)"
+            >
+                <CheckCircleIcon class="h-6 w-6" />
+            </div>
+            <div class="min-w-0 flex-1">
+                <h2 class="text-lg font-bold text-(--md-sys-color-on-surface)">
+                    请求成功
+                </h2>
+                <p class="mt-1 text-sm text-(--md-sys-color-on-surface-variant)">
+                    没有错误发生
+                </p>
+            </div>
+        </div>
     </div>
 </template>
 
-<script setup>
-import { computed, ref, onMounted } from "vue";
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
+import {
+    CheckCircleIcon,
+    ExclamationTriangleIcon,
+} from "@heroicons/vue/24/outline";
 
-const props = defineProps({
-    errorData: {
-        type: Object,
-        default: null,
+import AnzuButton from "~/components/AnzuButton.vue";
+
+type UnknownError = {
+    status?: number | string;
+    name?: string;
+    message?: string;
+    [key: string]: unknown;
+};
+
+const props = defineProps<{
+    errorData: UnknownError | null;
+}>();
+
+const emit = defineEmits<{
+    (e: "retry"): void;
+}>();
+
+const errorTime = ref<string>("");
+
+watch(
+    () => props.errorData,
+    (val) => {
+        if (val) {
+            errorTime.value = new Date().toLocaleString("zh-CN", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            });
+        } else {
+            errorTime.value = "";
+        }
     },
-});
-
-const emit = defineEmits(["retry"]);
-
-const errorTime = ref("");
-
-onMounted(() => {
-    if (props.errorData) {
-        errorTime.value = new Date().toLocaleString("zh-CN", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-        });
-    }
-});
+    { immediate: true },
+);
 
 const formattedErrorData = computed(() => {
     return props.errorData ? JSON.stringify(props.errorData, null, 2) : "{}";
 });
 
-const retryRequest = () => {
+function retryRequest() {
     emit("retry");
-};
+}
 </script>
-
-<style scoped>
-.content-auto {
-    content-visibility: auto;
-}
-
-.error-shadow {
-    box-shadow: 0 4px 20px rgba(255, 77, 79, 0.15);
-}
-
-.error-glow {
-    text-shadow: 0 0 10px rgba(255, 77, 79, 0.3);
-}
-</style>
