@@ -12,16 +12,16 @@ const showMenu = ref(false);
 
 const Themes = [
     { name: "江财红 (JXUFE)", color: "#A61E33" },
-    { name: "初音未来 (Miku)", color: "#39C5BB" },
-    { name: "田园海未 (Umi)", color: "#0067C0" },
-    { name: "矢泽妮可 (Nico)", color: "#EC008C" },
-    { name: "高坂穗乃果 (Honoka)", color: "#E48F23" },
-    { name: "南小鸟 (Kotori)", color: "#97978F" },
-    { name: "星空凛 (Rin)", color: "#FCD800" },
-    { name: "小泉花阳 (Hanayo)", color: "#54AB4C" },
-    { name: "西木野真姬 (Maki)", color: "#CC2439" },
-    { name: "东条希 (Nozomi)", color: "#742D93" },
-    { name: "绚濑绘里 (Eli)", color: "#2AB2E1" },
+    { name: "Miku", color: "#39C5BB" },
+    { name: "Umi", color: "#0067C0" },
+    { name: "Nico", color: "#EC008C" },
+    { name: "Honoka", color: "#E48F23" },
+    { name: "Kotori", color: "#97978F" },
+    { name: "Rin", color: "#FCD800" },
+    { name: "Hanayo", color: "#54AB4C" },
+    { name: "Maki", color: "#CC2439" },
+    { name: "Nozomi", color: "#742D93" },
+    { name: "Eli", color: "#2AB2E1" },
 ];
 
 const updateColor = (event: Event) => {
