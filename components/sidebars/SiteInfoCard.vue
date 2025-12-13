@@ -16,9 +16,9 @@
             </div>
 
             <ul class="space-y-2">
-                <li class="flex items-start gap-2">
+                <li class="flex items-center gap-2">
                     <div
-                        class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
                     >
                         <MapPinIcon
                             class="h-4 w-4 text-(--md-sys-color-on-secondary-container)"
@@ -31,9 +31,9 @@
                     </span>
                 </li>
 
-                <li class="flex items-start gap-2">
+                <li class="flex items-center gap-2">
                     <div
-                        class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
                     >
                         <EnvelopeIcon
                             class="h-4 w-4 text-(--md-sys-color-on-secondary-container)"
