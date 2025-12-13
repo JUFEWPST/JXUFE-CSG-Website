@@ -199,7 +199,11 @@ const scheduleClose = () => {
 };
 
 const toggleMenu = () => {
-    isOpen.value ? closeNow() : openMenu();
+    if (isOpen.value) {
+        closeNow();
+    } else {
+        openMenu();
+    }
 };
 
 const handleMouseEnter = () => {
