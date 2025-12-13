@@ -24,7 +24,7 @@
         <div class="flex flex-1 flex-col min-w-0">
             <div class="flex flex-wrap items-center gap-2 mb-1">
                 <h3 class="text-lg font-bold text-(--md-sys-color-on-surface)">
-                    {{ member.display || "Member" }}
+                    {{ member.display || "" }}
                 </h3>
                 <span class="inline-flex items-center rounded-md bg-(--md-sys-color-primary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)">
                     {{ member.position }}
@@ -45,7 +45,7 @@ import type { Member } from "~/data/membersData";
 const props = defineProps<{ member: Member }>();
 const nameInitial = computed(() => {
     if (!props.member.display) {
-        return "○";
+        return "";
     }
     return props.member.display.charAt(0).toUpperCase() || "";
 });
