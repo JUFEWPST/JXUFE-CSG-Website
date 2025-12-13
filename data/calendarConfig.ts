@@ -62,7 +62,7 @@ export const semesterCalendarConfigs: SemesterCalendarConfig[] = [
 
       // 国庆调休上课
       { date: '2025-09-28', type: 'workday', name: '调休上课' },
-      { date: '2025-10-18', type: 'workday', name: '调休上课' },
+      { date: '2025-10-11', type: 'workday', name: '调休上课' },
 
       // 运动会
       { date: '2025-10-16', type: 'event', name: '校运会' },
