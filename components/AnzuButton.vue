@@ -189,7 +189,7 @@ watch(
 @reference "tailwindcss";
 
 .anzu-button {
-    @apply relative inline-flex h-10 min-w-[64px] cursor-pointer items-center justify-center gap-2 overflow-hidden px-6 text-sm font-medium transition-all duration-200 outline-none select-none;
+    @apply relative inline-flex h-10 min-w-16 cursor-pointer items-center justify-center gap-2 overflow-hidden px-6 text-sm font-medium transition-all duration-200 outline-none select-none;
     text-decoration: none;
     border-radius: 0.5rem;
 }
@@ -266,7 +266,7 @@ watch(
 }
 
 .anzu-button__icon {
-    @apply flex-shrink-0;
+    @apply shrink-0;
 }
 
 .anzu-button--in-group-horizontal {
