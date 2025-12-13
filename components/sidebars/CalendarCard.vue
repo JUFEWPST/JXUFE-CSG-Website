@@ -1,5 +1,8 @@
 <template>
-    <div class="flex flex-col gap-3">
+    <div
+        v-if="isClientReady"
+        class="flex flex-col gap-3"
+    >
         <!-- Header: 当前月份与切换 -->
         <div class="flex items-center justify-between">
             <div class="flex flex-col items-start">
@@ -107,7 +110,7 @@
                     {{ t("calendar.todayPrefix") }}{{ todayStatus.label }}
                 </span>
                 <span class="text-[11px] text-(--md-sys-color-primary)">
-                    {{ formatDateDisplay(today) }}
+                    {{ today ? formatDateDisplay(today) : "--" }}
                 </span>
             </div>
             <div v-if="todayStatus.detail" class="mt-0.5 truncate text-[11px]">
@@ -118,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import {
     calendarConfig as defaultCalendarConfig,
@@ -148,10 +151,21 @@ const config = computed<CalendarConfig>(
     () => props.config ?? defaultCalendarConfig,
 );
 
+// 仅在客户端 mounted 后初始化，避免 SSR 使用服务端时间导致不一致
+const isClientReady = ref(false);
+const today = ref<Date | null>(null);
+
 // 当前展示的年月
-const today = new Date();
-const currentYear = ref(today.getFullYear());
-const currentMonth = ref(today.getMonth()); // 0-11
+const currentYear = ref(0);
+const currentMonth = ref(0); // 0-11
+
+onMounted(() => {
+    const now = new Date();
+    today.value = now;
+    currentYear.value = now.getFullYear();
+    currentMonth.value = now.getMonth();
+    isClientReady.value = true;
+});
 
 function formatDateDisplay(d: Date): string {
     const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -205,6 +219,7 @@ function isInExamWeeks(
 function buildMonthCells(
     year: number,
     month: number,
+    todayStr: string,
 ): (CalendarDayMeta | null)[] {
     const firstDay = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -219,7 +234,6 @@ function buildMonthCells(
         cells.push(null);
     }
 
-    const todayStr = formatDate(today);
 
     for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month, d);
@@ -255,7 +269,7 @@ function buildMonthCells(
 
         cells.push({
             date,
-            isToday: dateStr === todayStr,
+            isToday: !!todayStr && dateStr === todayStr,
             isWeekend,
             isHoliday,
             isOfficialHoliday,
@@ -272,9 +286,16 @@ function buildMonthCells(
     return cells;
 }
 
-const calendarCells = computed(() =>
-    buildMonthCells(currentYear.value, currentMonth.value),
-);
+const todayStr = computed(() => (today.value ? formatDate(today.value) : ""));
+
+const calendarCells = computed(() => {
+    if (!isClientReady.value) {
+        // 保持 6x7 栅格占位，避免布局跳动
+        return Array.from({ length: 42 }, () => null) as (CalendarDayMeta | null)[];
+    }
+
+    return buildMonthCells(currentYear.value, currentMonth.value, todayStr.value);
+});
 
 interface TodayStatus {
     label: string;
@@ -282,9 +303,13 @@ interface TodayStatus {
 }
 
 const todayStatus = computed<TodayStatus>(() => {
-    const todayStr = formatDate(today);
-    const overrides = overridesMap.value[todayStr] ?? [];
-    const jsDay = today.getDay();
+    if (!today.value) {
+        return { label: "", detail: "" };
+    }
+
+    const todayStrValue = formatDate(today.value);
+    const overrides = overridesMap.value[todayStrValue] ?? [];
+    const jsDay = today.value.getDay();
     const isWeekend = jsDay === 0 || jsDay === 6;
 
     let isHoliday = false;
@@ -308,7 +333,7 @@ const todayStatus = computed<TodayStatus>(() => {
     }
 
     const events = overrides.filter((o) => o.type === "event");
-    const inExamWeek = isInExamWeeks(todayStr, config.value.examWeeks);
+    const inExamWeek = isInExamWeeks(todayStrValue, config.value.examWeeks);
 
     const examWeeks = config.value.examWeeks ?? [];
     const lastExamEnd = examWeeks.at(-1)?.end;
@@ -320,7 +345,7 @@ const todayStatus = computed<TodayStatus>(() => {
         label = t("calendar.status.holiday");
     } else if (inExamWeek) {
         label = t("calendar.status.examWeekClass");
-    } else if (lastExamEnd && todayStr > lastExamEnd) {
+    } else if (lastExamEnd && todayStrValue > lastExamEnd) {
         label = t("calendar.status.vacation");
     } else if (isWorkdayOverride) {
         label = t("calendar.status.workdayAdjusted");
