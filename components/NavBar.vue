@@ -142,7 +142,7 @@
                         <template v-for="link in visibleLinks" :key="link.path">
                             <AnzuDropdown
                                 v-if="'children' in link"
-                                :model-value="dropdownStates[link.path]"
+                                :model-value="!!dropdownStates[link.path]"
                                 @update:modelValue="
                                     (v) => (dropdownStates[link.path] = !!v)
                                 "
@@ -183,7 +183,7 @@
                                             class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-(--md-sys-color-surface-container-high)"
                                             :class="{
                                                 'rotate-180':
-                                                    dropdownStates[link.path],
+                                                    !!dropdownStates[link.path],
                                             }"
                                             type="button"
                                             aria-label="子菜单"
@@ -382,15 +382,19 @@
                     <ToggleTheme class="shrink-0" />
                     <ToggleLocale class="shrink-0" />
                     <button
-                        class="relative ml-1 shrink-0 rounded-full p-2 text-(--md-sys-color-on-surface) transition-colors hover:bg-(--md-sys-color-surface-container-high) focus:outline-none md:hidden"
+                        class="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high) md:hidden"
                         aria-label="打开菜单"
                         @click.stop="toggleMenu"
+                        type="button"
                     >
                         <Bars3Icon
                             v-if="!isMenuOpen"
-                            class="h-6 w-6"
-                        ></Bars3Icon>
-                        <XMarkIcon v-else class="h-6 w-6"></XMarkIcon>
+                            class="box-border p-1"
+                        />
+                        <XMarkIcon
+                            v-else
+                            class="box-border p-1"
+                        />
                     </button>
                 </div>
             </nav>
