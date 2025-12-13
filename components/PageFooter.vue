@@ -12,7 +12,7 @@
                         ? `2025`
                         : `2025-${new Date().getFullYear()}`
                 }}
-                <span class="font-medium text-(--md-sys-color-primary)">
+                <span class="font-bold text-(--md-sys-color-primary)">
                     {{ t("meta.fullName") }}
                 </span>
                 All Rights Reserved.
