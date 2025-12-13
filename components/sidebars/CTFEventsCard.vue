@@ -20,10 +20,7 @@
         </div>
 
         <div v-if="loading" class="flex items-center justify-center py-4">
-            <AnimationLoadingSpinner
-                size="md"
-                color="[var(--md-sys-color-primary)]"
-            />
+            <AnzuProgressRing :size="48" status="loading" />
         </div>
 
         <div v-else-if="error" class="text-xs text-(--md-sys-color-error)">
@@ -105,7 +102,7 @@ import {
     PlayCircleIcon,
     QuestionMarkCircleIcon,
 } from "@heroicons/vue/24/outline";
-import AnimationLoadingSpinner from "@/components/AnimationLoadingSpinner.vue";
+import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
 
 const { t } = useI18n();
 

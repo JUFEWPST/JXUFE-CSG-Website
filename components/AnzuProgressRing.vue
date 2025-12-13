@@ -1,48 +1,78 @@
 <template>
-    <div class="relative inline-block">
+    <div
+        class="relative inline-flex items-center justify-center"
+        :style="{ width: `${size}px`, height: `${size}px` }"
+        role="progressbar"
+        :aria-valuenow="status === 'loading' ? undefined : effectiveProgress"
+        :aria-valuemin="0"
+        :aria-valuemax="100"
+    >
         <svg
-            class="progress-ring"
-            :width="size"
-            :height="size"
-            :style="svgStyle"
+            v-if="status === 'loading'"
+            class="animate-spin-slow absolute inset-0 -rotate-90 origin-center"
+            :viewBox="`0 0 ${size} ${size}`"
         >
             <circle
-                class="progress-ring__circle-bg"
-                :stroke-width="strokeWidth"
-                :cx="radius"
-                :cy="radius"
+                class="animate-progress-material"
+                :cx="size / 2"
+                :cy="size / 2"
                 :r="normalizedRadius"
-                fill="transparent"
-                :style="bgCircleStyle"
-            />
-            <circle
-                ref="progressCircle"
-                class="progress-ring__circle"
+                fill="none"
+                :stroke="props.primaryColor"
                 :stroke-width="strokeWidth"
                 stroke-linecap="round"
-                :cx="radius"
-                :cy="radius"
-                :r="normalizedRadius"
-                fill="transparent"
-                :style="circleStyle"
-                :class="{ 'animate-spin': props.status === 'loading' }"
             />
         </svg>
-        <div class="absolute inset-0 flex items-center justify-center">
-            <div class="text-center">
-                <div
-                    v-if="showContent && statusIcon"
-                    class="progress-content"
-                    :style="contentStyle"
-                >
-                    <slot name="content">
+        <svg
+            v-else
+            class="-rotate-90"
+            :width="size"
+            :height="size"
+            :viewBox="`0 0 ${size} ${size}`"
+        >
+            <circle
+                :cx="size / 2"
+                :cy="size / 2"
+                :r="normalizedRadius"
+                fill="none"
+                :stroke="`${props.primaryColor}20`"
+                :stroke-width="strokeWidth"
+            />
+            <circle
+                class="transition-all duration-500 ease-out"
+                :cx="size / 2"
+                :cy="size / 2"
+                :r="normalizedRadius"
+                fill="none"
+                :stroke="props.primaryColor"
+                :stroke-width="strokeWidth"
+                stroke-linecap="round"
+                :stroke-dasharray="circumference"
+                :stroke-dashoffset="dashOffset"
+            />
+        </svg>
+        <div
+            v-if="showContent && (status !== 'loading' || forceContent)"
+            class="absolute inset-0 flex items-center justify-center"
+        >
+            <transition
+                enter-active-class="transition-opacity duration-300"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition-opacity duration-300"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+                mode="out-in"
+            >
+                <div :key="status" class="flex items-center justify-center">
+                    <slot name="content" :status="status" :progress="progress">
                         <svg
-                            class="inline-block transition-opacity duration-300"
+                            v-if="statusIcon"
                             :width="iconSize"
                             :height="iconSize"
                             fill="none"
                             :stroke="props.primaryColor"
-                            stroke-width="2"
+                            stroke-width="2.5"
                             viewBox="0 0 24 24"
                         >
                             <path
@@ -51,14 +81,22 @@
                                 stroke-linejoin="round"
                             />
                         </svg>
+                        <span
+                            v-else-if="status === 'default'"
+                            class="text-xs font-medium"
+                            :style="{ color: props.primaryColor }"
+                        >
+                            {{ Math.round(progress) }}%
+                        </span>
                     </slot>
                 </div>
-            </div>
+            </transition>
         </div>
     </div>
 </template>
+
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
     progress: {
@@ -68,21 +106,13 @@ const props = defineProps({
     },
     size: {
         type: Number,
-        default: 50,
+        default: 48,
     },
     status: {
         type: String,
         default: "default",
         validator: (value) =>
             ["default", "success", "error", "loading"].includes(value),
-    },
-    initialStatus: {
-        type: String,
-        default: "default",
-    },
-    animationDuration: {
-        type: Number,
-        default: 800,
     },
     strokeWidth: {
         type: Number,
@@ -94,106 +124,73 @@ const props = defineProps({
     },
     primaryColor: {
         type: String,
-        default: "#3B82F6",
+        default: "var(--md-sys-color-primary)",
+    },
+    forceContent: {
+        type: Boolean,
+        default: false,
     },
 });
 
-const emit = defineEmits(["statusChange", "animationComplete"]);
-
-const progressCircle = ref(null);
-
-const radius = computed(() => props.size / 2);
-const normalizedRadius = computed(() =>
-    Math.max(props.size / 2 - props.strokeWidth, props.size / 2.5),
-);
+const normalizedRadius = computed(() => props.size / 2 - props.strokeWidth / 2);
 const circumference = computed(() => 2 * Math.PI * normalizedRadius.value);
-const effectiveProgress = computed(() =>
-    props.status === "success"
-        ? 100
-        : props.status === "loading"
-          ? 60
-          : props.progress,
-);
-const iconSize = computed(() => Math.max(props.size / 2.5, 24));
-const svgStyle = computed(() => ({
-    width: `${props.size}px`,
-    height: `${props.size}px`,
-    minWidth: "24px",
-}));
 
-const circleStyle = computed(() => ({
-    stroke: props.primaryColor,
-    strokeDasharray:
-        props.status === "loading"
-            ? `${circumference.value * 0.6} ${circumference.value}`
-            : `${circumference.value} ${circumference.value}`,
-    strokeDashoffset:
-        props.status === "loading"
-            ? 0
-            : circumference.value * (1 - effectiveProgress.value / 100),
-    transition:
-        props.status === "loading"
-            ? "none"
-            : `stroke-dashoffset ${props.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), stroke ${props.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-    transform: props.status === "loading" ? "none" : `rotate(-90deg)`,
-    transformOrigin: "50% 50%",
-}));
+const effectiveProgress = computed(() => {
+    if (props.status === "success") return 100;
+    if (props.status === "error") return 100; 
+    return props.progress;
+});
 
-const bgCircleStyle = computed(() => ({
-    stroke: `${props.primaryColor}20`,
-    transition: `stroke ${props.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-}));
+const dashOffset = computed(() => {
+    return circumference.value * (1 - effectiveProgress.value / 100);
+});
 
-const contentStyle = computed(() => ({
-    transition: `opacity ${props.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), color ${props.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-}));
+const iconSize = computed(() => Math.max(props.size * 0.5, 20));
 
 const statusIcon = computed(() => {
-    return {
-        default: "",
-        success: "M20 6L9 17l-5-5",
-        error: "M6 18 18 6M6 6l12 12",
-        loading: "",
-    }[props.status];
+    switch (props.status) {
+        case "success":
+            return "M5 13l4 4L19 7";
+        case "error":
+            return "M6 18L18 6M6 6l12 12";
+        default:
+            return null;
+    }
 });
-
-watch(
-    () => props.status,
-    (newStatus) => {
-        emit("statusChange", newStatus);
-    },
-);
 </script>
+
 <style scoped>
 @reference "tailwindcss";
 
-.progress-ring {
-    @apply block bg-transparent;
+.animate-spin-slow {
+    animation: rotation 2s linear infinite;
 }
 
-.progress-ring__circle {
-    @apply transition-all duration-300;
+.animate-progress-material {
+    animation: dash 1.5s ease-in-out infinite;
 }
 
-.progress-ring__circle-bg {
-    @apply transition-colors duration-300;
-}
-
-.progress-content {
-    @apply font-sans transition-all duration-300;
-}
-
-.animate-spin {
-    animation: spin 1.2s linear infinite;
-}
-
-@keyframes spin {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
     }
 }
 </style>

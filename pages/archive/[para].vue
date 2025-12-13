@@ -4,10 +4,7 @@
     >
         <div class="box-border min-h-1/2">
             <div v-if="loading" class="flex h-1/2 items-center justify-center">
-                <AnimationLoadingSpinner
-                    size="xl2"
-                    color="[var(--anzu-accent-hover)]"
-                ></AnimationLoadingSpinner>
+                <AnzuProgressRing :size="80" status="loading" />
             </div>
             <div v-if="error" class="m-2 flex justify-center">
                 <ErrorDisplay :error-data="error"></ErrorDisplay>

@@ -84,10 +84,7 @@
 
                 <div class="space-y-4 sm:space-y-5">
                     <div v-if="loading" class="flex justify-center py-10">
-                        <AnimationLoadingSpinner
-                            size="xl2"
-                            color="[var(--md-sys-color-primary)]"
-                        />
+                        <AnzuProgressRing :size="80" status="loading" />
                     </div>
 
                     <div v-else-if="error">

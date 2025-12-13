@@ -4,10 +4,7 @@
     >
         <div class="flex flex-col items-center justify-center">
             <div v-if="loading" class="py-8 text-center">
-                <AnimationLoadingSpinner
-                    size="xl2"
-                    color="[var(--anzu-accent-hover)]"
-                ></AnimationLoadingSpinner>
+                <AnzuProgressRing :size="80" status="loading" />
             </div>
             <div v-else-if="error">
                 <ErrorDisplay :errorData="error"></ErrorDisplay>
