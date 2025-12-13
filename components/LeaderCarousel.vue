@@ -1,10 +1,12 @@
 <template>
     <BaseCarousel :item-count="leaders.length">
-        <LeaderCard
+        <div
             v-for="(leader, index) in leaders"
             :key="index"
-            :leader="leader"
-        />
+            class="w-full shrink-0 pb-8 sm:px-12"
+        >
+            <LeaderCard :leader="leader" />
+        </div>
     </BaseCarousel>
 </template>
 

@@ -132,7 +132,8 @@
                 },
                 "title": "歴代責任者",
                 "dataCollectTip": "データ収集中です。ギルド関係者の方は、当方の収集表へのご記入にご協力ください",
-                "archiveInvite": "歴代メンバーアーカイブ共同構築への招待"
+                "archiveInvite": "歴代メンバーアーカイブ共同構築への招待",
+                "leaderCardTitle": "{year} 期会長"
             },
             "members": {
                 "meta": {

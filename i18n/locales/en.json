@@ -132,7 +132,8 @@
                 },
                 "title": "Past Leaders",
                 "dataCollectTip": "Data is still being collected. If you are a related member of the guild, please help by filling out our collection form.",
-                "archiveInvite": "Invitation to Co-build Past Members Archive"
+                "archiveInvite": "Invitation to Co-build Past Members Archive",
+                "leaderCardTitle": "{year} Cohort President"
             },
             "members": {
                 "meta": {
