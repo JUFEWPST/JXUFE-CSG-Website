@@ -180,10 +180,13 @@ function getOverridesMap(
     overrides: CalendarOverride[],
 ): Record<string, CalendarOverride[]> {
     const map: Record<string, CalendarOverride[]> = {};
+
     for (const o of overrides) {
-        if (!map[o.date]) map[o.date] = [];
-        map[o.date].push(o);
+        const key = o.date;
+        const list = map[key] ?? (map[key] = []);
+        list.push(o);
     }
+
     return map;
 }
 
@@ -308,9 +311,7 @@ const todayStatus = computed<TodayStatus>(() => {
     const inExamWeek = isInExamWeeks(todayStr, config.value.examWeeks);
 
     const examWeeks = config.value.examWeeks ?? [];
-    const lastExamEnd = examWeeks.length
-        ? examWeeks[examWeeks.length - 1].end
-        : undefined;
+    const lastExamEnd = examWeeks.at(-1)?.end;
 
     let label = "";
     const tags: string[] = [];
@@ -353,7 +354,7 @@ function dayClasses(day: CalendarDayMeta): string {
         );
     } else if (day.isHoliday) {
         classes.push(
-            "bg-(--md-sys-color-primary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-on-primary-container)",
+            "bg-(--md-sys-color-primary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-primary)",
         );
     } else if (day.isWorkdayOverride) {
         classes.push(
