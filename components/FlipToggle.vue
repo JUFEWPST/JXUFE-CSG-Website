@@ -1,6 +1,10 @@
 <template>
     <div class="flip-container" :style="containerStyle">
-        <div class="flipper" :class="{ 'flipped': isFlipped }" @click="handleClick">
+        <div
+            class="flipper"
+            :class="{ flipped: isFlipped }"
+            @click="handleClick"
+        >
             <div class="front">
                 <slot name="front"></slot>
             </div>
@@ -15,28 +19,28 @@
 const props = defineProps({
     duration: {
         type: Number,
-        default: 600
+        default: 600,
     },
     clickable: {
         type: Boolean,
-        default: true
-    }
+        default: true,
+    },
 });
 
-const emit = defineEmits(['flip', 'update:modelValue']);
+const emit = defineEmits(["flip", "update:modelValue"]);
 
 const isFlipped = ref(false);
 
 const containerStyle = computed(() => ({
-    cursor: props.clickable ? 'pointer' : 'auto'
+    cursor: props.clickable ? "pointer" : "auto",
 }));
 
 const transitionDuration = computed(() => `${props.duration}ms`);
 
 const toggleFlip = () => {
     isFlipped.value = !isFlipped.value;
-    emit('flip', isFlipped.value);
-    emit('update:modelValue', isFlipped.value);
+    emit("flip", isFlipped.value);
+    emit("update:modelValue", isFlipped.value);
 };
 
 const handleClick = () => {
@@ -46,7 +50,7 @@ const handleClick = () => {
 };
 
 defineExpose({
-    toggleFlip
+    toggleFlip,
 });
 </script>
 
@@ -83,4 +87,3 @@ defineExpose({
     transform: rotateY(180deg);
 }
 </style>
-

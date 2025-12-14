@@ -1,7 +1,16 @@
 <template>
-    <div class="w-full rounded-xl flex flex-col p-4 my-1" :class="bgColorClass">
-        <div v-if="titleText" class="font-bold mb-2 flex items-start">
-            <component :is="iconComponent" class="w-5 h-5 mt-0.5 mr-2 flex-shrink-0" :class="iconColorClass" />
+    <div
+        class="my-1 flex w-full flex-col rounded-xl bg-(--md-sys-color-surface-container) p-4 text-(--md-sys-color-on-surface-variant)"
+    >
+        <div
+            v-if="titleText"
+            class="mb-2 flex items-start font-bold text-(--md-sys-color-on-surface)"
+        >
+            <component
+                :is="iconComponent"
+                class="mt-0.5 mr-2 h-5 w-5 shrink-0"
+                :class="iconColorClass"
+            />
             {{ titleText }}
         </div>
         <div>
@@ -11,17 +20,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 import {
     CheckCircleIcon,
     ExclamationTriangleIcon,
     InformationCircleIcon,
     XCircleIcon,
-} from '@heroicons/vue/24/outline';
-const { t } = useI18n()
+} from "@heroicons/vue/24/outline";
+
+const { t } = useI18n();
+
 interface AlertInfo {
-    title?: string
-    type?: 'succ' | 'warn' | 'info' | 'error' | 'plain'
+    title?: string;
+    type?: "succ" | "warn" | "info" | "error" | "plain";
 }
 
 const props = defineProps<AlertInfo>();
@@ -36,22 +47,10 @@ const titleText = computed(() => {
         warn: t("common.items.Warning"),
         info: t("common.items.Info"),
         error: t("common.items.Error"),
-        plain: ''
+        plain: "",
     };
 
-    return typeMap[props.type || 'plain'];
-});
-
-const bgColorClass = computed(() => {
-    const colorMap: Record<string, string> = {
-        succ: 'bg-green-200 dark:bg-green-900/20 dark:border-green-800/30',
-        warn: 'bg-yellow-200 border border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800/30',
-        info: 'bg-blue-200 dark:bg-blue-900/20 dark:border-blue-800/30',
-        error: 'bg-red-200 dark:bg-red-900/20 dark:border-red-800/30',
-        plain: 'bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700'
-    };
-
-    return colorMap[props.type || 'plain'];
+    return typeMap[props.type || "plain"];
 });
 
 const iconComponent = computed(() => {
@@ -60,21 +59,21 @@ const iconComponent = computed(() => {
         warn: ExclamationTriangleIcon,
         info: InformationCircleIcon,
         error: XCircleIcon,
-        plain: null
+        plain: null,
     };
 
-    return iconMap[props.type || 'plain'];
+    return iconMap[props.type || "plain"];
 });
 
 const iconColorClass = computed(() => {
     const colorMap: Record<string, string> = {
-        succ: 'text-green-600 dark:text-green-400',
-        warn: 'text-yellow-600 dark:text-yellow-400',
-        info: 'text-blue-600 dark:text-blue-400',
-        error: 'text-red-600 dark:text-red-400',
-        plain: 'text-gray-600 dark:text-gray-400'
+        succ: "text-(--md-sys-color-primary)",
+        warn: "text-(--md-sys-color-tertiary)",
+        info: "text-(--md-sys-color-secondary)",
+        error: "text-(--md-sys-color-error)",
+        plain: "text-(--md-sys-color-on-surface-variant)",
     };
 
-    return colorMap[props.type || 'plain'];
+    return colorMap[props.type || "plain"];
 });
 </script>

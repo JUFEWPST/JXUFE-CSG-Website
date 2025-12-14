@@ -121,9 +121,7 @@
                     "idolLine": "함께 학교의 아이돌이 되어봐요!"
                 },
                 "contributors": {
-                    "title": "이 웹사이트는 다음 친구들의 기여 없이는 불가능했을 것입니다 — 여러분의 노력에 감사드립니다!",
-                    "invite": "여러분의 참여를 환영하며, 함께 JXUFE 사이버보안 길드를건설하는 데하는 데 동참해 주세요.",
-                    "projectLink": "이 프로젝트에 대해 더 알아보거나 기여하려면 {0}를 클릭하세요."
+                    "para": "본 웹사이트가 무사히 오픈할 수 있던 것은 다음 친구들(동료들)의 기여 덕분입니다. 모두의 노고에 진심으로 감사드립니다! 우리와 함께 강재 사이버보안 협회 웹사이트를 만들어 가요. 이 프로젝트에 대해 더 알고 싶거나 참여하고 싶으시다면, 지금 {0}을(를) 클릭해 주세요!"
                 }
             },
             "leaders": {
@@ -134,7 +132,8 @@
                 },
                 "title": "역대 리더",
                 "dataCollectTip": "데이터 수집 중입니다. 길드 관련 멤버이시다면 저희 수집 양식을 작성해 주시기 바랍니다.",
-                "archiveInvite": "역대 멤버 아카이브 공동 구축 초대"
+                "archiveInvite": "역대 멤버 아카이브 공동 구축 초대",
+                "leaderCardTitle": "{year} 기 회장"
             },
             "members": {
                 "meta": {
@@ -190,5 +189,70 @@
         "quickNav": "빠른 탐색",
         "contact": "연락처",
         "address": "장시 재경대학교 메이루 캠퍼스"
+    },
+    "themeMenu": {
+        "tooltip": "테마 설정",
+        "title": "테마 설정",
+        "mode": "테마 모드",
+        "light": "라이트",
+        "dark": "다크"
+    },
+    "themeColorPicker": {
+        "tooltip": "테마 색상 변경",
+        "title": "테마 색상",
+        "customColor": "사용자 정의 색상",
+        "colorInputLabel": "사용자 정의 테마 색상 선택",
+        "Themes": "테마",
+        "themeItem": "{name}의 테마 색상"
+    },
+    "ctf": {
+        "title": "최근 CTF 대회",
+        "status": {
+            "oncoming": "시작 전",
+            "running": "진행 중",
+            "finished": "종료",
+            "unknown": "상태 불명"
+        },
+        "reload": "새로고침",
+        "error": "CTF 대회 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        "empty": "현재 표시할 대회가 없습니다.",
+        "sourceLabel": "데이터 출처: {source}"
+    },
+    "calendar": {
+        "monthSuffix": "월",
+        "actions": {
+            "prevMonth": "이전 달",
+            "nextMonth": "다음 달"
+        },
+        "weekdays": {
+            "mon": "월",
+            "tue": "화",
+            "wed": "수",
+            "thu": "목",
+            "fri": "금",
+            "sat": "토",
+            "sun": "일"
+        },
+        "legend": {
+            "holiday": "휴일",
+            "workdayAdjusted": "대체 근무일",
+            "today": "오늘",
+            "examWeek": "기말 주간",
+            "event": "행사"
+        },
+        "todayPrefix": "오늘: ",
+        "status": {
+            "holiday": "휴일",
+            "examWeekClass": "기말 주간 수업일",
+            "vacation": "방학",
+            "workdayAdjusted": "대체 근무일",
+            "weekend": "주말",
+            "classDay": "수업일"
+        },
+        "tags": {
+            "examWeek": "기말 주간",
+            "holiday": "휴일",
+            "workdayAdjusted": "대체"
+        }
     }
 }

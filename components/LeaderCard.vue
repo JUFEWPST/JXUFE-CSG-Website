@@ -1,50 +1,86 @@
 <template>
-    <div class="w-full flex-shrink-0 px-4 py-6 md:px-8 md:py-8">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/3 flex justify-center mb-6 md:mb-0">
-                <div class="relative">
+    <div
+        class="relative mx-auto w-full shrink-0 px-4 py-4 md:px-0 md:max-w-3xl"
+    >
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-4">
+                <div
+                    class="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-(--md-sys-color-surface-container-highest) md:h-32 md:w-32"
+                >
+                    <img
+                        v-if="leader.avatar"
+                        :src="leader.avatar"
+                        :alt="leader.name"
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     <div
-                        class="w-55 h-55 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg">
-                        <img :src="leader.avatar" :alt="leader.name + '的头像'"
-                            class="w-full h-full object-cover"
-                            v-if="leader.avatar" />
-                        <div v-else class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                            <div class="text-4xl font-bold text-gray-500 dark:text-gray-400">
-                                {{ leader.name.charAt(0) }}
-                            </div>
-                        </div>
+                        v-else
+                        class="flex h-full w-full items-center justify-center"
+                    >
+                        <span
+                            class="text-3xl font-bold text-(--md-sys-color-on-surface-variant)"
+                        >
+                            {{ leader.name.charAt(0) }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center gap-2 min-w-0">
+                        <h2
+                            class="min-w-0 truncate text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
+                            :title="leader.name"
+                        >
+                            {{ leader.name }}
+                        </h2>
+                        <span
+                            class="shrink-0 inline-flex items-center rounded-md bg-(--md-sys-color-primary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)"
+                        >
+                            {{
+                                $t("pages.about.leaders.leaderCardTitle", {
+                                    year: leader.year,
+                                })
+                            }}
+                        </span>
+                    </div>
+                    <div class="mt-1 min-w-0">
+                        <span
+                            class="block truncate text-sm font-medium text-(--md-sys-color-primary)"
+                            :title="leader.class"
+                        >
+                            {{ leader.class }}
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="md:w-2/3 md:pl-8">
-                <div class="mb-4">
-                    <h3 class="text-2xl font-bold mb-1">
-                        {{ leader.name }}
-                        <span class="text-lg text-gray-600 dark:text-gray-300 ml-1"
-                            v-if="leader.class">({{ leader.class }})</span>
-                    </h3>
-                    <div
-                        class="inline-block bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm font-medium">
-                        {{ leader.year }} 届会长
-                    </div>
-                </div>
-                <div class="bg-gray-50 dark:bg-gray-700/50 w-full p-4 rounded-lg mb-4 border border-gray-200 dark:border-gray-600"
-                    v-if="leader.message">
-                    <p class="text-gray-700 dark:text-gray-300 italic leading-relaxed">
-                        "{{ leader.message }}"
+
+            <div class="flex flex-1 flex-col text-left min-w-0">
+                <div
+                    v-if="leader.message"
+                    class="mb-4 rounded-lg border border-(--md-sys-color-outline-variant)/50 bg-(--md-sys-color-surface-container-high) p-3"
+                >
+                    <p
+                        class="text-sm leading-relaxed text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ leader.message }}
                     </p>
                 </div>
-                <div v-if="leader.achievements && leader.achievements.length > 0">
-                    <h4 class="text-lg font-semibold mb-3">
-                        个人成就
-                    </h4>
-                    <ul
-                        class="space-y-2 bg-white/50 dark:bg-gray-700/30 p-4 rounded-lg border border-gray-200 dark:border-gray-600 max-h-50 overflow-scroll">
-                        <li v-for="(achievement, i) in leader.achievements" :key="i" class="flex items-start">
-                            <span class="inline-block w-2 h-2 rounded-full bg-blue-300 mt-2 mr-3 flex-shrink-0"></span>
-                            <span class="text-gray-700 dark:text-gray-300">{{ achievement }}</span>
-                        </li>
-                    </ul>
+
+                <div v-if="leader.achievements?.length" class="space-y-1">
+                    <div class="flex flex-wrap gap-x-4 gap-y-1">
+                        <span
+                            v-for="(achievement, i) in leader.achievements"
+                            :key="i"
+                            class="inline-flex items-center text-sm text-(--md-sys-color-on-surface-variant)/80"
+                        >
+                            <span
+                                class="mr-1.5 h-1 w-1 rounded-full bg-(--md-sys-color-outline)"
+                            ></span>
+                            {{ achievement }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,8 +88,9 @@
 </template>
 
 <script setup lang="ts">
-import type { Leader } from '~/types/leader';
+import type { Leader } from "~/types/leader";
+
 defineProps<{
-    leader: Leader
-}>()
+    leader: Leader;
+}>();
 </script>

@@ -1,14 +1,16 @@
+/* Markdown Wrapper Optimization for MD3 */
 .markdown-wrapper {
+    /* Base Settings */
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     margin: 0;
-    color: var(--fgColor-default);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-size: 16px;
     line-height: 1.6;
     word-wrap: break-word;
-    /* background-color: var(--bgColor-default); */
     border-radius: 8px;
+
+    /* Base Sizes */
     --base-size-4: 0.25rem;
     --base-size-8: 0.5rem;
     --base-size-16: 1rem;
@@ -18,138 +20,116 @@
     --base-text-weight-medium: 500;
     --base-text-weight-semibold: 600;
     --fontStack-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-    --fgColor-accent: #3a86ff;
-    --fgColor-success: #4cc9f0;
-    --fgColor-attention: #f8961e;
-    --bgColor-default: #ffffff;
-    --bgColor-muted: #f8f9fa;
-    --borderColor-default: #e9ecef;
-    --borderColor-muted: #dee2e6;
     --border-radius-base: 6px;
-}
 
-.dark .markdown-wrapper {
-    /* dark */
-    color-scheme: dark;
-    --focus-outlineColor: #1f6feb;
-    --fgColor-accent: #5390d9;
-    --bgColor-default: #212529;
-    --bgColor-muted: #343a40;
-    --borderColor-default: #495057;
-    --fgColor-default: #f0f6fc;
-    --fgColor-success: #88D8C0;
-    --fgColor-attention: #d29922;
-    --fgColor-danger: #f85149;
-    --fgColor-done: #ab7df8;
-    --bgColor-neutral-muted: #656c7633;
-    --bgColor-attention-muted: #bb800926;
-    --borderColor-muted: #3d444db3;
-    --borderColor-neutral-muted: #3d444db3;
-    --borderColor-accent-emphasis: #1f6feb;
-    --borderColor-success-emphasis: #238636;
-    --borderColor-attention-emphasis: #9e6a03;
-    --borderColor-danger-emphasis: #da3633;
-    --borderColor-done-emphasis: #8957e5;
-    --color-prettylights-syntax-comment: #9198a1;
-    --color-prettylights-syntax-constant: #79c0ff;
-    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-    --color-prettylights-syntax-entity: #d2a8ff;
-    --color-prettylights-syntax-storage-modifier-import: #f0f6fc;
-    --color-prettylights-syntax-entity-tag: #7ee787;
-    --color-prettylights-syntax-keyword: #ff7b72;
-    --color-prettylights-syntax-string: #a5d6ff;
-    --color-prettylights-syntax-variable: #ffa657;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-    --color-prettylights-syntax-brackethighlighter-angle: #9198a1;
-    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-    --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
-    --color-prettylights-syntax-carriage-return-text: #f0f6fc;
-    --color-prettylights-syntax-carriage-return-bg: #b62324;
-    --color-prettylights-syntax-string-regexp: #7ee787;
-    --color-prettylights-syntax-markup-list: #f2cc60;
-    --color-prettylights-syntax-markup-heading: #1f6feb;
-    --color-prettylights-syntax-markup-italic: #f0f6fc;
-    --color-prettylights-syntax-markup-bold: #f0f6fc;
-    --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
-    --color-prettylights-syntax-markup-deleted-bg: #67060c;
-    --color-prettylights-syntax-markup-inserted-text: #aff5b4;
-    --color-prettylights-syntax-markup-inserted-bg: #033a16;
-    --color-prettylights-syntax-markup-changed-text: #ffdfb6;
-    --color-prettylights-syntax-markup-changed-bg: #5a1e02;
-    --color-prettylights-syntax-markup-ignored-text: #f0f6fc;
-    --color-prettylights-syntax-markup-ignored-bg: #1158c7;
-    --color-prettylights-syntax-meta-diff-range: #d2a8ff;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
-}
-
-
-.markdown-wrapper {
-    /* light */
+    /* LIGHT THEME VARIABLES */
     color-scheme: light;
-    --focus-outlineColor: #0969da;
-    --fgColor-default: #1f2328;
-    --fgColor-muted: #59636e;
-    --fgColor-accent: #0969da;
-    --fgColor-success: #1a7f37;
-    --fgColor-attention: #9a6700;
-    --fgColor-danger: #d1242f;
-    --fgColor-done: #8250df;
-    --bgColor-default: #ffffff;
-    --bgColor-muted: #f6f8fa;
-    --bgColor-neutral-muted: #818b981f;
-    --bgColor-attention-muted: #fff8c5;
-    --borderColor-default: #d1d9e0;
-    --borderColor-muted: #d1d9e0b3;
-    --borderColor-neutral-muted: #d1d9e0b3;
-    --borderColor-accent-emphasis: #0969da;
-    --borderColor-success-emphasis: #1a7f37;
-    --borderColor-attention-emphasis: #9a6700;
-    --borderColor-danger-emphasis: #cf222e;
-    --borderColor-done-emphasis: #8250df;
-    --color-prettylights-syntax-comment: #59636e;
-    --color-prettylights-syntax-constant: #0550ae;
-    --color-prettylights-syntax-constant-other-reference-link: #0a3069;
-    --color-prettylights-syntax-entity: #6639ba;
-    --color-prettylights-syntax-storage-modifier-import: #1f2328;
-    --color-prettylights-syntax-entity-tag: #0550ae;
-    --color-prettylights-syntax-keyword: #cf222e;
-    --color-prettylights-syntax-string: #0a3069;
-    --color-prettylights-syntax-variable: #953800;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-    --color-prettylights-syntax-brackethighlighter-angle: #59636e;
-    --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-    --color-prettylights-syntax-invalid-illegal-bg: #82071e;
-    --color-prettylights-syntax-carriage-return-text: #f6f8fa;
-    --color-prettylights-syntax-carriage-return-bg: #cf222e;
-    --color-prettylights-syntax-string-regexp: #116329;
-    --color-prettylights-syntax-markup-list: #3b2300;
-    --color-prettylights-syntax-markup-heading: #0550ae;
-    --color-prettylights-syntax-markup-italic: #1f2328;
-    --color-prettylights-syntax-markup-bold: #1f2328;
-    --color-prettylights-syntax-markup-deleted-text: #82071e;
-    --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
-    --color-prettylights-syntax-markup-inserted-text: #116329;
-    --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
-    --color-prettylights-syntax-markup-changed-text: #953800;
-    --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
-    --color-prettylights-syntax-markup-ignored-text: #d1d9e0;
-    --color-prettylights-syntax-markup-ignored-bg: #0550ae;
-    --color-prettylights-syntax-meta-diff-range: #8250df;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #818b98;
-}
+    
+    /* Core Colors */
+    --fgColor-default: var(--md-sys-color-on-surface);
+    --fgColor-muted: var(--md-sys-color-on-surface-variant);
+    --focus-outlineColor: var(--md-sys-color-primary);
+    
+    /* Semantic Colors */
+    --fgColor-accent: var(--md-sys-color-primary);
+    --fgColor-success: var(--md-sys-color-secondary); /* Distinct from primary */
+    --fgColor-attention: var(--md-sys-color-tertiary);
+    --fgColor-danger: var(--md-sys-color-error);
+    --fgColor-done: var(--md-sys-color-tertiary); /* Distinct from primary */
 
+    /* Backgrounds */
+    --bgColor-default: var(--md-sys-color-surface-container-lowest);
+    --bgColor-muted: var(--md-sys-color-surface-container);
+    --bgColor-neutral-muted: var(--md-sys-color-surface-container-low);
+    --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
-.markdown-wrapper {
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    margin: 0;
+    /* Borders */
+    --borderColor-default: var(--md-sys-color-outline-variant);
+    --borderColor-muted: var(--md-sys-color-outline-variant);
+    --borderColor-neutral-muted: var(--md-sys-color-outline-variant);
+    
+    /* Border Emphasis (Used for Alerts) */
+    --borderColor-accent-emphasis: var(--md-sys-color-primary);
+    --borderColor-success-emphasis: var(--md-sys-color-secondary);
+    --borderColor-attention-emphasis: var(--md-sys-color-tertiary);
+    --borderColor-danger-emphasis: var(--md-sys-color-error);
+    --borderColor-done-emphasis: var(--md-sys-color-tertiary);
+
+    /* Code Syntax Highlighting - Light */
+    --color-prettylights-syntax-comment: var(--md-sys-color-on-surface-variant);
+    --color-prettylights-syntax-constant: var(--md-sys-color-primary);
+    --color-prettylights-syntax-entity: var(--md-sys-color-tertiary);
+    --color-prettylights-syntax-storage-modifier-import: var(--md-sys-color-on-surface);
+    --color-prettylights-syntax-entity-tag: var(--md-sys-color-secondary);
+    --color-prettylights-syntax-keyword: var(--md-sys-color-tertiary);
+    --color-prettylights-syntax-string: var(--md-sys-color-secondary);
+    --color-prettylights-syntax-variable: var(--md-sys-color-on-surface);
+    --color-prettylights-syntax-brackethighlighter-unmatched: var(--md-sys-color-error);
+    --color-prettylights-syntax-invalid-illegal-text: var(--md-sys-color-on-error);
+    --color-prettylights-syntax-invalid-illegal-bg: var(--md-sys-color-error);
+    --color-prettylights-syntax-carriage-return-text: var(--md-sys-color-on-surface);
+    --color-prettylights-syntax-carriage-return-bg: var(--md-sys-color-surface-variant);
+    --color-prettylights-syntax-string-regexp: var(--md-sys-color-secondary);
+    --color-prettylights-syntax-markup-list: var(--md-sys-color-secondary);
+    --color-prettylights-syntax-markup-heading: var(--md-sys-color-primary);
+    --color-prettylights-syntax-markup-italic: var(--md-sys-color-on-surface);
+    --color-prettylights-syntax-markup-bold: var(--md-sys-color-on-surface);
+    --color-prettylights-syntax-markup-deleted-text: var(--md-sys-color-on-error-container);
+    --color-prettylights-syntax-markup-deleted-bg: var(--md-sys-color-error-container);
+    --color-prettylights-syntax-markup-inserted-text: var(--md-sys-color-on-primary-container);
+    --color-prettylights-syntax-markup-inserted-bg: var(--md-sys-color-primary-container);
+    --color-prettylights-syntax-markup-changed-text: var(--md-sys-color-on-secondary-container);
+    --color-prettylights-syntax-markup-changed-bg: var(--md-sys-color-secondary-container);
+    --color-prettylights-syntax-markup-ignored-text: var(--md-sys-color-on-surface-variant);
+    --color-prettylights-syntax-markup-ignored-bg: var(--md-sys-color-surface-container-high);
+    --color-prettylights-syntax-meta-diff-range: var(--md-sys-color-tertiary);
+    --color-prettylights-syntax-sublimelinter-gutter-mark: var(--md-sys-color-outline);
+    --color-prettylights-syntax-constant-other-reference-link: var(--md-sys-color-primary);
+    --color-prettylights-syntax-brackethighlighter-angle: var(--md-sys-color-on-surface-variant);
+
     color: var(--fgColor-default);
     /* background-color: var(--bgColor-default); */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    font-size: 16px;
-    line-height: 1.5;
-    word-wrap: break-word;
 }
+
+/* DARK THEME VARIABLES */
+.dark .markdown-wrapper {
+    color-scheme: dark;
+    
+    /* Core Colors */
+    --fgColor-default: var(--md-sys-color-on-surface);
+    --fgColor-muted: var(--md-sys-color-on-surface-variant);
+    --focus-outlineColor: var(--md-sys-color-primary);
+    
+    /* Semantic Colors */
+    --fgColor-accent: var(--md-sys-color-primary);
+    --fgColor-success: var(--md-sys-color-secondary);
+    --fgColor-attention: var(--md-sys-color-tertiary);
+    --fgColor-danger: var(--md-sys-color-error);
+    --fgColor-done: var(--md-sys-color-tertiary);
+
+    /* Backgrounds */
+    --bgColor-default: var(--md-sys-color-surface-container-low);
+    --bgColor-muted: var(--md-sys-color-surface-container-high);
+    --bgColor-neutral-muted: var(--md-sys-color-surface-container-highest);
+    --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
+
+    /* Borders */
+    --borderColor-default: var(--md-sys-color-outline-variant);
+    --borderColor-muted: var(--md-sys-color-outline-variant);
+    --borderColor-neutral-muted: var(--md-sys-color-outline-variant);
+    
+    /* Border Emphasis */
+    --borderColor-accent-emphasis: var(--md-sys-color-primary);
+    --borderColor-success-emphasis: var(--md-sys-color-secondary);
+    --borderColor-attention-emphasis: var(--md-sys-color-tertiary);
+    --borderColor-danger-emphasis: var(--md-sys-color-error);
+    --borderColor-done-emphasis: var(--md-sys-color-tertiary);
+
+    /* Code Syntax Highlighting - Dark (Same logic as light, colors adjust automatically via MD3 vars) */
+    /* Some specific adjustments might be needed if light vars don't look good in dark */
+}
+
+/* Styles */
 
 .markdown-wrapper .octicon {
     display: inline-block;
@@ -190,6 +170,7 @@
     background-color: transparent;
     color: var(--fgColor-accent);
     text-decoration: none;
+    transition: color 0.2s;
 }
 
 .markdown-wrapper abbr[title] {
@@ -217,6 +198,8 @@
 .markdown-wrapper mark {
     background-color: var(--bgColor-attention-muted);
     color: var(--fgColor-default);
+    border-radius: 4px;
+    padding: 0 2px;
 }
 
 .markdown-wrapper small {
@@ -1192,6 +1175,8 @@
     margin-bottom: var(--base-size-16);
     color: inherit;
     border-left: .25em solid var(--borderColor-default);
+    background-color: var(--bgColor-neutral-muted);
+    border-radius: var(--border-radius-base);
 }
 
 .markdown-wrapper .markdown-alert>:first-child {

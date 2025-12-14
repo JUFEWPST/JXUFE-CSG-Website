@@ -1,29 +1,48 @@
 <template>
-    <main class="mt-15 mb-3 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="font-bold text-4xl text-center">{{ t('pages.about.excellent.title') }}</h1>
-        <AnzuAlert type="info">
-            {{ t('pages.about.excellent.dataCollectTip') }}<NuxtLink class="text-blue-500" to="/archive/nvz60h0y8pj9opi1hyn9ysvb">
-                [{{ t('pages.about.excellent.archiveInvite') }}]</NuxtLink>
-        </AnzuAlert>
-        <section class="mt-3 grid grid-cols-auto-fill gap-4">
-            <MemberHonorCard v-for="(person, index) in excellentData" :key="index" :person="person"></MemberHonorCard>
-        </section>
+    <main
+        class="box-border bg-(--md-sys-color-surface-container-lowest) px-4 py-6 sm:px-6 sm:py-8"
+    >
+        <div class="mx-auto max-w-6xl space-y-8 sm:space-y-10">
+            <AnzuAlert type="info">
+                {{ t("pages.about.excellent.dataCollectTip")
+                }}<NuxtLink
+                    class="text-(--md-sys-color-primary)"
+                    to="/archive/nvz60h0y8pj9opi1hyn9ysvb"
+                >
+                    [{{ t("pages.about.excellent.archiveInvite") }}]</NuxtLink
+                >
+            </AnzuAlert>
+
+            <section class="grid-cols-auto-fill grid gap-4">
+                <MemberHonorCard
+                    v-for="(person, index) in excellentData"
+                    :key="index"
+                    :person="person"
+                >
+                </MemberHonorCard>
+            </section>
+        </div>
     </main>
 </template>
 <script setup lang="ts">
-import MemberHonorCard from '~/components/MemberHonorCard.vue';
-import { excellentData } from '~/data/excellentData';
-const { t } = useI18n()
+import MemberHonorCard from "~/components/MemberHonorCard.vue";
+import { excellentData } from "~/data/excellentData";
+import { usePageTitle } from "@/composables/usePageTitle";
+const { t } = useI18n();
+const { setPageTitle } = usePageTitle();
+
+setPageTitle("pages.about.excellent.title");
 
 useHead(() => ({
-    title: t('pages.about.excellent.meta.title'),
+    title: t("pages.about.excellent.meta.title"),
     meta: [
-        { name: 'description', content: t('pages.about.excellent.meta.description') },
-        { name: 'keywords', content: t('pages.about.excellent.meta.keywords') }
-    ]
-}))
-
-
+        {
+            name: "description",
+            content: t("pages.about.excellent.meta.description"),
+        },
+        { name: "keywords", content: t("pages.about.excellent.meta.keywords") },
+    ],
+}));
 </script>
 <style scoped>
 .grid-cols-auto-fill {

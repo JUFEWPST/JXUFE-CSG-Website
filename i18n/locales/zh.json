@@ -121,9 +121,7 @@
                     "idolLine": "一起成为学院偶像！"
                 },
                 "contributors": {
-                    "title": "本网站的完成离不开以下小伙伴的贡献，感谢他们的付出",
-                    "invite": "欢迎加入我们，与我们共同建设江财网安协会。",
-                    "projectLink": "想了解或参与本项目，请点击 {0}。"
+                    "para":"本网站的顺利上线，离不开以下小伙伴们的贡献，衷心感谢他们的付出！欢迎加入我们，一起建设江财网安协会的网站。如果你也想了解或参与这个项目，快来点击 {0} 吧。"
                 }
             },
             "leaders": {
@@ -134,7 +132,8 @@
                 },
                 "title": "历届负责人",
                 "dataCollectTip": "数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表",
-                "archiveInvite": "历届成员档案共建邀请"
+                "archiveInvite": "历届成员档案共建邀请",
+                "leaderCardTitle": "{year} 届会长"
             },
             "members": {
                 "meta": {
@@ -177,18 +176,83 @@
             "up1": "上方",
             "down1": "下方"
         },
-        "items":{
-            "toc":"目录",
+        "items": {
+            "toc": "目录",
             "Warning": "警告",
             "Info": "信息",
             "Tip": "提示",
             "Error": "错误",
-            "Success":"成功"
+            "Success": "成功"
         }
     },
     "footer": {
         "quickNav": "快速导航",
         "contact": "联系我们",
         "address": "江西财经大学麦庐园校区"
+    },
+    "themeMenu": {
+        "tooltip": "主题设置",
+        "title": "主题设置",
+        "mode": "主题模式",
+        "light": "浅色",
+        "dark": "深色"
+    },
+    "themeColorPicker": {
+        "tooltip": "更改主题色",
+        "title": "主题配色",
+        "customColor": "自定义颜色",
+        "colorInputLabel": "选择自定义主题色",
+        "Themes": "主题",
+        "themeItem": "{name} 的主题配色"
+    },
+    "ctf": {
+        "title": "近期 CTF 赛事",
+        "status": {
+            "oncoming": "未开始",
+            "running": "进行中",
+            "finished": "已结束",
+            "unknown": "状态未知"
+        },
+        "reload": "刷新",
+        "error": "赛事数据加载失败，请稍后重试",
+        "empty": "暂时没有可显示的赛事",
+        "sourceLabel": "数据来源：{source}"
+    },
+    "calendar": {
+        "monthSuffix": "月",
+        "actions": {
+            "prevMonth": "上一月",
+            "nextMonth": "下一月"
+        },
+        "weekdays": {
+            "mon": "一",
+            "tue": "二",
+            "wed": "三",
+            "thu": "四",
+            "fri": "五",
+            "sat": "六",
+            "sun": "日"
+        },
+        "legend": {
+            "holiday": "节假日",
+            "workdayAdjusted": "调休上课",
+            "today": "今天",
+            "examWeek": "期末周",
+            "event": "活动"
+        },
+        "todayPrefix": "今天：",
+        "status": {
+            "holiday": "节假日",
+            "examWeekClass": "期末周上课",
+            "vacation": "寒假",
+            "workdayAdjusted": "调休上课",
+            "weekend": "周末",
+            "classDay": "上课日"
+        },
+        "tags": {
+            "examWeek": "期末周",
+            "holiday": "节假日",
+            "workdayAdjusted": "调休"
+        }
     }
 }

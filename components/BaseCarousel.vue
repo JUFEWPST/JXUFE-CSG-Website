@@ -1,90 +1,93 @@
 <template>
-    <div class="relative w-full">
-        <div ref="carousel" class="flex transition-transform duration-500 ease-in-out"
-            :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-            <slot></slot>
+    <div class="group relative w-full overflow-hidden">
+        <div
+            class="flex h-full w-full transition-transform duration-500 ease-[cubic-bezier(0.2,0.0,0,1.0)]"
+            :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        >
+             <slot></slot>
         </div>
+        <template v-if="itemCount > 1">
+            <button
+                @click="prevSlide"
+                class="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-(--md-sys-color-surface-container-low)/80 text-(--md-sys-color-on-surface) backdrop-blur-sm transition-all hover:bg-(--md-sys-color-surface-container-high) disabled:opacity-0 md:left-4"
+                aria-label="Previous slide"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
 
-        <!-- 导航按钮 -->
-        <button @click="prevSlide"
-            class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 w-10 h-10 rounded-full shadow flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none z-10 border border-gray-300 dark:border-gray-500">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-        </button>
-
-        <button @click="nextSlide"
-            class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 w-10 h-10 rounded-full shadow flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none z-10 border border-gray-300 dark:border-gray-500">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-        </button>
-
-        <!-- 指示器 -->
-        <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            <button v-for="(_, index) in itemCount" :key="index" @click="goToSlide(index)" :class="[
-                'w-2.5 h-2.5 rounded-full transition-all duration-300',
-                currentIndex === index ? 'bg-gray-700 dark:bg-gray-300 scale-125' : 'bg-gray-300 dark:bg-gray-600'
-            ]"></button>
-        </div>
+            <button
+                @click="nextSlide"
+                class="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-(--md-sys-color-surface-container-low)/80 text-(--md-sys-color-on-surface) backdrop-blur-sm transition-all hover:bg-(--md-sys-color-surface-container-high) disabled:opacity-0 md:right-4"
+                aria-label="Next slide"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
+            <div class="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-2">
+                <button
+                    v-for="(_, index) in itemCount"
+                    :key="index"
+                    @click="goToSlide(index)"
+                    class="h-1.5 rounded-full transition-all duration-300"
+                    :class="[
+                        currentIndex === index
+                            ? 'w-6 bg-(--md-sys-color-primary)'
+                            : 'w-1.5 bg-(--md-sys-color-outline-variant) hover:bg-(--md-sys-color-on-surface-variant)'
+                    ]"
+                    :aria-label="`Go to slide ${index + 1}`"
+                ></button>
+            </div>
+        </template>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, provide } from 'vue'
+import { ref, onMounted, onUnmounted, provide } from "vue";
 
 const props = defineProps<{
-    itemCount: number 
-}>()
+    itemCount: number;
+}>();
 
-const currentIndex = ref(0)
-let autoSlideInterval: NodeJS.Timeout | null = null
+const currentIndex = ref(0);
+let autoSlideInterval: NodeJS.Timeout | null = null;
 
-// 提供当前索引给子组件
-provide('currentSlideIndex', currentIndex)
+provide("currentSlideIndex", currentIndex);
 
 const nextSlide = () => {
-    currentIndex.value = (currentIndex.value + 1) % props.itemCount
-}
+    currentIndex.value = (currentIndex.value + 1) % props.itemCount;
+};
 
 const prevSlide = () => {
-    currentIndex.value = (currentIndex.value - 1 + props.itemCount) % props.itemCount
-}
+    currentIndex.value =
+        (currentIndex.value - 1 + props.itemCount) % props.itemCount;
+};
 
 const goToSlide = (index: number) => {
-    currentIndex.value = index
-}
+    currentIndex.value = index;
+};
 
-// 自动轮播
-onMounted(() => {
+const startAutoSlide = () => {
+    stopAutoSlide();
     autoSlideInterval = setInterval(() => {
-        nextSlide()
-    }, 5000)
-})
+        nextSlide();
+    }, 5000);
+};
+
+const stopAutoSlide = () => {
+    if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+    }
+};
+
+onMounted(() => {
+    startAutoSlide();
+});
 
 onUnmounted(() => {
-    if (autoSlideInterval) {
-        clearInterval(autoSlideInterval)
-    }
-})
+    stopAutoSlide();
+});
 </script>
-
-<style scoped>
-.absolute.left-0 {
-    left: -0.5rem;
-}
-
-.absolute.right-0 {
-    right: -0.5rem;
-}
-
-@media (min-width: 768px) {
-    .absolute.left-0 {
-        left: -1.5rem;
-    }
-
-    .absolute.right-0 {
-        right: -1.5rem;
-    }
-}
-</style>

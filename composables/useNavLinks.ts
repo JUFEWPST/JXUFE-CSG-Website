@@ -7,8 +7,6 @@ export interface NavChildLink {
 export interface BaseNavLink {
     path: string
     label: string
-    icon: string
-    color: string
     defaultPath?: string
 }
 
@@ -20,14 +18,18 @@ export type NavLink = BaseNavLink | NavLinkWithChildren
 
 export const useNavLinks = (): NavLink[] => {
     return [
-        { path: '/', label: 'nav.home', icon: '✧', color: 'pink' },
-        { path: '/archive', label: 'nav.archive', icon: '✦', color: 'blue' },
+        { 
+            path: '/', 
+            label: 'nav.home'
+        },
+        { 
+            path: '/archive', 
+            label: 'nav.archive'
+        },
         {
             path: '/about',
             defaultPath: '/about',
             label: 'nav.about',
-            icon: '✧',
-            color: 'purple',
             children: [
                 { path: '/about', label: 'nav.aboutChildren.index' },
                 { path: '/about/leaders', label: 'nav.aboutChildren.leaders' },
@@ -35,6 +37,9 @@ export const useNavLinks = (): NavLink[] => {
                 { path: '/about/excellent', label: 'nav.aboutChildren.excellent' }
             ]
         },
-        { path: '/links', label: 'nav.links', icon: '✦', color: 'yellow' }
+        { 
+            path: '/links', 
+            label: 'nav.links'
+        }
     ]
 }

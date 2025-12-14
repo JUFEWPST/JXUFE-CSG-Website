@@ -1,111 +1,182 @@
 <template>
-    <div class="error-container w-full max-w-2xl" v-if="errorData">
-        <div class="bg-white rounded-xl overflow-hidden error-shadow transition-all duration-500 hover:scale-[1.01]">
-            <div class=" bg-red-400 text-white p-6 flex items-center">
-                <i class="fa fa-exclamation-triangle text-4xl mr-4 error-glow"></i>
-                <div>
-                    <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold">请求失败</h1>
-                    <p class="opacity-90 mt-1">服务器返回了一个错误</p>
+    <div
+        v-if="errorData"
+        class="w-full max-w-2xl"
+    >
+        <div
+            class="overflow-hidden rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) p-6 shadow-sm"
+        >
+            <!-- Header -->
+            <div class="flex items-start gap-4">
+                <div
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--md-sys-color-error-container) text-(--md-sys-color-on-error-container)"
+                >
+                    <ExclamationTriangleIcon class="h-6 w-6" />
+                </div>
+                <div class="min-w-0 flex-1">
+                    <h1
+                        class="text-[clamp(1.25rem,2.2vw,1.75rem)] font-bold text-(--md-sys-color-on-surface)"
+                    >
+                        请求失败
+                    </h1>
+                    <p class="mt-1 text-sm text-(--md-sys-color-on-surface-variant)">
+                        服务器返回了一个错误
+                    </p>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-error-light p-4 rounded-lg">
-                        <h3 class="font-semibold text-error mb-2 flex items-center">
-                            状态码
-                        </h3>
-                        <p class="text-lg font-mono font-bold text-gray-800">{{ errorData?.status || '未知' }}</p>
-                    </div>
-                    <div class="bg-error-light p-4 rounded-lg">
-                        <h3 class="font-semibold text-error mb-2 flex items-center">
-                            错误类型
-                        </h3>
-                        <p class="text-lg font-mono font-bold text-gray-800">{{ errorData?.name || '未知' }}</p>
-                    </div>
-                    <div class="bg-error-light p-4 rounded-lg md:col-span-2">
-                        <h3 class="font-semibold text-error mb-2 flex items-center">
-                            错误信息
-                        </h3>
-                        <p class="text-lg font-mono font-bold text-gray-800">{{ errorData?.message || '未知错误' }}</p>
-                    </div>
-                </div>
 
-                <div class="mt-6 bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-gray-700 mb-2 flex items-center">
-                        错误详情
+            <!-- Summary blocks -->
+            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div
+                    class="rounded-lg bg-(--md-sys-color-surface-container-highest) p-4"
+                >
+                    <h3
+                        class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
+                    >
+                        状态码
                     </h3>
-                    <pre class="text-sm font-mono text-gray-600 bg-gray-100 p-3 rounded overflow-x-auto">
-  {{ formattedErrorData }}
-            </pre>
+                    <p
+                        class="mt-1 font-mono text-lg font-bold text-(--md-sys-color-on-surface)"
+                    >
+                        {{ errorData?.status || "未知" }}
+                    </p>
                 </div>
 
-                <div class="mt-6 flex justify-between items-center">
-                    <button
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors duration-300 flex items-center"
-                        @click="retryRequest">
-                        重试
-                    </button>
-                    <div class="text-sm text-gray-500">
-                        错误发生时间: {{ errorTime }}
-                    </div>
+                <div
+                    class="rounded-lg bg-(--md-sys-color-surface-container-highest) p-4"
+                >
+                    <h3
+                        class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
+                    >
+                        错误类型
+                    </h3>
+                    <p
+                        class="mt-1 font-mono text-lg font-bold text-(--md-sys-color-on-surface)"
+                    >
+                        {{ errorData?.name || "未知" }}
+                    </p>
+                </div>
+
+                <div
+                    class="rounded-lg bg-(--md-sys-color-surface-container-highest) p-4 sm:col-span-2"
+                >
+                    <h3
+                        class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
+                    >
+                        错误信息
+                    </h3>
+                    <p
+                        class="mt-1 font-mono text-sm font-semibold text-(--md-sys-color-on-surface) wrap-break-word"
+                    >
+                        {{ errorData?.message || "未知错误" }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <details
+                class="mt-6 rounded-lg border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-low) p-4"
+            >
+                <summary
+                    class="cursor-pointer select-none text-sm font-semibold text-(--md-sys-color-primary) outline-none"
+                >
+                    错误详情
+                </summary>
+                <pre
+                    class="mt-3 overflow-x-auto rounded-lg bg-(--md-sys-color-surface-container-highest) p-3 font-mono text-xs text-(--md-sys-color-on-surface-variant)"
+                >{{ formattedErrorData }}</pre
+                >
+            </details>
+
+            <!-- Actions -->
+            <div
+                class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+                <AnzuButton
+                    variant="tonal"
+                    @click="retryRequest"
+                >
+                    重试
+                </AnzuButton>
+                <div class="text-xs text-(--md-sys-color-on-surface-variant)">
+                    错误发生时间: {{ errorTime || "-" }}
                 </div>
             </div>
         </div>
     </div>
-    <div v-else class="text-center text-gray-500 p-8">
-        <i class="fa fa-check-circle text-green-500 text-3xl mb-2"></i>
-        <p>请求成功，没有错误发生</p>
+
+    <div
+        v-else
+        class="w-full max-w-2xl rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) p-6"
+    >
+        <div class="flex items-start gap-4">
+            <div
+                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container)"
+            >
+                <CheckCircleIcon class="h-6 w-6" />
+            </div>
+            <div class="min-w-0 flex-1">
+                <h2 class="text-lg font-bold text-(--md-sys-color-on-surface)">
+                    请求成功
+                </h2>
+                <p class="mt-1 text-sm text-(--md-sys-color-on-surface-variant)">
+                    没有错误发生
+                </p>
+            </div>
+        </div>
     </div>
 </template>
 
-<script setup>
-import { computed, ref, onMounted } from 'vue';
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
+import {
+    CheckCircleIcon,
+    ExclamationTriangleIcon,
+} from "@heroicons/vue/24/outline";
 
-const props = defineProps({
-    errorData: {
-        type: Object,
-        default: null
-    }
-});
+import AnzuButton from "~/components/AnzuButton.vue";
 
-const emit = defineEmits(['retry']);
+type UnknownError = {
+    status?: number | string;
+    name?: string;
+    message?: string;
+    [key: string]: unknown;
+};
 
-const errorTime = ref('');
+const props = defineProps<{
+    errorData: UnknownError | null;
+}>();
 
-onMounted(() => {
-    if (props.errorData) {
-        errorTime.value = new Date().toLocaleString('zh-CN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
-    }
-});
+const emit = defineEmits<{
+    (e: "retry"): void;
+}>();
+
+const errorTime = ref<string>("");
+
+watch(
+    () => props.errorData,
+    (val) => {
+        if (val) {
+            errorTime.value = new Date().toLocaleString("zh-CN", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            });
+        } else {
+            errorTime.value = "";
+        }
+    },
+    { immediate: true },
+);
 
 const formattedErrorData = computed(() => {
-    return props.errorData
-        ? JSON.stringify(props.errorData, null, 2)
-        : '{}';
+    return props.errorData ? JSON.stringify(props.errorData, null, 2) : "{}";
 });
 
-const retryRequest = () => {
-    emit('retry');
-};
+function retryRequest() {
+    emit("retry");
+}
 </script>
-
-<style scoped>
-.content-auto {
-    content-visibility: auto;
-}
-
-.error-shadow {
-    box-shadow: 0 4px 20px rgba(255, 77, 79, 0.15);
-}
-
-.error-glow {
-    text-shadow: 0 0 10px rgba(255, 77, 79, 0.3);
-}
-</style>

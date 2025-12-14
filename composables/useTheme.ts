@@ -1,7 +1,10 @@
-import { ref, onMounted, watchEffect } from 'vue'
+import { onMounted, watchEffect } from 'vue'
+import { useState } from '#imports'
+
+let themeInitialized = false
 
 export default function useTheme() {
-    const isDark = ref(false)
+    const isDark = useState<boolean>('is-dark-theme', () => false)
     const isClient = () => typeof window !== 'undefined'
 
     const initTheme = () => {
@@ -40,7 +43,9 @@ export default function useTheme() {
         mediaQuery.addEventListener('change', handler)
         return () => mediaQuery.removeEventListener('change', handler)
     }
-    if (import.meta.client) {
+    if (import.meta.client && !themeInitialized) {
+        themeInitialized = true
+
         onMounted(() => {
             initTheme()
             const cleanup = watchSystemTheme()

@@ -3,7 +3,7 @@ export default {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
-  pluginSearchDirs: false,
+  tabWidth: 4,
+  useTabs: false,
   plugins: ['prettier-plugin-tailwindcss'],
-  importOrder: ['^@', '^[a-zA-Z0-9-]+', '^[./]'],
-};
+}

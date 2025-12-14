@@ -60,9 +60,9 @@
                 "hello": "Hello JXUFE",
                 "ctfplatform": "CTF Platform",
                 "cloud": "Cloud Drive Resources",
-                "acm":"Association of Programming Contest, JXUFE",
-                "ca":"Computer Association, JXUFE",
-                "cida":"Cyber-Intelligence & Data Association, JXUFE"
+                "acm": "Association of Programming Contest, JXUFE",
+                "ca": "Computer Association, JXUFE",
+                "cida": "Cyber-Intelligence & Data Association, JXUFE"
             }
         },
         "archive": {
@@ -121,9 +121,7 @@
                     "idolLine": "Let’s become the school’s idols together!"
                 },
                 "contributors": {
-                    "title": "This website wouldn’t be possible without contributions from these friends — thank you for your effort!",
-                    "invite": "You’re welcome to join us and help build the JXUFE Cybersecurity Guild together.",
-                    "projectLink": "To learn more about or contribute to this project, click {0}."
+                    "para": "The successful launch of this website is all thanks to the contributions of the following folks. A huge thank you for their hard work! We welcome you to join us and build the Cybersecurity Guild of JXUFE website together. If you'd like to learn more or get involved in this project, just click {0}!"
                 }
             },
             "leaders": {
@@ -134,7 +132,8 @@
                 },
                 "title": "Past Leaders",
                 "dataCollectTip": "Data is still being collected. If you are a related member of the guild, please help by filling out our collection form.",
-                "archiveInvite": "Invitation to Co-build Past Members Archive"
+                "archiveInvite": "Invitation to Co-build Past Members Archive",
+                "leaderCardTitle": "{year} Cohort President"
             },
             "members": {
                 "meta": {
@@ -190,5 +189,70 @@
         "quickNav": "Quick Navigation",
         "contact": "Contact Us",
         "address": "Jiangxi University of Finance and Economics, Mailu Campus"
+    },
+    "themeMenu": {
+        "tooltip": "Theme settings",
+        "title": "Theme settings",
+        "mode": "Theme mode",
+        "light": "Light",
+        "dark": "Dark"
+    },
+    "themeColorPicker": {
+        "tooltip": "Change theme color",
+        "title": "Theme color",
+        "customColor": "Custom color",
+        "colorInputLabel": "Pick a custom theme color",
+        "Themes": "Themes",
+        "themeItem": "Theme color of {name}"
+    },
+    "ctf": {
+        "title": "Upcoming CTF Events",
+        "status": {
+            "oncoming": "Not started",
+            "running": "Ongoing",
+            "finished": "Finished",
+            "unknown": "Unknown status"
+        },
+        "reload": "Reload",
+        "error": "Failed to load CTF events. Please try again later.",
+        "empty": "No events to display at the moment.",
+        "sourceLabel": "Data source: {source}"
+    },
+    "calendar": {
+        "monthSuffix": "",
+        "actions": {
+            "prevMonth": "Previous month",
+            "nextMonth": "Next month"
+        },
+        "weekdays": {
+            "mon": "Mon",
+            "tue": "Tue",
+            "wed": "Wed",
+            "thu": "Thu",
+            "fri": "Fri",
+            "sat": "Sat",
+            "sun": "Sun"
+        },
+        "legend": {
+            "holiday": "Holiday",
+            "workdayAdjusted": "Adjusted workday",
+            "today": "Today",
+            "examWeek": "Exam week",
+            "event": "Event"
+        },
+        "todayPrefix": "Today: ",
+        "status": {
+            "holiday": "Holiday",
+            "examWeekClass": "Exam-week class day",
+            "vacation": "Vacation",
+            "workdayAdjusted": "Adjusted workday",
+            "weekend": "Weekend",
+            "classDay": "Class day"
+        },
+        "tags": {
+            "examWeek": "Exam week",
+            "holiday": "Holiday",
+            "workdayAdjusted": "Adjusted"
+        }
     }
 }
