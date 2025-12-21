@@ -27,6 +27,8 @@
                         v-for="(member, index) in item.members"
                         :key="`${item.year}-${index}`"
                         :member="member"
+                        :year="item.year"
+                        :index="index"
                     />
                 </div>
             </div>

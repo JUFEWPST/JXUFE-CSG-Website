@@ -232,8 +232,8 @@ const toggleMahou = () => {
         </header>
         <!-- 三列布局 -->
         <div class="w-full grow bg-transparent">
-            <div class="mx-auto w-full max-w-[1600px] px-2">
-                <div class="grid grid-cols-1 gap-4 lg:grid-cols-10">
+            <div class="mx-auto w-full max-w-400 px-2">
+                <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-10">
                     <!-- left: 非 sticky 在上，sticky 在下 -->
                     <aside
                         v-if="
