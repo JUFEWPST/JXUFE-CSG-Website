@@ -17,6 +17,13 @@
         }
     },
     "pages": {
+        "privacy": {
+            "title": "Privacy Policy",
+            "meta": {
+                "title": "Privacy Policy - Cybersecurity Guild of JXUFE",
+                "description": "Learn how this website collects and uses information and what rights you have."
+            }
+        },
         "home": {
             "meta": {
                 "title": "Cybersecurity Guild of Jiangxi University of Finance and Economics - Building Cybersecurity Together, Guarding the Digital Frontier",
