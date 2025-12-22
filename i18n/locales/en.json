@@ -9,6 +9,7 @@
         "archive": "Archive",
         "about": "About the Guild",
         "links": "Useful Links",
+        "timeline": "Timeline",
         "aboutChildren": {
             "index": "Guild Overview",
             "leaders": "Past Leaders",
@@ -17,6 +18,13 @@
         }
     },
     "pages": {
+        "timeline": {
+            "title": "Timeline",
+            "meta": {
+                "title": "Timeline - Cybersecurity Guild of JXUFE",
+                "description": "Timeline of the Cybersecurity Guild of JXUFE."
+            }
+        },
         "privacy": {
             "title": "Privacy Policy",
             "meta": {

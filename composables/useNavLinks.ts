@@ -8,6 +8,10 @@ export interface BaseNavLink {
     path: string
     label: string
     defaultPath?: string
+    /**
+     * 如果为 true，该入口将默认固定在“更多”菜单中（不参与顶部可见区域的宽度计算）。
+     */
+    alwaysInMore?: boolean
 }
 
 export interface NavLinkWithChildren extends BaseNavLink {
@@ -18,12 +22,12 @@ export type NavLink = BaseNavLink | NavLinkWithChildren
 
 export const useNavLinks = (): NavLink[] => {
     return [
-        { 
-            path: '/', 
+        {
+            path: '/',
             label: 'nav.home'
         },
-        { 
-            path: '/archive', 
+        {
+            path: '/archive',
             label: 'nav.archive'
         },
         {
@@ -37,9 +41,14 @@ export const useNavLinks = (): NavLink[] => {
                 { path: '/about/excellent', label: 'nav.aboutChildren.excellent' }
             ]
         },
-        { 
-            path: '/links', 
+        {
+            path: '/links',
             label: 'nav.links'
+        },
+        {
+            path: '/timeline',
+            label: 'nav.timeline',
+            alwaysInMore: true
         }
     ]
 }

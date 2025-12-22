@@ -9,6 +9,7 @@
         "archive": "アーカイブ",
         "about": "ギルドについて",
         "links": "関連リンク",
+        "timeline": "タイムライン",
         "aboutChildren": {
             "index": "ギルド概要",
             "leaders": "歴代責任者",
@@ -17,6 +18,13 @@
         }
     },
   "pages": {
+        "timeline": {
+            "title": "タイムライン",
+            "meta": {
+                "title": "タイムライン - 江西財経大学サイバーセキュリティギルド",
+                "description": "江西財経大学サイバーセキュリティギルドの発展のタイムライン。"
+            }
+        },
     "privacy": {
       "title": "プライバシーポリシー",
       "meta": {

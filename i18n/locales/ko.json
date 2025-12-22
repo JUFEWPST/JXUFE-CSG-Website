@@ -9,6 +9,7 @@
         "archive": "아카이브",
         "about": "길드 소개",
         "links": "유용한 링크",
+        "timeline": "타임라인",
         "aboutChildren": {
             "index": "길드 개요",
             "leaders": "역대 리더",
@@ -17,6 +18,13 @@
         }
     },
   "pages": {
+        "timeline": {
+            "title": "타임라인",
+            "meta": {
+                "title": "타임라인 - 장시 재경대학교 사이버보안 길드",
+                "description": "장시 재경대학교 사이버보안 길드의 발전 타임라인."
+            }
+        },
     "privacy": {
       "title": "개인정보 처리방침",
       "meta": {
