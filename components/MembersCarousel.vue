@@ -25,6 +25,8 @@
                         v-for="(member, index) in group"
                         :key="`${groupIndex}-${index}`"
                         :member="member"
+                        :year="selectedYear"
+                        :index="groupIndex * perPage + index"
                     />
                 </div>
             </BaseCarousel>
@@ -78,7 +80,7 @@ onMounted(() => {
     updatePerPage();
     window.addEventListener("resize", updatePerPage);
     if (props.membersArray.length > 0 && selectedYear.value === "") {
-        selectedYear.value = props.membersArray[0].year;
+        selectedYear.value = props.membersArray[0]?.year ?? "";
     }
 });
 
