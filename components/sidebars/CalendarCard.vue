@@ -344,7 +344,7 @@ const todayStatus = computed<TodayStatus>(() => {
     if (isHoliday && !isWorkdayOverride) {
         label = t("calendar.status.holiday");
     } else if (inExamWeek) {
-        label = t("calendar.status.examWeekClass");
+        label = t("calendar.status.examWeek");
     } else if (lastExamEnd && todayStrValue > lastExamEnd) {
         label = t("calendar.status.vacation");
     } else if (isWorkdayOverride) {

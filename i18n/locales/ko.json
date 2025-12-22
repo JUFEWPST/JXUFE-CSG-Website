@@ -258,7 +258,7 @@
         "todayPrefix": "오늘: ",
         "status": {
             "holiday": "휴일",
-            "examWeekClass": "기말 주간 수업일",
+            "examWeek": "기말 주간",
             "vacation": "방학",
             "workdayAdjusted": "대체 근무일",
             "weekend": "주말",

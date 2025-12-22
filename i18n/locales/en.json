@@ -258,7 +258,7 @@
         "todayPrefix": "Today: ",
         "status": {
             "holiday": "Holiday",
-            "examWeekClass": "Exam-week class day",
+            "examWeek": "Exam week",
             "vacation": "Vacation",
             "workdayAdjusted": "Adjusted workday",
             "weekend": "Weekend",
