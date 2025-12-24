@@ -1,42 +1,33 @@
 <template>
-    <main
-        class="box-borde bg-(--md-sys-color-surface-container-lowest) px-4 py-6 sm:px-6 sm:py-8"
-    >
-        <div
-            class="relative space-y-8 pl-4 sm:pl-8 before:absolute before:left-0 before:top-2 before:h-[calc(100%-1rem)] before:w-0.5 before:bg-(--md-sys-color-outline-variant) sm:before:left-2"
-        >
-            <div
-                v-for="(item, index) in timelineData"
-                :key="index"
-                class="timeline-item relative animate-fade-in-up"
-                :style="{ animationDelay: `${index * 100}ms` }"
-            >
+    <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-6 sm:px-6 sm:py-8">
+        <div class="flex flex-col">
+            <div v-for="(item, index) in timelineData" :key="index"
+                class="group flex w-full min-h-20 items-center rounded-xl transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50 duration-75 animate-fade-in-up"
+                :style="{ animationDelay: `${index * 100}ms` }">
+                <!-- date -->
                 <div
-                    class="absolute -left-5.25 top-1.5 h-3 w-3 rounded-full bg-(--md-sys-color-primary) ring-4 ring-(--md-sys-color-surface-container-lowest) sm:-left-7.25 sm:h-4 sm:w-4"
-                ></div>
-                <div
-                    class="rounded-xl bg-(--md-sys-color-surface-container) p-4 transition-all hover:bg-(--md-sys-color-surface-container-high) sm:p-6"
-                >
+                    class="w-24 shrink-0 pl-2 pr-3 text-left font-mono text-sm font-bold tracking-wide text-(--md-sys-color-on-surface-variant) md:w-28 md:text-base">
+                    {{ item.date || "" }}
+                </div>
+
+                <!-- rail -->
+                <div class="relative w-10 shrink-0 self-stretch md:w-12 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-[repeating-linear-gradient(to_bottom,var(--md-sys-color-outline-variant)_0px,var(--md-sys-color-outline-variant)_7px,transparent_7px,transparent_14px)]"
+                    aria-hidden="true">
                     <div
-                        class="mb-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4"
-                    >
-                        <span
-                            class="font-mono text-sm font-bold text-(--md-sys-color-primary) sm:text-base"
-                        >
-                            {{ item.date }}
-                        </span>
-                        <h3
-                            class="text-lg font-bold text-(--md-sys-color-on-surface) sm:text-xl"
-                        >
-                            {{ item.title }}
-                        </h3>
+                        class="absolute left-3 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent  outline-3 outline-(--md-sys-color-primary) -outline-offset-2">
                     </div>
-                    <p
-                        v-if="item.description"
-                        class="text-sm leading-relaxed text-(--md-sys-color-on-surface-variant) sm:text-base"
-                    >
+                </div>
+
+                <!-- content -->
+                <div class="flex min-w-0 flex-1 flex-col justify-center py-3 pr-3">
+                    <div
+                        class="truncate text-base font-extrabold leading-snug text-(--md-sys-color-on-surface) sm:text-lg">
+                        {{ item.title }}
+                    </div>
+                    <div v-if="item.description"
+                        class="mt-0.5 line-clamp-2 text-sm leading-relaxed text-(--md-sys-color-on-surface-variant) sm:text-base">
                         {{ item.description }}
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,9 +46,7 @@ setPageTitle("pages.timeline.title");
 
 useHead(() => ({
     title: t("pages.timeline.meta.title"),
-    meta: [
-        { name: "description", content: t("pages.timeline.meta.description") },
-    ],
+    meta: [{ name: "description", content: t("pages.timeline.meta.description") }],
 }));
 </script>
 
@@ -67,6 +56,7 @@ useHead(() => ({
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
