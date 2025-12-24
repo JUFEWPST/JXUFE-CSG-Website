@@ -9,6 +9,7 @@
         "archive": "아카이브",
         "about": "길드 소개",
         "links": "유용한 링크",
+        "timeline": "타임라인",
         "aboutChildren": {
             "index": "길드 개요",
             "leaders": "역대 리더",
@@ -16,7 +17,21 @@
             "excellent": "우수 멤버"
         }
     },
-    "pages": {
+  "pages": {
+        "timeline": {
+            "title": "타임라인",
+            "meta": {
+                "title": "타임라인 - 장시 재경대학교 사이버보안 길드",
+                "description": "장시 재경대학교 사이버보안 길드의 발전 타임라인."
+            }
+        },
+    "privacy": {
+      "title": "개인정보 처리방침",
+      "meta": {
+        "title": "개인정보 처리방침 - 장시 재경대학교 사이버보안 길드",
+        "description": "본 웹사이트의 정보 수집·이용 방식과 이용자의 권리에 대해 안내합니다."
+      }
+    },
         "home": {
             "meta": {
                 "title": "장시 재경대학교 사이버보안 길드 - 함께 하는 사이버보안, 디지털 방어선 수호",
@@ -243,7 +258,7 @@
         "todayPrefix": "오늘: ",
         "status": {
             "holiday": "휴일",
-            "examWeekClass": "기말 주간 수업일",
+            "examWeek": "기말 주간",
             "vacation": "방학",
             "workdayAdjusted": "대체 근무일",
             "weekend": "주말",

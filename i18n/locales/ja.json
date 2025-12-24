@@ -9,6 +9,7 @@
         "archive": "アーカイブ",
         "about": "ギルドについて",
         "links": "関連リンク",
+        "timeline": "タイムライン",
         "aboutChildren": {
             "index": "ギルド概要",
             "leaders": "歴代責任者",
@@ -16,7 +17,21 @@
             "excellent": "優秀メンバー"
         }
     },
-    "pages": {
+  "pages": {
+        "timeline": {
+            "title": "タイムライン",
+            "meta": {
+                "title": "タイムライン - 江西財経大学サイバーセキュリティギルド",
+                "description": "江西財経大学サイバーセキュリティギルドの発展のタイムライン。"
+            }
+        },
+    "privacy": {
+      "title": "プライバシーポリシー",
+      "meta": {
+        "title": "プライバシーポリシー - 江西財経大学サイバーセキュリティギルド",
+        "description": "本サイトにおける情報の収集・利用方法および利用者の権利について説明します。"
+      }
+    },
         "home": {
             "meta": {
                 "title": "江西財経大学サイバーセキュリティギルド - ネットワークセキュリティを共に築き、ネットワーク防衛線を守る",
@@ -243,7 +258,7 @@
         "todayPrefix": "今日：",
         "status": {
             "holiday": "休日",
-            "examWeekClass": "期末週授業日",
+            "examWeek": "期末週",
             "vacation": "休暇",
             "workdayAdjusted": "振替出勤日",
             "weekend": "週末",

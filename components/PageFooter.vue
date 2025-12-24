@@ -17,6 +17,15 @@
                 </span>
                 All Rights Reserved.
             </p>
+
+            <p class="mt-2">
+                <NuxtLink
+                    to="/privacy"
+                    class="underline underline-offset-4 transition hover:text-(--md-sys-color-on-surface-variant)"
+                >
+                    {{ t("pages.privacy.title") }}
+                </NuxtLink>
+            </p>
         </div>
     </footer>
 </template>

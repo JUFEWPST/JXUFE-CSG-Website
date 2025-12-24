@@ -9,6 +9,7 @@
         "archive": "归档",
         "about": "关于协会",
         "links": "相关链接",
+        "timeline": "时间线",
         "aboutChildren": {
             "index": "协会简介",
             "leaders": "历届负责人",
@@ -17,6 +18,20 @@
         }
     },
     "pages": {
+        "timeline": {
+            "title": "时间线",
+            "meta": {
+                "title": "时间线 - 江西财经大学网络安全协会",
+                "description": "江西财经大学网络安全协会发展历程时间线。"
+            }
+        },
+        "privacy": {
+            "title": "隐私政策",
+            "meta": {
+                "title": "隐私政策 - 江西财经大学网络安全协会",
+                "description": "了解本网站如何收集与使用信息，以及您的相关权利。"
+            }
+        },
         "home": {
             "meta": {
                 "title": "江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线",
@@ -243,7 +258,7 @@
         "todayPrefix": "今天：",
         "status": {
             "holiday": "节假日",
-            "examWeekClass": "期末周上课",
+            "examWeek": "期末周",
             "vacation": "寒假",
             "workdayAdjusted": "调休上课",
             "weekend": "周末",

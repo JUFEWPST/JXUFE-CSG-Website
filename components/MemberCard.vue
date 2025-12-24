@@ -1,6 +1,7 @@
 <template>
-    <div
-        class="flex w-full min-w-70 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50"
+    <NuxtLink
+        :to="`/about/members/${year}/${index}`"
+        class="flex w-full min-w-70 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50 cursor-pointer"
         :title="member.message"
     >
         <div class="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-(--md-sys-color-surface-container-highest)">
@@ -35,14 +36,18 @@
                 {{ member.message }}
             </p>
         </div>
-    </div>
+    </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 import type { Member } from "~/data/membersData";
 
-const props = defineProps<{ member: Member }>();
+const props = defineProps<{ 
+    member: Member;
+    year: string | number;
+    index: number;
+}>();
 const nameInitial = computed(() => {
     if (!props.member.display) {
         return "";

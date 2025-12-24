@@ -9,6 +9,7 @@
         "archive": "Archive",
         "about": "About the Guild",
         "links": "Useful Links",
+        "timeline": "Timeline",
         "aboutChildren": {
             "index": "Guild Overview",
             "leaders": "Past Leaders",
@@ -17,6 +18,20 @@
         }
     },
     "pages": {
+        "timeline": {
+            "title": "Timeline",
+            "meta": {
+                "title": "Timeline - Cybersecurity Guild of JXUFE",
+                "description": "Timeline of the Cybersecurity Guild of JXUFE."
+            }
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "meta": {
+                "title": "Privacy Policy - Cybersecurity Guild of JXUFE",
+                "description": "Learn how this website collects and uses information and what rights you have."
+            }
+        },
         "home": {
             "meta": {
                 "title": "Cybersecurity Guild of Jiangxi University of Finance and Economics - Building Cybersecurity Together, Guarding the Digital Frontier",
@@ -243,7 +258,7 @@
         "todayPrefix": "Today: ",
         "status": {
             "holiday": "Holiday",
-            "examWeekClass": "Exam-week class day",
+            "examWeek": "Exam week",
             "vacation": "Vacation",
             "workdayAdjusted": "Adjusted workday",
             "weekend": "Weekend",

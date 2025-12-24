@@ -39,7 +39,7 @@
                         class="pointer-events-none invisible absolute top-0 left-0 flex items-center gap-2 whitespace-nowrap md:gap-4"
                     >
                         <template
-                            v-for="(link, index) in navLinks"
+                            v-for="(link, index) in primaryLinks"
                             :key="`measure-${link.path}`"
                         >
                             <div
@@ -387,14 +387,8 @@
                         @click.stop="toggleMenu"
                         type="button"
                     >
-                        <Bars3Icon
-                            v-if="!isMenuOpen"
-                            class="box-border p-1"
-                        />
-                        <XMarkIcon
-                            v-else
-                            class="box-border p-1"
-                        />
+                        <Bars3Icon v-if="!isMenuOpen" class="box-border p-1" />
+                        <XMarkIcon v-else class="box-border p-1" />
                     </button>
                 </div>
             </nav>
@@ -545,6 +539,7 @@ import {
     ArchiveBoxIcon,
     UserGroupIcon,
     LinkIcon,
+    ClockIcon,
 } from "@heroicons/vue/24/outline";
 import { useDropdownController } from "~/composables/useDropdownController";
 import ToggleLocale from "./ToggleLocale.vue";
@@ -557,12 +552,15 @@ const navTitleBox = useState("navTitleBox", () => ({
 }));
 
 const navLinks = useNavLinks();
+const primaryLinks = computed(() => navLinks.filter((l) => !l.alwaysInMore));
+const forcedMoreLinks = computed(() => navLinks.filter((l) => l.alwaysInMore));
 
 const iconMap: Record<string, any> = {
     "/": HomeIcon,
     "/archive": ArchiveBoxIcon,
     "/about": UserGroupIcon,
     "/links": LinkIcon,
+    "/timeline": ClockIcon,
 };
 
 const dropdownLinks = navLinks.filter(
@@ -576,11 +574,16 @@ const measureRowRef = ref<HTMLElement | null>(null);
 const moreMeasureRef = ref<HTMLElement | null>(null);
 const measureItemRefs = ref<Array<HTMLElement | null>>([]);
 
-const visibleCount = ref(navLinks.length);
+const visibleCount = ref(primaryLinks.value.length);
 const moreOpen = ref(false);
 
-const visibleLinks = computed(() => navLinks.slice(0, visibleCount.value));
-const overflowLinks = computed(() => navLinks.slice(visibleCount.value));
+const visibleLinks = computed(() =>
+    primaryLinks.value.slice(0, visibleCount.value),
+);
+const overflowLinks = computed(() => [
+    ...primaryLinks.value.slice(visibleCount.value),
+    ...forcedMoreLinks.value,
+]);
 
 const setMeasureItemRef = (el: HTMLElement | null, index: number) => {
     measureItemRefs.value[index] = el;
@@ -617,6 +620,7 @@ const recomputeOverflow = async () => {
     };
 
     let count = itemEls.length;
+
     while (count > 0 && totalWidth(count) > availableWidth) {
         count--;
     }

@@ -1,48 +1,62 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-    <url>
-        <loc>https://www.wpst.top/</loc>
-        <lastmod>2025-07-26T23:42:10+08:00</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://www.wpst.top/archive</loc>
-        <lastmod>2025-08-11T11:42:38+08:00</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://www.wpst.top/about</loc>
-        <lastmod>2025-07-26T23:42:10+08:00</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.wpst.top/links</loc>
-        <lastmod>2025-07-26T23:42:10+08:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://www.wpst.top/about/leaders</loc>
-        <lastmod>2025-07-26T23:55:05+08:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>https://csec.jxufe.edu.cn/</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
-    <url>
-        <loc>https://www.wpst.top/about/members</loc>
-        <lastmod>2025-08-11T11:42:38+08:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
+  <url>
+    <loc>https://csec.jxufe.edu.cn/archive</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
-    <url>
-        <loc>https://www.wpst.top/about/excellent</loc>
-        <lastmod>2025-08-11T11:42:38+08:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
+  <url>
+    <loc>https://csec.jxufe.edu.cn/about</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://csec.jxufe.edu.cn/links</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://csec.jxufe.edu.cn/privacy</loc>
+    <lastmod>2025-12-21T16:07:00+08:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://csec.jxufe.edu.cn/about/leaders</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://csec.jxufe.edu.cn/about/members</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://csec.jxufe.edu.cn/about/excellent</loc>
+    <lastmod>2025-12-14T19:18:10+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
