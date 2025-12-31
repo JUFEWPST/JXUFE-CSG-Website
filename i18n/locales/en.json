@@ -22,20 +22,20 @@
             "title": "Timeline",
             "meta": {
                 "title": "Timeline - Cybersecurity Guild of JXUFE",
-                "description": "Timeline of the Cybersecurity Guild of JXUFE."
+                "description": "Records the development history and important milestones of the Cybersecurity Guild of JXUFE."
             }
         },
         "privacy": {
             "title": "Privacy Policy",
             "meta": {
                 "title": "Privacy Policy - Cybersecurity Guild of JXUFE",
-                "description": "Learn how this website collects and uses information and what rights you have."
+                "description": "Learn about this website's information collection and usage rules and your rights."
             }
         },
         "home": {
             "meta": {
                 "title": "Cybersecurity Guild of Jiangxi University of Finance and Economics - Building Cybersecurity Together, Guarding the Digital Frontier",
-                "description": "Founded in September 2016, the Cybersecurity Guild of Jiangxi University of Finance and Economics aims to popularize cybersecurity knowledge among students and staff, cultivate technical talent, promote mutual exchange, and grow together."
+                "description": "Founded in September 2016, dedicated to popularizing cybersecurity knowledge to all students and staff, cultivating technical talent, and promoting exchange and progress."
             },
             "slogan": "Building Cybersecurity Together, Guarding the Digital Frontier",
             "aboutUs": {
@@ -56,8 +56,8 @@
         "links": {
             "meta": {
                 "title": "Useful Links - Cybersecurity Guild of Jiangxi University of Finance and Economics",
-                "description": "Friend links page of the official website of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Provides links to the university's official site, on-campus organizations, and personal websites.",
-                "keywords": "friend links,useful links,university official site,organization sites,personal websites"
+                "description": "Friend links of the Cybersecurity Guild of JXUFE, featuring the official university site, campus organizations, and excellent personal blogs.",
+                "keywords": "friend links,useful links,university official site,campus organizations,personal blogs"
             },
             "title": "Useful Links",
             "sections": {
@@ -83,8 +83,8 @@
         "archive": {
             "meta": {
                 "title": "Archive - Cybersecurity Guild of Jiangxi University of Finance and Economics",
-                "description": "Archive page of the official website of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse archived posts here.",
-                "keywords": "post archive,blog,guild news"
+                "description": "Archives of the Cybersecurity Guild of JXUFE, including technical blogs, event updates, and history.",
+                "keywords": "post archive,technical blogs,cybersecurity,guild news"
             },
             "title": "Archive",
             "para": {
@@ -142,7 +142,7 @@
             "leaders": {
                 "meta": {
                     "title": "Past Leaders - Cybersecurity Guild of Jiangxi University of Finance and Economics",
-                    "description": "Past leaders page of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse past leaders here.",
+                    "description": "Showcase of past leaders of the Cybersecurity Guild of JXUFE.",
                     "keywords": "past leaders,past presidents,former presidents,JXUFE cybersecurity guild presidents"
                 },
                 "title": "Past Leaders",
@@ -153,7 +153,7 @@
             "members": {
                 "meta": {
                     "title": "Past Members - Cybersecurity Guild of Jiangxi University of Finance and Economics",
-                    "description": "Past members page of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse past members here.",
+                    "description": "List and profiles of past members of the Cybersecurity Guild of JXUFE.",
                     "keywords": "past members,guild members,member archive,JXUFE cybersecurity guild past members"
                 },
                 "title": "Past Members",
@@ -164,7 +164,7 @@
             "excellent": {
                 "meta": {
                     "title": "Outstanding Members - Cybersecurity Guild of Jiangxi University of Finance and Economics",
-                    "description": "Outstanding members page of the Cybersecurity Guild of Jiangxi University of Finance and Economics. Browse outstanding members here.",
+                    "description": "Showcase of outstanding members of the Cybersecurity Guild of JXUFE and their contributions.",
                     "keywords": "outstanding members,member highlights,security experts,honor roll,JXUFE cybersecurity guild outstanding members"
                 },
                 "title": "Outstanding Members",
