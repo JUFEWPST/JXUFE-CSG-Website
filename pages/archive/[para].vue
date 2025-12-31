@@ -109,7 +109,7 @@ onMounted(() => {
         side: "right",
         order: 50,
         sticky: true,
-        showOnMobileBottom: true,
+        showOnMobileBottom: false,
         component: MarkdownTOC,
         props: {
             items: tocItems.value,
