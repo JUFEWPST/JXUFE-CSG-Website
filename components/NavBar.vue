@@ -781,7 +781,7 @@ header {
     @apply before:absolute before:inset-0 before:z-[-1] before:scale-[0.8] before:rounded-lg before:opacity-0 before:backdrop-blur before:transition-all before:duration-300 before:ease-out;
     @apply before:origin-center;
     @apply hover:before:scale-100 hover:before:opacity-100;
-    @apply before:bg-(--md-sys-color-primary-container)/40 dark:before:bg-(--md-sys-color-primary-container)/70;
+    @apply before:bg-(--md-sys-color-secondary-container)/40 dark:before:bg-(--md-sys-color-secondary-container)/70;
     @apply hover:text-(--md-sys-color-primary);
 }
 

@@ -23,7 +23,7 @@
                     </ArticleBlock>
                 </ul>
                 <hr
-                    class="mx-auto box-border w-4/5 border-t-2 border-(--md-sys-color-primary-container) p-2 transition-colors duration-300 hover:border-(--md-sys-color-primary) md:w-2/5"
+                    class="mx-auto box-border w-4/5 border-t-2 border-(--md-sys-color-secondary-container) p-2 transition-colors duration-300 hover:border-(--md-sys-color-primary) md:w-2/5"
                 />
                 <ul class="box-border w-full p-2">
                     <ArticleBlock
