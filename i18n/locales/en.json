@@ -14,7 +14,8 @@
             "index": "Guild Overview",
             "leaders": "Past Leaders",
             "members": "Past Members",
-            "excellent": "Outstanding Members"
+            "excellent": "Outstanding Members",
+            "teacher": "Faculty Advisor"
         }
     },
     "pages": {
@@ -170,6 +171,15 @@
                 "title": "Outstanding Members",
                 "dataCollectTip": "Data is still being collected. If you are a related member of the guild, please help by filling out our collection form.",
                 "archiveInvite": "Invitation to Co-build Past Members Archive"
+            },
+            "teacher": {
+                "meta": {
+                    "title": "Faculty Advisor - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                    "description": "Introduction to the Faculty Advisor of JXUFE Network Security Association.",
+                    "keywords": "Advisor, Faculty Advisor, Tan Zuowen"
+                },
+                "title": "Faculty Advisor",
+                "homepage": "Personal Homepage"
             }
         }
     },

@@ -2,8 +2,10 @@
 import FlipToggle from "~/components/FlipToggle.vue";
 import { onMounted, ref } from "vue";
 import { leadersData } from "~/data/leadersData";
+import { teacherData } from "~/data/teacherData";
 import { honorsData, getLevelColor, getYearColor } from "~/data/honors";
 import { membersArray } from "~/data/membersData";
+import TeacherCard from "~/components/TeacherCard.vue";
 import { usePageTitle } from "@/composables/usePageTitle";
 
 const isMounted = ref(false);
@@ -263,6 +265,20 @@ onMounted(() => {
                     [{{ t("pages.about.members.archiveInvite") }}]</NuxtLink
                 >
             </AnzuAlert>
+
+            <!-- Faculty Advisor -->
+            <section class="space-y-4">
+                <div class="flex flex-wrap items-end justify-between gap-4">
+                    <h2
+                        class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
+                    >
+                        {{ t("pages.about.teacher.title") }}
+                    </h2>
+                </div>
+                <div class="flex justify-center">
+                    <TeacherCard :teacher="teacherData" />
+                </div>
+            </section>
 
             <!-- Leaders -->
             <section class="space-y-4">

@@ -36,6 +36,7 @@ export const useNavLinks = (): NavLink[] => {
             label: 'nav.about',
             children: [
                 { path: '/about', label: 'nav.aboutChildren.index' },
+                { path: '/about/teacher', label: 'nav.aboutChildren.teacher' },
                 { path: '/about/leaders', label: 'nav.aboutChildren.leaders' },
                 { path: '/about/members', label: 'nav.aboutChildren.members' },
                 { path: '/about/excellent', label: 'nav.aboutChildren.excellent' }

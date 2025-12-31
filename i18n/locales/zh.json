@@ -14,7 +14,8 @@
             "index": "协会简介",
             "leaders": "历届负责人",
             "members": "历届成员",
-            "excellent": "优秀成员"
+            "excellent": "优秀成员",
+            "teacher": "社团指导老师"
         }
     },
     "pages": {
@@ -170,6 +171,15 @@
                 "title": "协会优秀成员",
                 "dataCollectTip": "数据努力收集中，若您是协会相关成员，烦请协助填写我们的收集表",
                 "archiveInvite": "历届成员档案共建邀请"
+            },
+            "teacher": {
+                "meta": {
+                    "title": "社团指导老师 - 江西财经大学网络安全协会",
+                    "description": "介绍江西财经大学网络安全协会社团指导老师。",
+                    "keywords": "指导老师,网安协会指导老师,谭作文"
+                },
+                "title": "社团指导老师",
+                "homepage": "教师个人主页"
             }
         }
     },

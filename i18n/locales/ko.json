@@ -14,7 +14,8 @@
             "index": "길드 개요",
             "leaders": "역대 리더",
             "members": "역대 멤버",
-            "excellent": "우수 멤버"
+            "excellent": "우수 멤버",
+            "teacher": "지도 교수"
         }
     },
   "pages": {
@@ -170,6 +171,15 @@
                 "title": "우수 멤버",
                 "dataCollectTip": "데이터 수집 중입니다. 길드 관련 멤버이시다면 저희 수집 양식을 작성해 주시기 바랍니다.",
                 "archiveInvite": "역대 멤버 아카이브 공동 구축 초대"
+            },
+            "teacher": {
+                "meta": {
+                    "title": "지도 교수 - 장시 재경대학교 사이버보안 길드",
+                    "description": "장시 재경대학교 사이버보안 길드의 지도 교수 소개.",
+                    "keywords": "지도 교수, 고문, Tan Zuowen"
+                },
+                "title": "지도 교수",
+                "homepage": "개인 홈페이지"
             }
         }
     },
