@@ -17,7 +17,6 @@
                 </span>
                 All Rights Reserved.
             </p>
-
             <p class="mt-2">
                 <NuxtLink
                     to="/privacy"
@@ -26,10 +25,26 @@
                     {{ t("pages.privacy.title") }}
                 </NuxtLink>
             </p>
+            <p class="mt-2 text-xs">
+                Built by {{ buildInfo.builder }} / {{ buildInfo.buildTime }} /
+                <a
+                    :href="`https://github.com/JUFEWPST/JXUFE-CSG-Website/commit/${buildInfo.commitHash}`"
+                    class="text-(--md-sys-color-primary)"
+                    >#{{ buildInfo.commitHashShort.toUpperCase() }}</a
+                >
+            </p>
         </div>
     </footer>
 </template>
 
 <script lang="ts" setup>
 const { t } = useI18n();
+
+const runtimeConfig = useRuntimeConfig();
+const buildInfo = runtimeConfig.public.buildInfo as {
+    builder: string;
+    buildTime: string;
+    commitHash: string;
+    commitHashShort: string;
+};
 </script>
