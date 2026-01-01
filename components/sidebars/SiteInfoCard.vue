@@ -21,7 +21,7 @@
                         class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
                     >
                         <MapPinIcon
-                            class="h-4 w-4 text-(--md-sys-color-on-secondary-container)"
+                            class="h-4 w-4 text-(--md-sys-color-primary)"
                         />
                     </div>
                     <span
@@ -36,7 +36,7 @@
                         class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
                     >
                         <EnvelopeIcon
-                            class="h-4 w-4 text-(--md-sys-color-on-secondary-container)"
+                            class="h-4 w-4 text-(--md-sys-color-primary)"
                         />
                     </div>
                     <span

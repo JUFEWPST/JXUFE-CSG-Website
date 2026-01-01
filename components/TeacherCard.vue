@@ -8,9 +8,9 @@
                     class="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-(--md-sys-color-surface-container-highest) md:h-32 md:w-32"
                 >
                     <img
-                        v-if="leader.avatar"
-                        :src="leader.avatar"
-                        :alt="leader.name"
+                        v-if="teacher.avatar"
+                        :src="teacher.avatar"
+                        :alt="teacher.name"
                         class="h-full w-full object-cover"
                         loading="lazy"
                         decoding="async"
@@ -22,7 +22,7 @@
                         <span
                             class="text-3xl font-bold text-(--md-sys-color-on-surface-variant)"
                         >
-                            {{ leader.name.charAt(0) }}
+                            {{ teacher.name.charAt(0) }}
                         </span>
                     </div>
                 </div>
@@ -31,54 +31,64 @@
                     <div class="flex flex-wrap items-center gap-2 min-w-0">
                         <h2
                             class="min-w-0 truncate text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
-                            :title="leader.name"
+                            :title="teacher.name"
                         >
-                            {{ leader.name }}
+                            {{ teacher.name }}
                         </h2>
                         <span
                             class="shrink-0 inline-flex items-center rounded-md bg-(--md-sys-color-secondary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)"
                         >
-                            {{
-                                $t("pages.about.leaders.leaderCardTitle", {
-                                    year: leader.year,
-                                })
-                            }}
+                            {{ teacher.role }}
                         </span>
                     </div>
                     <div class="mt-1 min-w-0">
                         <span
-                            class="block truncate text-sm font-medium text-(--md-sys-color-primary)"
-                            :title="leader.class"
+                            class="block text-sm font-medium text-(--md-sys-color-primary)"
+                            :title="teacher.title"
                         >
-                            {{ leader.class }}
+                            {{ teacher.title }}
                         </span>
+                    </div>
+                    <div v-if="teacher.link" class="mt-2">
+                        <a
+                            :href="teacher.link"
+                            target="_blank"
+                            class="text-sm text-(--md-sys-color-primary) hover:underline flex items-center gap-1"
+                        >
+                            <span>{{
+                                $t("pages.about.teacher.homepage")
+                            }}</span>
+                            <span
+                                class="i-material-symbols-open-in-new text-xs"
+                            ></span>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-1 flex-col text-left min-w-0">
                 <div
-                    v-if="leader.message"
+                    v-if="teacher.bio"
                     class="mb-4 rounded-lg border border-(--md-sys-color-outline-variant)/50 bg-(--md-sys-color-surface-container-high) p-3"
                 >
                     <p
                         class="text-sm leading-relaxed text-(--md-sys-color-on-surface-variant)"
                     >
-                        {{ leader.message }}
+                        {{ teacher.bio }}
                     </p>
                 </div>
 
-                <div v-if="leader.achievements?.length" class="space-y-1">
+                <div v-if="teacher.highlights?.length" class="space-y-1">
                     <div class="flex flex-wrap gap-x-4 gap-y-1">
                         <span
-                            v-for="(achievement, i) in leader.achievements"
+                            v-for="(item, i) in teacher.highlights"
                             :key="i"
                             class="inline-flex items-center text-sm text-(--md-sys-color-on-surface-variant)/80"
                         >
                             <span
                                 class="mr-1.5 h-1 w-1 rounded-full bg-(--md-sys-color-outline)"
                             ></span>
-                            {{ achievement }}
+                            {{ item }}
                         </span>
                     </div>
                 </div>
@@ -88,9 +98,9 @@
 </template>
 
 <script setup lang="ts">
-import type { Leader } from "~/types/leader";
+import type { Teacher } from "~/types/teacher";
 
 defineProps<{
-    leader: Leader;
+    teacher: Teacher;
 }>();
 </script>

@@ -1,5 +1,7 @@
 <template>
-    <div class="pagination-container">
+    <div
+        class="flex flex-wrap items-center justify-center gap-2 my-4 text-(--md-sys-color-on-surface)"
+    >
         <!-- 上一页 -->
         <button
             class="pagination-button"
@@ -8,7 +10,7 @@
             :disabled="currentPage <= 1"
             :aria-label="t('common.actions.paginationPrevious')"
         >
-            <span class="pagination-arrow">←</span>
+            <span class="text-base leading-none">←</span>
         </button>
         <template v-for="page in displayedPages" :key="page">
             <button
@@ -31,12 +33,15 @@
             :disabled="currentPage >= totalPages"
             :aria-label="$t('common.actions.paginationNext')"
         >
-            <span class="pagination-arrow">→</span>
+            <span class="text-base leading-none">→</span>
         </button>
-        <div class="page-jump">
+        <div
+            class="flex items-center gap-2 ml-3 text-sm text-(--md-sys-color-on-surface)/80"
+        >
             <span>{{ t("common.actions.paginationJumpTo") }}</span>
             <input
                 type="number"
+                class="w-13 px-2 py-1 rounded-lg border border-(--md-sys-color-outline)/80 bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-on-surface) text-center text-sm leading-none outline-none transition-all duration-200 focus-visible:border-(--md-sys-color-primary) focus-visible:shadow-[0_0_0_1px_color-mix(in_srgb,var(--md-sys-color-primary)_40%,transparent)]"
                 v-model.number="inputPage"
                 min="1"
                 :max="totalPages"
@@ -45,7 +50,7 @@
             />
             <span>{{ t("common.actions.paginationPageUnit") }}</span>
             <button
-                class="jump-button"
+                class="pagination-button active"
                 @click="jumpToPage"
                 :aria-label="
                     t('common.actions.paginationJumpToPage', {
@@ -53,192 +58,57 @@
                     })
                 "
             >
-                GO
+                芳文跳
             </button>
         </div>
     </div>
 </template>
 
 <style scoped>
-.pagination-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin: 1rem 0;
-    flex-wrap: wrap;
-    color: var(--md-sys-color-on-surface);
-}
+@reference "tailwindcss";
 
 .pagination-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 36px;
-    padding: 0 12px;
-    height: 32px;
-    box-sizing: border-box;
-    border-radius: 0.75rem;
-    border: 1px solid
-        color-mix(in srgb, var(--md-sys-color-outline) 80%, transparent);
-    background-color: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.1s ease,
-        box-shadow 0.2s ease;
+    @apply relative inline-flex h-8 min-w-9 items-center justify-center overflow-hidden rounded-lg border border-(--md-sys-color-outline)/80 bg-(--md-sys-color-surface) px-3 text-sm font-medium leading-none text-(--md-sys-color-on-surface) cursor-pointer transition-all duration-200;
 }
 
 .pagination-button::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: currentColor;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
+    @apply pointer-events-none absolute inset-0 bg-current opacity-0 transition-opacity duration-200 content-[''];
 }
 
 .pagination-button:hover:not(.disabled, .active, .dots) {
-    background-color: var(--md-sys-color-surface-container-low);
+    @apply bg-(--md-sys-color-surface-container-low);
 }
 
 .pagination-button:hover:not(.disabled, .active, .dots)::after {
-    opacity: 0.08;
+    @apply opacity-8;
 }
 
 .pagination-button:active:not(.disabled, .active, .dots) {
-    transform: translateY(0);
+    @apply translate-y-0;
 }
 
 .pagination-button:active:not(.disabled, .active, .dots)::after {
-    opacity: 0.12;
+    @apply opacity-12;
 }
 
 .pagination-button.active {
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    border-color: var(--md-sys-color-primary);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
+    @apply border-(--md-sys-color-primary) bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary);
 }
 
 .pagination-button.disabled {
-    cursor: not-allowed;
-    border-color: transparent;
-    background-color: color-mix(
-        in srgb,
-        var(--md-sys-color-on-surface) 12%,
-        transparent
-    );
-    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    @apply cursor-not-allowed border-transparent bg-(--md-sys-color-on-surface)/12 text-(--md-sys-color-on-surface)/38;
 }
 
 .pagination-button.disabled::after {
-    opacity: 0;
+    @apply opacity-0;
 }
 
 .pagination-button.dots {
-    cursor: default;
-    border: none;
-    background-color: transparent;
-    color: color-mix(in srgb, var(--md-sys-color-on-surface) 60%, transparent);
+    @apply cursor-default border-none bg-transparent text-(--md-sys-color-on-surface)/60;
 }
 
 .disabled-item {
-    cursor: not-allowed;
-}
-
-.pagination-arrow {
-    font-size: 1rem;
-    line-height: 1;
-}
-
-.page-jump {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: 12px;
-    font-size: 0.875rem;
-    color: color-mix(in srgb, var(--md-sys-color-on-surface) 80%, transparent);
-}
-
-.page-jump input {
-    width: 3.25rem;
-    padding: 4px 8px;
-    border-radius: 0.5rem;
-    border: 1px solid
-        color-mix(in srgb, var(--md-sys-color-outline) 80%, transparent);
-    background-color: var(--md-sys-color-surface-container-low);
-    color: var(--md-sys-color-on-surface);
-    text-align: center;
-    font-size: 0.875rem;
-    line-height: 1;
-    outline: none;
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background-color 0.2s ease;
-}
-
-.page-jump input:focus-visible {
-    border-color: var(--md-sys-color-primary);
-    box-shadow: 0 0 0 1px
-        color-mix(in srgb, var(--md-sys-color-primary) 40%, transparent);
-}
-
-.jump-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 12px;
-    height: 32px;
-    border-radius: 0.75rem;
-    border: none;
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    font-size: 0.875rem;
-    line-height: 1;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition:
-        background-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.jump-button::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: currentColor;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-}
-
-.jump-button:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--md-sys-color-secondary-container) 90%,
-        var(--md-sys-color-on-surface) 10%
-    );
-}
-
-.jump-button:hover::after {
-    opacity: 0.08;
-}
-
-.jump-button:active::after {
-    opacity: 0.12;
+    @apply cursor-not-allowed;
 }
 </style>
 

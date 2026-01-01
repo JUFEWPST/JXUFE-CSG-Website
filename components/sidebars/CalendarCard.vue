@@ -71,7 +71,7 @@
         >
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded border border-(--md-sys-color-primary)/40 bg-(--md-sys-color-primary-container)"
+                    class="h-3 w-3 rounded border border-(--md-sys-color-primary)/40 bg-(--md-sys-color-secondary-container)"
                 />
                 <span>{{ t("calendar.legend.holiday") }}</span>
             </div>
@@ -379,7 +379,7 @@ function dayClasses(day: CalendarDayMeta): string {
         );
     } else if (day.isHoliday) {
         classes.push(
-            "bg-(--md-sys-color-primary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-primary)",
+            "bg-(--md-sys-color-secondary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-primary)",
         );
     } else if (day.isWorkdayOverride) {
         classes.push(

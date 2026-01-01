@@ -41,13 +41,13 @@
                 :href="event.比赛链接"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group block rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest) px-3 py-2.5 transition-colors hover:bg-(--md-sys-color-primary-container)"
+                class="group block rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest) px-3 py-2.5 transition-colors hover:bg-(--md-sys-color-secondary-container)"
             >
                 <div class="flex items-center gap-3">
                     <div class="shrink-0">
                         <component
                             :is="iconForStatus(statusKey(event))"
-                            class="h-5 w-5"
+                            class="h-5 w-5 group-hover:text-(--md-sys-color-primary)"
                             :class="iconColorClass(statusKey(event))"
                             :title="t(`ctf.status.${statusKey(event)}`)"
                         />
@@ -55,19 +55,19 @@
 
                     <div class="min-w-0 flex-1">
                         <p
-                            class="truncate text-sm font-medium text-(--md-sys-color-on-surface) group-hover:text-(--md-sys-color-on-primary-container)"
+                            class="truncate text-sm font-medium text-(--md-sys-color-on-surface) group-hover:text-(--md-sys-color-primary)"
                         >
                             {{ event.比赛名称 }}
                         </p>
                         <p
-                            class="mt-0.5 truncate text-[11px] text-(--md-sys-color-on-surface-variant) group-hover:text-(--md-sys-color-on-primary-container)"
+                            class="mt-0.5 truncate text-[11px] text-(--md-sys-color-on-surface-variant) group-hover:text-(--md-sys-color-primary)"
                         >
                             {{ formatStartTime(event.比赛时间) }}
                         </p>
                     </div>
 
                     <ArrowTopRightOnSquareIcon
-                        class="h-4 w-4 shrink-0 text-(--md-sys-color-on-surface-variant) group-hover:text-(--md-sys-color-on-primary-container)"
+                        class="h-4 w-4 shrink-0 text-(--md-sys-color-on-surface-variant) group-hover:text-(--md-sys-color-primary)"
                     />
                 </div>
             </a>

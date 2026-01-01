@@ -31,7 +31,7 @@
                 </h3>
                 <span
                     v-if="person.className"
-                    class="inline-flex items-center rounded-md bg-(--md-sys-color-primary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)"
+                    class="inline-flex items-center rounded-md bg-(--md-sys-color-secondary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)"
                     :title="person.className"
                 >
                     {{ person.className }}

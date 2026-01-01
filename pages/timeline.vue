@@ -1,7 +1,7 @@
 <template>
     <main class="bg-(--md-sys-color-surface-container-lowest) px-4 py-6 sm:px-6 sm:py-8">
         <div class="flex flex-col">
-            <div v-for="(item, index) in timelineData" :key="index"
+            <div v-for="(item, index) in paginatedData" :key="index"
                 class="group flex w-full min-h-20 items-center rounded-xl transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50 duration-75 animate-fade-in-up"
                 :style="{ animationDelay: `${index * 100}ms` }">
                 <!-- date -->
@@ -31,6 +31,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- Pagination -->
+        <div class="mt-8 flex justify-center">
+            <PageNav
+                v-if="totalPages > 1"
+                :total-pages="totalPages"
+                :current-page="currentPage"
+            />
+        </div>
     </main>
 </template>
 
@@ -41,6 +50,23 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const { setPageTitle } = usePageTitle();
+const route = useRoute();
+
+const itemsPerPage = 10;
+
+const currentPage = computed(() => {
+    return Number(route.query.page) || 1;
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(timelineData.length / itemsPerPage);
+});
+
+const paginatedData = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return timelineData.slice(start, end);
+});
 
 setPageTitle("pages.timeline.title");
 

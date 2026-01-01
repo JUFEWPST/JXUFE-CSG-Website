@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <div
-            class="max-h-[calc(100vh-7rem)] overflow-y-auto p-2 text-(--md-sys-color-on-surface-variant) transition-all duration-300 ease-in-out md:p-3"
+            class="max-h-[calc(100vh-7rem)] overflow-y-auto text-(--md-sys-color-on-surface-variant) transition-all duration-300 ease-in-out"
             id="toc-container"
             aria-labelledby="toc-title"
             role="navigation"
@@ -9,7 +9,7 @@
             <div v-if="items.length" class="mb-2 flex items-center">
                 <h2
                     id="toc-title"
-                    class="text-lg font-bold text-(--md-sys-color-primary)"
+                    class="text-lg font-bold"
                 >
                     {{ t("common.items.toc") }}
                 </h2>
@@ -37,7 +37,7 @@
                 v-if="items.length === 0"
                 class="mt-2 text-sm text-(--md-sys-color-on-surface-variant) italic"
             >
-                NULL
+                目录为空 | Empty TOC
             </div>
         </div>
     </div>
@@ -68,11 +68,11 @@ const activeId = ref("");
 
 const getLinkClasses = (item: TocItem) => {
     const baseClasses =
-        "block py-1.5 px-2 md:px-3 no-underline rounded-full text-sm transition-colors cursor-pointer whitespace-normal wrap-break-word";
+        "block py-1.5 px-2 md:px-3 no-underline rounded-lg text-sm transition-colors cursor-pointer whitespace-normal wrap-break-word";
     const activeClasses =
         activeId.value === item.id
             ? "bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-medium"
-            : "text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)";
+            : "text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-primary)";
 
     return `${baseClasses} ${activeClasses}`;
 };

@@ -2,7 +2,7 @@
     <li class="list-none">
         <NuxtLink
             :to="linkto"
-            class="relative flex cursor-pointer! flex-col rounded-xl px-8 py-6 transition-all duration-200 ease-out before:absolute before:inset-0 before:inset-y-0 before:z-[-1] before:origin-[var(--origin-x)_var(--origin-y)] before:scale-[0.92] before:rounded-2xl before:bg-(--md-sys-color-primary-container)/40 before:opacity-0 before:backdrop-blur before:transition-all before:duration-200 hover:translate-x-2 hover:before:scale-100 hover:before:opacity-100 focus-visible:shadow-none! dark:before:bg-(--md-sys-color-primary-container)/70"
+            class="relative flex cursor-pointer! flex-col rounded-xl px-8 py-6 transition-all duration-200 ease-out before:absolute before:inset-0 before:inset-y-0 before:z-[-1] before:origin-[var(--origin-x)_var(--origin-y)] before:scale-[0.92] before:rounded-2xl before:bg-(--md-sys-color-secondary-container)/40 before:opacity-0 before:backdrop-blur before:transition-all before:duration-200 hover:translate-x-2 hover:before:scale-100 hover:before:opacity-100 focus-visible:shadow-none! dark:before:bg-(--md-sys-color-secondary-container)/70"
             :style="`--origin-x: ${Math.random() * 100}%; --origin-y: ${Math.random() * 30}%`"
         >
             <h2

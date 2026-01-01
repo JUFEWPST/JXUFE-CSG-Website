@@ -27,7 +27,7 @@
                 <h3 class="text-lg font-bold text-(--md-sys-color-on-surface)">
                     {{ member.display || "" }}
                 </h3>
-                <span class="inline-flex items-center rounded-md bg-(--md-sys-color-primary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)">
+                <span class="inline-flex items-center rounded-md bg-(--md-sys-color-secondary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)">
                     {{ member.position }}
                 </span>
             </div>
