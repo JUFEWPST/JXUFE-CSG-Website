@@ -30,7 +30,7 @@
                 <a
                     :href="`https://github.com/JUFEWPST/JXUFE-CSG-Website/commit/${buildInfo.commitHash}`"
                     class="text-(--md-sys-color-primary)"
-                    >#{{ buildInfo.commitHashShort.toUpperCase() }}</a
+                    >#{{ buildInfo.commitHash.substring(0, 6).toUpperCase() }}</a
                 >
             </p>
         </div>
@@ -45,6 +45,5 @@ const buildInfo = runtimeConfig.public.buildInfo as {
     builder: string;
     buildTime: string;
     commitHash: string;
-    commitHashShort: string;
 };
 </script>

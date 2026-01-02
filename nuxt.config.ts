@@ -26,8 +26,7 @@ export default defineNuxtConfig({
       buildInfo: {
         builder: process.env.NUXT_PUBLIC_BUILDER || 'Manual Build',
         buildTime: process.env.NUXT_PUBLIC_BUILD_TIME || new Date().toISOString(),
-        commitHash: process.env.NUXT_PUBLIC_COMMIT_HASH || 'unknown',
-        commitHashShort: process.env.NUXT_PUBLIC_COMMIT_HASH_SHORT || 'unknown'
+        commitHash: process.env.NUXT_PUBLIC_COMMIT_HASH || 'unknown'
       }
     }
   },

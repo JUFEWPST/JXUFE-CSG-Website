@@ -94,11 +94,10 @@ pull_latest() {
 
 build_with_docker() {
     local commit_hash="$1"
-    local commit_hash_short="$(echo $commit_hash | cut -c1-6)"
     local build_time="$(date -Iseconds)"
     
     log "开始Docker构建..."
-    log "构建信息: Builder=AnzuOrchestra, Commit=$commit_hash_short, Time=$build_time"
+    log "构建信息: Builder=AnzuOrchestra, Commit=$commit_hash, Time=$build_time"
     
     cd "$PROJECT_DIR"
     
@@ -108,7 +107,6 @@ build_with_docker() {
         --build-arg NUXT_PUBLIC_BUILDER="AnzuOrchestra" \
         --build-arg NUXT_PUBLIC_BUILD_TIME="$build_time" \
         --build-arg NUXT_PUBLIC_COMMIT_HASH="$commit_hash" \
-        --build-arg NUXT_PUBLIC_COMMIT_HASH_SHORT="$commit_hash_short" \
         -t "$PROJECT_NAME:latest" \
         -t "$PROJECT_NAME:$commit_hash" \
         .; then
