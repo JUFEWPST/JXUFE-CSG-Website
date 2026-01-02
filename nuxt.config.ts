@@ -21,6 +21,17 @@ export default defineNuxtConfig({
     defaultLocale: 'zh',
   },
 
+  runtimeConfig: {
+    public: {
+      buildInfo: {
+        builder: process.env.NUXT_PUBLIC_BUILDER || 'Manual Build',
+        buildTime: process.env.NUXT_PUBLIC_BUILD_TIME || new Date().toISOString(),
+        commitHash: process.env.NUXT_PUBLIC_COMMIT_HASH || 'unknown',
+        commitHashShort: process.env.NUXT_PUBLIC_COMMIT_HASH_SHORT || 'unknown'
+      }
+    }
+  },
+
   app: {
     head: {
       title: '江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线',
