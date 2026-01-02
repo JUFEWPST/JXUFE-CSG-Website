@@ -24,10 +24,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       buildInfo: {
-        builder: process.env.NUXT_PUBLIC_BUILDER || 'Manual Build',
-        buildTime: process.env.NUXT_PUBLIC_BUILD_TIME || new Date().toISOString(),
-        commitHash: process.env.NUXT_PUBLIC_COMMIT_HASH || 'unknown',
-        commitHashShort: process.env.NUXT_PUBLIC_COMMIT_HASH_SHORT || 'unknown'
+        builder: 'Manual Build',
+        buildTime: new Date().toISOString(),
+        commitHash: process.env.VERCEL_GIT_COMMIT_SHA ||
+          process.env.COMMIT_REF ||
+          'unknown'
       }
     }
   },
