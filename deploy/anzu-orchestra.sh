@@ -104,9 +104,9 @@ build_with_docker() {
     log "构建Docker镜像..."
     if docker build \
         -f "$DEPLOY_DIR/Dockerfile" \
-        --build-arg NUXT_PUBLIC_BUILDER="AnzuOrchestra" \
-        --build-arg NUXT_PUBLIC_BUILD_TIME="$build_time" \
-        --build-arg NUXT_PUBLIC_COMMIT_HASH="$commit_hash" \
+        --build-arg NUXT_PUBLIC_BUILD_INFO_BUILDER="AnzuOrchestra" \
+        --build-arg NUXT_PUBLIC_BUILD_INFO_BUILD_TIME="$build_time" \
+        --build-arg NUXT_PUBLIC_BUILD_INFO_COMMIT_HASH="$commit_hash" \
         -t "$PROJECT_NAME:latest" \
         -t "$PROJECT_NAME:$commit_hash" \
         .; then

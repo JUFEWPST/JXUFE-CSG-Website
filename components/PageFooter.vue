@@ -27,11 +27,14 @@
             </p>
             <p class="mt-2 text-xs">
                 Built by {{ buildInfo.builder }} / {{ buildInfo.buildTime }} /
+                <span v-if="buildInfo.commitHash === 'unknown'">#unknown</span>
                 <a
+                    v-else
                     :href="`https://github.com/JUFEWPST/JXUFE-CSG-Website/commit/${buildInfo.commitHash}`"
                     class="text-(--md-sys-color-primary)"
-                    >#{{ buildInfo.commitHash.substring(0, 6).toUpperCase() }}</a
                 >
+                    #{{ buildInfo.commitHash.slice(0, 6).toUpperCase() }}
+                </a>
             </p>
         </div>
     </footer>
