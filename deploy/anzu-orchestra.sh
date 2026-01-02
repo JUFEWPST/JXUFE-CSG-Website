@@ -21,60 +21,49 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 log() {
-    echo -e "${BLUE}[$(date '+%Y-%m-%d %H:%M:%S')]${NC} $1"
+    echo -e "${BLUE}[$(date '+%Y-%m-%d %H:%M:%S')]${NC} $1" >&2
 }
-
 success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
+    echo -e "${GREEN}[SUCCESS]${NC} $1" >&2
 }
-
 warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
+    echo -e "${YELLOW}[WARNING]${NC} $1" >&2
 }
-
 error() {
-    echo -e "${RED}[ERROR]${NC} $1"
+    echo -e "${RED}[ERROR]${NC} $1" >&2
 }
 
 check_updates() {
     log "检查远程仓库更新..."
-    
-    cd "$PROJECT_DIR"
-    
-    LOCAL_HASH=$(git rev-parse HEAD)
-    
-    for url in "${MIRROR_URLS[@]}"; do
-        log "尝试从镜像站获取更新: $url"
-        if git ls-remote "$url" HEAD > /dev/null 2>&1; then
-            REMOTE_HASH=$(git ls-remote "$url" HEAD | cut -f1)
+
+    cd "$PROJECT_DIR" || { error "无法进入项目目录"; return 1; }
+
+    LOCAL_HASH=$(git rev-parse HEAD 2>/dev/null)
+    [ -z "$LOCAL_HASH" ] && { error "获取本地 commit hash 失败"; return 1; }
+
+    # 合并镜像和原始仓库，统一循环
+    local urls=("${MIRROR_URLS[@]}" "$ORIGINAL_URL")
+
+    for url in "${urls[@]}"; do
+        log "尝试从 $url 获取远程 HEAD..."
+        if git ls-remote "$url" HEAD >/dev/null 2>&1; then
+            REMOTE_HASH=$(git ls-remote "$url" HEAD | awk '{print $1}')
             if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
                 log "发现更新: 本地 $LOCAL_HASH -> 远程 $REMOTE_HASH"
-                echo "$REMOTE_HASH"
+                echo "$REMOTE_HASH"   # 只输出纯 hash 到 stdout
                 return 0
             else
                 log "已是最新版本"
-                echo ""
+                echo ""               # 无更新时返回空
                 return 0
             fi
+        else
+            warning "无法连接到 $url"
         fi
     done
-    
-    log "镜像站均失败，尝试原始仓库: $ORIGINAL_URL"
-    if git ls-remote "$ORIGINAL_URL" HEAD > /dev/null 2>&1; then
-        REMOTE_HASH=$(git ls-remote "$ORIGINAL_URL" HEAD | cut -f1)
-        if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-            log "发现更新: 本地 $LOCAL_HASH -> 远程 $REMOTE_HASH"
-            echo "$REMOTE_HASH"
-            return 0
-        else
-            log "已是最新版本"
-            echo ""
-            return 0
-        fi
-    fi
-    
-    warning "无法连接到任何仓库"
-    echo ""
+
+    warning "所有仓库均无法连接"
+    echo ""   # 最终失败也返回空
     return 1
 }
 
@@ -167,42 +156,45 @@ deploy() {
 
 main_loop() {
     log "AnzuOrchestra 启动，检查间隔：15分钟"
-    
+   
     trap 'log "收到退出信号，正在停止..."; exit 0' INT TERM
-    
+   
     while true; do
         log "开始新一轮检查..."
-        
+       
         NEW_HASH=$(check_updates)
-        
-        if [ -n "$NEW_HASH" ]; then
-            log "检测到更新，开始处理..."
-            
+       
+        # 如果 NEW_HASH 为空，说明没有更新或失败，直接等待下一轮
+        if [ -z "$NEW_HASH" ]; then
+            log "没有发现更新或无法检查，继续等待..."
+        else
+            log "检测到更新 (commit: $NEW_HASH)，开始处理..."
+           
             if ! pull_latest "$NEW_HASH"; then
                 error "拉取代码失败，跳过本次更新"
-                sleep 900 || break
+                sleep 900
                 continue
             fi
-            
+           
             if ! build_with_docker "$NEW_HASH"; then
                 error "构建失败，跳过部署"
-                sleep 900 || break
+                sleep 900
                 continue
             fi
-            
+           
             if ! deploy "$NEW_HASH"; then
                 error "部署失败"
-                sleep 900 || break
+                sleep 900
                 continue
             fi
-            
+           
             success "更新部署完成"
         fi
-        
+       
         log "等待15分钟..."
         sleep 900 || break
     done
-    
+   
     log "AnzuOrchestra 已停止"
 }
 
