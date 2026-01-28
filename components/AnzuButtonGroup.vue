@@ -1,17 +1,14 @@
 <template>
-    <div
-        class="anzu-button-group"
-        :class="[
-            `anzu-button-group--${direction}`,
-            `anzu-button-group--gap-${gap}`,
-        ]"
-    >
+    <div class="inline-flex" :class="[
+        direction === 'horizontal' ? 'flex-row' : 'flex-col',
+        gapClasses
+    ]">
         <slot />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide, watch } from "vue";
+import { computed, provide } from "vue";
 
 interface Props {
     modelValue?: string | number;
@@ -26,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-    (e: "update:modelValue", value: string | number): void;
+    (e: "update:modelValue", value: string | number | undefined): void;
 }>();
 
 const selectedValue = computed({
@@ -38,56 +35,27 @@ function select(value: string | number) {
     selectedValue.value = value;
 }
 
+const gapClasses = computed(() => {
+    switch (props.gap) {
+        case 'none': return 'gap-0';
+        case 'sm': return 'gap-1';
+        case 'md': return 'gap-2';
+        case 'lg': return 'gap-3';
+        default: return 'gap-0';
+    }
+});
+
+const directionContext = computed(() => {
+    return props.gap === 'none' ? props.direction : '';
+});
+
 provide("buttonGroup", {
     selectedValue,
     select,
-    direction: computed(() => props.direction),
-    gap: computed(() => props.gap),
+    direction: directionContext,
 });
 </script>
 
 <style scoped>
 @reference "tailwindcss";
-
-.anzu-button-group {
-    @apply inline-flex;
-}
-
-.anzu-button-group--horizontal {
-    @apply flex-row;
-}
-
-.anzu-button-group--vertical {
-    @apply flex-col;
-}
-
-.anzu-button-group--gap-none {
-    @apply gap-0;
-}
-
-.anzu-button-group--gap-sm {
-    @apply gap-1;
-}
-
-.anzu-button-group--gap-md {
-    @apply gap-2;
-}
-
-.anzu-button-group--gap-lg {
-    @apply gap-3;
-}
-
-@media (max-width: 600px) {
-    .anzu-button-group--horizontal {
-        @apply flex-wrap;
-    }
-
-    .anzu-button-group--gap-md {
-        @apply gap-1;
-    }
-
-    .anzu-button-group--gap-lg {
-        @apply gap-2;
-    }
-}
 </style>

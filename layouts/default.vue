@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, watch } from "vue";
 import { useRoute } from "#imports";
-import NavBar from "@/components/NavBar.vue";
+import AnzuNavBar from "@/components/AnzuNavBar.vue";
 import PageFooter from "@/components/PageFooter.vue";
 import AnzuNotification from "~/components/AnzuNotification.vue";
 import { useNotification } from "@/composables/useNotification";
@@ -136,7 +136,7 @@ const toggleMahou = () => {
     <div
         class="min-h-screen bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-background) transition-colors duration-300"
     >
-        <NavBar />
+        <AnzuNavBar />
         <!-- banner -->
         <header
             class="relative flex w-full flex-col items-center justify-center overflow-hidden bg-(--md-sys-color-background) text-(--md-sys-color-on-surface) transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"

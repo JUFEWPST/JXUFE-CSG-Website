@@ -20,7 +20,7 @@
                         <img
                             src="/favicon.svg"
                             class="mr-2 h-9 shrink-0"
-                            alt="江财网安协会logo"
+                            alt="logo"
                         />
                         <span
                             class="block max-w-56 min-w-0 truncate lg:max-w-[20rem]"
@@ -68,8 +68,8 @@
                                             class="relative z-10 flex items-center font-bold"
                                         >
                                             <component
-                                                :is="iconMap[link.path]"
-                                                v-if="iconMap[link.path]"
+                                                :is="link.icon"
+                                                v-if="link.icon"
                                                 class="mr-1.5 h-5 w-5"
                                             />
                                             {{ t(link.label) }}
@@ -107,8 +107,8 @@
                                         class="relative z-10 flex items-center font-bold"
                                     >
                                         <component
-                                            :is="iconMap[link.path]"
-                                            v-if="iconMap[link.path]"
+                                            :is="link.icon"
+                                            v-if="link.icon"
                                             class="mr-1.5 h-5 w-5"
                                         />
                                         {{ t(link.label) }}
@@ -167,8 +167,8 @@
                                                 class="relative z-10 flex items-center font-bold"
                                             >
                                                 <component
-                                                    :is="iconMap[link.path]"
-                                                    v-if="iconMap[link.path]"
+                                                    :is="link.icon"
+                                                    v-if="link.icon"
                                                     class="mr-1.5 h-5 w-5"
                                                 />
                                                 {{ t(link.label) }}
@@ -240,8 +240,8 @@
                                     class="relative z-10 flex items-center font-bold"
                                 >
                                     <component
-                                        :is="iconMap[link.path]"
-                                        v-if="iconMap[link.path]"
+                                        :is="link.icon"
+                                        v-if="link.icon"
                                         class="mr-1.5 h-5 w-5"
                                     />
                                     {{ t(link.label) }}
@@ -296,8 +296,8 @@
                                         >
                                             <span class="flex items-center">
                                                 <component
-                                                    :is="iconMap[link.path]"
-                                                    v-if="iconMap[link.path]"
+                                                    :is="link.icon"
+                                                    v-if="link.icon"
                                                     class="mr-2 h-5 w-5"
                                                 />
                                                 {{ t(link.label) }}
@@ -339,8 +339,8 @@
                                     >
                                         <span class="flex items-center">
                                             <component
-                                                :is="iconMap[link.path]"
-                                                v-if="iconMap[link.path]"
+                                                :is="link.icon"
+                                                v-if="link.icon"
                                                 class="mr-2 h-5 w-5"
                                             />
                                             {{ t(link.label) }}
@@ -351,10 +351,7 @@
                         </AnzuDropdown>
                     </div>
                     <div
-                        v-if="
-                            route.path.startsWith('/archive/') &&
-                            navTitleBox.title
-                        "
+                        v-if="navTitleBox.title"
                         class="pointer-events-none absolute top-0 left-0 flex h-full w-full flex-col items-start justify-center px-4 text-left transition-all duration-300"
                         :class="{
                             'invisible opacity-0':
@@ -428,8 +425,8 @@
                                     @click="closeMenu"
                                 >
                                     <component
-                                        :is="iconMap[link.path]"
-                                        v-if="iconMap[link.path]"
+                                        :is="link.icon"
+                                        v-if="link.icon"
                                         class="mr-2 h-5 w-5"
                                     />
                                     {{ t(link.label) }}
@@ -504,8 +501,8 @@
                                 "
                             >
                                 <component
-                                    :is="iconMap[link.path]"
-                                    v-if="iconMap[link.path]"
+                                    :is="link.icon"
+                                    v-if="link.icon"
                                     class="mr-2 h-5 w-5"
                                 />
                                 {{ t(link.label) }}
@@ -521,12 +518,13 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from "vue";
 import ToggleTheme from "./ToggleTheme.vue";
-import AnzuDropdown from "@/components/AnzuDropdown.vue";
-import { useClickAway } from "@/composables/useClickAway";
+import AnzuDropdown from "~/components/AnzuDropdown.vue";
+import { useClickAway } from "~/composables/useClickAway";
 import {
     Bars3Icon,
     XMarkIcon,
     EllipsisHorizontalIcon,
+    ArrowRightEndOnRectangleIcon,
 } from "@heroicons/vue/24/outline";
 import { useRoute } from "vue-router";
 import {
@@ -534,34 +532,22 @@ import {
     type NavLink,
     type NavLinkWithChildren,
 } from "~/composables/useNavLinks";
-import {
-    HomeIcon,
-    ArchiveBoxIcon,
-    UserGroupIcon,
-    LinkIcon,
-    ClockIcon,
-} from "@heroicons/vue/24/outline";
 import { useDropdownController } from "~/composables/useDropdownController";
 import ToggleLocale from "./ToggleLocale.vue";
 
+import { useNotification } from "~/composables/useNotification";
+import { useNavTitle } from "~/composables/useNavTitle";
+import { NotificationType } from "~/types/notification";
+
 const { t } = useI18n();
+
+const { notify } = useNotification();
 const route = useRoute();
-const navTitleBox = useState("navTitleBox", () => ({
-    title: "",
-    subtitle: "",
-}));
+const { navTitleBox, reset: resetNavTitle } = useNavTitle();
 
 const navLinks = useNavLinks();
 const primaryLinks = computed(() => navLinks.filter((l) => !l.alwaysInMore));
 const forcedMoreLinks = computed(() => navLinks.filter((l) => l.alwaysInMore));
-
-const iconMap: Record<string, any> = {
-    "/": HomeIcon,
-    "/archive": ArchiveBoxIcon,
-    "/about": UserGroupIcon,
-    "/links": LinkIcon,
-    "/timeline": ClockIcon,
-};
 
 const dropdownLinks = navLinks.filter(
     (link): link is NavLinkWithChildren => "children" in link,
@@ -576,6 +562,7 @@ const measureItemRefs = ref<Array<HTMLElement | null>>([]);
 
 const visibleCount = ref(primaryLinks.value.length);
 const moreOpen = ref(false);
+const userMenuOpen = ref(false);
 
 const visibleLinks = computed(() =>
     primaryLinks.value.slice(0, visibleCount.value),
@@ -670,7 +657,9 @@ const headerStyles = computed(() => {
     const alphaValue = isMenuOpen.value ? 0.95 : Math.min(opacity.value, 0.8);
 
     return {
-        backgroundColor: `color-mix(in srgb, var(--md-sys-color-surface) ${alphaValue * 100}%, transparent)`,
+        backgroundColor: `color-mix(in srgb, var(--md-sys-color-surface) ${
+            alphaValue * 100
+        }%, transparent)`,
         backdropFilter: bgEffect ? "blur(10px)" : "none",
         WebkitBackdropFilter: bgEffect ? "blur(10px)" : "none",
         borderBottom: bgEffect
@@ -720,7 +709,7 @@ const handleScroll = () => {
     const rawOpacity = Math.min(scrollPosition / 100, 1);
     opacity.value = easeOutCubic(rawOpacity);
 
-    if (route.path.startsWith("/archive/")) {
+    if (navTitleBox.value.showOnScroll) {
         if (scrollPosition > 120) {
             showArticleTitle.value = true;
         } else {
@@ -752,6 +741,7 @@ onMounted(() => {
         () => {
             moreOpen.value = false;
             scheduleRecompute();
+            resetNavTitle();
         },
         { immediate: true },
     );

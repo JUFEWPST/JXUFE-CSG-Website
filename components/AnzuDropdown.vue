@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { useClickAway } from "@/composables/useClickAway";
+import { useClickAway } from "~/composables/useClickAway";
 
 type Align = "left" | "right";
 

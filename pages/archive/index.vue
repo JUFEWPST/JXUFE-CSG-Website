@@ -37,19 +37,19 @@
                     </ArticleBlock>
                 </ul>
             </template>
-            <PageNav
+            <AnzuPagination
                 v-if="totalPages >= 1"
                 :totalPages="totalPages"
                 :currentPage="currentPage"
                 @page-change="handlePageChange"
             >
-            </PageNav>
+            </AnzuPagination>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-import PageNav from "~/components/PageNav.vue";
+import AnzuPagination from "~/components/AnzuPagination.vue";
 import ArticleBlock from "~/components/ArticleBlock.vue";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "#imports";

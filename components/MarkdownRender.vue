@@ -11,11 +11,12 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, nextTick } from "vue";
 import mediumZoom from "medium-zoom";
-const { md, renderMarkdown } = useMarkdown();
+import { useMarkdown } from "~/composables/UseMarkdown";
 import "~/assets/css/markdown.css";
 import "~/assets/css/atom-one.css";
 import type { TocItem } from "~/types/tocitems";
 import slugify from "slugify";
+const { md, renderMarkdown } = useMarkdown();
 const props = defineProps<{
     content: string | "";
     sanitize?: boolean;
@@ -65,8 +66,6 @@ function extractHeadings() {
         if (!heading.id) {
             const textContent = heading.textContent || "";
             heading.id = slugify(textContent, slugifyConfig);
-
-            // 如果仍然为空，使用备用方案
             if (!heading.id) {
                 heading.id = `heading-${index}-${Math.random().toString(36).substr(2, 4)}`;
             }

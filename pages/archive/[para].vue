@@ -61,6 +61,7 @@ import type { TocItem } from "~/types/tocitems";
 import { useApi } from "#imports";
 import { useRightSidebar } from "@/composables/useRightSidebar";
 import { usePageTitle } from "@/composables/usePageTitle";
+import { useNavTitle } from "@/composables/useNavTitle";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
 
 const route = useRoute();
@@ -69,6 +70,7 @@ const tocItems = ref<TocItem[]>([]);
 
 const { setHasContent, clearRightSidebar } = useRightSidebar();
 const { registerCard, unregisterCard, setCardOptions } = useSidebarLayout();
+const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 
 const para = computed(() => route.params.para);
 const { data: archive, loading, error, get } = useApi<ArchiveData>();
@@ -93,15 +95,12 @@ function handleTocUpdate(items: TocItem[]) {
 useHead({
     title: pageTitle,
 });
-const navTitleBox = useState("navTitleBox", () => ({
-    title: "",
-    subtitle: "",
-}));
 const { setPageTitle } = usePageTitle();
 setPageTitle("");
 
 onMounted(() => {
     get(`/archives/${para.value}`);
+    setScrollReveal(true);
 
     // 注册归档阅读页右侧 TOC 卡片
     registerCard({
@@ -121,10 +120,10 @@ watch(
     archive,
     (newVal) => {
         if (newVal) {
-            navTitleBox.value = {
-                title: newVal.title,
-                subtitle: `${newVal.publisher || ""}   ${new Date(newVal.publishedAt).toLocaleString()}`,
-            };
+            setTitle(
+                newVal.title,
+                `${newVal.publisher || ""}   ${new Date(newVal.publishedAt).toLocaleString()}`,
+            );
         }
     },
     { immediate: true },
@@ -133,7 +132,7 @@ watch(
 onUnmounted(() => {
     clearRightSidebar();
     unregisterCard("archive-toc");
-    navTitleBox.value = { title: "", subtitle: "" };
+    resetNavTitle();
 });
 </script>
 

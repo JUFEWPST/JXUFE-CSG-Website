@@ -2,55 +2,63 @@
     <div
         class="flex flex-wrap items-center justify-center gap-2 my-4 text-(--md-sys-color-on-surface)"
     >
-        <!-- 上一页 -->
-        <button
-            class="pagination-button"
-            :class="{ disabled: currentPage <= 1 }"
-            @click="goToPage(currentPage - 1)"
+        <AnzuButton
+            variant="outlined"
+            class="h-10! w-10! min-w-10! px-0!"
             :disabled="currentPage <= 1"
+            @click="goToPage(currentPage - 1)"
             :aria-label="t('common.actions.paginationPrevious')"
         >
-            <span class="text-base leading-none">←</span>
-        </button>
+            <span class="text-base leading-none"> < </span>
+        </AnzuButton>
         <template v-for="page in displayedPages" :key="page">
-            <button
-                class="pagination-button"
-                :class="{
-                    active: page === currentPage,
-                    dots: page === '...',
-                    'disabled-item': page === '...',
-                }"
-                @click="page !== '...' ? goToPage(page) : null"
+            <div
+                v-if="page === '...'"
+                class="flex h-10 w-10 items-center justify-center text-(--md-sys-color-on-surface-variant)"
+            >
+                ...
+            </div>
+            <AnzuButton
+                v-else
+                :variant="page === currentPage ? 'filled' : 'outlined'"
+                class="h-10! w-10! min-w-10! px-0!"
+                @click="goToPage(page)"
             >
                 {{ page }}
-            </button>
+            </AnzuButton>
         </template>
+
         <!-- 下一页 -->
-        <button
-            class="pagination-button"
-            :class="{ disabled: currentPage >= totalPages }"
-            @click="goToPage(currentPage + 1)"
+        <AnzuButton
+            variant="outlined"
+            class="h-10! w-10! min-w-10! px-0!"
             :disabled="currentPage >= totalPages"
-            :aria-label="$t('common.actions.paginationNext')"
+            @click="goToPage(currentPage + 1)"
+            :aria-label="t('common.actions.paginationNext')"
         >
-            <span class="text-base leading-none">→</span>
-        </button>
+            <span class="text-base leading-none">></span>
+        </AnzuButton>
+
         <div
             class="flex items-center gap-2 ml-3 text-sm text-(--md-sys-color-on-surface)/80"
         >
             <span>{{ t("common.actions.paginationJumpTo") }}</span>
-            <input
-                type="number"
-                class="w-13 px-2 py-1 rounded-lg border border-(--md-sys-color-outline)/80 bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-on-surface) text-center text-sm leading-none outline-none transition-all duration-200 focus-visible:border-(--md-sys-color-primary) focus-visible:shadow-[0_0_0_1px_color-mix(in_srgb,var(--md-sys-color-primary)_40%,transparent)]"
-                v-model.number="inputPage"
-                min="1"
-                :max="totalPages"
-                @keyup.enter="jumpToPage"
-                :aria-label="t('common.actions.paginationTargetPageNumber')"
-            />
+            <div class="w-20">
+                <AnzuInput
+                    v-model.number="inputPage"
+                    type="number"
+                    :min="1"
+                    :max="totalPages"
+                    class="text-center"
+                    placeholder=""
+                    @keydown.enter="jumpToPage"
+                    :aria-label="t('common.actions.paginationTargetPageNumber')"
+                />
+            </div>
             <span>{{ t("common.actions.paginationPageUnit") }}</span>
-            <button
-                class="pagination-button active"
+            <AnzuButton
+                variant="filled"
+                class="min-w-16!"
                 @click="jumpToPage"
                 :aria-label="
                     t('common.actions.paginationJumpToPage', {
@@ -59,73 +67,28 @@
                 "
             >
                 芳文跳
-            </button>
+            </AnzuButton>
         </div>
     </div>
 </template>
 
-<style scoped>
-@reference "tailwindcss";
-
-.pagination-button {
-    @apply relative inline-flex h-8 min-w-9 items-center justify-center overflow-hidden rounded-lg border border-(--md-sys-color-outline)/80 bg-(--md-sys-color-surface) px-3 text-sm font-medium leading-none text-(--md-sys-color-on-surface) cursor-pointer transition-all duration-200;
-}
-
-.pagination-button::after {
-    @apply pointer-events-none absolute inset-0 bg-current opacity-0 transition-opacity duration-200 content-[''];
-}
-
-.pagination-button:hover:not(.disabled, .active, .dots) {
-    @apply bg-(--md-sys-color-surface-container-low);
-}
-
-.pagination-button:hover:not(.disabled, .active, .dots)::after {
-    @apply opacity-8;
-}
-
-.pagination-button:active:not(.disabled, .active, .dots) {
-    @apply translate-y-0;
-}
-
-.pagination-button:active:not(.disabled, .active, .dots)::after {
-    @apply opacity-12;
-}
-
-.pagination-button.active {
-    @apply border-(--md-sys-color-primary) bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary);
-}
-
-.pagination-button.disabled {
-    @apply cursor-not-allowed border-transparent bg-(--md-sys-color-on-surface)/12 text-(--md-sys-color-on-surface)/38;
-}
-
-.pagination-button.disabled::after {
-    @apply opacity-0;
-}
-
-.pagination-button.dots {
-    @apply cursor-default border-none bg-transparent text-(--md-sys-color-on-surface)/60;
-}
-
-.disabled-item {
-    @apply cursor-not-allowed;
-}
-</style>
-
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRouter } from "#imports";
+import AnzuButton from "./AnzuButton.vue";
+import AnzuInput from "./AnzuInput.vue";
+
 const { t } = useI18n();
 const props = defineProps({
     totalPages: {
         type: Number,
         required: true,
-        validator: (value) => value > 0,
+        validator: (value: number) => value > 0,
     },
     currentPage: {
         type: Number,
         required: true,
-        validator: (value) => value > 0,
+        validator: (value: number) => value > 0,
     },
     baseUrl: {
         type: String,
@@ -136,7 +99,7 @@ const props = defineProps({
 const emit = defineEmits(["pageChanged"]);
 
 const router = useRouter();
-const inputPage = ref("");
+const inputPage = ref<string | number>("");
 
 const displayedPages = computed(() => {
     const pages = [];
@@ -182,7 +145,9 @@ const displayedPages = computed(() => {
     return pages;
 });
 
-const goToPage = (page) => {
+const goToPage = (page: number | string) => {
+    if (typeof page !== "number") return;
+
     if (page < 1 || page > props.totalPages || page === props.currentPage)
         return;
 
@@ -195,10 +160,22 @@ const goToPage = (page) => {
 };
 
 const jumpToPage = () => {
-    const page = parseInt(inputPage.value);
-    if (!isNaN(page) && page >= 1 && page <= props.totalPages) {
+    const page =
+        typeof inputPage.value === "string"
+            ? parseInt(inputPage.value)
+            : inputPage.value;
+    if (
+        typeof page === "number" &&
+        !isNaN(page) &&
+        page >= 1 &&
+        page <= props.totalPages
+    ) {
         goToPage(page);
         inputPage.value = "";
     }
 };
 </script>
+
+<style scoped>
+@reference "tailwindcss";
+</style>
