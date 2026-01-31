@@ -6,6 +6,7 @@
     },
     "nav": {
         "home": "首页",
+        "wiki": "Wiki",
         "archive": "归档",
         "about": "关于协会",
         "links": "相关链接",
@@ -90,6 +91,24 @@
             "title": "归档",
             "para": {
                 "title": "归档详情"
+            }
+        },
+        "wiki": {
+            "title": "Wiki",
+            "meta": {
+                "title": "Wiki - 江西财经大学网络安全协会",
+                "description": "江西财经大学网络安全协会 Wiki，汇集知识与经验沉淀。"
+            },
+            "index": {
+                "hint": "请从左侧目录树选择文章进行阅读"
+            },
+            "tree": {
+                "title": "Wiki",
+                "loadError": "Wiki 目录加载失败"
+            },
+            "content": {
+                "empty": "此页面暂无内容",
+                "emptyFolder": "空容器"
             }
         },
         "about": {
@@ -185,6 +204,8 @@
     },
     "common": {
         "actions": {
+            "open": "打开",
+            "close": "关闭",
             "more": "更多",
             "viewDetail": "查看详情",
             "paginationPrevious": "上一页",
@@ -203,6 +224,8 @@
         },
         "items": {
             "toc": "目录",
+            "sidebar": "侧边栏",
+            "empty": "暂无内容",
             "Warning": "警告",
             "Info": "信息",
             "Tip": "提示",

@@ -18,7 +18,7 @@
             "teacher": "指導教員"
         }
     },
-  "pages": {
+    "pages": {
         "timeline": {
             "title": "タイムライン",
             "meta": {
@@ -55,6 +55,7 @@
             }
         },
         "links": {
+            "wiki": "Wiki",
             "meta": {
                 "title": "関連リンク - 江西財経大学サイバーセキュリティギルド",
                 "description": "江西財経大学サイバーセキュリティギルドの関連リンク集。大学公式サイト、学内サークル、および優れた個人ブログを収録しています。",
@@ -75,6 +76,24 @@
                 "zsjy": "江西財経大学学部入学者募集",
                 "hello": "江西財経大学新入生歓迎ページ",
                 "ctfplatform": "CTF プラットフォーム",
+                "wiki": {
+                    "title": "Wiki",
+                    "meta": {
+                        "title": "Wiki - 江西財経大学サイバーセキュリティギルド",
+                        "description": "江西財経大学サイバーセキュリティギルドのWiki。知識と経験を蓄積します。"
+                    },
+                    "index": {
+                        "hint": "左側のツリーから記事を選択して読んでください。"
+                    },
+                    "tree": {
+                        "title": "Wiki",
+                        "loadError": "Wikiツリーの読み込みに失敗しました"
+                    },
+                    "content": {
+                        "empty": "このページには内容がありません",
+                        "emptyFolder": "空のコンテナ"
+                    }
+                },
                 "cloud": "クラウドストレージリソース",
                 "acm": "江西財経大学プログラミングコンテスト同好会",
                 "ca": "江西財経大学コンピュータ同好会",
@@ -188,6 +207,8 @@
             "more": "もっと見る",
             "viewDetail": "詳細を見る",
             "paginationPrevious": "前へ",
+            "open": "開く",
+            "close": "閉じる",
             "paginationNext": "次へ",
             "paginationJumpTo": "移動",
             "paginationPageUnit": "ページ",
@@ -206,6 +227,8 @@
             "Warning": "警告",
             "Info": "情報",
             "Tip": "ヒント",
+            "sidebar": "サイドバー",
+            "empty": "内容がありません",
             "Error": "エラー",
             "Success": "成功"
         }

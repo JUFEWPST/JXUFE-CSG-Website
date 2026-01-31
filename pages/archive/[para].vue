@@ -78,7 +78,7 @@ const markdownRender = ref();
 const tocItems = ref<TocItem[]>([]);
 
 const { setHasContent, clearRightSidebar } = useRightSidebar();
-const { registerCard, unregisterCard, setCardOptions } = useSidebarLayout();
+const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 
 const para = computed(() => route.params.para);
@@ -111,21 +111,34 @@ setPageTitle("");
 onMounted(() => {
     get(`/v1/contents/by-path/archive/${para.value}`);
     setScrollReveal(true);
+});
 
-    // 注册归档阅读页右侧 TOC 卡片
+const registerArchiveToc = () => {
     registerCard({
         id: "archive-toc",
         side: "right",
         order: 50,
         sticky: true,
         showOnMobileBottom: false,
+        showOnMobileDrawer: true,
+        scope: "page",
+        mutualGroup: "right-context",
+        priority: 100,
         component: MarkdownTOC,
         props: {
             items: tocItems.value,
             markdownRenderRef: markdownRender.value,
         },
     });
-});
+};
+
+watch(
+    () => route.fullPath,
+    () => {
+        registerArchiveToc();
+    },
+    { immediate: true },
+);
 watch(
     archive,
     (newVal) => {
@@ -141,7 +154,6 @@ watch(
 // 离开页面时清除数据
 onUnmounted(() => {
     clearRightSidebar();
-    unregisterCard("archive-toc");
     resetNavTitle();
 });
 </script>

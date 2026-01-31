@@ -86,6 +86,7 @@ export function useApi<T>() {
     response.value.loading = true
     response.value.error = null
     response.value.meta = undefined
+    response.value.data = null
     try {
       const url = `${baseURL}${endpoint}`
       const res = await fetch(url, {

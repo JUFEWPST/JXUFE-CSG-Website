@@ -5,6 +5,7 @@ import {
     UserGroupIcon,
     LinkIcon,
     ClockIcon,
+    BookOpenIcon,
 } from "@heroicons/vue/24/outline";
 export interface NavChildLink {
     path: string
@@ -36,6 +37,11 @@ export const useNavLinks = (): NavLink[] => {
             path: '/archive',
             label: 'nav.archive',
             icon: ArchiveBoxIcon
+        },
+        {
+            path: '/wiki',
+            label: 'nav.wiki',
+            icon: BookOpenIcon
         },
         {
             path: '/about',

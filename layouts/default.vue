@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "#imports";
 import AnzuNavBar from "@/components/AnzuNavBar.vue";
 import PageFooter from "@/components/PageFooter.vue";
@@ -10,14 +10,13 @@ import { useOncePerSession } from "@/composables/useOncePerSession";
 import { useI18n } from "vue-i18n";
 import { useColorPalette } from "@/composables/useColorPalette";
 import { usePageTitle } from "@/composables/usePageTitle";
-import { useRightSidebar } from "@/composables/useRightSidebar";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
 import SiteInfoCard from "@/components/sidebars/SiteInfoCard.vue";
 import CalendarCard from "@/components/sidebars/CalendarCard.vue";
 import CTFEventsCard from "@/components/sidebars/CTFEventsCard.vue";
+import WikiTree from "@/components/sidebars/WikiTree.vue";
 
 const { t } = useI18n();
-const { hasContent } = useRightSidebar();
 const { notificationRef } = useNotification();
 const { titleKey } = usePageTitle();
 
@@ -27,8 +26,8 @@ const {
     leftCards,
     rightCards,
     mobileBottomCards,
+    mobileDrawerCards,
     registerCard,
-    unregisterCard,
 } = useSidebarLayout();
 
 const leftNonStickyCards = computed(() =>
@@ -43,6 +42,40 @@ const rightNonStickyCards = computed(() =>
 const rightStickyCards = computed(() =>
     rightCards.value.filter((card) => card.sticky),
 );
+const isMobileDrawerOpen = ref(false);
+const mobileDrawerSide = ref<"left" | "right">("right");
+const mobileDrawerLeftCards = computed(() =>
+    mobileDrawerCards.value.filter((card) => card.side === "left"),
+);
+const mobileDrawerRightCards = computed(() =>
+    mobileDrawerCards.value.filter((card) => card.side === "right"),
+);
+const hasMobileDrawer = computed(
+    () =>
+        mobileDrawerLeftCards.value.length ||
+        mobileDrawerRightCards.value.length,
+);
+const activeMobileDrawerCards = computed(() =>
+    mobileDrawerSide.value === "left"
+        ? mobileDrawerLeftCards.value
+        : mobileDrawerRightCards.value,
+);
+const mobileDrawerLeftLabel = computed(() => {
+    if (mobileDrawerLeftCards.value.length === 1) {
+        const card = mobileDrawerLeftCards.value[0];
+        if (card?.mobileLabelKey) return t(card.mobileLabelKey);
+        if (card?.mobileLabel) return card.mobileLabel;
+    }
+    return t("common.items.sidebar");
+});
+const mobileDrawerRightLabel = computed(() => {
+    if (mobileDrawerRightCards.value.length === 1) {
+        const card = mobileDrawerRightCards.value[0];
+        if (card?.mobileLabelKey) return t(card.mobileLabelKey);
+        if (card?.mobileLabel) return card.mobileLabel;
+    }
+    return t("common.items.toc");
+});
 
 useColorPalette();
 
@@ -63,29 +96,55 @@ registerCard({
     order: 20,
     sticky: false,
     showOnMobileBottom: true,
+    excludeRoutes: ["/archive/", "/wiki/"],
     component: CTFEventsCard,
+});
+
+registerCard({
+    id: "site-calendar",
+    side: "right",
+    order: 10,
+    sticky: false,
+    showOnMobileBottom: true,
+    excludeRoutes: ["/archive/", "/wiki/"],
+    mutualGroup: "right-context",
+    priority: 1,
+    component: CalendarCard,
+});
+
+// 左侧：Wiki 树（仅在 /wiki 下展示）
+registerCard({
+    id: "wiki-tree",
+    side: "left",
+    order: 10,
+    sticky: true,
+    showOnMobileBottom: false,
+    showOnMobileDrawer: true,
+    includeRoutes: ["/wiki"],
+    when: ({ route }) => route.path !== "/wiki" && route.path !== "/wiki/",
+    mobileLabelKey: "pages.wiki.tree.title",
+    component: WikiTree,
 });
 
 const route = useRoute();
 
-watch(
-    () => route.path,
-    (path) => {
-        if (!path.startsWith("/archive/")) {
-            registerCard({
-                id: "site-calendar",
-                side: "right",
-                order: 10,
-                sticky: false,
-                showOnMobileBottom: true,
-                component: CalendarCard,
-            });
-        } else {
-            unregisterCard("site-calendar");
-        }
-    },
-    { immediate: true },
-);
+const openMobileDrawer = (preferred?: "left" | "right") => {
+    if (!hasMobileDrawer.value) return;
+    if (preferred === "left" && mobileDrawerLeftCards.value.length) {
+        mobileDrawerSide.value = "left";
+    } else if (preferred === "right" && mobileDrawerRightCards.value.length) {
+        mobileDrawerSide.value = "right";
+    } else {
+        mobileDrawerSide.value = mobileDrawerRightCards.value.length
+            ? "right"
+            : "left";
+    }
+    isMobileDrawerOpen.value = true;
+};
+
+const closeMobileDrawer = () => {
+    isMobileDrawerOpen.value = false;
+};
 
 if (import.meta.client) {
     useOncePerSession("init-notice", () => {
@@ -93,7 +152,6 @@ if (import.meta.client) {
     });
 }
 
-const slots = useSlots();
 const isHome = computed(() => route.path === "/" || route.path === "");
 const showLeft = computed(() => {
     if (route.meta?.showLeftSidebar !== undefined)
@@ -121,6 +179,36 @@ watch(
             showMahouBg.value = false;
         }
     },
+);
+
+watch(
+    () => route.fullPath,
+    () => {
+        isMobileDrawerOpen.value = false;
+    },
+);
+
+watch(
+    [mobileDrawerLeftCards, mobileDrawerRightCards],
+    () => {
+        if (!hasMobileDrawer.value) {
+            isMobileDrawerOpen.value = false;
+            return;
+        }
+        if (
+            mobileDrawerSide.value === "left" &&
+            !mobileDrawerLeftCards.value.length
+        ) {
+            mobileDrawerSide.value = "right";
+        }
+        if (
+            mobileDrawerSide.value === "right" &&
+            !mobileDrawerRightCards.value.length
+        ) {
+            mobileDrawerSide.value = "left";
+        }
+    },
+    { immediate: true },
 );
 
 const toggleMahou = () => {
@@ -384,6 +472,91 @@ const toggleMahou = () => {
                                 v-bind="card.props || {}"
                             />
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Trigger -->
+        <button
+            v-if="hasMobileDrawer"
+            class="fixed right-4 bottom-6 z-40 flex items-center gap-2 rounded-full bg-(--md-sys-color-primary) px-4 py-3 text-(--md-sys-color-on-primary) shadow-center-sm transition-transform active:scale-95 lg:hidden"
+            @click="openMobileDrawer()"
+            :aria-label="t('common.actions.open')"
+        >
+            <span class="text-sm font-semibold">
+                {{
+                    mobileDrawerRightCards.length
+                        ? mobileDrawerRightLabel
+                        : mobileDrawerLeftLabel
+                }}
+            </span>
+        </button>
+
+        <!-- Mobile Drawer -->
+        <div v-if="isMobileDrawerOpen" class="fixed inset-0 z-50 lg:hidden">
+            <div
+                class="absolute inset-0 bg-black/30 backdrop-blur-sm"
+                @click="closeMobileDrawer"
+            ></div>
+            <div
+                class="absolute bottom-0 left-0 right-0 max-h-[80vh] rounded-t-2xl bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface) shadow-center-sm"
+            >
+                <div
+                    class="flex items-center justify-between border-b border-(--md-sys-color-outline-variant)/50 px-4 py-3"
+                >
+                    <div class="flex items-center gap-2">
+                        <button
+                            v-if="mobileDrawerLeftCards.length"
+                            class="rounded-full px-3 py-1 text-sm transition-colors"
+                            :class="
+                                mobileDrawerSide === 'left'
+                                    ? 'bg-(--md-sys-color-primary-container) text-(--md-sys-color-primary)'
+                                    : 'text-(--md-sys-color-on-surface-variant)'
+                            "
+                            @click="openMobileDrawer('left')"
+                        >
+                            {{ mobileDrawerLeftLabel }}
+                        </button>
+                        <button
+                            v-if="mobileDrawerRightCards.length"
+                            class="rounded-full px-3 py-1 text-sm transition-colors"
+                            :class="
+                                mobileDrawerSide === 'right'
+                                    ? 'bg-(--md-sys-color-primary-container) text-(--md-sys-color-primary)'
+                                    : 'text-(--md-sys-color-on-surface-variant)'
+                            "
+                            @click="openMobileDrawer('right')"
+                        >
+                            {{ mobileDrawerRightLabel }}
+                        </button>
+                    </div>
+                    <button
+                        class="text-sm text-(--md-sys-color-primary)"
+                        @click="closeMobileDrawer"
+                    >
+                        {{ t("common.actions.close") }}
+                    </button>
+                </div>
+
+                <div class="max-h-[calc(80vh-3.25rem)] overflow-y-auto p-4">
+                    <div
+                        v-for="card in activeMobileDrawerCards"
+                        :key="card.id"
+                        class="shadow-center-sm mb-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) text-(--md-sys-color-on-surface)"
+                    >
+                        <div class="p-6">
+                            <component
+                                :is="card.component"
+                                v-bind="card.props || {}"
+                            />
+                        </div>
+                    </div>
+                    <div
+                        v-if="!activeMobileDrawerCards.length"
+                        class="py-6 text-center text-sm text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ t("common.items.empty") }}
                     </div>
                 </div>
             </div>

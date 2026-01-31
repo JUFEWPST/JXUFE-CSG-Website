@@ -4,9 +4,10 @@ import { useNotification } from "~/composables/useNotification";
 import type {
     NotificationType,
 } from '@/types/notification'
-const { data: notices, get } = useApi<Notice[]>()
-const { notify } = useNotification()
+
 export const useFetchNotice = async () => {
+    const { data: notices, get } = useApi<Notice[]>()
+    const { notify } = useNotification()
     const { t } = useI18n()
     try {
         await get('/v1/contents?type_slug=notice')
