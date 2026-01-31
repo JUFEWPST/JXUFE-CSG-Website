@@ -14,23 +14,32 @@
                     <h1
                         class="mb-2 text-2xl leading-tight font-bold sm:text-3xl"
                     >
-                        {{ archive?.title }}
+                        {{ archive?.data?.title || archive?.title }}
                     </h1>
                     <div
                         class="mb-2 flex items-center gap-2 text-xs text-(--md-sys-color-on-surface-variant) sm:text-sm"
                     >
-                        <div v-if="archive.publisher" class="flex items-center">
-                            {{ archive.publisher }}
+                        <div
+                            v-if="archive.data.publisher"
+                            class="flex items-center"
+                        >
+                            {{ archive.data.publisher }}
                         </div>
                         <div class="flex items-center">
-                            {{ new Date(archive.createdAt).toLocaleString() }}
+                            {{
+                                new Date(
+                                    archive.data.publish_time,
+                                ).toLocaleString()
+                            }}
                         </div>
                     </div>
                     <div
-                        v-if="archive.tags?.tags?.length"
+                        v-if="archive.tags?.length"
                         class="mb-6 flex flex-wrap justify-center gap-2"
                     >
-                        <TagList :tags="archive.tags.tags"></TagList>
+                        <TagList
+                            :tags="archive.tags.map((t) => t.name)"
+                        ></TagList>
                     </div>
                     <hr class="mb-6 border-(--md-sys-color-outline-variant)" />
                 </header>
@@ -40,7 +49,7 @@
                     <!-- 文章内容 -->
                     <MarkdownRender
                         ref="markdownRender"
-                        :content="archive.content"
+                        :content="archive.data.body ?? ''"
                         @toc-updated="handleTocUpdate"
                         class="box-border flex-1 overflow-hidden"
                     >
@@ -75,8 +84,9 @@ const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 const para = computed(() => route.params.para);
 const { data: archive, loading, error, get } = useApi<ArchiveData>();
 const pageTitle = computed(() => {
-    return archive.value?.title
-        ? `${archive.value.title} - 江西财经大学网络安全协会
+    const title = archive.value?.data?.title || archive.value?.title;
+    return title
+        ? `${title} - 江西财经大学网络安全协会
   `
         : "加载中...";
 });
@@ -99,7 +109,7 @@ const { setPageTitle } = usePageTitle();
 setPageTitle("");
 
 onMounted(() => {
-    get(`/archives/${para.value}`);
+    get(`/v1/contents/by-path/archive/${para.value}`);
     setScrollReveal(true);
 
     // 注册归档阅读页右侧 TOC 卡片
@@ -121,8 +131,8 @@ watch(
     (newVal) => {
         if (newVal) {
             setTitle(
-                newVal.title,
-                `${newVal.publisher || ""}   ${new Date(newVal.publishedAt).toLocaleString()}`,
+                newVal.data?.title || newVal.title,
+                `${newVal.data.publisher || ""}   ${new Date(newVal.data.publish_time).toLocaleString()}`,
             );
         }
     },

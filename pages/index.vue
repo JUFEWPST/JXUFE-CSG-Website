@@ -99,11 +99,13 @@
                             v-for="archive in archives"
                             :key="archive.id"
                             :datetime="
-                                new Date(archive.createdAt).toLocaleString()
+                                new Date(
+                                    archive.data.publish_time,
+                                ).toLocaleString()
                             "
-                            :linkto="`/archive/${archive.documentId}`"
+                            :linkto="`/archive/${archive.slug}`"
                             :title="archive.title"
-                            :tags="archive.tags?.tags"
+                            :tags="archive.tags?.map((t) => t.name)"
                         />
                     </ul>
 
@@ -133,7 +135,7 @@ useHead(() => ({
 const { data: archives, loading, error, get } = useApi<Archive[]>();
 const loadArticles = async () => {
     await get(
-        `/archives?pagination[page]=1&pagination[pageSize]=6`,
+        `/v1/contents?type_slug=archive&fields=publish_time&page=1&page_size=6`,
     );
 };
 void loadArticles();

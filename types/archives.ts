@@ -1,17 +1,29 @@
-export interface Archive {
-  id: number
-  documentId: string
-  title: string
-  tags: {
-    tags: string[]
-  } | null
-  publishedAt: string
-  createdAt: string
-  updatedAt: string
-  isTop:boolean
+export interface Tag {
+  id: string;
+  name: string;
 }
 
-export interface ArchiveData extends Archive {
-  content: string;
-  publisher: string | null;
+export interface ContentData {
+  title?: string;
+  publish_time: string;
+  isTop?: boolean;
+  body?: string;
+  publisher?: string;
+  [key: string]: any;
 }
+
+export interface Archive {
+  id: string;
+  title: string;
+  slug: string;
+  path: string;
+  tags: Tag[];
+  data: ContentData;
+  type: {
+    id: string;
+    name: string;
+    slug: string;
+  }
+}
+
+export type ArchiveData = Archive;
