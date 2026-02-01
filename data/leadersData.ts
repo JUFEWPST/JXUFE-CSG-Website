@@ -7,7 +7,7 @@ export const leadersData = [
         achievements: [
             "成就"
         ],
-        avatar: 'https://img.tantanchugasuki.cn/i/2025/10/16/avatar.webp'
+        avatar: 'https://img.tantanchugasuki.cn/i/r/avatar'
     },
     {
         name: "秋雨样",
