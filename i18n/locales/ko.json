@@ -6,6 +6,7 @@
     },
     "nav": {
         "home": "홈",
+        "wiki": "Wiki",
         "archive": "아카이브",
         "about": "길드 소개",
         "links": "유용한 링크",
@@ -204,6 +205,7 @@
     },
     "common": {
         "actions": {
+            "back": "돌아가기",
             "open": "열기",
             "close": "닫기",
             "more": "더보기",

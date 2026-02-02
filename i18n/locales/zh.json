@@ -204,6 +204,7 @@
     },
     "common": {
         "actions": {
+            "back": "返回",
             "open": "打开",
             "close": "关闭",
             "more": "更多",

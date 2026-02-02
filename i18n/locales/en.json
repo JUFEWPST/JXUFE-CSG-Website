@@ -204,6 +204,7 @@
     },
     "common": {
         "actions": {
+            "back": "Back",
             "open": "Open",
             "close": "Close",
             "more": "More",
