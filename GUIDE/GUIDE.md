@@ -122,6 +122,13 @@ export interface SidebarCardConfig {
     order?: number; // 排序：数值越小越靠前（同一侧、同 sticky 状态内）
     sticky?: boolean; // 是否在桌面端固定在视窗口（右侧目录等）
     showOnMobileBottom?: boolean; // 是否在移动端以“底部卡片”形式展示
+    slots?: ("left" | "right" | "mobileBottom")[]; // 统一投放位置（默认包含 side）
+    scope?: "global" | "route" | "page"; // 显示范围：全局 / 当前路由 / 当前页面（含 query）
+    includeRoutes?: string[]; // 路由前缀白名单
+    excludeRoutes?: string[]; // 路由前缀黑名单
+    mutualGroup?: string; // 互斥分组（同组仅保留一个）
+    priority?: number; // 互斥优先级：越大越优先
+    when?: (ctx) => boolean; // 自定义显示条件
     component: any; // 要渲染的组件
     props?: Record<string, any>; // 传入组件的 props
 }
@@ -129,8 +136,9 @@ export interface SidebarCardConfig {
 
 实现说明：
 
-- 使用 `useState` 存储**纯数据**（id / side / order / sticky / props 等）。
-- 使用本地 `componentRegistry` 存放组件引用，避免 `useState` 序列化组件函数导致 SSR 报错。
+- 使用 `useState` 存储**纯数据**（id / side / order / sticky / props / route 规则 等）。
+- 使用本地 `componentRegistry` 与 `ruleRegistry` 存放组件与 `when` 规则，避免 `useState` 序列化函数导致 SSR 报错。
+- `scope: "page" | "route"` 会在路由变化时自动清理旧卡片，避免手动注销的历史包袱。
 
 ### 2.3 注册 / 更新 / 移除卡片
 
@@ -147,13 +155,15 @@ registerCard({
 });
 ```
 
-#### 更新卡片选项（顺序 / sticky / 移动端显示 / props）
+#### 更新卡片选项（顺序 / sticky / 投放位置 / props 等）
 
 ```ts
 setCardOptions("archive-toc", {
     order: 50,
     sticky: true,
     showOnMobileBottom: true,
+    mutualGroup: "right-context",
+    priority: 100,
     props: {
         items,
         markdownRenderRef: markdownRender.value,
@@ -178,8 +188,8 @@ clearSide("right"); // 清空某一侧所有卡片
 
 ```ts
 const leftCards = computed(() =>
-    state.value.cards
-        .filter((c) => c.side === "left")
+    resolvedCards.value
+        .filter((c) => c.slots.includes("left"))
         .slice()
         // 先按 sticky 分组：非 sticky 在前，sticky 在后
         // 同组内部按 order 从小到大排序
@@ -188,21 +198,19 @@ const leftCards = computed(() =>
             const stickyB = b.sticky ? 1 : 0;
             if (stickyA !== stickyB) return stickyA - stickyB;
             return (a.order ?? 100) - (b.order ?? 100);
-        })
-        .map((c) => ({ ...c, component: componentRegistry[c.id] })),
+        }),
 );
 
 const rightCards = computed(() =>
-    state.value.cards
-        .filter((c) => c.side === "right")
+    resolvedCards.value
+        .filter((c) => c.slots.includes("right"))
         .slice()
         .sort((a, b) => {
             const stickyA = a.sticky ? 1 : 0;
             const stickyB = b.sticky ? 1 : 0;
             if (stickyA !== stickyB) return stickyA - stickyB;
             return (a.order ?? 100) - (b.order ?? 100);
-        })
-        .map((c) => ({ ...c, component: componentRegistry[c.id] })),
+        }),
 );
 ```
 
@@ -212,6 +220,7 @@ const rightCards = computed(() =>
     - 先渲染所有 `sticky: false` 的卡片；
     - 再渲染所有 `sticky: true` 的卡片（固定卡片自然位于该列底部）。
 - 在各自分组内部：用 `order` 决定上下顺序。
+- 互斥组 (`mutualGroup`) 会在解析阶段选择优先级最高的卡片参与排序渲染。
 
 ### 3.2 sticky 渲染方式
 
@@ -295,25 +304,29 @@ registerCard({
     component: SiteInfoCard,
 });
 
-// 右侧：日历卡（除归档详情页外显示）
-watch(
-    () => route.path,
-    (path) => {
-        if (!path.startsWith("/archive/")) {
-            registerCard({
-                id: "site-calendar",
-                side: "right",
-                order: 10,
-                sticky: false,
-                showOnMobileBottom: true,
-                component: CalendarCard,
-            });
-        } else {
-            unregisterCard("site-calendar");
-        }
-    },
-    { immediate: true },
-);
+// 右侧：日历卡（排除归档与 Wiki）
+registerCard({
+    id: "site-calendar",
+    side: "right",
+    order: 10,
+    sticky: false,
+    showOnMobileBottom: true,
+    excludeRoutes: ["/archive/", "/wiki"],
+    mutualGroup: "right-context",
+    priority: 1,
+    component: CalendarCard,
+});
+
+// 左侧：Wiki 树（仅在 /wiki 下展示）
+registerCard({
+    id: "wiki-tree",
+    side: "left",
+    order: 10,
+    sticky: true,
+    showOnMobileBottom: true,
+    includeRoutes: ["/wiki"],
+    component: WikiTree,
+});
 ```
 
 ### 4.2 归档详情页 TOC 卡片
@@ -329,7 +342,7 @@ const markdownRender = ref();
 const tocItems = ref<TocItem[]>([]);
 
 const { setHasContent, clearRightSidebar } = useRightSidebar();
-const { registerCard, unregisterCard, setCardOptions } = useSidebarLayout();
+const { registerCard, setCardOptions } = useSidebarLayout();
 
 function handleTocUpdate(items: TocItem[]) {
     tocItems.value = items;
@@ -350,7 +363,10 @@ onMounted(() => {
         side: "right",
         order: 50,
         sticky: true, // 固定在视窗口
-        showOnMobileBottom: true, // 在移动端底部展示
+        showOnMobileBottom: false, // 是否在移动端底部展示
+        scope: "page",
+        mutualGroup: "right-context",
+        priority: 100,
         component: MarkdownTOC,
         props: {
             items: tocItems.value,
@@ -361,20 +377,19 @@ onMounted(() => {
 
 onUnmounted(() => {
     clearRightSidebar();
-    unregisterCard("archive-toc");
 });
 ```
 
 效果：
 
 - 桌面端：TOC 出现在右列底部，并固定在视窗口（sticky）。
-- 移动端：TOC 以底部卡片形式展示在正文之后。
+- 移动端：默认不展示（如需展示可配置 `showOnMobileBottom: true` 或 `slots`）。
 
 ---
 
 ## 5. 移动端底部卡片
 
-所有设置了 `showOnMobileBottom: true` 的卡片，会在 < lg 屏幕下统一渲染在页面底部：
+所有设置了 `showOnMobileBottom: true` 或 `slots` 包含 `"mobileBottom"` 的卡片，会在 < lg 屏幕下统一渲染在页面底部：
 
 ```vue
 <div class="mt-4 space-y-4 lg:hidden">

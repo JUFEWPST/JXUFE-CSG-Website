@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="isClientReady"
-        class="flex flex-col gap-3"
-    >
+    <div v-if="isClientReady" class="flex flex-col gap-3">
         <!-- Header: 当前月份与切换 -->
         <div class="flex items-center justify-between">
             <div class="flex flex-col items-start">
@@ -89,7 +86,7 @@
             </div>
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded border border-dashed border-(--md-sys-color-secondary)/70"
+                    class="h-3 w-3 rounded border border-dashed border-(--md-sys-color-outline-variant)"
                 />
                 <span>{{ t("calendar.legend.examWeek") }}</span>
             </div>
@@ -234,7 +231,6 @@ function buildMonthCells(
         cells.push(null);
     }
 
-
     for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month, d);
         const dateStr = formatDate(date);
@@ -291,10 +287,17 @@ const todayStr = computed(() => (today.value ? formatDate(today.value) : ""));
 const calendarCells = computed(() => {
     if (!isClientReady.value) {
         // 保持 6x7 栅格占位，避免布局跳动
-        return Array.from({ length: 42 }, () => null) as (CalendarDayMeta | null)[];
+        return Array.from(
+            { length: 42 },
+            () => null,
+        ) as (CalendarDayMeta | null)[];
     }
 
-    return buildMonthCells(currentYear.value, currentMonth.value, todayStr.value);
+    return buildMonthCells(
+        currentYear.value,
+        currentMonth.value,
+        todayStr.value,
+    );
 });
 
 interface TodayStatus {
@@ -336,7 +339,10 @@ const todayStatus = computed<TodayStatus>(() => {
     const inExamWeek = isInExamWeeks(todayStrValue, config.value.examWeeks);
 
     const examWeeks = config.value.examWeeks ?? [];
-    const lastExamEnd = examWeeks.at(-1)?.end;
+    const lastExamEnd = examWeeks.reduce((latest, week) => {
+        if (!latest) return week.end;
+        return week.end > latest ? week.end : latest;
+    }, "");
 
     let label = "";
     const tags: string[] = [];
@@ -373,9 +379,27 @@ function dayClasses(day: CalendarDayMeta): string {
         "w-8 h-8 rounded-lg flex items-center justify-center text-[13px] select-none transition-colors duration-150",
     ];
 
-    if (day.isExamWeek && !day.isOfficialHoliday) {
+    if (day.isToday) {
+        if (day.isHoliday) {
+            classes.push(
+                "bg-(--md-sys-color-secondary-container) text-(--md-sys-color-primary) border-2 border-(--md-sys-color-primary)",
+            );
+        } else if (day.isWorkdayOverride) {
+            classes.push(
+                "bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-on-surface) border-2 border-(--md-sys-color-primary)",
+            );
+        } else if (day.isExamWeek && !day.isOfficialHoliday) {
+            classes.push(
+                "bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container) border-2 border-(--md-sys-color-primary)",
+            );
+        } else {
+            classes.push(
+                "bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container) border-2 border-(--md-sys-color-primary)",
+            );
+        }
+    } else if (day.isExamWeek && !day.isOfficialHoliday) {
         classes.push(
-            "border border-dashed border-(--md-sys-color-secondary)/70 text-(--md-sys-color-on-surface)",
+            "border border-dashed border-(--md-sys-color-outline-variant) text-(--md-sys-color-on-surface)",
         );
     } else if (day.isHoliday) {
         classes.push(
@@ -391,15 +415,13 @@ function dayClasses(day: CalendarDayMeta): string {
         );
     }
 
-    if (day.isToday) {
-        classes.push("border-2 border-(--md-sys-color-primary) font-semibold");
-    }
-
     return classes.join(" ");
 }
 
 function dayTitle(day: CalendarDayMeta): string {
     const parts: string[] = [];
+
+    parts.push(formatDate(day.date));
 
     if (day.isHoliday) parts.push(t("calendar.tags.holiday"));
     if (day.isWorkdayOverride) parts.push(t("calendar.tags.workdayAdjusted"));
@@ -408,7 +430,7 @@ function dayTitle(day: CalendarDayMeta): string {
         if (e.name) parts.push(e.name);
     }
 
-    return parts.join(" / ");
+    return parts.join(" · ");
 }
 
 function gotoPrevMonth() {

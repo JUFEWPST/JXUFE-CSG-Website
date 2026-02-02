@@ -137,7 +137,7 @@ const circumference = computed(() => 2 * Math.PI * normalizedRadius.value);
 
 const effectiveProgress = computed(() => {
     if (props.status === "success") return 100;
-    if (props.status === "error") return 100; 
+    if (props.status === "error") return 100;
     return props.progress;
 });
 

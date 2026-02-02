@@ -15,9 +15,11 @@
                         v-for="archive in topArchives"
                         :key="archive.id"
                         :title="archive.title"
-                        :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.createdAt).toLocaleString()"
-                        :tags="archive.tags?.tags || []"
+                        :linkto="`/archive/${archive.slug}`"
+                        :datetime="
+                            new Date(archive.data.publish_time).toLocaleString()
+                        "
+                        :tags="archive.tags?.map((t) => t.name) || []"
                         :istop="true"
                     >
                     </ArticleBlock>
@@ -30,26 +32,28 @@
                         v-for="archive in archives"
                         :key="archive.id"
                         :title="archive.title"
-                        :linkto="`/archive/${archive.documentId}`"
-                        :datetime="new Date(archive.createdAt).toLocaleString()"
-                        :tags="archive.tags?.tags || []"
+                        :linkto="`/archive/${archive.slug}`"
+                        :datetime="
+                            new Date(archive.data.publish_time).toLocaleString()
+                        "
+                        :tags="archive.tags?.map((t) => t.name) || []"
                     >
                     </ArticleBlock>
                 </ul>
             </template>
-            <PageNav
+            <AnzuPagination
                 v-if="totalPages >= 1"
                 :totalPages="totalPages"
                 :currentPage="currentPage"
                 @page-change="handlePageChange"
             >
-            </PageNav>
+            </AnzuPagination>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-import PageNav from "~/components/PageNav.vue";
+import AnzuPagination from "~/components/AnzuPagination.vue";
 import ArticleBlock from "~/components/ArticleBlock.vue";
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "#imports";
@@ -83,11 +87,13 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 
 const loadArchives = async (page: number = 1) => {
-    await getArchives(`/archives?pagination[page]=${page}`);
+    await getArchives(
+        `/v1/contents?type_slug=archive&fields=publish_time&page=${page}`,
+    );
     if (archives.value) {
-        if (meta.value?.pagination) {
-            totalPages.value = meta.value.pagination.pageCount;
-            currentPage.value = meta.value.pagination.page;
+        if (meta.value) {
+            totalPages.value = meta.value.total_pages;
+            currentPage.value = meta.value.current_page;
         }
     } else {
         console.error("加载失败", error.value);
@@ -95,7 +101,9 @@ const loadArchives = async (page: number = 1) => {
 };
 
 const loadTopArchives = async () => {
-    getTopArchives("/archives?filters[isTop][$eq]=true");
+    getTopArchives(
+        "/v1/contents?type_slug=archive&fields=publish_time&filter[is_top][eq]=true",
+    );
 };
 loadTopArchives();
 watch(

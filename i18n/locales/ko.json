@@ -6,10 +6,12 @@
     },
     "nav": {
         "home": "홈",
+        "wiki": "Wiki",
         "archive": "아카이브",
         "about": "길드 소개",
         "links": "유용한 링크",
         "timeline": "타임라인",
+        "wiki": "Wiki",
         "aboutChildren": {
             "index": "길드 개요",
             "leaders": "역대 리더",
@@ -18,7 +20,7 @@
             "teacher": "지도 교수"
         }
     },
-  "pages": {
+    "pages": {
         "timeline": {
             "title": "타임라인",
             "meta": {
@@ -90,6 +92,24 @@
             "title": "아카이브",
             "para": {
                 "title": "아카이브 상세정보"
+            }
+        },
+        "wiki": {
+            "title": "Wiki",
+            "meta": {
+                "title": "Wiki - 장시 재경대학교 사이버보안 길드",
+                "description": "장시 재경대학교 사이버보안 길드 Wiki로 지식과 경험을 모읍니다."
+            },
+            "index": {
+                "hint": "왼쪽 트리에서 문서를 선택해 읽어보세요."
+            },
+            "tree": {
+                "title": "Wiki",
+                "loadError": "Wiki 트리 로딩에 실패했습니다"
+            },
+            "content": {
+                "empty": "이 페이지에는 내용이 없습니다",
+                "emptyFolder": "빈 컨테이너"
             }
         },
         "about": {
@@ -185,6 +205,9 @@
     },
     "common": {
         "actions": {
+            "back": "돌아가기",
+            "open": "열기",
+            "close": "닫기",
             "more": "더보기",
             "viewDetail": "상세보기",
             "paginationPrevious": "이전",
@@ -203,6 +226,8 @@
         },
         "items": {
             "toc": "목차",
+            "sidebar": "사이드바",
+            "empty": "내용이 없습니다",
             "Warning": "경고",
             "Info": "정보",
             "Tip": "팁",

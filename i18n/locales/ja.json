@@ -6,6 +6,7 @@
     },
     "nav": {
         "home": "ホーム",
+        "wiki": "Wiki",
         "archive": "アーカイブ",
         "about": "ギルドについて",
         "links": "関連リンク",
@@ -18,7 +19,7 @@
             "teacher": "指導教員"
         }
     },
-  "pages": {
+    "pages": {
         "timeline": {
             "title": "タイムライン",
             "meta": {
@@ -90,6 +91,24 @@
             "title": "アーカイブ",
             "para": {
                 "title": "アーカイブ詳細"
+            }
+        },
+        "wiki": {
+            "title": "Wiki",
+            "meta": {
+                "title": "Wiki - 江西財経大学サイバーセキュリティギルド",
+                "description": "江西財経大学サイバーセキュリティギルドのWiki。知識と経験を蓄積します。"
+            },
+            "index": {
+                "hint": "左側のツリーから記事を選択して読んでください。"
+            },
+            "tree": {
+                "title": "Wiki",
+                "loadError": "Wikiツリーの読み込みに失敗しました"
+            },
+            "content": {
+                "empty": "このページには内容がありません",
+                "emptyFolder": "空のコンテナ"
             }
         },
         "about": {
@@ -185,6 +204,9 @@
     },
     "common": {
         "actions": {
+            "back": "戻る",
+            "open": "開く",
+            "close": "閉じる",
             "more": "もっと見る",
             "viewDetail": "詳細を見る",
             "paginationPrevious": "前へ",
@@ -206,6 +228,8 @@
             "Warning": "警告",
             "Info": "情報",
             "Tip": "ヒント",
+            "sidebar": "サイドバー",
+            "empty": "内容がありません",
             "Error": "エラー",
             "Success": "成功"
         }

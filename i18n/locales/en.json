@@ -6,6 +6,7 @@
     },
     "nav": {
         "home": "Home",
+        "wiki": "Wiki",
         "archive": "Archive",
         "about": "About the Guild",
         "links": "Useful Links",
@@ -90,6 +91,24 @@
             "title": "Archive",
             "para": {
                 "title": "Archive Details"
+            }
+        },
+        "wiki": {
+            "title": "Wiki",
+            "meta": {
+                "title": "Wiki - Cybersecurity Guild of Jiangxi University of Finance and Economics",
+                "description": "The Cybersecurity Guild Wiki, gathering knowledge and experiences."
+            },
+            "index": {
+                "hint": "Select an article from the left tree to start reading."
+            },
+            "tree": {
+                "title": "Wiki",
+                "loadError": "Failed to load the Wiki tree"
+            },
+            "content": {
+                "empty": "No content on this page",
+                "emptyFolder": "Empty container"
             }
         },
         "about": {
@@ -185,6 +204,9 @@
     },
     "common": {
         "actions": {
+            "back": "Back",
+            "open": "Open",
+            "close": "Close",
             "more": "More",
             "viewDetail": "View Details",
             "paginationPrevious": "Previous page",
@@ -203,6 +225,8 @@
         },
         "items": {
             "toc": "Contents",
+            "sidebar": "Sidebar",
+            "empty": "No content",
             "Warning": "Warning",
             "Info": "Info",
             "Tip": "Tip",

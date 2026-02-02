@@ -2,12 +2,49 @@
     <component
         :is="tag"
         ref="buttonRef"
-        class="anzu-button"
+        class="relative inline-flex h-10 min-w-16 cursor-pointer items-center justify-center gap-2 overflow-hidden px-6 text-sm font-medium transition-all duration-200 outline-none select-none"
         :class="[
-            `anzu-button--variant-${effectiveVariant}`,
-            `anzu-button--status-${status}`,
-            buttonGroupClasses,
-            { 'anzu-button--disabled': isButtonDisabled },
+            buttonGroupClasses ? '' : 'rounded-lg',
+
+            effectiveVariant === 'filled'
+                ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
+                : '',
+            effectiveVariant === 'outlined'
+                ? 'border border-(--md-sys-color-outline) bg-transparent text-(--md-sys-color-primary)'
+                : '',
+            effectiveVariant === 'text'
+                ? 'bg-transparent text-(--md-sys-color-primary) px-3 hover:bg-(--md-sys-color-primary)/8 active:bg-(--md-sys-color-primary)/12'
+                : '',
+            effectiveVariant === 'elevated'
+                ? 'bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-primary) shadow-sm'
+                : '',
+            effectiveVariant === 'tonal'
+                ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
+                : '',
+            buttonGroupClasses.includes('horizontal')
+                ? 'rounded-none border-r-0'
+                : '',
+            buttonGroupClasses.includes('horizontal')
+                ? 'first:rounded-l-lg last:rounded-r-lg last:border-r'
+                : '',
+            buttonGroupClasses.includes('vertical')
+                ? 'rounded-none border-b-0'
+                : '',
+            buttonGroupClasses.includes('vertical')
+                ? 'first:rounded-t-lg last:rounded-b-lg last:border-b'
+                : '',
+            isButtonDisabled
+                ? 'pointer-events-none cursor-not-allowed border-transparent shadow-none'
+                : '',
+        ]"
+        :style="[
+            isButtonDisabled
+                ? {
+                      backgroundColor:
+                          'color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent)',
+                      color: 'color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent)',
+                  }
+                : {},
         ]"
         :disabled="isButtonDisabled"
         :href="href"
@@ -22,7 +59,7 @@
             :status="status"
             :primary-color="loadingColor"
             :animation-duration="400"
-            class="anzu-button__progress"
+            class="relative z-10 shrink-0"
         />
         <svg
             v-else-if="status === 'success' && showIcon"
@@ -32,13 +69,12 @@
             :stroke="loadingColor"
             stroke-width="3"
             viewBox="0 0 24 24"
-            class="anzu-button__icon"
+            class="relative z-10 shrink-0"
         >
             <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="m4.5 12.75 6 6 9-13.5"
-                class="anzu-button__icon-path"
             />
         </svg>
         <svg
@@ -49,7 +85,7 @@
             :stroke="loadingColor"
             stroke-width="3"
             viewBox="0 0 24 24"
-            class="anzu-button__icon"
+            class="relative z-10 shrink-0"
         >
             <path
                 d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
@@ -57,21 +93,27 @@
                 stroke-linejoin="round"
             />
         </svg>
-        <span class="anzu-button__text">
+        <span class="relative z-10">
             <slot>Button</slot>
         </span>
-        <div class="anzu-button__state-layer"></div>
+        <div
+            v-if="effectiveVariant !== 'text'"
+            class="pointer-events-none absolute inset-0 z-0 bg-current opacity-0 transition-opacity duration-200"
+            :class="[
+                !isButtonDisabled
+                    ? 'hover:opacity-[0.08] active:opacity-[0.12]'
+                    : '',
+            ]"
+        ></div>
     </component>
 </template>
 
 <script setup lang="ts">
-import { computed, watch, inject } from "vue";
-import { useColorPalette } from "@/composables/useColorPalette";
+import { computed, inject } from "vue";
 
 interface Props {
     value?: string | number;
     status?: "default" | "loading" | "success" | "error" | "disabled";
-    primaryColor?: string;
     variant?: "filled" | "outlined" | "text" | "elevated" | "tonal";
     showIcon?: boolean;
     disabled?: boolean;
@@ -110,13 +152,8 @@ const effectiveVariant = computed(() => {
 
 const buttonGroupClasses = computed(() => {
     if (!buttonGroupContext) return "";
-    return `anzu-button--in-group-${buttonGroupContext.direction?.value}`;
+    return buttonGroupContext.direction?.value || "";
 });
-
-const { colorPalette, setPrimaryColor } = useColorPalette();
-
-const isValidHexColor = (color: string) =>
-    /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(color);
 
 const isDisabled = computed(
     () => props.disabled || props.status === "disabled",
@@ -169,133 +206,8 @@ function handleClick(event: MouseEvent): void {
 
     emit("click", event);
 }
-
-watch(
-    () => props.primaryColor,
-    (newColor) => {
-        if (
-            typeof newColor === "string" &&
-            isValidHexColor(newColor) &&
-            newColor !== colorPalette.value.primary
-        ) {
-            setPrimaryColor(newColor);
-        }
-    },
-    { immediate: true },
-);
 </script>
 
 <style scoped>
 @reference "tailwindcss";
-
-.anzu-button {
-    @apply relative inline-flex h-10 min-w-16 cursor-pointer items-center justify-center gap-2 overflow-hidden px-6 text-sm font-medium transition-all duration-200 outline-none select-none;
-    text-decoration: none;
-    border-radius: 0.5rem;
-}
-
-.anzu-button__state-layer {
-    @apply pointer-events-none absolute inset-0 z-0 bg-current opacity-0 transition-opacity duration-200;
-}
-
-.anzu-button:hover .anzu-button__state-layer {
-    @apply opacity-[0.08];
-}
-
-.anzu-button:active .anzu-button__state-layer {
-    @apply opacity-[0.12];
-}
-
-/* Variants */
-.anzu-button--variant-filled {
-    @apply bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary);
-}
-
-.anzu-button--variant-filled:not(.anzu-button--disabled):hover {
-    @apply shadow-sm;
-}
-
-.anzu-button--variant-filled:not(.anzu-button--disabled):active {
-    @apply shadow-none;
-}
-
-.anzu-button--variant-outlined {
-    @apply border border-(--md-sys-color-outline) bg-transparent text-(--md-sys-color-primary);
-}
-
-.anzu-button--variant-outlined:hover {
-    @apply border-(--md-sys-color-primary);
-}
-
-.anzu-button--variant-text {
-    @apply bg-transparent text-(--md-sys-color-primary);
-    @apply px-3;
-}
-
-.anzu-button--variant-elevated {
-    @apply bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-primary) shadow-sm;
-}
-
-.anzu-button--variant-elevated:not(.anzu-button--disabled):hover {
-    @apply shadow-md;
-}
-
-.anzu-button--variant-elevated:not(.anzu-button--disabled):active {
-    @apply shadow-sm;
-}
-
-.anzu-button--variant-tonal {
-    @apply bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container);
-}
-
-/* Disabled State */
-.anzu-button--disabled {
-    @apply pointer-events-none cursor-not-allowed border-transparent shadow-none;
-    background-color: color-mix(
-        in srgb,
-        var(--md-sys-color-on-surface) 12%,
-        transparent
-    );
-    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
-}
-
-.anzu-button__text,
-.anzu-button__icon,
-.anzu-button__progress {
-    @apply relative z-10;
-}
-
-.anzu-button__icon {
-    @apply shrink-0;
-}
-
-.anzu-button--in-group-horizontal {
-    @apply rounded-none border-r-0;
-}
-
-.anzu-button--in-group-horizontal:first-child {
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-}
-
-.anzu-button--in-group-horizontal:last-child {
-    border-top-right-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    border-right-width: 1px;
-}
-
-.anzu-button--in-group-vertical {
-    @apply rounded-none border-b-0;
-}
-
-.anzu-button--in-group-vertical:first-child {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-}
-
-.anzu-button--in-group-vertical:last-child {
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    border-bottom-width: 1px;
-}
 </style>

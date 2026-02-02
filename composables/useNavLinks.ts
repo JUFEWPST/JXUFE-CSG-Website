@@ -1,4 +1,12 @@
-
+import type { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue'
+import {
+    HomeIcon,
+    ArchiveBoxIcon,
+    UserGroupIcon,
+    LinkIcon,
+    ClockIcon,
+    BookOpenIcon,
+} from "@heroicons/vue/24/outline";
 export interface NavChildLink {
     path: string
     label: string
@@ -8,10 +16,8 @@ export interface BaseNavLink {
     path: string
     label: string
     defaultPath?: string
-    /**
-     * 如果为 true，该入口将默认固定在“更多”菜单中（不参与顶部可见区域的宽度计算）。
-     */
     alwaysInMore?: boolean
+    icon?: FunctionalComponent<HTMLAttributes & VNodeProps>
 }
 
 export interface NavLinkWithChildren extends BaseNavLink {
@@ -24,16 +30,24 @@ export const useNavLinks = (): NavLink[] => {
     return [
         {
             path: '/',
-            label: 'nav.home'
+            label: 'nav.home',
+            icon: HomeIcon
         },
         {
             path: '/archive',
-            label: 'nav.archive'
+            label: 'nav.archive',
+            icon: ArchiveBoxIcon
+        },
+        {
+            path: '/wiki',
+            label: 'nav.wiki',
+            icon: BookOpenIcon
         },
         {
             path: '/about',
             defaultPath: '/about',
             label: 'nav.about',
+            icon: UserGroupIcon,
             children: [
                 { path: '/about', label: 'nav.aboutChildren.index' },
                 { path: '/about/teacher', label: 'nav.aboutChildren.teacher' },
@@ -44,12 +58,14 @@ export const useNavLinks = (): NavLink[] => {
         },
         {
             path: '/links',
-            label: 'nav.links'
+            label: 'nav.links',
+            icon: LinkIcon
         },
         {
             path: '/timeline',
             label: 'nav.timeline',
-            alwaysInMore: true
+            alwaysInMore: true,
+            icon: ClockIcon
         }
     ]
 }

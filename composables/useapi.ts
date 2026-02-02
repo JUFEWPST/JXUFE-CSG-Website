@@ -3,14 +3,9 @@ import type { Ref } from 'vue'
 
 export interface ApiResponse<T> {
   data: T | null
-  error: {
-    status: number
-    name: string
-    message: string
-    details: Record<string, unknown>
-  } | null
+  error: ApiError | null
   loading: boolean
-  meta?: StrapiMeta
+  meta?: ApiMeta
 }
 
 interface ErrorResponse {
@@ -20,40 +15,83 @@ interface ErrorResponse {
   details?: Record<string, unknown>
 }
 
-export interface StrapiPagination {
-  page: number
-  pageSize: number
-  pageCount: number
-  total: number
+export interface ApiMeta {
+  current_page: number
+  page_size: number
+  total_items: number
+  total_pages: number
 }
 
-interface StrapiMeta {
-  pagination: StrapiPagination
-}
+const DEFAULT_BASE_URL = 'https://csec.jxufe.edu.cn/nozomi'
 
-export interface StrapiResponse<T> {
+interface CmsEnvelope<T> {
+  code: number
+  message: string
   data: T
-  meta?: StrapiMeta
+  meta?: ApiMeta
 }
 
-const BASE_URL = 'https://csgapi.tantanchugasuki.cn/api'
+interface ApiError {
+  status: number
+  name: string
+  message: string
+  details: Record<string, unknown>
+}
+
+const isCmsEnvelope = <T>(value: unknown): value is CmsEnvelope<T> => {
+  if (!value || typeof value !== 'object') return false
+  const record = value as Record<string, unknown>
+  return typeof record.code === 'number' && 'data' in record
+}
+
+const normalizeError = (err: unknown): ApiError => {
+  const fallback: ApiError = {
+    status: 500,
+    name: 'UnknownError',
+    message: 'Unknown error occurred',
+    details: {},
+  }
+
+  if (typeof err !== 'object' || err === null) return fallback
+  const e = err as Partial<ApiError>
+  return {
+    status: e.status ?? 500,
+    name: e.name ?? 'UnknownError',
+    message: e.message ?? 'Unknown error occurred',
+    details: e.details ?? {},
+  }
+}
 
 export function useApi<T>() {
   const response: Ref<ApiResponse<T>> = ref({
     data: null,
     error: null,
     loading: false,
-    meta: undefined
+    meta: undefined // This will be inferred as ApiMeta | undefined if I update ApiResponse
   })
 
+  const config = useRuntimeConfig()
+  const baseURL = config.public?.apiBase || DEFAULT_BASE_URL
+  let activeController: AbortController | null = null
+  let requestId = 0
+
   const fetchData = async (endpoint: string, options: RequestInit = {}) => {
+    requestId += 1
+    const currentId = requestId
+    if (activeController) {
+      activeController.abort()
+    }
+    activeController = new AbortController()
+
     response.value.loading = true
     response.value.error = null
     response.value.meta = undefined
+    response.value.data = null
     try {
-      const url = `${BASE_URL}${endpoint}`
+      const url = `${baseURL}${endpoint}`
       const res = await fetch(url, {
         ...options,
+        signal: activeController.signal,
         headers: {
           'Content-Type': 'application/json',
           ...options.headers,
@@ -76,18 +114,31 @@ export function useApi<T>() {
         }
       }
 
-      const data = await res.json();
-      response.value.data = data.data;
-      response.value.meta = data.meta;
-    } catch (err) {
-      response.value.error = {
-        status: (err as any).status || 500,
-        name: (err as any).name || 'UnknownError',
-        message: (err as any).message || 'Unknown error occurred',
-        details: (err as any).details || {}
+      const payload: unknown = await res.json()
+      if (currentId !== requestId) return
+
+      if (isCmsEnvelope<T>(payload)) {
+        if (payload.code !== 200) {
+          throw {
+            status: res.status,
+            name: 'ApiError',
+            message: payload.message || `API request failed with status ${payload.code}`,
+            details: {},
+          }
+        }
+        response.value.data = payload.data
+        response.value.meta = payload.meta
+        return
       }
+
+      response.value.data = payload as T
+    } catch (err) {
+      if ((err as { name?: string })?.name === 'AbortError') return
+      response.value.error = normalizeError(err)
     } finally {
-      response.value.loading = false
+      if (currentId === requestId) {
+        response.value.loading = false
+      }
     }
   }
 

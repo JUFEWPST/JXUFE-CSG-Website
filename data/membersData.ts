@@ -27,7 +27,7 @@ const member2025: Member[] = [
         name: '邱挺',
         display: '糖糖毬',
         position: '会长',
-        avatar: 'https://img.tantanchugasuki.cn/i/2025/10/16/avatar.webp',
+        avatar: 'https://img.tantanchugasuki.cn/i/r/avatar',
         contact: 'tangtangchugasuki@qq.com',
         message: '愿我们终能与我们所憧憬的美好相遇'
     },
@@ -385,7 +385,7 @@ const member2024: Member[] =
         {
             name: "邱挺",
             display: "糖糖毬",
-            avatar: "https://img.tantanchugasuki.cn/i/2025/10/16/avatar.webp",
+            avatar: "https://img.tantanchugasuki.cn/i/r/avatar",
             position: "学习部成员",
             message: '愿我们终能与我们所憧憬的美好相遇'
         },

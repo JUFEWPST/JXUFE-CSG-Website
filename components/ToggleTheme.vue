@@ -13,15 +13,15 @@ const showMenu = ref(false);
 const Themes = [
     { name: "江财红 (JXUFE)", color: "#A61E33" },
     { name: "Miku", color: "#39C5BB" },
-    { name: "Umi", color: "#0067C0" },
-    { name: "Nico", color: "#EC008C" },
-    { name: "Honoka", color: "#E48F23" },
-    { name: "Kotori", color: "#97978F" },
-    { name: "Rin", color: "#FCD800" },
-    { name: "Hanayo", color: "#54AB4C" },
-    { name: "Maki", color: "#CC2439" },
-    { name: "Nozomi", color: "#742D93" },
-    { name: "Eli", color: "#2AB2E1" },
+    { name: "Umi", color: "#1769ff" },
+    { name: "Nico", color: "#ff4f91" },
+    { name: "Honoka", color: "#f38500" },
+    { name: "Kotori", color: "#cebfbf" },
+    { name: "Rin", color: "#fff832" },
+    { name: "Hanayo", color: "#6ae673" },
+    { name: "Maki", color: "#ff503e" },
+    { name: "Nozomi", color: "#c455f6" },
+    { name: "Eli", color: "#7aeeff" },
 ];
 
 const updateColor = (event: Event) => {
