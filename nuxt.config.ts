@@ -25,9 +25,10 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://csec.jxufe.edu.cn/nozomi',
       buildInfo: {
-        builder: 'Manual Build',
-        buildTime: new Date().toISOString(),
-        commitHash: process.env.VERCEL_GIT_COMMIT_SHA ||
+        builder: process.env.NUXT_PUBLIC_BUILD_INFO_BUILDER || 'Manual Build',
+        buildTime: process.env.NUXT_PUBLIC_BUILD_INFO_BUILD_TIME || new Date().toISOString(),
+        commitHash: process.env.NUXT_PUBLIC_BUILD_INFO_COMMIT_HASH ||
+          process.env.VERCEL_GIT_COMMIT_SHA ||
           process.env.COMMIT_REF ||
           'unknown'
       }

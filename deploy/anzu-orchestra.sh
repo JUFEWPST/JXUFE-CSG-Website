@@ -75,7 +75,8 @@ resolve_image_name() {
         local compose_image
         compose_image=$(grep -E '^[[:space:]]*image:' "$COMPOSE_FILE" | head -n 1 | awk '{print $2}')
         if [ -n "$compose_image" ]; then
-            IMAGE_NAME="$compose_image"
+            # 移除可能存在的标签，只保留镜像名称部分
+            IMAGE_NAME="${compose_image%%:*}"
             log "使用 compose 中的镜像名: $IMAGE_NAME"
             return 0
         fi

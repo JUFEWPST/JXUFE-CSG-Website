@@ -7,7 +7,7 @@
                 {{ t("pages.about.members.dataCollectTip")
                 }}<NuxtLink
                     class="text-(--md-sys-color-primary)"
-                    to="/archive/nvz60h0y8pj9opi1hyn9ysvb"
+                    to="/archive/江财网安协会历届成员档案共建邀请"
                 >
                     [{{ t("pages.about.members.archiveInvite") }}]</NuxtLink
                 >
