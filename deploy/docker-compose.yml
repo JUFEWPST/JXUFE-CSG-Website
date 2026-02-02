@@ -5,7 +5,7 @@ services:
     image: jxufe-csg-website:latest
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "4122:3000"
     environment:
       - NODE_ENV=production
     healthcheck:
