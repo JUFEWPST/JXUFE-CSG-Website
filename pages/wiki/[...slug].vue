@@ -64,6 +64,12 @@
                         {{ t("pages.wiki.content.empty") }}
                     </div>
                 </div>
+
+                <AnzuPrevNextNav
+                    v-if="wikiPrev || wikiNext"
+                    :prev="wikiPrev"
+                    :next="wikiNext"
+                />
             </article>
 
             <!-- Folder View -->
@@ -130,6 +136,7 @@ import ErrorDisplay from "~/components/ErrorDisplay.vue";
 import TagList from "~/components/TagList.vue";
 import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
 import AnzuBreadcrumbs from "~/components/AnzuBreadcrumbs.vue";
+import AnzuPrevNextNav from "~/components/AnzuPrevNextNav.vue";
 import WikiTree from "~/components/sidebars/WikiTree.vue";
 import { FolderIcon, DocumentTextIcon } from "@heroicons/vue/24/outline";
 
@@ -137,6 +144,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { useRoute, useRouter } from "#imports";
 import type { TocItem } from "~/types/tocitems";
+import type { WikiTreeNode } from "~/types/wiki";
 import { useApi } from "#imports";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
 import { useNavTitle } from "@/composables/useNavTitle";
@@ -204,7 +212,7 @@ const {
     error: treeError,
     get: getTree,
 } = useApi<any>();
-const { data: breadcrumbTree, get: getBreadcrumbTree } = useApi<any>();
+const { data: breadcrumbTree, get: getBreadcrumbTree } = useApi<WikiTreeNode>();
 
 const isFolder = computed(() => treeNode.value?.is_container === true);
 const isFolderView = computed(() => isFolder.value);
@@ -256,6 +264,59 @@ const breadcrumbItems = computed(() => {
         });
     });
     return items;
+});
+
+type PrevNextTarget = { to: string; title: string };
+
+const resolveNodeBySegments = (root: WikiTreeNode | null | undefined, segments: string[]) => {
+    let node: WikiTreeNode | null | undefined = root;
+    for (const segment of segments) {
+        if (!node?.children) return null;
+        const next = node.children.find((child) => child.slug === segment);
+        if (!next) return null;
+        node = next;
+    }
+    return node ?? null;
+};
+
+const wikiSiblingArticles = computed(() => {
+    if (!breadcrumbTree.value) return [] as WikiTreeNode[];
+    if (!slugSegments.value.length) return [] as WikiTreeNode[];
+
+    const parentSegments = slugSegments.value.slice(0, -1);
+    const parentNode = resolveNodeBySegments(breadcrumbTree.value, parentSegments);
+    const children = parentNode?.children ?? [];
+
+    return children
+        .filter((n) => n && n.is_container === false)
+        .slice()
+        .sort((a, b) => {
+            if (a.order !== b.order) return a.order - b.order;
+            const t = a.title.localeCompare(b.title);
+            if (t !== 0) return t;
+            return a.path.localeCompare(b.path);
+        });
+});
+
+const wikiCurrentSiblingIndex = computed(() => {
+    const currentSlug = slugSegments.value[slugSegments.value.length - 1];
+    return wikiSiblingArticles.value.findIndex((n) => n.slug === currentSlug);
+});
+
+const wikiPrev = computed<PrevNextTarget | null>(() => {
+    if (isFolderView.value) return null;
+    const idx = wikiCurrentSiblingIndex.value;
+    if (idx <= 0) return null;
+    const item = wikiSiblingArticles.value[idx - 1];
+    return item?.path ? { to: `/${item.path}`, title: item.title || item.slug } : null;
+});
+
+const wikiNext = computed<PrevNextTarget | null>(() => {
+    if (isFolderView.value) return null;
+    const idx = wikiCurrentSiblingIndex.value;
+    if (idx === -1 || idx >= wikiSiblingArticles.value.length - 1) return null;
+    const item = wikiSiblingArticles.value[idx + 1];
+    return item?.path ? { to: `/${item.path}`, title: item.title || item.slug } : null;
 });
 
 const showError = computed(() => {

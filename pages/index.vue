@@ -60,7 +60,7 @@
                             to="/about"
                             class="text-sm font-bold text-(--md-sys-color-primary) underline-offset-4 transition hover:underline sm:text-base"
                         >
-                            {{ t("pages.home.aboutUs.more") }} →
+                            {{ t("pages.home.aboutUs.more") }}
                         </NuxtLink>
                     </div>
                 </div>

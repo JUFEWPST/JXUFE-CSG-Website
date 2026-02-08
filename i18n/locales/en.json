@@ -52,7 +52,7 @@
             },
             "recentNews": {
                 "title": "Lastest Updates",
-                "more": "View More Updates >>"
+                "more": "View More Updates"
             }
         },
         "links": {
@@ -216,6 +216,9 @@
             "paginationTargetPageNumber": "Target page number",
             "paginationJumpToPage": "Jump to page {page}",
             "paginationGoButton": "GO"
+            ,
+            "prevContent": "Previous",
+            "nextContent": "Next"
         },
         "direction": {
             "left1": "Left",
@@ -231,7 +234,8 @@
             "Info": "Info",
             "Tip": "Tip",
             "Error": "Error",
-            "Success": "Success"
+            "Success": "Success",
+            "prevNextNav": "Previous/Next"
         }
     },
     "footer": {
