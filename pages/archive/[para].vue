@@ -55,6 +55,12 @@
                     >
                     </MarkdownRender>
                 </div>
+
+                <AnzuPrevNextNav
+                    v-if="archivePrev || archiveNext"
+                    :prev="archivePrev"
+                    :next="archiveNext"
+                />
             </article>
         </div>
     </main>
@@ -63,11 +69,13 @@
 <script lang="ts" setup>
 import MarkdownRender from "~/components/MarkdownRender.vue";
 import MarkdownTOC from "~/components/MarkdownTOC.vue";
+import AnzuPrevNextNav from "~/components/AnzuPrevNextNav.vue";
 import { computed, onMounted, ref, onUnmounted, watch } from "vue";
 import { useRoute } from "#imports";
 import type { ArchiveData } from "~/types/archives";
 import type { TocItem } from "~/types/tocitems";
 import { useApi } from "#imports";
+import { useArchivePrevNext } from "~/composables/useArchivePrevNext";
 import { useRightSidebar } from "@/composables/useRightSidebar";
 import { usePageTitle } from "@/composables/usePageTitle";
 import { useNavTitle } from "@/composables/useNavTitle";
@@ -83,6 +91,10 @@ const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 
 const para = computed(() => route.params.para);
 const { data: archive, loading, error, get } = useApi<ArchiveData>();
+
+const currentSlug = computed(() => String(para.value ?? ""));
+const { prev: archivePrev, next: archiveNext } = useArchivePrevNext(currentSlug);
+
 const pageTitle = computed(() => {
     const title = archive.value?.data?.title || archive.value?.title;
     return title

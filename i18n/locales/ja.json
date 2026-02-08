@@ -52,7 +52,7 @@
             },
             "recentNews": {
                 "title": "最近の動向",
-                "more": "もっと見る >>"
+                "more": "もっと見る"
             }
         },
         "links": {
@@ -216,6 +216,9 @@
             "paginationTargetPageNumber": "対象ページ",
             "paginationJumpToPage": "{page} ページに移動",
             "paginationGoButton": "GO"
+            ,
+            "prevContent": "前へ",
+            "nextContent": "次へ"
         },
         "direction": {
             "left1": "左側",
@@ -231,7 +234,8 @@
             "sidebar": "サイドバー",
             "empty": "内容がありません",
             "Error": "エラー",
-            "Success": "成功"
+            "Success": "成功",
+            "prevNextNav": "前へ/次へ"
         }
     },
     "footer": {

@@ -52,7 +52,7 @@
             },
             "recentNews": {
                 "title": "近期动态",
-                "more": "查看更多动态 >>"
+                "more": "查看更多动态"
             }
         },
         "links": {
@@ -216,6 +216,9 @@
             "paginationTargetPageNumber": "目标页数",
             "paginationJumpToPage": "跳转至 {page} 页",
             "paginationGoButton": "跳转"
+            ,
+            "prevContent": "上一篇",
+            "nextContent": "下一篇"
         },
         "direction": {
             "left1": "左方",
@@ -231,7 +234,8 @@
             "Info": "信息",
             "Tip": "提示",
             "Error": "错误",
-            "Success": "成功"
+            "Success": "成功",
+            "prevNextNav": "上一篇/下一篇"
         }
     },
     "footer": {
