@@ -7,10 +7,7 @@
             role="navigation"
         >
             <div v-if="items.length" class="mb-2 flex items-center">
-                <h2
-                    id="toc-title"
-                    class="text-lg font-bold"
-                >
+                <h2 id="toc-title" class="text-lg font-bold">
                     {{ t("common.items.toc") }}
                 </h2>
             </div>
@@ -20,10 +17,12 @@
                     v-for="item in items"
                     :key="item.id"
                     class="my-0.5 min-w-0 overflow-hidden leading-snug text-ellipsis"
+                    :style="{ paddingLeft: getIndent(item.level) }"
                 >
                     <a
                         @click="scrollTo(item.id)"
                         :class="getLinkClasses(item)"
+                        :style="{ fontSize: getLevelFontSize(item.level) }"
                         :title="item.text"
                         :aria-current="
                             activeId === item.id ? 'location' : undefined
@@ -44,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import slugify from "slugify";
 import type { TocItem } from "~/types/tocitems";
 
@@ -66,6 +65,17 @@ function getHeadingSelector() {
 
 const activeId = ref("");
 
+// 计算当前文章中最小的level
+const minLevel = computed(() => {
+    if (!props.items.length) return 1;
+    return Math.min(...props.items.map((item) => item.level));
+});
+
+// 根据相对层级计算缩进
+const getIndent = (level: number) => {
+    return `${(level - minLevel.value) * 0.75}rem`;
+};
+
 const getLinkClasses = (item: TocItem) => {
     const baseClasses =
         "block py-1.5 px-2 md:px-3 no-underline rounded-lg text-sm transition-colors cursor-pointer whitespace-normal wrap-break-word";
@@ -75,6 +85,19 @@ const getLinkClasses = (item: TocItem) => {
             : "text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-primary)";
 
     return `${baseClasses} ${activeClasses}`;
+};
+
+const getLevelFontSize = (level: number) => {
+    const relativeLevel = level - minLevel.value;
+    const fontSizes: Record<number, string> = {
+        0: "0.9rem", // 最大标题
+        1: "0.875rem", // 二级标题
+        2: "0.85rem", // 三级标题
+        3: "0.825rem", // 四级标题
+        4: "0.8rem", // 五级标题
+        5: "0.8rem", // 六级标题
+    };
+    return fontSizes[relativeLevel] || "0.8rem";
 };
 
 async function scrollTo(idOrText: string) {

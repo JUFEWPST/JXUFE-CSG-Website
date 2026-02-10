@@ -14,6 +14,7 @@ import mediumZoom from "medium-zoom";
 import { useMarkdown } from "~/composables/UseMarkdown";
 import "~/assets/css/markdown.css";
 import "~/assets/css/atom-one.css";
+import "katex/dist/katex.min.css";
 import type { TocItem } from "~/types/tocitems";
 import slugify from "slugify";
 const { md, renderMarkdown } = useMarkdown();
@@ -48,7 +49,10 @@ watch(
     () => props.content,
     (newContent) => {
         if (newContent) {
-            nextTick(extractHeadings);
+            nextTick(() => {
+                extractHeadings();
+                setupCodeCopy();
+            });
         }
     },
     { immediate: true },
@@ -67,7 +71,8 @@ function extractHeadings() {
             const textContent = heading.textContent || "";
             heading.id = slugify(textContent, slugifyConfig);
             if (!heading.id) {
-                heading.id = `heading-${index}-${Math.random().toString(36).substr(2, 4)}`;
+                const randomSuffix = Math.random().toString(36).slice(2, 6);
+                heading.id = `heading-${index}-${randomSuffix}`;
             }
         }
 
@@ -86,9 +91,35 @@ defineExpose({
     tocItems: tocItems as Ref<TocItem[]>,
 });
 
+// 代码复制功能
+function setupCodeCopy() {
+    if (!markdownRef.value) return;
+
+    const copyButtons = markdownRef.value.querySelectorAll(".code-copy-btn");
+    copyButtons.forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+            const button = e.currentTarget as HTMLButtonElement;
+            const code = button.getAttribute("data-code");
+
+            if (!code) return;
+
+            try {
+                await navigator.clipboard.writeText(code);
+                button.classList.add("copied");
+                setTimeout(() => {
+                    button.classList.remove("copied");
+                }, 2000);
+            } catch (err) {
+                console.error("复制失败:", err);
+            }
+        });
+    });
+}
+
 onMounted(() => {
     nextTick(() => {
         extractHeadings();
+        setupCodeCopy();
     });
     if (markdownRef.value) {
         const zoom = mediumZoom(markdownRef.value.querySelectorAll("img"));

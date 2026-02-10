@@ -1,5 +1,5 @@
 const colorMap = new Map<string, string>();
-const VIBRANT_HUES = [
+const VIBRANT_HUES: Array<[number, number]> = [
     [210, 230],  // 蓝
     [330, 360],  // 粉/红
     [20, 40],    // 橙
@@ -12,6 +12,7 @@ export function useRandomColor(tag: string): string {
 
     // 随机选择一个鲜艳色相范围
     const hueRange = VIBRANT_HUES[Math.floor(Math.random() * VIBRANT_HUES.length)];
+    if (!hueRange) return 'hsl(0, 50%, 50%)';
     const hue = Math.floor(Math.random() * (hueRange[1] - hueRange[0])) + hueRange[0];
     const saturation = Math.floor(Math.random() * 30) + 20; // 20-49%
     const lightness = Math.floor(Math.random() * 15) + 45;  // 45-59%
