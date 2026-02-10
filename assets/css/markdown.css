@@ -24,18 +24,20 @@
 
     /* LIGHT THEME VARIABLES */
     color-scheme: light;
-    
+
     /* Core Colors */
     --fgColor-default: var(--md-sys-color-on-surface);
     --fgColor-muted: var(--md-sys-color-on-surface-variant);
     --focus-outlineColor: var(--md-sys-color-primary);
-    
+
     /* Semantic Colors */
     --fgColor-accent: var(--md-sys-color-primary);
-    --fgColor-success: var(--md-sys-color-secondary); /* Distinct from primary */
+    --fgColor-success: var(--md-sys-color-secondary);
+    /* Distinct from primary */
     --fgColor-attention: var(--md-sys-color-tertiary);
     --fgColor-danger: var(--md-sys-color-error);
-    --fgColor-done: var(--md-sys-color-tertiary); /* Distinct from primary */
+    --fgColor-done: var(--md-sys-color-tertiary);
+    /* Distinct from primary */
 
     /* Backgrounds */
     --bgColor-default: var(--md-sys-color-surface-container-lowest);
@@ -47,7 +49,7 @@
     --borderColor-default: var(--md-sys-color-outline-variant);
     --borderColor-muted: var(--md-sys-color-outline-variant);
     --borderColor-neutral-muted: var(--md-sys-color-outline-variant);
-    
+
     /* Border Emphasis (Used for Alerts) */
     --borderColor-accent-emphasis: var(--md-sys-color-primary);
     --borderColor-success-emphasis: var(--md-sys-color-secondary);
@@ -94,12 +96,12 @@
 /* DARK THEME VARIABLES */
 .dark .markdown-wrapper {
     color-scheme: dark;
-    
+
     /* Core Colors */
     --fgColor-default: var(--md-sys-color-on-surface);
     --fgColor-muted: var(--md-sys-color-on-surface-variant);
     --focus-outlineColor: var(--md-sys-color-primary);
-    
+
     /* Semantic Colors */
     --fgColor-accent: var(--md-sys-color-primary);
     --fgColor-success: var(--md-sys-color-secondary);
@@ -117,7 +119,7 @@
     --borderColor-default: var(--md-sys-color-outline-variant);
     --borderColor-muted: var(--md-sys-color-outline-variant);
     --borderColor-neutral-muted: var(--md-sys-color-outline-variant);
-    
+
     /* Border Emphasis */
     --borderColor-accent-emphasis: var(--md-sys-color-primary);
     --borderColor-success-emphasis: var(--md-sys-color-secondary);
@@ -319,17 +321,32 @@
     content: "";
 }
 
+/* 表格容器，支持横向滚动 */
 .markdown-wrapper table {
     border-spacing: 0;
     border-collapse: separate;
     border-radius: var(--border-radius-base);
-    overflow: hidden;
     box-shadow: 0 0 0 1px var(--borderColor-default);
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.markdown-wrapper table thead,
+.markdown-wrapper table tbody {
+    display: table;
+    width: 100%;
+}
+
+.markdown-wrapper table tr {
+    display: table-row;
 }
 
 .markdown-wrapper td,
 .markdown-wrapper th {
     padding: 0;
+    display: table-cell;
 }
 
 .markdown-wrapper details summary {
@@ -400,7 +417,6 @@
     font-weight: var(--base-text-weight-semibold, 600);
     padding-bottom: .3em;
     font-size: 1.5em;
-    border-bottom: 1px solid var(--borderColor-muted);
 }
 
 .markdown-wrapper h3 {
@@ -433,13 +449,77 @@
     margin: 16px 0;
     padding: 16px 20px;
     background-color: var(--bgColor-muted);
-    border-left: 4px solid var(--fgColor-accent);
-    border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0;
+    border-radius: var(--border-radius-base);
+}
+
+/* Markdown Alerts (GitHub style callouts) */
+.markdown-wrapper .markdown-alert {
+    margin: 16px 0;
+    padding: 16px;
+    background-color: var(--md-sys-color-surface-container);
+    border-radius: 12px;
+    border: none;
+}
+
+.markdown-wrapper .markdown-alert-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+}
+
+.markdown-wrapper .markdown-alert-title .alert-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.markdown-wrapper .markdown-alert-content {
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.markdown-wrapper .markdown-alert-content> :first-child {
+    margin-top: 0;
+}
+
+.markdown-wrapper .markdown-alert-content> :last-child {
+    margin-bottom: 0;
+}
+
+/* Alert type specific styles */
+.markdown-wrapper .markdown-alert.alert-info .alert-icon {
+    color: var(--md-sys-color-secondary);
+}
+
+.markdown-wrapper .markdown-alert.alert-succ .alert-icon {
+    color: var(--md-sys-color-primary);
+}
+
+.markdown-wrapper .markdown-alert.alert-warn .alert-icon {
+    color: var(--md-sys-color-tertiary);
+}
+
+.markdown-wrapper .markdown-alert.alert-error .alert-icon {
+    color: var(--md-sys-color-error);
+}
+
+.markdown-wrapper .markdown-alert.alert-plain .markdown-alert-content {
+    margin-top: 0;
 }
 
 .markdown-wrapper ul,
 .markdown-wrapper ol {
     padding-left: 2em;
+}
+
+.markdown-wrapper ul {
+    list-style-type: disc;
+}
+
+.markdown-wrapper ol {
+    list-style-type: decimal;
 }
 
 .markdown-wrapper ol ol,
@@ -620,8 +700,6 @@
 .markdown-wrapper h1,
 .markdown-wrapper h2 {
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--borderColor-default);
-    border-radius: 0 0 2px 2px;
 }
 
 .markdown-wrapper ul.no-list,
@@ -882,6 +960,104 @@
     border-radius: 6px;
 }
 
+/* 代码块容器和复制按钮样式 */
+.markdown-wrapper .code-block-wrapper {
+    position: relative;
+    margin-bottom: var(--base-size-16);
+    border-radius: 8px;
+    background-color: var(--bgColor-muted);
+    border: 1px solid var(--borderColor-default);
+    overflow: hidden;
+}
+
+.markdown-wrapper .code-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: var(--bgColor-neutral-muted);
+    border-bottom: 1px solid var(--borderColor-default);
+}
+
+.markdown-wrapper .code-block-lang {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fgColor-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.markdown-wrapper .code-copy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    background-color: transparent;
+    border: 1px solid var(--borderColor-muted);
+    border-radius: 4px;
+    color: var(--fgColor-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.markdown-wrapper .code-copy-btn:hover {
+    background-color: var(--bgColor-default);
+    border-color: var(--borderColor-default);
+    color: var(--fgColor-accent);
+}
+
+.markdown-wrapper .code-copy-btn .check-icon {
+    display: none;
+}
+
+.markdown-wrapper .code-copy-btn.copied .copy-icon {
+    display: none;
+}
+
+.markdown-wrapper .code-copy-btn.copied .check-icon {
+    display: block;
+    color: var(--fgColor-success);
+}
+
+.markdown-wrapper .code-block-wrapper pre {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+
+.markdown-wrapper .code-block-wrapper code {
+    display: block;
+}
+
+.markdown-wrapper .code-block-wrapper .code-line {
+    display: block;
+    padding: 0 12px;
+    white-space: pre;
+}
+
+.markdown-wrapper .code-block-wrapper .code-line.is-highlighted {
+    background-color: var(--bgColor-neutral-muted);
+}
+
+.markdown-wrapper .code-block-wrapper .code-line-number {
+    display: inline-block;
+    width: 2.5em;
+    margin-right: 12px;
+    text-align: right;
+    color: var(--fgColor-muted);
+    user-select: none;
+}
+
+.markdown-wrapper .code-block-wrapper .code-line-content {
+    display: inline-block;
+    min-width: 0;
+}
+
+.markdown-wrapper .code-block-wrapper .has-line-numbers .code-line {
+    padding-left: 8px;
+}
+
 .markdown-wrapper pre code,
 .markdown-wrapper pre tt {
     display: inline;
@@ -920,6 +1096,38 @@
     font-weight: var(--base-text-weight-semibold, 600);
     background: var(--bgColor-muted);
     border-top: 0;
+}
+
+.markdown-wrapper mark {
+    background-color: var(--bgColor-attention-muted);
+    color: var(--fgColor-default);
+    padding: 0 0.2em;
+    border-radius: 4px;
+}
+
+.markdown-wrapper sup {
+    vertical-align: super;
+    font-size: 75%;
+}
+
+.markdown-wrapper sub {
+    vertical-align: sub;
+    font-size: 75%;
+}
+
+.markdown-wrapper dl {
+    margin-top: 0;
+    margin-bottom: var(--base-size-16);
+}
+
+.markdown-wrapper dt {
+    font-weight: var(--base-text-weight-semibold, 600);
+    margin-top: var(--base-size-8);
+}
+
+.markdown-wrapper dd {
+    margin-left: var(--base-size-16);
+    color: var(--fgColor-muted);
 }
 
 .markdown-wrapper [data-footnote-ref]::before {
@@ -1168,70 +1376,6 @@
 
 .markdown-wrapper ::-webkit-calendar-picker-indicator {
     filter: invert(50%);
-}
-
-.markdown-wrapper .markdown-alert {
-    padding: var(--base-size-8) var(--base-size-16);
-    margin-bottom: var(--base-size-16);
-    color: inherit;
-    border-left: .25em solid var(--borderColor-default);
-    background-color: var(--bgColor-neutral-muted);
-    border-radius: var(--border-radius-base);
-}
-
-.markdown-wrapper .markdown-alert>:first-child {
-    margin-top: 0;
-}
-
-.markdown-wrapper .markdown-alert>:last-child {
-    margin-bottom: 0;
-}
-
-.markdown-wrapper .markdown-alert .markdown-alert-title {
-    display: flex;
-    font-weight: var(--base-text-weight-medium, 500);
-    align-items: center;
-    line-height: 1;
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-note {
-    border-left-color: var(--borderColor-accent-emphasis);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-note .markdown-alert-title {
-    color: var(--fgColor-accent);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-important {
-    border-left-color: var(--borderColor-done-emphasis);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-important .markdown-alert-title {
-    color: var(--fgColor-done);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-warning {
-    border-left-color: var(--borderColor-attention-emphasis);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-warning .markdown-alert-title {
-    color: var(--fgColor-attention);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-tip {
-    border-left-color: var(--borderColor-success-emphasis);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-tip .markdown-alert-title {
-    color: var(--fgColor-success);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-caution {
-    border-left-color: var(--borderColor-danger-emphasis);
-}
-
-.markdown-wrapper .markdown-alert.markdown-alert-caution .markdown-alert-title {
-    color: var(--fgColor-danger);
 }
 
 .markdown-wrapper>*:first-child>.heading-element:first-child {

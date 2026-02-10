@@ -51,7 +51,7 @@
                         ref="markdownRender"
                         :content="archive.data.body ?? ''"
                         @toc-updated="handleTocUpdate"
-                        class="box-border flex-1 overflow-hidden"
+                        class="box-border flex-1"
                     >
                     </MarkdownRender>
                 </div>
@@ -93,7 +93,8 @@ const para = computed(() => route.params.para);
 const { data: archive, loading, error, get } = useApi<ArchiveData>();
 
 const currentSlug = computed(() => String(para.value ?? ""));
-const { prev: archivePrev, next: archiveNext } = useArchivePrevNext(currentSlug);
+const { prev: archivePrev, next: archiveNext } =
+    useArchivePrevNext(currentSlug);
 
 const pageTitle = computed(() => {
     const title = archive.value?.data?.title || archive.value?.title;

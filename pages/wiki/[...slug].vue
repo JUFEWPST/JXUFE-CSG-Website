@@ -54,7 +54,7 @@
                             content.data.body || content.data.content || ''
                         "
                         @toc-updated="handleTocUpdate"
-                        class="box-border flex-1 overflow-hidden"
+                        class="box-border flex-1"
                     >
                     </MarkdownRender>
                     <div
@@ -268,7 +268,10 @@ const breadcrumbItems = computed(() => {
 
 type PrevNextTarget = { to: string; title: string };
 
-const resolveNodeBySegments = (root: WikiTreeNode | null | undefined, segments: string[]) => {
+const resolveNodeBySegments = (
+    root: WikiTreeNode | null | undefined,
+    segments: string[],
+) => {
     let node: WikiTreeNode | null | undefined = root;
     for (const segment of segments) {
         if (!node?.children) return null;
@@ -284,7 +287,10 @@ const wikiSiblingArticles = computed(() => {
     if (!slugSegments.value.length) return [] as WikiTreeNode[];
 
     const parentSegments = slugSegments.value.slice(0, -1);
-    const parentNode = resolveNodeBySegments(breadcrumbTree.value, parentSegments);
+    const parentNode = resolveNodeBySegments(
+        breadcrumbTree.value,
+        parentSegments,
+    );
     const children = parentNode?.children ?? [];
 
     return children
@@ -308,7 +314,9 @@ const wikiPrev = computed<PrevNextTarget | null>(() => {
     const idx = wikiCurrentSiblingIndex.value;
     if (idx <= 0) return null;
     const item = wikiSiblingArticles.value[idx - 1];
-    return item?.path ? { to: `/${item.path}`, title: item.title || item.slug } : null;
+    return item?.path
+        ? { to: `/${item.path}`, title: item.title || item.slug }
+        : null;
 });
 
 const wikiNext = computed<PrevNextTarget | null>(() => {
@@ -316,7 +324,9 @@ const wikiNext = computed<PrevNextTarget | null>(() => {
     const idx = wikiCurrentSiblingIndex.value;
     if (idx === -1 || idx >= wikiSiblingArticles.value.length - 1) return null;
     const item = wikiSiblingArticles.value[idx + 1];
-    return item?.path ? { to: `/${item.path}`, title: item.title || item.slug } : null;
+    return item?.path
+        ? { to: `/${item.path}`, title: item.title || item.slug }
+        : null;
 });
 
 const showError = computed(() => {
