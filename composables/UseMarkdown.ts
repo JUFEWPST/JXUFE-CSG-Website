@@ -11,6 +11,32 @@ import markdownItKatex from "markdown-it-katex";
 import bilibiliPlugin from "~/utils/markdown-it-bilibili";
 import alertsPlugin from "~/utils/markdown-it-alerts";
 
+const ALLOWED_IFRAME_DOMAINS = new Set(["player.bilibili.com"]);
+let domPurifyHookRegistered = false;
+
+const ensureDomPurifyHook = () => {
+  if (domPurifyHookRegistered) return;
+
+  DOMPurify.addHook("beforeSanitizeAttributes", (currentNode) => {
+    if (currentNode.tagName !== "IFRAME") return;
+
+    const src = currentNode.getAttribute("src") || "";
+    if (src.startsWith("/") || src.startsWith("./")) return;
+
+    try {
+      const urlStr = src.startsWith("//") ? `https:${src}` : src;
+      const url = new URL(urlStr);
+      if (!ALLOWED_IFRAME_DOMAINS.has(url.hostname)) {
+        currentNode.removeAttribute("src");
+      }
+    } catch {
+      currentNode.removeAttribute("src");
+    }
+  });
+
+  domPurifyHookRegistered = true;
+};
+
 export const useMarkdown = () => {
   const mdConfig = {
     html: true,
@@ -157,24 +183,7 @@ export const useMarkdown = () => {
     if (!content.trim()) return "";
 
     const rendered = md.render(content);
-
-    DOMPurify.addHook("beforeSanitizeAttributes", (currentNode) => {
-      if (currentNode.tagName === "IFRAME") {
-        const src = currentNode.getAttribute("src") || "";
-        if (src.startsWith("/") || src.startsWith("./")) return;
-
-        const allowedDomains = ["player.bilibili.com"];
-        try {
-          const urlStr = src.startsWith("//") ? `https:${src}` : src;
-          const url = new URL(urlStr);
-          if (!allowedDomains.includes(url.hostname)) {
-            currentNode.removeAttribute("src");
-          }
-        } catch (e) {
-          currentNode.removeAttribute("src");
-        }
-      }
-    });
+    ensureDomPurifyHook();
 
     return DOMPurify.sanitize(rendered, {
       USE_PROFILES: { html: true },

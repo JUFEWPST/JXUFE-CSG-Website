@@ -53,6 +53,7 @@
                         <a
                             :href="teacher.link"
                             target="_blank"
+                            rel="noopener noreferrer"
                             class="text-sm text-(--md-sys-color-primary) hover:underline flex items-center gap-1"
                         >
                             <span>{{

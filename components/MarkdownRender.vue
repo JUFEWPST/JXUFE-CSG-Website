@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, nextTick } from "vue";
+import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
 import mediumZoom from "medium-zoom";
 import { useMarkdown } from "~/composables/UseMarkdown";
 import "~/assets/css/markdown.css";
@@ -51,7 +51,6 @@ watch(
         if (newContent) {
             nextTick(() => {
                 extractHeadings();
-                setupCodeCopy();
             });
         }
     },
@@ -91,39 +90,45 @@ defineExpose({
     tocItems: tocItems as Ref<TocItem[]>,
 });
 
-// 代码复制功能
-function setupCodeCopy() {
+let zoomInstance: ReturnType<typeof mediumZoom> | null = null;
+
+const handleCopyClick = async (event: Event) => {
     if (!markdownRef.value) return;
 
-    const copyButtons = markdownRef.value.querySelectorAll(".code-copy-btn");
-    copyButtons.forEach((btn) => {
-        btn.addEventListener("click", async (e) => {
-            const button = e.currentTarget as HTMLButtonElement;
-            const code = button.getAttribute("data-code");
+    const target = event.target as Element | null;
+    const button = target?.closest(".code-copy-btn") as HTMLButtonElement | null;
+    if (!button || !markdownRef.value.contains(button)) return;
 
-            if (!code) return;
+    const code = button.getAttribute("data-code");
+    if (!code) return;
 
-            try {
-                await navigator.clipboard.writeText(code);
-                button.classList.add("copied");
-                setTimeout(() => {
-                    button.classList.remove("copied");
-                }, 2000);
-            } catch (err) {
-                console.error("复制失败:", err);
-            }
-        });
-    });
-}
+    try {
+        await navigator.clipboard.writeText(code);
+        button.classList.add("copied");
+        setTimeout(() => {
+            button.classList.remove("copied");
+        }, 2000);
+    } catch (err) {
+        console.error("复制失败:", err);
+    }
+};
 
 onMounted(() => {
     nextTick(() => {
         extractHeadings();
-        setupCodeCopy();
     });
     if (markdownRef.value) {
-        const zoom = mediumZoom(markdownRef.value.querySelectorAll("img"));
+        zoomInstance = mediumZoom(markdownRef.value.querySelectorAll("img"));
+        markdownRef.value.addEventListener("click", handleCopyClick);
     }
+});
+
+onUnmounted(() => {
+    if (markdownRef.value) {
+        markdownRef.value.removeEventListener("click", handleCopyClick);
+    }
+    zoomInstance?.detach();
+    zoomInstance = null;
 });
 </script>
 
