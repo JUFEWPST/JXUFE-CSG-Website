@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import FlipToggle from "~/components/FlipToggle.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { leadersData } from "~/data/leadersData";
 import { teacherData } from "~/data/teacherData";
 import { honorsData, getLevelColor, getYearColor } from "~/data/honors";
@@ -10,6 +10,7 @@ import { usePageTitle } from "@/composables/usePageTitle";
 
 const isMounted = ref(false);
 const currentQuote = ref(0);
+let quoteTimer: ReturnType<typeof setInterval> | null = null;
 const { t } = useI18n();
 const { setPageTitle } = usePageTitle();
 
@@ -35,9 +36,16 @@ useHead(() => ({
 
 onMounted(() => {
     isMounted.value = true;
-    setInterval(() => {
+    quoteTimer = setInterval(() => {
         currentQuote.value = (currentQuote.value + 1) % quotes.length;
     }, 5000);
+});
+
+onUnmounted(() => {
+    if (quoteTimer !== null) {
+        clearInterval(quoteTimer);
+        quoteTimer = null;
+    }
 });
 </script>
 
