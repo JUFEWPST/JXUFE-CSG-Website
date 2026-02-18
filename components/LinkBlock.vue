@@ -1,6 +1,7 @@
 <template>
     <a
         target="_blank"
+        rel="noopener noreferrer"
         class="relative flex h-35 cursor-pointer! rounded-xl px-4 py-3 transition-all duration-200 ease-out before:absolute before:inset-0 before:inset-y-0 before:z-[-1] before:origin-[var(--origin-x)_var(--origin-y)] before:scale-[0.92] before:rounded-2xl before:bg-(--md-sys-color-secondary-container)/40 before:opacity-0 before:backdrop-blur before:transition-all before:duration-200 hover:translate-x-2 hover:before:scale-100 hover:before:opacity-100 focus-visible:shadow-none! dark:before:bg-(--md-sys-color-secondary-container)/70"
         :href="link.url"
         :title="link.tooltip"
