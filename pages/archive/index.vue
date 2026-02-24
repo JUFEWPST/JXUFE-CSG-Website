@@ -88,7 +88,7 @@ const totalPages = ref(1);
 
 const loadArchives = async (page: number = 1) => {
     await getArchives(
-        `/v1/contents?type_slug=archive&fields=publish_time&page=${page}`,
+        `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=${page}`,
     );
     if (archives.value) {
         if (meta.value) {

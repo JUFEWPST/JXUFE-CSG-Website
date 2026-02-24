@@ -135,7 +135,7 @@ useHead(() => ({
 const { data: archives, loading, error, get } = useApi<Archive[]>();
 const loadArticles = async () => {
     await get(
-        `/v1/contents?type_slug=archive&fields=publish_time&page=1&page_size=6`,
+        `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=1&page_size=6`,
     );
 };
 void loadArticles();
