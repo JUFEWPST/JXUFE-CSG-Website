@@ -10,6 +10,7 @@ import markdownItSup from "markdown-it-sup";
 import markdownItKatex from "markdown-it-katex";
 import bilibiliPlugin from "~/utils/markdown-it-bilibili";
 import alertsPlugin from "~/utils/markdown-it-alerts";
+import githubCardPlugin from "~/utils/markdown-it-github-card";
 
 const ALLOWED_IFRAME_DOMAINS = new Set(["player.bilibili.com"]);
 let domPurifyHookRegistered = false;
@@ -67,6 +68,7 @@ export const useMarkdown = () => {
   md.use(markdownItSub);
   md.use(markdownItSup);
   md.use(markdownItKatex, { throwOnError: false, errorColor: "#cc0000" });
+  md.use(githubCardPlugin);
 
   const parseHighlightLines = (meta: string): Set<number> => {
     const highlightLines = new Set<number>();
@@ -191,6 +193,8 @@ export const useMarkdown = () => {
       FORBID_ATTR: ["onerror", "onload", "onclick", "onfocus"],
       ADD_TAGS: ["iframe"],
       ADD_ATTR: [
+        "class",
+        "style",
         "target",
         "allow",
         "allowfullscreen",
