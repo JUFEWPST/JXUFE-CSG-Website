@@ -45,6 +45,14 @@
     --bgColor-neutral-muted: var(--md-sys-color-surface-container-low);
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
+    /* Code Block Colors */
+    --codeBlock-bg: var(--md-sys-color-surface-container-lowest);
+    --codeBlock-header-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-content-bg: var(--md-sys-color-surface-container-lowest);
+    --codeBlock-inline-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-line-highlight-bg: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+    --codeBlock-copy-hover-bg: var(--md-sys-color-surface-container-low);
+
     /* Borders */
     --borderColor-default: var(--md-sys-color-outline-variant);
     --borderColor-muted: var(--md-sys-color-outline-variant);
@@ -114,6 +122,14 @@
     --bgColor-muted: var(--md-sys-color-surface-container-high);
     --bgColor-neutral-muted: var(--md-sys-color-surface-container-highest);
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
+
+    /* Code Block Colors */
+    --codeBlock-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-header-bg: var(--md-sys-color-surface-container);
+    --codeBlock-content-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-inline-bg: var(--md-sys-color-surface-container-high);
+    --codeBlock-line-highlight-bg: color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent);
+    --codeBlock-copy-hover-bg: var(--md-sys-color-surface-container-high);
 
     /* Borders */
     --borderColor-default: var(--md-sys-color-outline-variant);
@@ -910,7 +926,7 @@
     margin: 0;
     font-size: 85%;
     white-space: break-spaces;
-    background-color: var(--bgColor-neutral-muted);
+    background-color: var(--codeBlock-inline-bg);
     border-radius: 6px;
 }
 
@@ -964,8 +980,8 @@
 .markdown-wrapper .code-block-wrapper {
     position: relative;
     margin-bottom: var(--base-size-16);
-    border-radius: 8px;
-    background-color: var(--bgColor-muted);
+    border-radius: 12px;
+    background-color: var(--codeBlock-bg);
     border: 1px solid var(--borderColor-default);
     overflow: hidden;
 }
@@ -974,35 +990,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
-    background-color: var(--bgColor-neutral-muted);
+    padding: 6px 10px;
+    background-color: var(--codeBlock-header-bg);
     border-bottom: 1px solid var(--borderColor-default);
 }
 
 .markdown-wrapper .code-block-lang {
-    font-size: 12px;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
     color: var(--fgColor-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1px;
+    white-space: nowrap;
+    padding: 0;
 }
 
 .markdown-wrapper .code-copy-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 8px;
+    padding: 3px 7px;
     background-color: transparent;
     border: 1px solid var(--borderColor-muted);
-    border-radius: 4px;
+    border-radius: 6px;
     color: var(--fgColor-muted);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     font-size: 14px;
 }
 
 .markdown-wrapper .code-copy-btn:hover {
-    background-color: var(--bgColor-default);
+    background-color: var(--codeBlock-copy-hover-bg);
     border-color: var(--borderColor-default);
     color: var(--fgColor-accent);
 }
@@ -1024,38 +1043,50 @@
     margin: 0;
     border-radius: 0;
     border: none;
+    padding: 6px 0;
+    background-color: var(--codeBlock-content-bg);
 }
 
 .markdown-wrapper .code-block-wrapper code {
     display: block;
+    background: transparent;
+}
+
+.markdown-wrapper .code-block-wrapper code.hljs {
+    background: transparent;
 }
 
 .markdown-wrapper .code-block-wrapper .code-line {
     display: block;
-    padding: 0 12px;
+    padding: 0 10px;
     white-space: pre;
+    line-height: 1.24;
 }
 
 .markdown-wrapper .code-block-wrapper .code-line.is-highlighted {
-    background-color: var(--bgColor-neutral-muted);
+    background-color: var(--codeBlock-line-highlight-bg);
 }
 
 .markdown-wrapper .code-block-wrapper .code-line-number {
     display: inline-block;
-    width: 2.5em;
-    margin-right: 12px;
+    width: 2.4em;
+    margin-right: 10px;
     text-align: right;
     color: var(--fgColor-muted);
     user-select: none;
 }
 
 .markdown-wrapper .code-block-wrapper .code-line-content {
-    display: inline-block;
+    display: inline;
     min-width: 0;
 }
 
 .markdown-wrapper .code-block-wrapper .has-line-numbers .code-line {
     padding-left: 8px;
+}
+
+.markdown-wrapper .code-block-wrapper .code-line.is-empty {
+    line-height: 1.05;
 }
 
 .markdown-wrapper pre code,

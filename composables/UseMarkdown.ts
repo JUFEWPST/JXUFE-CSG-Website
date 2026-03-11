@@ -127,7 +127,7 @@ export const useMarkdown = () => {
       }
     }
 
-    const langDisplay = lang || "text";
+    const langDisplay = lang || "纯文本";
     const highlightLines = parseHighlightLines(meta);
     const showLineNumbers = hasLineNumbers(meta) || highlightLines.size > 0;
 
@@ -150,35 +150,26 @@ export const useMarkdown = () => {
       .map((line, index) => {
         const lineNumber = index + 1;
         const isHighlighted = highlightLines.has(lineNumber);
-        const safeLine = line.length ? line : " ";
-        const lineClass = isHighlighted
-          ? "code-line is-highlighted"
-          : "code-line";
+        const isEmptyLine = line.length === 0;
+        const safeLine = isEmptyLine ? "&nbsp;" : line;
+        const lineClass = [
+          "code-line",
+          isHighlighted ? "is-highlighted" : "",
+          isEmptyLine ? "is-empty" : "",
+        ]
+          .filter(Boolean)
+          .join(" ");
         const lineNumberHtml = showLineNumbers
           ? `<span class="code-line-number">${lineNumber}</span>`
           : "";
         return `<span class="${lineClass}" data-line="${lineNumber}">${lineNumberHtml}<span class="code-line-content">${safeLine}</span></span>`;
       })
-      .join("\n");
+      .join("");
 
     const langClass = lang ? `language-${md.utils.escapeHtml(lang)}` : "";
     const numberClass = showLineNumbers ? "has-line-numbers" : "";
 
-    return `<div class="code-block-wrapper">
-      <div class="code-block-header">
-        <span class="code-block-lang">${md.utils.escapeHtml(langDisplay)}</span>
-        <button class="code-copy-btn" data-code="${md.utils.escapeHtml(code)}" title="复制代码">
-          <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        </button>
-      </div>
-      <pre><code class="hljs ${langClass} ${numberClass}">${codeLines}</code></pre>
-    </div>`;
+    return `<div class="code-block-wrapper"><div class="code-block-header"><span class="code-block-lang">${md.utils.escapeHtml(langDisplay)}</span><button class="code-copy-btn" data-code="${md.utils.escapeHtml(code)}" title="复制代码"><svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div><pre><code class="hljs ${langClass} ${numberClass}">${codeLines}</code></pre></div>`;
   };
 
   const renderMarkdown = (content: string): string => {
