@@ -64,16 +64,24 @@ function extractHeadings() {
         "h1, h2, h3, h4, h5, h6",
     );
     const items: TocItem[] = [];
+    const usedIds = new Set<string>();
 
     headings.forEach((heading, index) => {
         if (!heading.id) {
             const textContent = heading.textContent || "";
-            heading.id = slugify(textContent, slugifyConfig);
-            if (!heading.id) {
-                const randomSuffix = Math.random().toString(36).slice(2, 6);
-                heading.id = `heading-${index}-${randomSuffix}`;
+            const baseSlug =
+                slugify(textContent, slugifyConfig) || `heading-${index}`;
+
+            let slug = baseSlug;
+            let counter = 2;
+            while (usedIds.has(slug)) {
+                slug = `${baseSlug}-${counter}`;
+                counter++;
             }
+            heading.id = slug;
         }
+
+        usedIds.add(heading.id);
 
         items.push({
             id: heading.id,
@@ -96,7 +104,9 @@ const handleCopyClick = async (event: Event) => {
     if (!markdownRef.value) return;
 
     const target = event.target as Element | null;
-    const button = target?.closest(".code-copy-btn") as HTMLButtonElement | null;
+    const button = target?.closest(
+        ".code-copy-btn",
+    ) as HTMLButtonElement | null;
     if (!button || !markdownRef.value.contains(button)) return;
 
     const code = button.getAttribute("data-code");
