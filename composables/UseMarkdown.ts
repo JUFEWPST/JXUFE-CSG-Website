@@ -7,7 +7,7 @@ import markdownItDeflist from "markdown-it-deflist";
 import markdownItMark from "markdown-it-mark";
 import markdownItSub from "markdown-it-sub";
 import markdownItSup from "markdown-it-sup";
-import markdownItKatex from "markdown-it-katex";
+import markdownItKatex from "@vscode/markdown-it-katex";
 import bilibiliPlugin from "~/utils/markdown-it-bilibili";
 import alertsPlugin from "~/utils/markdown-it-alerts";
 import githubCardPlugin from "~/utils/markdown-it-github-card";
