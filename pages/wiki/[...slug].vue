@@ -198,6 +198,16 @@ const treeRootPath = computed(() => {
     return `wiki.${slugSegments.value.join(".")}`;
 });
 
+const firstLevelRootPath = computed(() => {
+    const first = slugSegments.value[0];
+    return first ? `wiki.${first}` : "wiki";
+});
+
+const currentWikiContentPath = computed(() => {
+    if (!slugSegments.value.length) return "";
+    return `wiki/${slugSegments.value.join("/")}`;
+});
+
 const contentPath = computed(() => {
     if (!slugSegments.value.length) {
         return "wiki";
@@ -213,6 +223,7 @@ const {
     get: getTree,
 } = useApi<any>();
 const { data: breadcrumbTree, get: getBreadcrumbTree } = useApi<WikiTreeNode>();
+const { data: sectionTree, get: getSectionTree } = useApi<WikiTreeNode>();
 
 const isFolder = computed(() => treeNode.value?.is_container === true);
 const isFolderView = computed(() => isFolder.value);
@@ -268,52 +279,48 @@ const breadcrumbItems = computed(() => {
 
 type PrevNextTarget = { to: string; title: string };
 
-const resolveNodeBySegments = (
-    root: WikiTreeNode | null | undefined,
-    segments: string[],
-) => {
-    let node: WikiTreeNode | null | undefined = root;
-    for (const segment of segments) {
-        if (!node?.children) return null;
-        const next = node.children.find((child) => child.slug === segment);
-        if (!next) return null;
-        node = next;
-    }
-    return node ?? null;
+const sortWikiNodes = (nodes: WikiTreeNode[]) => {
+    return nodes.slice().sort((a, b) => {
+        if (a.order !== b.order) return a.order - b.order;
+        const t = a.title.localeCompare(b.title);
+        if (t !== 0) return t;
+        return a.path.localeCompare(b.path);
+    });
 };
 
-const wikiSiblingArticles = computed(() => {
-    if (!breadcrumbTree.value) return [] as WikiTreeNode[];
+const flattenArticleNodes = (node: WikiTreeNode | null | undefined) => {
+    if (!node) return [] as WikiTreeNode[];
+
+    const result: WikiTreeNode[] = [];
+    const walk = (current: WikiTreeNode) => {
+        if (!current.is_container) {
+            result.push(current);
+            return;
+        }
+        const children = sortWikiNodes(current.children ?? []);
+        children.forEach((child) => walk(child));
+    };
+
+    walk(node);
+    return result;
+};
+
+const wikiSectionArticles = computed(() => {
     if (!slugSegments.value.length) return [] as WikiTreeNode[];
-
-    const parentSegments = slugSegments.value.slice(0, -1);
-    const parentNode = resolveNodeBySegments(
-        breadcrumbTree.value,
-        parentSegments,
-    );
-    const children = parentNode?.children ?? [];
-
-    return children
-        .filter((n) => n && n.is_container === false)
-        .slice()
-        .sort((a, b) => {
-            if (a.order !== b.order) return a.order - b.order;
-            const t = a.title.localeCompare(b.title);
-            if (t !== 0) return t;
-            return a.path.localeCompare(b.path);
-        });
+    return flattenArticleNodes(sectionTree.value);
 });
 
-const wikiCurrentSiblingIndex = computed(() => {
-    const currentSlug = slugSegments.value[slugSegments.value.length - 1];
-    return wikiSiblingArticles.value.findIndex((n) => n.slug === currentSlug);
+const wikiCurrentSectionIndex = computed(() => {
+    const currentPath = currentWikiContentPath.value;
+    if (!currentPath) return -1;
+    return wikiSectionArticles.value.findIndex((n) => n.path === currentPath);
 });
 
 const wikiPrev = computed<PrevNextTarget | null>(() => {
     if (isFolderView.value) return null;
-    const idx = wikiCurrentSiblingIndex.value;
+    const idx = wikiCurrentSectionIndex.value;
     if (idx <= 0) return null;
-    const item = wikiSiblingArticles.value[idx - 1];
+    const item = wikiSectionArticles.value[idx - 1];
     return item?.path
         ? { to: `/${item.path}`, title: item.title || item.slug }
         : null;
@@ -321,9 +328,9 @@ const wikiPrev = computed<PrevNextTarget | null>(() => {
 
 const wikiNext = computed<PrevNextTarget | null>(() => {
     if (isFolderView.value) return null;
-    const idx = wikiCurrentSiblingIndex.value;
-    if (idx === -1 || idx >= wikiSiblingArticles.value.length - 1) return null;
-    const item = wikiSiblingArticles.value[idx + 1];
+    const idx = wikiCurrentSectionIndex.value;
+    if (idx === -1 || idx >= wikiSectionArticles.value.length - 1) return null;
+    const item = wikiSectionArticles.value[idx + 1];
     return item?.path
         ? { to: `/${item.path}`, title: item.title || item.slug }
         : null;
@@ -377,6 +384,7 @@ const fetchContent = async () => {
     await getBreadcrumbTree(
         `/v1/tree?root=wiki&depth=${slugSegments.value.length + 1}`,
     );
+    await getSectionTree(`/v1/tree?root=${firstLevelRootPath.value}`);
     await getTree(`/v1/tree?root=${treeRootPath.value}&depth=2`);
     if (treeNode.value?.is_container === true) {
         return;
