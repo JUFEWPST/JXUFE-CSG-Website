@@ -165,9 +165,20 @@ const showRight = computed(() => {
     return true;
 });
 
-const showMahouBg = ref(false);
+const homeBannerImages = [
+    "/home-banners/MahouCsg.svg",
+    "/home-banners/网安协会Creative.svg",
+] as const;
 
-const mahouVisible = computed(() => isHome.value && showMahouBg.value);
+const homeBannerState = ref(0);
+
+const activeHomeBannerImage = computed(
+    () => homeBannerImages[homeBannerState.value - 1] ?? null,
+);
+
+const isBannerImageVisible = computed(
+    () => isHome.value && activeHomeBannerImage.value !== null,
+);
 
 // 路由切回首页时，自动恢复为“文字模式”（只在从非首页跳转回首页时触发）
 watch(
@@ -176,7 +187,7 @@ watch(
         const wasHome = oldPath === "/" || oldPath === "";
         const nowHome = path === "/" || path === "";
         if (nowHome && !wasHome) {
-            showMahouBg.value = false;
+            homeBannerState.value = 0;
         }
     },
 );
@@ -213,10 +224,11 @@ watch(
 
 const toggleMahou = () => {
     if (!isHome.value) {
-        showMahouBg.value = false;
+        homeBannerState.value = 0;
         return;
     }
-    showMahouBg.value = !showMahouBg.value;
+    homeBannerState.value =
+        (homeBannerState.value + 1) % (homeBannerImages.length + 1);
 };
 </script>
 
@@ -243,13 +255,15 @@ const toggleMahou = () => {
             >
                 <div
                     class="h-full w-full max-w-6xl px-4 transition-opacity duration-500"
-                    :class="mahouVisible ? 'opacity-100' : 'opacity-0'"
-                    style="
-                        background-image: url(&quot;/MahouCsg.svg&quot;);
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                        background-position: center;
-                    "
+                    :class="isBannerImageVisible ? 'opacity-100' : 'opacity-0'"
+                    :style="{
+                        backgroundImage: activeHomeBannerImage
+                            ? `url(${activeHomeBannerImage})`
+                            : 'none',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'contain',
+                        backgroundPosition: 'center',
+                    }"
                 />
             </div>
 
@@ -312,7 +326,7 @@ const toggleMahou = () => {
                     leave-to-class="opacity-0 translate-y-4"
                 >
                     <div
-                        v-if="isHome && !showMahouBg"
+                        v-if="isHome && !isBannerImageVisible"
                         class="flex flex-col items-center gap-6 sm:gap-8"
                     >
                         <div class="space-y-2 sm:space-y-4">
