@@ -80,7 +80,7 @@
             </div>
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded bg-(--md-sys-color-primary-container)"
+                    class="h-3 w-3 rounded border-2 border-(--md-sys-color-primary) bg-(--md-sys-color-secondary-container)"
                 />
                 <span>{{ t("calendar.legend.today") }}</span>
             </div>
@@ -382,19 +382,19 @@ function dayClasses(day: CalendarDayMeta): string {
     if (day.isToday) {
         if (day.isHoliday) {
             classes.push(
-                "bg-(--md-sys-color-secondary-container) text-(--md-sys-color-primary) border-2 border-(--md-sys-color-primary)",
+                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
             );
         } else if (day.isWorkdayOverride) {
             classes.push(
-                "bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-on-surface) border-2 border-(--md-sys-color-primary)",
+                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
             );
         } else if (day.isExamWeek && !day.isOfficialHoliday) {
             classes.push(
-                "bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container) border-2 border-(--md-sys-color-primary)",
+                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
             );
         } else {
             classes.push(
-                "bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container) border-2 border-(--md-sys-color-primary)",
+                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
             );
         }
     } else if (day.isExamWeek && !day.isOfficialHoliday) {
