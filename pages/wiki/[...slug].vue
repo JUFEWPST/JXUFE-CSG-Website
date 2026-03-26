@@ -369,7 +369,7 @@ const showError = computed(
 
 useHead(() => ({
     title: content.value?.data?.title
-        ? `${pageTitle.value} - ${t("nav.wiki")}`
+        ? `${pageTitle.value} - ${t("site.fullName")}`
         : t("pages.wiki.meta.title"),
 }));
 
