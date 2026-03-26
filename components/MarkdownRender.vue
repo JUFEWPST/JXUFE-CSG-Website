@@ -4,12 +4,13 @@
             class="markdown-wrapper"
             v-html="renderedContent"
             ref="markdownRef"
+            :style="{ '--md-heading-base-level': headingSizeLevel.toString() }"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
+import { computed, ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 import mediumZoom from "medium-zoom";
 import { useMarkdown } from "~/composables/UseMarkdown";
 import "~/assets/css/markdown.css";
@@ -28,6 +29,7 @@ const emit = defineEmits<{
 
 const markdownRef = ref<HTMLElement | null>(null);
 const tocItems = ref<TocItem[]>([]);
+const headingSizeLevel = ref(1);
 const slugifyConfig = {
     lower: true, // 转换为小写
     strict: true, // 移除特殊字符
@@ -90,6 +92,9 @@ function extractHeadings() {
         });
     });
 
+    headingSizeLevel.value = items.length
+        ? Math.min(...items.map((item) => item.level))
+        : 1;
     tocItems.value = items;
     emit("toc-updated", items);
 }

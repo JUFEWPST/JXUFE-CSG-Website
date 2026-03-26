@@ -28,7 +28,7 @@
                             activeId === item.id ? 'location' : undefined
                         "
                     >
-                        {{ item.text }}
+                        {{ getDisplayText(item.text) }}
                     </a>
                 </li>
             </ul>
@@ -49,6 +49,7 @@ import type { TocItem } from "~/types/tocitems";
 
 const HEADING_SELECTOR = "h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]";
 const ALL_HEADINGS_SELECTOR = "h1, h2, h3, h4, h5, h6";
+const TOC_TEXT_MAX_LENGTH = 26;
 const { t } = useI18n();
 
 const props = defineProps<{
@@ -98,6 +99,15 @@ const getLevelFontSize = (level: number) => {
         5: "0.8rem", // 六级标题
     };
     return fontSizes[relativeLevel] || "0.8rem";
+};
+
+const getDisplayText = (text: string) => {
+    const normalizedText = text.trim();
+    if (normalizedText.length <= TOC_TEXT_MAX_LENGTH) {
+        return normalizedText;
+    }
+
+    return `${normalizedText.slice(0, TOC_TEXT_MAX_LENGTH).trimEnd()}...`;
 };
 
 async function scrollTo(idOrText: string) {
