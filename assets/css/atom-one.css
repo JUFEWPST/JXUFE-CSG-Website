@@ -11,7 +11,7 @@ code.hljs {
 /* 默认亮色主题 */
 .hljs {
     color: #383a42;
-    background: #fafafa;
+    background: transparent;
 }
 
 .hljs-comment,
@@ -87,7 +87,7 @@ code.hljs {
 /* 暗色主题 - 当html有dark类时应用 */
 .dark .hljs {
     color: #abb2bf;
-    background: #282c34;
+    background: transparent;
 }
 
 .dark .hljs-comment,

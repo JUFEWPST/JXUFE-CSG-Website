@@ -13,7 +13,7 @@
 >
 > 自定义域名 [https://jxufe.tech](https://jxufe.tech) 目前指向上述 Vercel 测试站点。
 
-本网站基于 [Nuxt: The Progressive Web Framework](https://nuxt.com/) 开发（v4.3.0），项目目录结构与官方指导保持一致
+本网站基于 [Nuxt: The Progressive Web Framework](https://nuxt.com/) 开发（v4），本项目的 UX 设计与界面布局灵感来源于 [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) 项目，特别感谢 matsuzaka-yuki 以及 Fuwari 的作者 saicaca 提供的优秀设计思路
 
 截至目前，网站建设项目已告一段落，剩下的就是一些UI美化、细节打磨与规范化……以及给现任会长留点“发挥空间”加点私货
 

@@ -59,16 +59,18 @@
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
     /* Code Block Colors */
-    --codeBlock-bg: var(--md-sys-color-surface-container-lowest);
-    --codeBlock-header-bg: var(--md-sys-color-surface-container-low);
-    --codeBlock-content-bg: var(--md-sys-color-surface-container-lowest);
+    --codeBlock-bg: var(--md-sys-color-surface-container-low);
     --codeBlock-inline-bg: var(--md-sys-color-surface-container-low);
     --codeBlock-line-highlight-bg: color-mix(
         in srgb,
         var(--md-sys-color-primary) 8%,
         transparent
     );
-    --codeBlock-copy-hover-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-copy-hover-bg: color-mix(
+        in srgb,
+        var(--md-sys-color-on-surface) 6%,
+        transparent
+    );
 
     /* Borders */
     --borderColor-default: var(--md-sys-color-outline-variant);
@@ -173,16 +175,18 @@
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
     /* Code Block Colors */
-    --codeBlock-bg: var(--md-sys-color-surface-container-low);
-    --codeBlock-header-bg: var(--md-sys-color-surface-container);
-    --codeBlock-content-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-bg: var(--md-sys-color-surface-container);
     --codeBlock-inline-bg: var(--md-sys-color-surface-container-high);
     --codeBlock-line-highlight-bg: color-mix(
         in srgb,
         var(--md-sys-color-primary) 16%,
         transparent
     );
-    --codeBlock-copy-hover-bg: var(--md-sys-color-surface-container-high);
+    --codeBlock-copy-hover-bg: color-mix(
+        in srgb,
+        var(--md-sys-color-on-surface) 10%,
+        transparent
+    );
 
     /* Borders */
     --borderColor-default: var(--md-sys-color-outline-variant);
@@ -1080,53 +1084,67 @@
 /* 代码块容器和复制按钮样式 */
 .markdown-wrapper .code-block-wrapper {
     position: relative;
-    margin-bottom: var(--base-size-16);
+    margin: 0 0 var(--base-size-16);
     border-radius: 12px;
     background-color: var(--codeBlock-bg);
-    border: 1px solid var(--borderColor-default);
     overflow: hidden;
 }
 
-.markdown-wrapper .code-block-header {
+.markdown-wrapper .code-block-toolbar {
+    position: absolute;
+    top: 10px;
+    right: 12px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 6px 10px;
-    background-color: var(--codeBlock-header-bg);
-    border-bottom: 1px solid var(--borderColor-default);
+    gap: 6px;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
+}
+
+.markdown-wrapper .code-block-wrapper:hover .code-block-toolbar,
+.markdown-wrapper .code-block-wrapper:focus-within .code-block-toolbar {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .markdown-wrapper .code-block-lang {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     font-size: 11px;
     font-weight: 600;
     color: var(--fgColor-muted);
     letter-spacing: 0.1px;
     white-space: nowrap;
-    padding: 0;
 }
 
 .markdown-wrapper .code-copy-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3px 7px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
     background-color: transparent;
-    border: 1px solid var(--borderColor-muted);
-    border-radius: 6px;
+    border: none;
+    border-radius: 999px;
     color: var(--fgColor-muted);
     cursor: pointer;
     transition:
         background-color 0.2s ease,
-        border-color 0.2s ease,
         color 0.2s ease;
     font-size: 14px;
 }
 
 .markdown-wrapper .code-copy-btn:hover {
     background-color: var(--codeBlock-copy-hover-bg);
-    border-color: var(--borderColor-default);
     color: var(--fgColor-accent);
 }
 
@@ -1147,8 +1165,9 @@
     margin: 0;
     border-radius: 0;
     border: none;
-    padding: 6px 0;
-    background-color: var(--codeBlock-content-bg);
+    padding: 10px 0;
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .markdown-wrapper .code-block-wrapper code {
@@ -1164,7 +1183,7 @@
     display: block;
     padding: 0 10px;
     white-space: pre;
-    line-height: 1.24;
+    line-height: 1.45;
 }
 
 .markdown-wrapper .code-block-wrapper .code-line.is-highlighted {
