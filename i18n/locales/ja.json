@@ -215,8 +215,7 @@
             "paginationPageUnit": "ページ",
             "paginationTargetPageNumber": "対象ページ",
             "paginationJumpToPage": "{page} ページに移動",
-            "paginationGoButton": "GO"
-            ,
+            "paginationGoButton": "GO",
             "prevContent": "前へ",
             "nextContent": "次へ"
         },

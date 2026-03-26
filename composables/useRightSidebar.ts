@@ -1,13 +1,13 @@
 export const useRightSidebar = () => {
-    const hasContent = useState('right-sidebar-has-content', () => false)
+    const hasContent = useState("right-sidebar-has-content", () => false);
 
     const setHasContent = (value: boolean) => {
-        hasContent.value = value
-    }
+        hasContent.value = value;
+    };
 
     const clearRightSidebar = () => {
-        hasContent.value = false
-    }
+        hasContent.value = false;
+    };
 
-    return { hasContent, setHasContent, clearRightSidebar }
-}
+    return { hasContent, setHasContent, clearRightSidebar };
+};

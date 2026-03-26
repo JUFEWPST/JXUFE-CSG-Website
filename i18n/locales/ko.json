@@ -215,8 +215,7 @@
             "paginationPageUnit": "페이지",
             "paginationTargetPageNumber": "대상 페이지",
             "paginationJumpToPage": "{page} 페이지로 이동",
-            "paginationGoButton": "이동"
-            ,
+            "paginationGoButton": "이동",
             "prevContent": "이전",
             "nextContent": "다음"
         },

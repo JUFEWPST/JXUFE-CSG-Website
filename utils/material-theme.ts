@@ -44,7 +44,10 @@ export interface ColorScheme {
     surfaceContainerHighest: string;
 }
 
-export function generateTheme(sourceColorHex: string, isDark: boolean): ColorScheme {
+export function generateTheme(
+    sourceColorHex: string,
+    isDark: boolean,
+): ColorScheme {
     const argb = argbFromHex(sourceColorHex);
     const theme: Theme = themeFromSourceColor(argb);
     const scheme = isDark ? theme.schemes.dark : theme.schemes.light;
@@ -88,18 +91,26 @@ export function generateTheme(sourceColorHex: string, isDark: boolean): ColorSch
         // Note: material-color-utilities 0.3.0 might strictly follow scheme props.
         // If some props are missing in TS defs, we map them from palettes or available scheme props.
         // For simplicity and compatibility, we use standard mapping:
-        surfaceDim: hexFromArgb(palettes.neutral.tone(isDark ? 6 : 87)), 
+        surfaceDim: hexFromArgb(palettes.neutral.tone(isDark ? 6 : 87)),
         surfaceBright: hexFromArgb(palettes.neutral.tone(isDark ? 24 : 98)),
-        surfaceContainerLowest: hexFromArgb(palettes.neutral.tone(isDark ? 4 : 100)),
-        surfaceContainerLow: hexFromArgb(palettes.neutral.tone(isDark ? 10 : 96)),
+        surfaceContainerLowest: hexFromArgb(
+            palettes.neutral.tone(isDark ? 4 : 100),
+        ),
+        surfaceContainerLow: hexFromArgb(
+            palettes.neutral.tone(isDark ? 10 : 96),
+        ),
         surfaceContainer: hexFromArgb(palettes.neutral.tone(isDark ? 12 : 94)),
-        surfaceContainerHigh: hexFromArgb(palettes.neutral.tone(isDark ? 17 : 92)),
-        surfaceContainerHighest: hexFromArgb(palettes.neutral.tone(isDark ? 22 : 90)),
+        surfaceContainerHigh: hexFromArgb(
+            palettes.neutral.tone(isDark ? 17 : 92),
+        ),
+        surfaceContainerHighest: hexFromArgb(
+            palettes.neutral.tone(isDark ? 22 : 90),
+        ),
     };
 }
 
 export function applyThemeToRoot(theme: ColorScheme) {
-    if (typeof document === 'undefined') return;
+    if (typeof document === "undefined") return;
     const root = document.documentElement;
     Object.entries(theme).forEach(([key, value]) => {
         // Convert camelCase to kebab-case for CSS variables: primaryContainer -> --md-sys-color-primary-container

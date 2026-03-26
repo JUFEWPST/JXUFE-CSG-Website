@@ -13,7 +13,9 @@
             >
                 <div class="anzu-prev-next-nav__meta">
                     <span class="anzu-prev-next-nav__hint">
-                        <span class="anzu-prev-next-nav__arrow" aria-hidden="true"
+                        <span
+                            class="anzu-prev-next-nav__arrow"
+                            aria-hidden="true"
                             >←</span
                         >
                         {{ t("common.actions.prevContent") }}
@@ -31,10 +33,14 @@
                 :class="!prev ? 'sm:col-start-2' : ''"
                 :aria-label="`${t('common.actions.nextContent')}：${next.title}`"
             >
-                <div class="anzu-prev-next-nav__meta justify-start sm:justify-end">
+                <div
+                    class="anzu-prev-next-nav__meta justify-start sm:justify-end"
+                >
                     <span class="anzu-prev-next-nav__hint">
                         {{ t("common.actions.nextContent") }}
-                        <span class="anzu-prev-next-nav__arrow" aria-hidden="true"
+                        <span
+                            class="anzu-prev-next-nav__arrow"
+                            aria-hidden="true"
                             >→</span
                         >
                     </span>
@@ -72,7 +78,8 @@ const hasAny = computed(() => !!props.prev || !!props.next);
 .anzu-prev-next-nav__card {
     display: block;
     border-radius: 0.75rem;
-    border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 40%, transparent);
+    border: 1px solid
+        color-mix(in srgb, var(--md-sys-color-outline-variant) 40%, transparent);
     padding: 1rem;
     color: var(--md-sys-color-on-surface);
     background: transparent;
@@ -83,7 +90,11 @@ const hasAny = computed(() => !!props.prev || !!props.next);
 }
 
 .anzu-prev-next-nav__card:hover {
-    border-color: color-mix(in srgb, var(--md-sys-color-primary) 70%, transparent);
+    border-color: color-mix(
+        in srgb,
+        var(--md-sys-color-primary) 70%,
+        transparent
+    );
     color: var(--md-sys-color-primary);
 }
 
@@ -126,7 +137,10 @@ const hasAny = computed(() => !!props.prev || !!props.next);
 }
 
 .anzu-prev-next-nav__card:hover .anzu-prev-next-nav__title {
-    color: color-mix(in srgb, var(--md-sys-color-primary) 85%, var(--md-sys-color-on-surface));
+    color: color-mix(
+        in srgb,
+        var(--md-sys-color-primary) 85%,
+        var(--md-sys-color-on-surface)
+    );
 }
 </style>
-

@@ -215,8 +215,7 @@
             "paginationPageUnit": "页",
             "paginationTargetPageNumber": "目标页数",
             "paginationJumpToPage": "跳转至 {page} 页",
-            "paginationGoButton": "跳转"
-            ,
+            "paginationGoButton": "跳转",
             "prevContent": "上一篇",
             "nextContent": "下一篇"
         },

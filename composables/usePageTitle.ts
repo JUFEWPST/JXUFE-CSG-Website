@@ -1,12 +1,12 @@
 export const usePageTitle = () => {
-    const titleKey = useState<string>('page_title_key', () => '')
+    const titleKey = useState<string>("page_title_key", () => "");
 
     const setPageTitle = (key: string) => {
-        titleKey.value = key
-    }
+        titleKey.value = key;
+    };
 
     return {
         titleKey,
-        setPageTitle
-    }
-}
+        setPageTitle,
+    };
+};

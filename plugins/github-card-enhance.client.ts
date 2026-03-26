@@ -56,7 +56,7 @@ const renderStatsHtml = (stats: string[]): string => {
             const label = match[2] || "";
             return `<span style="white-space:nowrap;"><strong style="font-weight:700;color:var(--md-sys-color-on-surface);">${escapeHtml(value)}</strong> ${escapeHtml(label)}</span>`;
         })
-        .join("<span aria-hidden=\"true\"> · </span>");
+        .join('<span aria-hidden="true"> · </span>');
 };
 
 const getCache = (key: string): GithubCardData | null => {
@@ -137,7 +137,10 @@ const buildApiUrl = (dataset: GithubCardDataset): string | null => {
     return null;
 };
 
-const mapGithubData = (dataset: GithubCardDataset, payload: any): GithubCardData | null => {
+const mapGithubData = (
+    dataset: GithubCardDataset,
+    payload: any,
+): GithubCardData | null => {
     if (!payload) return null;
 
     if (dataset.type === "user") {
@@ -171,7 +174,9 @@ const mapGithubData = (dataset: GithubCardDataset, payload: any): GithubCardData
         return {
             title: payload.title,
             subtitle: `${dataset.owner}/${dataset.repo} #${payload.number}`,
-            description: payload.user?.login ? `opened by @${payload.user.login}` : "GitHub Issue",
+            description: payload.user?.login
+                ? `opened by @${payload.user.login}`
+                : "GitHub Issue",
             stats: [`${formatNumber(payload.comments || 0)} comments`],
             state: payload.state,
         };
@@ -181,7 +186,9 @@ const mapGithubData = (dataset: GithubCardDataset, payload: any): GithubCardData
         return {
             title: payload.title,
             subtitle: `${dataset.owner}/${dataset.repo} #${payload.number}`,
-            description: payload.user?.login ? `opened by @${payload.user.login}` : "GitHub Pull Request",
+            description: payload.user?.login
+                ? `opened by @${payload.user.login}`
+                : "GitHub Pull Request",
             stats: [`${formatNumber(payload.comments || 0)} comments`],
             state: payload.merged_at ? "merged" : payload.state,
         };
@@ -197,8 +204,8 @@ const mapGithubData = (dataset: GithubCardDataset, payload: any): GithubCardData
             state: payload.draft
                 ? "draft"
                 : payload.prerelease
-                    ? "prerelease"
-                    : "released",
+                  ? "prerelease"
+                  : "released",
         };
     }
 
@@ -222,7 +229,9 @@ const extractDataset = (card: HTMLElement): GithubCardDataset | null => {
     };
 };
 
-const getGithubCardData = async (dataset: GithubCardDataset): Promise<GithubCardData | null> => {
+const getGithubCardData = async (
+    dataset: GithubCardDataset,
+): Promise<GithubCardData | null> => {
     const cached = getCache(dataset.key);
     if (cached) return cached;
 

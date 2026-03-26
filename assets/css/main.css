@@ -7,15 +7,23 @@
     }
 
     .text-shadow-glow-lg {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6;
+        text-shadow:
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #0073e6,
+            0 0 20px #0073e6;
     }
 
     .shadow-center-sm {
-        box-shadow: 0 0 8px -2px rgba(0, 0, 0, 0.05), 0 0 4px -1px rgba(0, 0, 0, 0.02);
+        box-shadow:
+            0 0 8px -2px rgba(0, 0, 0, 0.05),
+            0 0 4px -1px rgba(0, 0, 0, 0.02);
     }
 
     .shadow-center-md {
-        box-shadow: 0 0 12px -2px rgba(0, 0, 0, 0.08), 0 0 6px -1px rgba(0, 0, 0, 0.04);
+        box-shadow:
+            0 0 12px -2px rgba(0, 0, 0, 0.08),
+            0 0 6px -1px rgba(0, 0, 0, 0.04);
     }
 }
 
@@ -106,7 +114,6 @@
     body {
         @apply bg-(--md-sys-color-background) text-(--md-sys-color-on-background) transition-colors duration-300;
     }
-
 }
 
 ::-webkit-scrollbar {
@@ -131,8 +138,9 @@
     font-family: HarmonyOS_Sans_SC_Medium;
     font-style: normal;
     font-display: swap;
-    src: url('/assets/font/HarmonyOS_Sans_SC_Medium.woff2') format('woff2'),
-        url('/assets/font/HarmonyOS_Sans_SC_Medium.woff2') format('woff');
+    src:
+        url("/assets/font/HarmonyOS_Sans_SC_Medium.woff2") format("woff2"),
+        url("/assets/font/HarmonyOS_Sans_SC_Medium.woff2") format("woff");
 }
 
 * {

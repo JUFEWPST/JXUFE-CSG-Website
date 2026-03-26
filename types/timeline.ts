@@ -1,5 +1,5 @@
 export interface TimelineItem {
-  date: string;
-  title: string;
-  description?: string;
+    date: string;
+    title: string;
+    description?: string;
 }

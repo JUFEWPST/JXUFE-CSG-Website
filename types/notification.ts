@@ -1,31 +1,31 @@
 export enum NotificationType {
-    SUCCESS = 'success',
-    INFO = 'info',
-    WARNING = 'warning',
-    ERROR = 'error'
+    SUCCESS = "success",
+    INFO = "info",
+    WARNING = "warning",
+    ERROR = "error",
 }
 
 export enum NotificationPosition {
-    BOTTOM_RIGHT = 'bottom-right',
-    TOP_RIGHT = 'top-right',
-    CENTER = 'center'
+    BOTTOM_RIGHT = "bottom-right",
+    TOP_RIGHT = "top-right",
+    CENTER = "center",
 }
 
 export interface NotificationAction {
-    text: string
-    handler?: () => void
-    primary?: boolean
-    route?: string
+    text: string;
+    handler?: () => void;
+    primary?: boolean;
+    route?: string;
 }
 
 export interface NotificationOptions {
-    message: string
-    type?: NotificationType
-    timeout?: number
-    position?: NotificationPosition
-    actions?: NotificationAction[]
+    message: string;
+    type?: NotificationType;
+    timeout?: number;
+    position?: NotificationPosition;
+    actions?: NotificationAction[];
 }
 
 export interface Notification extends NotificationOptions {
-    id: number
+    id: number;
 }

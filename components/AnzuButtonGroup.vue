@@ -1,8 +1,11 @@
 <template>
-    <div class="inline-flex" :class="[
-        direction === 'horizontal' ? 'flex-row' : 'flex-col',
-        gapClasses
-    ]">
+    <div
+        class="inline-flex"
+        :class="[
+            direction === 'horizontal' ? 'flex-row' : 'flex-col',
+            gapClasses,
+        ]"
+    >
         <slot />
     </div>
 </template>
@@ -37,16 +40,21 @@ function select(value: string | number) {
 
 const gapClasses = computed(() => {
     switch (props.gap) {
-        case 'none': return 'gap-0';
-        case 'sm': return 'gap-1';
-        case 'md': return 'gap-2';
-        case 'lg': return 'gap-3';
-        default: return 'gap-0';
+        case "none":
+            return "gap-0";
+        case "sm":
+            return "gap-1";
+        case "md":
+            return "gap-2";
+        case "lg":
+            return "gap-3";
+        default:
+            return "gap-0";
     }
 });
 
 const directionContext = computed(() => {
-    return props.gap === 'none' ? props.direction : '';
+    return props.gap === "none" ? props.direction : "";
 });
 
 provide("buttonGroup", {

@@ -215,8 +215,7 @@
             "paginationPageUnit": "Page",
             "paginationTargetPageNumber": "Target page number",
             "paginationJumpToPage": "Jump to page {page}",
-            "paginationGoButton": "GO"
-            ,
+            "paginationGoButton": "GO",
             "prevContent": "Previous",
             "nextContent": "Next"
         },

@@ -87,7 +87,9 @@ export function useArchivePrevNext(currentSlug: Ref<string>) {
 
                     if (apiError.value) {
                         const msg = (apiError.value as any)?.message;
-                        throw new Error(typeof msg === "string" ? msg : "ApiError");
+                        throw new Error(
+                            typeof msg === "string" ? msg : "ApiError",
+                        );
                     }
                     if (Array.isArray(data.value)) {
                         all.push(...data.value);
@@ -111,7 +113,9 @@ export function useArchivePrevNext(currentSlug: Ref<string>) {
                     if (keep) bySlug.set(slug, item);
                 }
 
-                const items = Array.from(bySlug.values()).sort(sortByPublishTimeDesc);
+                const items = Array.from(bySlug.values()).sort(
+                    sortByPublishTimeDesc,
+                );
                 state.value.items = items;
                 state.value.loaded = true;
             } catch (e) {
@@ -138,7 +142,9 @@ export function useArchivePrevNext(currentSlug: Ref<string>) {
 
     const items = computed(() => state.value.items ?? []);
     const currentIndex = computed(() =>
-        items.value.findIndex((i) => String(i.slug) === String(currentSlug.value)),
+        items.value.findIndex(
+            (i) => String(i.slug) === String(currentSlug.value),
+        ),
     );
 
     const prev = computed<PrevNextTarget | null>(() => {
@@ -171,4 +177,3 @@ export function useArchivePrevNext(currentSlug: Ref<string>) {
         ensureLoaded: loadIndex,
     };
 }
-

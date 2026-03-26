@@ -116,8 +116,10 @@ const parseGithubLink = (href: string): ParsedGithubLink | null => {
 const getCardTitle = (link: ParsedGithubLink): string => {
     if (link.type === "user") return `@${link.owner}`;
     if (!link.repo) return link.owner;
-    if (link.type === "issue") return `${link.owner}/${link.repo}#${link.number}`;
-    if (link.type === "pull") return `${link.owner}/${link.repo}#${link.number}`;
+    if (link.type === "issue")
+        return `${link.owner}/${link.repo}#${link.number}`;
+    if (link.type === "pull")
+        return `${link.owner}/${link.repo}#${link.number}`;
     if (link.type === "release") {
         return link.tag
             ? `${link.owner}/${link.repo}@${link.tag}`
@@ -201,11 +203,13 @@ const renderGithubCard = (md: MarkdownIt, link: ParsedGithubLink): string => {
 const markdownItGithubCard = (md: MarkdownIt): void => {
     const defaultLinkOpen =
         md.renderer.rules.link_open ||
-        ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options));
+        ((tokens, idx, options, env, self) =>
+            self.renderToken(tokens, idx, options));
 
     const defaultLinkClose =
         md.renderer.rules.link_close ||
-        ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options));
+        ((tokens, idx, options, env, self) =>
+            self.renderToken(tokens, idx, options));
 
     const stack: Array<ParsedGithubLink | null> = [];
 

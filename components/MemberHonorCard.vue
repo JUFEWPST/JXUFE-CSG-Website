@@ -3,7 +3,9 @@
         class="flex w-full min-w-75 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50"
         :title="person.honors?.join(' | ')"
     >
-        <div class="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-(--md-sys-color-surface-container-highest)">
+        <div
+            class="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-(--md-sys-color-surface-container-highest)"
+        >
             <img
                 v-if="person.avatar"
                 :src="person.avatar"
@@ -12,11 +14,10 @@
                 loading="lazy"
                 decoding="async"
             />
-            <div
-                v-else
-                class="flex h-full w-full items-center justify-center"
-            >
-                <span class="text-xl font-bold text-(--md-sys-color-on-surface-variant)">
+            <div v-else class="flex h-full w-full items-center justify-center">
+                <span
+                    class="text-xl font-bold text-(--md-sys-color-on-surface-variant)"
+                >
                     {{ nameInitial }}
                 </span>
             </div>
@@ -37,10 +38,7 @@
                     {{ person.className }}
                 </span>
             </div>
-            <ul
-                v-if="person.honors?.length"
-                class="space-y-1.5"
-            >
+            <ul v-if="person.honors?.length" class="space-y-1.5">
                 <li
                     v-for="(honor, index) in person.honors"
                     :key="index"
