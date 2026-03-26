@@ -6,16 +6,19 @@
             <div class="px-2" v-if="breadcrumbItems.length">
                 <AnzuBreadcrumbs :items="breadcrumbItems" />
             </div>
-            <div v-if="loading" class="flex h-1/2 items-center justify-center">
+            <div
+                v-if="isPageLoading"
+                class="flex h-1/2 items-center justify-center"
+            >
                 <AnzuProgressRing :size="80" status="loading" />
             </div>
-            <div v-if="showError" class="m-2 flex justify-center">
-                <ErrorDisplay :error-data="error"></ErrorDisplay>
+            <div v-else-if="showError" class="m-2 flex justify-center">
+                <ErrorDisplay :error-data="currentPageError"></ErrorDisplay>
             </div>
 
             <!-- Content View -->
             <article
-                v-if="content && !isFolderView"
+                v-else-if="content && !isFolderView"
                 class="mb-2 box-border max-w-screen p-2"
             >
                 <header class="mb-8">
@@ -89,12 +92,8 @@
                     </h1>
                 </div>
 
-                <div v-if="loadingTree" class="flex justify-center p-4">
-                    <AnzuProgressRing :size="40" status="loading" />
-                </div>
-
                 <ul
-                    v-else-if="treeNode && treeNode.children"
+                    v-if="treeNode && treeNode.children"
                     class="box-border w-full grid grid-cols-1 md:grid-cols-2 gap-4"
                 >
                     <li
@@ -169,6 +168,8 @@ const route = useRoute();
 const router = useRouter();
 const markdownRender = ref();
 const tocItems = ref<TocItem[]>([]);
+const pageLoading = ref(false);
+let fetchSequence = 0;
 
 const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
@@ -222,11 +223,30 @@ const {
     error: treeError,
     get: getTree,
 } = useApi<any>();
-const { data: breadcrumbTree, get: getBreadcrumbTree } = useApi<WikiTreeNode>();
-const { data: sectionTree, get: getSectionTree } = useApi<WikiTreeNode>();
+const {
+    data: breadcrumbTree,
+    loading: loadingBreadcrumbTree,
+    error: breadcrumbTreeError,
+    get: getBreadcrumbTree,
+} = useApi<WikiTreeNode>();
+const {
+    data: sectionTree,
+    loading: loadingSectionTree,
+    error: sectionTreeError,
+    get: getSectionTree,
+} = useApi<WikiTreeNode>();
 
 const isFolder = computed(() => treeNode.value?.is_container === true);
 const isFolderView = computed(() => isFolder.value);
+const isResolvingWikiPage = computed(
+    () =>
+        loadingBreadcrumbTree.value ||
+        loadingSectionTree.value ||
+        loadingTree.value,
+);
+const isPageLoading = computed(
+    () => pageLoading.value || isResolvingWikiPage.value,
+);
 
 const pageTitle = computed(() => {
     return (
@@ -336,12 +356,16 @@ const wikiNext = computed<PrevNextTarget | null>(() => {
         : null;
 });
 
-const showError = computed(() => {
-    if (isFolderView.value) {
-        return !!treeError.value;
-    }
-    return !!error.value;
-});
+const currentPageError = computed(
+    () =>
+        breadcrumbTreeError.value ||
+        sectionTreeError.value ||
+        treeError.value ||
+        error.value,
+);
+const showError = computed(
+    () => !isPageLoading.value && !!currentPageError.value,
+);
 
 useHead(() => ({
     title: content.value?.data?.title
@@ -381,15 +405,25 @@ const registerWikiToc = () => {
 
 const fetchContent = async () => {
     if (!slug.value) return;
-    await getBreadcrumbTree(
-        `/v1/tree?root=wiki&depth=${slugSegments.value.length + 1}`,
-    );
-    await getSectionTree(`/v1/tree?root=${firstLevelRootPath.value}`);
-    await getTree(`/v1/tree?root=${treeRootPath.value}&depth=2`);
-    if (treeNode.value?.is_container === true) {
-        return;
+    fetchSequence += 1;
+    const currentFetch = fetchSequence;
+    pageLoading.value = true;
+
+    try {
+        await getBreadcrumbTree(
+            `/v1/tree?root=wiki&depth=${slugSegments.value.length + 1}`,
+        );
+        await getSectionTree(`/v1/tree?root=${firstLevelRootPath.value}`);
+        await getTree(`/v1/tree?root=${treeRootPath.value}&depth=2`);
+        if (treeNode.value?.is_container === true) {
+            return;
+        }
+        await get(`/v1/contents/by-path/${contentPath.value}`);
+    } finally {
+        if (currentFetch === fetchSequence) {
+            pageLoading.value = false;
+        }
     }
-    await get(`/v1/contents/by-path/${contentPath.value}`);
 };
 
 const updateLayout = () => {

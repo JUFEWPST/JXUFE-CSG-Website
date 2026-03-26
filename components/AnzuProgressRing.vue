@@ -7,47 +7,61 @@
         :aria-valuemin="0"
         :aria-valuemax="100"
     >
-        <svg
+        <div
             v-if="status === 'loading'"
-            class="animate-spin-slow absolute inset-0 -rotate-90 origin-center"
-            :viewBox="`0 0 ${size} ${size}`"
+            class="progress-ring-spinner absolute inset-0"
+            :style="loadingRingStyle"
         >
-            <circle
-                class="animate-progress-material"
-                :cx="size / 2"
-                :cy="size / 2"
-                :r="normalizedRadius"
-                fill="none"
-                :stroke="props.primaryColor"
-                :stroke-width="strokeWidth"
-                stroke-linecap="round"
-            />
-        </svg>
+            <svg
+                class="progress-ring progress-ring--loading"
+                :width="size"
+                :height="size"
+                :viewBox="`0 0 ${size} ${size}`"
+            >
+                <circle
+                    class="progress-ring__indicator progress-ring__indicator--loading"
+                    :cx="size / 2"
+                    :cy="size / 2"
+                    :r="normalizedRadius"
+                    fill="none"
+                    :stroke="props.primaryColor"
+                    :stroke-width="strokeWidth"
+                    pathLength="100"
+                    stroke-linecap="round"
+                    stroke-dasharray="5.556 94.444"
+                    stroke-dashoffset="0"
+                />
+            </svg>
+        </div>
         <svg
             v-else
-            class="-rotate-90"
+            class="progress-ring progress-ring--determinate"
             :width="size"
             :height="size"
             :viewBox="`0 0 ${size} ${size}`"
+            :style="determinateRingStyle"
         >
             <circle
+                class="progress-ring__track"
                 :cx="size / 2"
                 :cy="size / 2"
                 :r="normalizedRadius"
                 fill="none"
-                :stroke="`${props.primaryColor}20`"
+                :stroke="trackColor"
                 :stroke-width="strokeWidth"
+                pathLength="100"
             />
             <circle
-                class="transition-all duration-500 ease-out"
+                class="progress-ring__indicator progress-ring__indicator--determinate"
                 :cx="size / 2"
                 :cy="size / 2"
                 :r="normalizedRadius"
                 fill="none"
                 :stroke="props.primaryColor"
                 :stroke-width="strokeWidth"
+                pathLength="100"
                 stroke-linecap="round"
-                :stroke-dasharray="circumference"
+                stroke-dasharray="100"
                 :stroke-dashoffset="dashOffset"
             />
         </svg>
@@ -130,10 +144,38 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    animationDuration: {
+        type: Number,
+        default: 1333,
+    },
 });
 
 const normalizedRadius = computed(() => props.size / 2 - props.strokeWidth / 2);
-const circumference = computed(() => 2 * Math.PI * normalizedRadius.value);
+
+const resolvedAnimationDuration = computed(() =>
+    Math.max(props.animationDuration, 400),
+);
+
+const spinnerRotationDuration = computed(() =>
+    Math.max(Math.round(resolvedAnimationDuration.value * 4.8), 2400),
+);
+
+const progressAnimationDuration = computed(() =>
+    Math.max(Math.round(resolvedAnimationDuration.value * 0.38), 240),
+);
+
+const loadingRingStyle = computed(() => ({
+    "--ring-arc-duration": `${spinnerRotationDuration.value}ms`,
+    "--ring-rotation-duration": `${spinnerRotationDuration.value}ms`,
+}));
+
+const determinateRingStyle = computed(() => ({
+    "--ring-progress-duration": `${progressAnimationDuration.value}ms`,
+}));
+
+const trackColor = computed(
+    () => `color-mix(in srgb, ${props.primaryColor} 18%, transparent)`,
+);
 
 const effectiveProgress = computed(() => {
     if (props.status === "success") return 100;
@@ -141,9 +183,7 @@ const effectiveProgress = computed(() => {
     return props.progress;
 });
 
-const dashOffset = computed(() => {
-    return circumference.value * (1 - effectiveProgress.value / 100);
-});
+const dashOffset = computed(() => 100 - effectiveProgress.value);
 
 const iconSize = computed(() => Math.max(props.size * 0.5, 20));
 
@@ -162,35 +202,146 @@ const statusIcon = computed(() => {
 <style scoped>
 @reference "tailwindcss";
 
-.animate-spin-slow {
-    animation: rotation 2s linear infinite;
+.progress-ring {
+    overflow: visible;
 }
 
-.animate-progress-material {
-    animation: dash 1.5s ease-in-out infinite;
+.progress-ring-spinner {
+    animation: ring-rotate var(--ring-rotation-duration) linear infinite;
+    transform-origin: center;
 }
 
-@keyframes rotation {
+.progress-ring--loading,
+.progress-ring--determinate {
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+.progress-ring--loading {
+    display: block;
+}
+
+.progress-ring__track {
+    opacity: 1;
+}
+
+.progress-ring__indicator {
+    transform-origin: center;
+    transform-box: fill-box;
+    will-change: stroke-dasharray, stroke-dashoffset, transform;
+}
+
+.progress-ring__indicator--loading {
+    animation: ring-dash var(--ring-arc-duration) linear infinite;
+}
+
+@keyframes ring-rotate {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
-        transform: rotate(360deg);
+        transform: rotate(1080deg);
     }
 }
 
-@keyframes dash {
+@keyframes ring-dash {
     0% {
-        stroke-dasharray: 1, 200;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 5.556 94.444;
         stroke-dashoffset: 0;
     }
-    50% {
-        stroke-dasharray: 89, 200;
-        stroke-dashoffset: -35px;
+
+    12.3519% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 75 25;
+        stroke-dashoffset: -52.14;
     }
+
+    24.7037% {
+        animation-timing-function: linear;
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -173.724;
+    }
+
+    25% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -177.778;
+    }
+
+    37.3519% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 75 25;
+        stroke-dashoffset: -227.14;
+    }
+
+    49.7037% {
+        animation-timing-function: linear;
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -348.724;
+    }
+
+    50% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -355.556;
+    }
+
+    62.3519% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 75 25;
+        stroke-dashoffset: -402.14;
+    }
+
+    74.7037% {
+        animation-timing-function: linear;
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -523.724;
+    }
+
+    75% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -527.778;
+    }
+
+    87.3519% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dasharray: 75 25;
+        stroke-dashoffset: -577.14;
+    }
+
+    99.7037% {
+        animation-timing-function: linear;
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -698.724;
+    }
+
     100% {
-        stroke-dasharray: 89, 200;
-        stroke-dashoffset: -124px;
+        stroke-dasharray: 5.556 94.444;
+        stroke-dashoffset: -700;
+    }
+}
+
+.progress-ring__indicator--determinate {
+    transition: stroke-dashoffset var(--ring-progress-duration)
+        cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-ring-spinner {
+        animation-duration: calc(var(--ring-rotation-duration) * 1.5);
+    }
+
+    .progress-ring__indicator--loading {
+        animation: none;
+        stroke-dasharray: 28 72;
+        stroke-dashoffset: -8;
+    }
+
+    .progress-ring__indicator--determinate {
+        transition-duration: 0ms;
     }
 }
 </style>
