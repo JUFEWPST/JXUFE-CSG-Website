@@ -12,6 +12,7 @@ import bilibiliPlugin from "~/utils/markdown-it-bilibili";
 import alertsPlugin from "~/utils/markdown-it-alerts";
 import githubCardPlugin from "~/utils/markdown-it-github-card";
 import imageViewerPlugin from "~/utils/markdown-it-image-viewer";
+import videoPlayerPlugin from "~/utils/markdown-it-video-player";
 
 const ALLOWED_IFRAME_DOMAINS = new Set(["player.bilibili.com"]);
 let domPurifyHookRegistered = false;
@@ -71,6 +72,7 @@ export const useMarkdown = () => {
     md.use(markdownItKatex, { throwOnError: false, errorColor: "#cc0000" });
     md.use(githubCardPlugin);
     md.use(imageViewerPlugin);
+    md.use(videoPlayerPlugin);
 
     const parseHighlightLines = (meta: string): Set<number> => {
         const highlightLines = new Set<number>();
@@ -184,7 +186,7 @@ export const useMarkdown = () => {
             USE_PROFILES: { html: true },
             FORBID_TAGS: ["style", "script"],
             FORBID_ATTR: ["onerror", "onload", "onclick", "onfocus"],
-            ADD_TAGS: ["iframe"],
+            ADD_TAGS: ["iframe", "video", "source"],
             ADD_ATTR: [
                 "class",
                 "style",
@@ -200,7 +202,10 @@ export const useMarkdown = () => {
                 "data-md-zoomable",
                 "data-md-img-group",
                 "data-md-img-index",
+                "data-md-video",
                 "title",
+                "preload",
+                "playsinline",
             ],
         });
     };

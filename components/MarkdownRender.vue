@@ -16,6 +16,10 @@ import {
     createMarkdownImageViewerController,
     type MarkdownImageViewerController,
 } from "~/utils/markdown-it-image-viewer";
+import {
+    createMarkdownVideoPlayerController,
+    type MarkdownVideoPlayerController,
+} from "~/utils/markdown-it-video-player";
 import "~/assets/css/markdown.css";
 import "~/assets/css/atom-one.css";
 import "katex/dist/katex.min.css";
@@ -57,6 +61,7 @@ watch(
             nextTick(() => {
                 extractHeadings();
                 imageViewerController?.refresh();
+                videoPlayerController?.refresh();
             });
         }
     },
@@ -107,6 +112,7 @@ defineExpose({
     tocItems: tocItems as Ref<TocItem[]>,
 });
 let imageViewerController: MarkdownImageViewerController | null = null;
+let videoPlayerController: MarkdownVideoPlayerController | null = null;
 
 const handleCopyClick = async (event: Event) => {
     if (!markdownRef.value) return;
@@ -135,9 +141,13 @@ onMounted(() => {
     nextTick(() => {
         extractHeadings();
         imageViewerController?.refresh();
+        videoPlayerController?.refresh();
     });
     if (markdownRef.value) {
         imageViewerController = createMarkdownImageViewerController(
+            markdownRef.value,
+        );
+        videoPlayerController = createMarkdownVideoPlayerController(
             markdownRef.value,
         );
         markdownRef.value.addEventListener("click", handleCopyClick);
@@ -150,6 +160,8 @@ onUnmounted(() => {
     }
     imageViewerController?.destroy();
     imageViewerController = null;
+    videoPlayerController?.destroy();
+    videoPlayerController = null;
 });
 </script>
 
