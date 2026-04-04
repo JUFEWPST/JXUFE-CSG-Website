@@ -11,8 +11,11 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted, nextTick, watch } from "vue";
-import mediumZoom from "medium-zoom";
 import { useMarkdown } from "~/composables/UseMarkdown";
+import {
+    createMarkdownImageViewerController,
+    type MarkdownImageViewerController,
+} from "~/utils/markdown-it-image-viewer";
 import "~/assets/css/markdown.css";
 import "~/assets/css/atom-one.css";
 import "katex/dist/katex.min.css";
@@ -53,6 +56,7 @@ watch(
         if (newContent) {
             nextTick(() => {
                 extractHeadings();
+                imageViewerController?.refresh();
             });
         }
     },
@@ -102,8 +106,7 @@ function extractHeadings() {
 defineExpose({
     tocItems: tocItems as Ref<TocItem[]>,
 });
-
-let zoomInstance: ReturnType<typeof mediumZoom> | null = null;
+let imageViewerController: MarkdownImageViewerController | null = null;
 
 const handleCopyClick = async (event: Event) => {
     if (!markdownRef.value) return;
@@ -131,9 +134,12 @@ const handleCopyClick = async (event: Event) => {
 onMounted(() => {
     nextTick(() => {
         extractHeadings();
+        imageViewerController?.refresh();
     });
     if (markdownRef.value) {
-        zoomInstance = mediumZoom(markdownRef.value.querySelectorAll("img"));
+        imageViewerController = createMarkdownImageViewerController(
+            markdownRef.value,
+        );
         markdownRef.value.addEventListener("click", handleCopyClick);
     }
 });
@@ -142,8 +148,8 @@ onUnmounted(() => {
     if (markdownRef.value) {
         markdownRef.value.removeEventListener("click", handleCopyClick);
     }
-    zoomInstance?.detach();
-    zoomInstance = null;
+    imageViewerController?.destroy();
+    imageViewerController = null;
 });
 </script>
 

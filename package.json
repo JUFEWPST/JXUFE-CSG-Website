@@ -24,7 +24,6 @@
         "markdown-it-sub": "^2.0.0",
         "markdown-it-sup": "^2.0.0",
         "markdown-it-task-lists": "^2.1.1",
-        "medium-zoom": "^1.1.0",
         "nuxt": "^4.4.2",
         "vue": "^3.5.27"
     },

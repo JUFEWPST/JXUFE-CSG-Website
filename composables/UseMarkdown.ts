@@ -11,6 +11,7 @@ import markdownItKatex from "@vscode/markdown-it-katex";
 import bilibiliPlugin from "~/utils/markdown-it-bilibili";
 import alertsPlugin from "~/utils/markdown-it-alerts";
 import githubCardPlugin from "~/utils/markdown-it-github-card";
+import imageViewerPlugin from "~/utils/markdown-it-image-viewer";
 
 const ALLOWED_IFRAME_DOMAINS = new Set(["player.bilibili.com"]);
 let domPurifyHookRegistered = false;
@@ -69,6 +70,7 @@ export const useMarkdown = () => {
     md.use(markdownItSup);
     md.use(markdownItKatex, { throwOnError: false, errorColor: "#cc0000" });
     md.use(githubCardPlugin);
+    md.use(imageViewerPlugin);
 
     const parseHighlightLines = (meta: string): Set<number> => {
         const highlightLines = new Set<number>();
@@ -195,6 +197,9 @@ export const useMarkdown = () => {
                 "border",
                 "data-code",
                 "data-line",
+                "data-md-zoomable",
+                "data-md-img-group",
+                "data-md-img-index",
                 "title",
             ],
         });
