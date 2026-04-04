@@ -30,7 +30,7 @@
                         {{ archive?.data?.title || archive?.title }}
                     </h1>
                     <div
-                        class="mb-2 flex items-center gap-2 text-xs text-(--md-sys-color-on-surface-variant) sm:text-sm"
+                        class="mb-2 flex flex-wrap items-center gap-y-2 gap-x-3 text-xs text-(--md-sys-color-on-surface-variant) sm:text-sm"
                     >
                         <div
                             v-if="archive.data.publisher"
@@ -50,7 +50,7 @@
                                 i18nFallback?.available &&
                                 i18nFallback.available.length > 0
                             "
-                            class="flex items-center gap-1.5 ml-3"
+                            class="flex items-center gap-1.5"
                         >
                             <LanguageIcon
                                 class="h-4 w-4 text-(--md-sys-color-primary)"
