@@ -91,7 +91,8 @@
             "title": "아카이브",
             "para": {
                 "title": "아카이브 상세정보"
-            }
+            },
+            "fallback": "현재 언어 버전을 찾을 수 없어 {lang} 언어로 대체되었습니다."
         },
         "wiki": {
             "title": "Wiki",

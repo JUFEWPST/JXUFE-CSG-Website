@@ -16,10 +16,17 @@ interface ErrorResponse {
 }
 
 export interface ApiMeta {
-    current_page: number;
-    page_size: number;
-    total_items: number;
-    total_pages: number;
+    current_page?: number;
+    page_size?: number;
+    total_items?: number;
+    total_pages?: number;
+    i18n?: {
+        current: string;
+        default: string;
+        available: string[];
+        fallback: boolean;
+        fallback_to?: string;
+    };
 }
 
 const DEFAULT_BASE_URL = "https://csec.jxufe.edu.cn/nozomi";

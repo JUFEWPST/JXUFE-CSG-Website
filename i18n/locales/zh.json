@@ -91,7 +91,8 @@
             "title": "归档",
             "para": {
                 "title": "归档详情"
-            }
+            },
+            "fallback": "当前语言版本未找到，已为您回退到 {lang}。"
         },
         "wiki": {
             "title": "Wiki",

@@ -91,7 +91,8 @@
             "title": "Archive",
             "para": {
                 "title": "Archive Details"
-            }
+            },
+            "fallback": "Current language version not found, falling back to {lang}."
         },
         "wiki": {
             "title": "Wiki",

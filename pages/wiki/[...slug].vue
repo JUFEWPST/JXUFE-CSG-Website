@@ -22,6 +22,19 @@
                 class="mb-2 box-border max-w-screen p-2"
             >
                 <header class="mb-8">
+                    <div
+                        v-if="
+                            i18nFallback?.fallback && i18nFallback.fallback_to
+                        "
+                        class="mb-6 flex items-center rounded-xl bg-(--md-sys-color-error-container) px-4 py-3 text-sm text-(--md-sys-color-on-error-container)"
+                    >
+                        <LanguageIcon class="mr-2 h-5 w-5" aria-hidden="true" />
+                        {{
+                            t("pages.archive.fallback", {
+                                lang: getLangName(i18nFallback.fallback_to),
+                            })
+                        }}
+                    </div>
                     <h1
                         class="mb-2 text-2xl leading-tight font-bold sm:text-3xl"
                     >
@@ -35,6 +48,31 @@
                             class="flex items-center"
                         >
                             {{ content.data.publisher }}
+                        </div>
+                        <div
+                            v-if="
+                                i18nFallback?.available &&
+                                i18nFallback.available.length > 0
+                            "
+                            class="flex items-center gap-1.5 ml-3"
+                        >
+                            <LanguageIcon
+                                class="h-4 w-4 text-(--md-sys-color-primary)"
+                                aria-hidden="true"
+                            />
+                            <button
+                                v-for="lang in i18nFallback.available"
+                                :key="lang"
+                                @click="currentContentLang = lang"
+                                :class="[
+                                    'px-1.5 py-0.5 text-xs rounded-md cursor-pointer transition-colors',
+                                    currentContentLang === lang
+                                        ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
+                                        : 'bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-highest)',
+                                ]"
+                            >
+                                {{ getLangName(lang) }}
+                            </button>
                         </div>
                     </div>
                     <div
@@ -137,7 +175,11 @@ import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
 import AnzuBreadcrumbs from "~/components/AnzuBreadcrumbs.vue";
 import AnzuPrevNextNav from "~/components/AnzuPrevNextNav.vue";
 import WikiTree from "~/components/sidebars/WikiTree.vue";
-import { FolderIcon, DocumentTextIcon } from "@heroicons/vue/24/outline";
+import {
+    FolderIcon,
+    DocumentTextIcon,
+    LanguageIcon,
+} from "@heroicons/vue/24/outline";
 
 import { computed, onMounted, ref, watch } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
@@ -174,13 +216,19 @@ let fetchSequence = 0;
 const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 const { setPageTitle: setSitePageTitle } = usePageTitle();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const slug = computed(() => {
     if (Array.isArray(route.params.slug)) {
         return route.params.slug.join("/");
     }
     return route.params.slug || "";
+});
+
+const currentContentLang = ref(getApiLocale(locale.value));
+
+watch(locale, (newLocale) => {
+    currentContentLang.value = getApiLocale(newLocale);
 });
 
 const slugSegments = computed(() => {
@@ -216,7 +264,8 @@ const contentPath = computed(() => {
     return `wiki/${slugSegments.value.join("/")}`;
 });
 
-const { data: content, loading, error, get } = useApi<WikiData>();
+const { data: content, loading, error, get, meta } = useApi<WikiData>();
+const i18nFallback = computed(() => meta.value?.i18n);
 const {
     data: treeNode,
     loading: loadingTree,
@@ -411,14 +460,20 @@ const fetchContent = async () => {
 
     try {
         await getBreadcrumbTree(
-            `/v1/tree?root=wiki&depth=${slugSegments.value.length + 1}`,
+            `/v1/tree?root=wiki&depth=${slugSegments.value.length + 1}&i18n=${currentContentLang.value}`,
         );
-        await getSectionTree(`/v1/tree?root=${firstLevelRootPath.value}`);
-        await getTree(`/v1/tree?root=${treeRootPath.value}&depth=2`);
+        await getSectionTree(
+            `/v1/tree?root=${firstLevelRootPath.value}&i18n=${currentContentLang.value}`,
+        );
+        await getTree(
+            `/v1/tree?root=${treeRootPath.value}&depth=2&i18n=${currentContentLang.value}`,
+        );
         if (treeNode.value?.is_container === true) {
             return;
         }
-        await get(`/v1/contents/by-path/${contentPath.value}`);
+        await get(
+            `/v1/contents/by-path/${contentPath.value}?i18n=${currentContentLang.value}`,
+        );
     } finally {
         if (currentFetch === fetchSequence) {
             pageLoading.value = false;
@@ -440,6 +495,11 @@ const updateLayout = () => {
 onMounted(async () => {
     setScrollReveal(true);
 
+    await fetchContent();
+    updateLayout();
+});
+
+watch(currentContentLang, async () => {
     await fetchContent();
     updateLayout();
 });

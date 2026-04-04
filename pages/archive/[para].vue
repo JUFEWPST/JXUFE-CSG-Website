@@ -11,6 +11,19 @@
             </div>
             <article v-if="archive" class="mb-2 box-border max-w-screen p-2">
                 <header class="mb-8">
+                    <div
+                        v-if="
+                            i18nFallback?.fallback && i18nFallback.fallback_to
+                        "
+                        class="mb-6 flex items-center rounded-xl bg-(--md-sys-color-error-container) px-4 py-3 text-sm text-(--md-sys-color-on-error-container)"
+                    >
+                        <LanguageIcon class="mr-2 h-5 w-5" aria-hidden="true" />
+                        {{
+                            t("pages.archive.fallback", {
+                                lang: getLangName(i18nFallback.fallback_to),
+                            })
+                        }}
+                    </div>
                     <h1
                         class="mb-2 text-2xl leading-tight font-bold sm:text-3xl"
                     >
@@ -31,6 +44,31 @@
                                     archive.data.publish_time,
                                 ).toLocaleString()
                             }}
+                        </div>
+                        <div
+                            v-if="
+                                i18nFallback?.available &&
+                                i18nFallback.available.length > 0
+                            "
+                            class="flex items-center gap-1.5 ml-3"
+                        >
+                            <LanguageIcon
+                                class="h-4 w-4 text-(--md-sys-color-primary)"
+                                aria-hidden="true"
+                            />
+                            <button
+                                v-for="lang in i18nFallback.available"
+                                :key="lang"
+                                @click="currentContentLang = lang"
+                                :class="[
+                                    'px-1.5 py-0.5 text-xs rounded-md cursor-pointer transition-colors',
+                                    currentContentLang === lang
+                                        ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
+                                        : 'bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-highest)',
+                                ]"
+                            >
+                                {{ getLangName(lang) }}
+                            </button>
                         </div>
                     </div>
                     <div
@@ -80,17 +118,22 @@ import { useRightSidebar } from "@/composables/useRightSidebar";
 import { usePageTitle } from "@/composables/usePageTitle";
 import { useNavTitle } from "@/composables/useNavTitle";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
+import { LanguageIcon } from "@heroicons/vue/24/outline";
+import { useI18n } from "vue-i18n";
 
 const route = useRoute();
 const markdownRender = ref();
 const tocItems = ref<TocItem[]>([]);
+
+const { t, locale } = useI18n();
 
 const { setHasContent, clearRightSidebar } = useRightSidebar();
 const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 
 const para = computed(() => route.params.para);
-const { data: archive, loading, error, get } = useApi<ArchiveData>();
+const { data: archive, loading, error, get, meta } = useApi<ArchiveData>();
+const i18nFallback = computed(() => meta.value?.i18n);
 
 const currentSlug = computed(() => String(para.value ?? ""));
 const { prev: archivePrev, next: archiveNext } =
@@ -121,8 +164,20 @@ useHead({
 const { setPageTitle } = usePageTitle();
 setPageTitle("");
 
+const currentContentLang = ref(getApiLocale(locale.value));
+
+watch(locale, (newLocale) => {
+    currentContentLang.value = getApiLocale(newLocale);
+});
+
+watch(currentContentLang, (newLang) => {
+    get(`/v1/contents/by-path/archive/${para.value}?i18n=${newLang}`);
+});
+
 onMounted(() => {
-    get(`/v1/contents/by-path/archive/${para.value}`);
+    get(
+        `/v1/contents/by-path/archive/${para.value}?i18n=${currentContentLang.value}`,
+    );
     setScrollReveal(true);
 });
 
