@@ -11,6 +11,7 @@
         "about": "길드 소개",
         "links": "유용한 링크",
         "timeline": "타임라인",
+        "ctf": "CTF 대회",
         "aboutChildren": {
             "index": "길드 개요",
             "leaders": "역대 리더",
@@ -269,7 +270,60 @@
         "reload": "새로고침",
         "error": "CTF 대회 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
         "empty": "현재 표시할 대회가 없습니다.",
-        "sourceLabel": "데이터 출처: {source}"
+        "emptyHint": "곧 있을 대회가 없습니다. 나중에 다시 확인해 주세요.",
+        "showMore": "더 보기",
+        "showLess": "덜 보기",
+        "sourceLabel": "데이터 출처: {source}",
+        "table": {
+            "event": "대회",
+            "time": "시간",
+            "start": "시작",
+            "end": "종료",
+            "duration": "기간",
+            "status": "상태",
+            "action": "작업",
+            "join": "참가",
+            "addToCalendar": "캘린더에 추가"
+        },
+        "page": {
+            "title": "CTF 대회 캘린더",
+            "subtitle": "글로벌 사이버 보안 대회 일정, 실시간 업데이트",
+            "loading": "대회 데이터를 불러오는 중...",
+            "retry": "재시도",
+            "refresh": "데이터 새로고침",
+            "totalEvents": "총 {count}개 대회",
+            "monthSummary": "이번 달 대회 {count}개",
+            "monthEmpty": "선택한 달에는 조건에 맞는 대회가 없습니다",
+            "moreEvents": "+{count}개 더보기",
+            "fetchError": "대회 데이터를 가져오지 못했습니다",
+            "region": {
+                "domestic": "국내만",
+                "foreign": "해외만"
+            },
+            "view": {
+                "calendar": "월",
+                "list": "목록"
+            },
+            "duration": {
+                "day": "1일",
+                "days": "{days}일",
+                "hours": "{hours}시간",
+                "dayHours": "{days}일 {hours}시간",
+                "single": "단일일",
+                "multiple": "여러일"
+            },
+            "about": {
+                "title": "CTF 대회 정보",
+                "description1": "CTF(Capture The Flag)는 참가자가 다양한 보안 과제를 해결하여 점수를 얻는 사이버 보안 대회 형식입니다.",
+                "description2": "이 페이지는 Hello-CTFTime 프로젝트의 데이터를 실시간으로 동기화하여 전 세계 CTF 대회 정보를 표시합니다.",
+                "description3": "'참가' 버튼을 클릭하여 공식 대회 사이트에 접속하거나, '캘린더에 추가' 기능을 사용하여 대회를 캘린더에 추가할 수 있습니다.",
+                "learnMore": "Hello-CTFTime 프로젝트에 대해 자세히 알아보기"
+            },
+            "meta": {
+                "title": "CTF 대회 캘린더 - 장시재경대학 사이버보안협회",
+                "description": "글로벌 CTF 사이버 보안 대회 일정, 실시간 대회 업데이트, 원클릭 참가 및 캘린더 구독 기능 제공."
+            }
+        }
     },
     "calendar": {
         "monthSuffix": "월",

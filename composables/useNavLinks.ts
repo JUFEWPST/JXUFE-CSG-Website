@@ -6,6 +6,7 @@ import {
     LinkIcon,
     ClockIcon,
     BookOpenIcon,
+    TrophyIcon,
 } from "@heroicons/vue/24/outline";
 export interface NavChildLink {
     path: string;
@@ -69,6 +70,12 @@ export const useNavLinks = (): NavLink[] => {
             label: "nav.timeline",
             alwaysInMore: true,
             icon: ClockIcon,
+        },
+        {
+            path: "/ctf",
+            label: "nav.ctf",
+            alwaysInMore: true,
+            icon: TrophyIcon,
         },
     ];
 };

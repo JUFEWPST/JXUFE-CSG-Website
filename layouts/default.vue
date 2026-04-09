@@ -13,7 +13,6 @@ import { usePageTitle } from "@/composables/usePageTitle";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
 import SiteInfoCard from "@/components/sidebars/SiteInfoCard.vue";
 import CalendarCard from "@/components/sidebars/CalendarCard.vue";
-import CTFEventsCard from "@/components/sidebars/CTFEventsCard.vue";
 import WikiTree from "@/components/sidebars/WikiTree.vue";
 
 const { t } = useI18n();
@@ -89,17 +88,6 @@ registerCard({
     component: SiteInfoCard,
 });
 
-// 注册默认右侧 CTF 赛事卡片
-registerCard({
-    id: "ctf-events",
-    side: "right",
-    order: 20,
-    sticky: false,
-    showOnMobileBottom: true,
-    excludeRoutes: ["/archive/", "/wiki/"],
-    component: CTFEventsCard,
-});
-
 registerCard({
     id: "site-calendar",
     side: "right",
@@ -163,6 +151,33 @@ const showRight = computed(() => {
         return route.meta.showRightSidebar;
     }
     return true;
+});
+const hasLeftSidebar = computed(
+    () =>
+        showLeft.value &&
+        (leftNonStickyCards.value.length > 0 ||
+            leftStickyCards.value.length > 0),
+);
+const hasRightSidebar = computed(
+    () =>
+        showRight.value &&
+        (rightNonStickyCards.value.length > 0 ||
+            rightStickyCards.value.length > 0),
+);
+const mainColumnClass = computed(() => {
+    if (hasLeftSidebar.value && hasRightSidebar.value) {
+        return "lg:col-span-6 lg:col-start-3";
+    }
+
+    if (hasLeftSidebar.value && !hasRightSidebar.value) {
+        return "lg:col-span-8 lg:col-start-3";
+    }
+
+    if (!hasLeftSidebar.value && hasRightSidebar.value) {
+        return "lg:col-span-8 lg:col-start-1";
+    }
+
+    return "lg:col-span-10 lg:col-start-1";
 });
 
 const homeBannerImages = [
@@ -373,11 +388,7 @@ const toggleMahou = () => {
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-10">
                     <!-- left: 非 sticky 在上，sticky 在下 -->
                     <aside
-                        v-if="
-                            showLeft &&
-                            (leftNonStickyCards.length ||
-                                leftStickyCards.length)
-                        "
+                        v-if="hasLeftSidebar"
                         class="hidden lg:col-span-2 lg:col-start-1 lg:block"
                     >
                         <!-- 非 sticky 卡片 -->
@@ -418,7 +429,7 @@ const toggleMahou = () => {
                     <!-- Page Content -->
                     <main
                         :class="[
-                            'lg:col-span-6 lg:col-start-3',
+                            mainColumnClass,
                             'overflow-hidden rounded-xl',
                             'shadow-center-sm',
                             'self-start',
@@ -430,11 +441,7 @@ const toggleMahou = () => {
 
                     <!-- Right Sidebar: 非 sticky 在上，sticky 在下 -->
                     <aside
-                        v-if="
-                            showRight &&
-                            (rightNonStickyCards.length ||
-                                rightStickyCards.length)
-                        "
+                        v-if="hasRightSidebar"
                         class="hidden lg:col-span-2 lg:col-start-9 lg:block"
                     >
                         <!-- 非 sticky 卡片 -->

@@ -11,6 +11,7 @@
         "about": "ギルドについて",
         "links": "関連リンク",
         "timeline": "タイムライン",
+        "ctf": "CTF イベント",
         "aboutChildren": {
             "index": "ギルド概要",
             "leaders": "歴代責任者",
@@ -269,7 +270,60 @@
         "reload": "再読み込み",
         "error": "CTF イベントの読み込みに失敗しました。しばらくしてからもう一度お試しください。",
         "empty": "現在表示できるイベントはありません。",
-        "sourceLabel": "データソース：{source}"
+        "emptyHint": "近日中のイベントはありません。後ほど確認してください。",
+        "showMore": "もっと表示",
+        "showLess": "少なく表示",
+        "sourceLabel": "データソース：{source}",
+        "table": {
+            "event": "イベント",
+            "time": "時間",
+            "start": "開始",
+            "end": "終了",
+            "duration": "期間",
+            "status": "状態",
+            "action": "操作",
+            "join": "参加",
+            "addToCalendar": "カレンダーに追加"
+        },
+        "page": {
+            "title": "CTF イベントカレンダー",
+            "subtitle": "グローバルなサイバーセキュリティ競技スケジュール、リアルタイム更新",
+            "loading": "イベントデータを読み込み中...",
+            "retry": "再試行",
+            "refresh": "データを更新",
+            "totalEvents": "合計 {count} イベント",
+            "monthSummary": "今月のイベント {count} 件",
+            "monthEmpty": "選択中の月に該当イベントはありません",
+            "moreEvents": "+{count} 件",
+            "fetchError": "イベントデータの取得に失敗しました",
+            "region": {
+                "domestic": "国内のみ",
+                "foreign": "海外のみ"
+            },
+            "view": {
+                "calendar": "月",
+                "list": "リスト"
+            },
+            "duration": {
+                "day": "1日",
+                "days": "{days}日",
+                "hours": "{hours}時間",
+                "dayHours": "{days}日 {hours}時間",
+                "single": "単日",
+                "multiple": "複数日"
+            },
+            "about": {
+                "title": "CTF イベントについて",
+                "description1": "CTF（Capture The Flag）は、参加者がさまざまなセキュリティ課題を解決してポイントを獲得するサイバーセキュリティ競技形式です。",
+                "description2": "このページは Hello-CTFTime プロジェクトのデータをリアルタイムで同期し、世界中の CTF イベント情報を表示します。",
+                "description3": "「参加」ボタンをクリックして公式競技サイトにアクセスするか、「カレンダーに追加」機能を使用してイベントをカレンダーに追加できます。",
+                "learnMore": "Hello-CTFTime プロジェクトについて詳しく知る"
+            },
+            "meta": {
+                "title": "CTF イベントカレンダー - 江西財経大学サイバーセキュリティ協会",
+                "description": "グローバル CTF サイバーセキュリティ競技スケジュール、リアルタイムイベント更新、ワンクリック参加とカレンダー登録機能付き。"
+            }
+        }
     },
     "calendar": {
         "monthSuffix": "月",
