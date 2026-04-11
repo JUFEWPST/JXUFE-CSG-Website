@@ -262,6 +262,36 @@
                     "status": "상태",
                     "action": "작업",
                     "join": "참가"
+                },
+                "loading": "正在加载赛事数据...",
+                "fetchError": "获取赛事数据失败",
+                "filters": {
+                    "all": "全部赛事",
+                    "domestic": "只看国内",
+                    "foreign": "只看国外"
+                },
+                "view": {
+                    "calendar": "月",
+                    "list": "列表"
+                },
+                "summary": {
+                    "totalEvents": "共 {count} 个赛事",
+                    "monthEvents": "本月共 {count} 场赛事",
+                    "monthEmpty": "当前月份暂无符合筛选条件的赛事",
+                    "dayEventsShort": "{count}场",
+                    "moreEvents": "+{count} 场"
+                },
+                "sheet": {
+                    "daySummary": "当日共 {count} 场赛事",
+                    "openList": "列表查看",
+                    "empty": "这一天暂无赛事"
+                },
+                "duration": {
+                    "day": "1天",
+                    "days": "{days}天",
+                    "hours": "{hours}小时",
+                    "dayHours": "{days}天 {hours}小时",
+                    "single": "单日"
                 }
             }
         }
