@@ -66,7 +66,7 @@
                     })
                 "
             >
-                芳文跳
+                {{ t('common.actions.paginationGoButton') }}
             </AnzuButton>
         </div>
     </div>

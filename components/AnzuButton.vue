@@ -93,7 +93,9 @@
                 stroke-linejoin="round"
             />
         </svg>
-        <span class="relative z-10">
+        <span
+            class="relative z-10 inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+        >
             <slot>Button</slot>
         </span>
         <div

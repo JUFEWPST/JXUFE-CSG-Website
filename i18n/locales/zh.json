@@ -28,6 +28,13 @@
                 "description": "记录江西财经大学网络安全协会的发展历程与重要里程碑。"
             }
         },
+        "ctf": {
+            "title": "CTF赛事",
+            "meta": {
+                "title": "CTF 赛事日历 - 江西财经大学网络安全协会",
+                "description": "全球 CTF 网络安全竞赛时间表，实时更新赛事信息。"
+            }
+        },
         "privacy": {
             "title": "隐私政策",
             "meta": {
@@ -267,13 +274,43 @@
             "finished": "已结束",
             "unknown": "状态未知"
         },
+        "loading": "正在加载赛事数据...",
         "reload": "刷新",
         "error": "赛事数据加载失败，请稍后重试",
         "empty": "暂时没有可显示的赛事",
         "emptyHint": "暂无近期赛事，请稍后再来查看",
+        "fetchError": "获取赛事数据失败",
         "showMore": "显示更多",
         "showLess": "显示较少",
         "sourceLabel": "数据来源：{source}",
+        "filters": {
+            "all": "全部赛事",
+            "domestic": "只看国内",
+            "foreign": "只看国外"
+        },
+        "view": {
+            "calendar": "月",
+            "list": "列表"
+        },
+        "summary": {
+            "totalEvents": "共 {count} 个赛事",
+            "monthEvents": "本月共 {count} 场赛事",
+            "monthEmpty": "当前月份暂无符合筛选条件的赛事",
+            "dayEventsShort": "{count}场",
+            "moreEvents": "+{count} 场"
+        },
+        "sheet": {
+            "daySummary": "当日共 {count} 场赛事",
+            "openList": "列表查看",
+            "empty": "这一天暂无赛事"
+        },
+        "duration": {
+            "day": "1天",
+            "days": "{days}天",
+            "hours": "{hours}小时",
+            "dayHours": "{days}天 {hours}小时",
+            "single": "单日"
+        },
         "table": {
             "event": "赛事",
             "time": "时间",
@@ -284,45 +321,6 @@
             "action": "操作",
             "join": "参加",
             "addToCalendar": "添加到日历"
-        },
-        "page": {
-            "title": "CTF 赛事日历",
-            "subtitle": "全球网络安全竞赛时间表，实时更新",
-            "loading": "正在加载赛事数据...",
-            "retry": "重试",
-            "refresh": "刷新数据",
-            "totalEvents": "共 {count} 个赛事",
-            "monthSummary": "本月共 {count} 场赛事",
-            "monthEmpty": "当前月份暂无符合筛选条件的赛事",
-            "moreEvents": "+{count} 场",
-            "fetchError": "获取赛事数据失败",
-            "region": {
-                "domestic": "只看国内",
-                "foreign": "只看国外"
-            },
-            "view": {
-                "calendar": "月",
-                "list": "列表"
-            },
-            "duration": {
-                "day": "1天",
-                "days": "{days}天",
-                "hours": "{hours}小时",
-                "dayHours": "{days}天 {hours}小时",
-                "single": "单日",
-                "multiple": "多日"
-            },
-            "about": {
-                "title": "关于 CTF 赛事",
-                "description1": "CTF（Capture The Flag）是一种网络安全竞赛形式，参赛者通过解决各种安全挑战来获取分数。",
-                "description2": "本页面实时同步 Hello-CTFTime 项目的数据，展示全球范围内的 CTF 赛事信息。",
-                "description3": "您可以通过点击「参加」按钮访问比赛官网，或使用「添加到日历」功能将赛事添加到您的日历中。",
-                "learnMore": "了解更多关于 Hello-CTFTime 项目"
-            },
-            "meta": {
-                "title": "CTF 赛事日历 - 江西财经大学网络安全协会",
-                "description": "全球 CTF 网络安全竞赛时间表，实时更新赛事信息，支持一键参加和日历订阅。"
-            }
         }
     },
     "calendar": {

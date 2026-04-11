@@ -72,7 +72,7 @@ export const useNavLinks = (): NavLink[] => {
             icon: ClockIcon,
         },
         {
-            path: "/ctf",
+            path: "/ctf-event",
             label: "nav.ctf",
             alwaysInMore: true,
             icon: TrophyIcon,

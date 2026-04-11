@@ -28,6 +28,13 @@
                 "description": "Records the development history and important milestones of the Cybersecurity Guild of JXUFE."
             }
         },
+        "ctf": {
+            "title": "CTF Events",
+            "meta": {
+                "title": "CTF Events Calendar - Cybersecurity Guild of JXUFE",
+                "description": "Global CTF cybersecurity competition schedule with real-time event updates."
+            }
+        },
         "privacy": {
             "title": "Privacy Policy",
             "meta": {
@@ -267,13 +274,43 @@
             "finished": "Finished",
             "unknown": "Unknown status"
         },
+        "loading": "Loading events data...",
         "reload": "Reload",
         "error": "Failed to load CTF events. Please try again later.",
         "empty": "No events to display at the moment.",
         "emptyHint": "No upcoming events. Please check back later.",
+        "fetchError": "Failed to fetch events data",
         "showMore": "Show more",
         "showLess": "Show less",
         "sourceLabel": "Data source: {source}",
+        "filters": {
+            "all": "All Events",
+            "domestic": "Domestic Only",
+            "foreign": "Foreign Only"
+        },
+        "view": {
+            "calendar": "Month",
+            "list": "List"
+        },
+        "summary": {
+            "totalEvents": "Total {count} events",
+            "monthEvents": "{count} events in this month",
+            "monthEmpty": "No events in the selected month",
+            "dayEventsShort": "{count} ev",
+            "moreEvents": "+{count} more"
+        },
+        "sheet": {
+            "daySummary": "{count} events on this day",
+            "openList": "View in list",
+            "empty": "No events on this day"
+        },
+        "duration": {
+            "day": "1 day",
+            "days": "{days} days",
+            "hours": "{hours}h",
+            "dayHours": "{days}d {hours}h",
+            "single": "Single day"
+        },
         "table": {
             "event": "Event",
             "time": "Time",
@@ -284,45 +321,6 @@
             "action": "Action",
             "join": "Join",
             "addToCalendar": "Add to calendar"
-        },
-        "page": {
-            "title": "CTF Events Calendar",
-            "subtitle": "Global cybersecurity competition schedule, updated in real-time",
-            "loading": "Loading events data...",
-            "retry": "Retry",
-            "refresh": "Refresh data",
-            "totalEvents": "Total {count} events",
-            "monthSummary": "{count} events in this month",
-            "monthEmpty": "No events in the selected month",
-            "moreEvents": "+{count} more",
-            "fetchError": "Failed to fetch events data",
-            "region": {
-                "domestic": "Domestic Only",
-                "foreign": "Foreign Only"
-            },
-            "view": {
-                "calendar": "Month",
-                "list": "List"
-            },
-            "duration": {
-                "day": "1 day",
-                "days": "{days} days",
-                "hours": "{hours}h",
-                "dayHours": "{days}d {hours}h",
-                "single": "Single day",
-                "multiple": "Multiple days"
-            },
-            "about": {
-                "title": "About CTF Events",
-                "description1": "CTF (Capture The Flag) is a cybersecurity competition format where participants earn points by solving various security challenges.",
-                "description2": "This page synchronizes data from the Hello-CTFTime project in real-time, displaying CTF event information worldwide.",
-                "description3": "You can visit the official competition website by clicking the 'Join' button, or use the 'Add to calendar' feature to add events to your calendar.",
-                "learnMore": "Learn more about the Hello-CTFTime project"
-            },
-            "meta": {
-                "title": "CTF Events Calendar - Jiangxi University of Finance and Economics Cybersecurity Association",
-                "description": "Global CTF cybersecurity competition schedule, real-time event updates, with one-click participation and calendar subscription."
-            }
         }
     },
     "calendar": {
