@@ -8,7 +8,7 @@
                 class="flex min-h-72 flex-col items-center justify-center gap-4 text-center text-(--md-sys-color-on-surface-variant)"
             >
                 <AnzuProgressRing :size="56" status="loading" />
-                <p class="text-sm sm:text-base">{{ t("ctf.loading") }}</p>
+                <p class="text-sm sm:text-base">{{ t("pages.ctf.events.loading") }}</p>
             </div>
 
             <div
@@ -18,7 +18,7 @@
                 <div class="flex items-start gap-3">
                     <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
                     <div class="space-y-2">
-                        <p class="font-semibold">{{ t("ctf.error") }}</p>
+                        <p class="font-semibold">{{ t("pages.ctf.events.error") }}</p>
                         <p class="text-sm opacity-80">{{ error }}</p>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     variant="filled"
                     class="h-9! min-w-0! px-4!"
                     @click="refresh"
-                    >{{ t("ctf.reload") }}</AnzuButton
+                    >{{ t("common.actions.reload") }}</AnzuButton
                 >
             </div>
 
@@ -39,29 +39,29 @@
                             <AnzuButton
                                 value="all"
                                 class="h-9! min-w-0! px-4!"
-                                >{{ t("ctf.filters.all") }}</AnzuButton
+                                >{{ t("pages.ctf.events.filters.all") }}</AnzuButton
                             >
                             <AnzuButton
                                 value="domestic"
                                 class="h-9! min-w-0! px-4!"
-                                >{{ t("ctf.filters.domestic") }}</AnzuButton
+                                >{{ t("pages.ctf.events.filters.domestic") }}</AnzuButton
                             >
                             <AnzuButton
                                 value="foreign"
                                 class="h-9! min-w-0! px-4!"
-                                >{{ t("ctf.filters.foreign") }}</AnzuButton
+                                >{{ t("pages.ctf.events.filters.foreign") }}</AnzuButton
                             >
                         </AnzuButtonGroup>
                         <AnzuButtonGroup v-model="viewMode" gap="sm">
                             <AnzuButton
                                 value="calendar"
                                 class="h-9! min-w-0! px-4!"
-                                >{{ t("ctf.view.calendar") }}</AnzuButton
+                                >{{ t("pages.ctf.events.view.calendar") }}</AnzuButton
                             >
                             <AnzuButton
                                 value="list"
                                 class="h-9! min-w-0! px-4!"
-                                >{{ t("ctf.view.list") }}</AnzuButton
+                                >{{ t("pages.ctf.events.view.list") }}</AnzuButton
                             >
                         </AnzuButtonGroup>
                     </div>
@@ -105,7 +105,7 @@
                                 class="h-4 w-4"
                                 :class="{ 'animate-spin': loading }"
                             />
-                            {{ t("ctf.reload") }}
+                            {{ t("common.actions.reload") }}
                         </AnzuButton>
                     </div>
                 </header>
@@ -115,6 +115,21 @@
                 >
                     <span>{{ summaryText }}</span>
                 </div>
+
+                <p class="mt-2 text-[11px] text-(--md-sys-color-on-surface-variant)">
+                    <i18n-t keypath="pages.ctf.events.sourceLabel" tag="span">
+                        <template #source>
+                            <a
+                                href="https://github.com/ProbiusOfficial/Hello-CTFtime"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="underline hover:text-(--md-sys-color-primary)"
+                            >
+                                Hello-CTFTime
+                            </a>
+                        </template>
+                    </i18n-t>
+                </p>
 
                 <div v-if="viewMode === 'calendar'" class="space-y-4">
                     <div
@@ -173,7 +188,7 @@
                                         class="text-xs font-medium leading-4 text-(--md-sys-color-primary)"
                                     >
                                         {{
-                                            t("ctf.summary.dayEventsShort", {
+                                            t("pages.ctf.events.summary.dayEventsShort", {
                                                 count: cell.eventCount,
                                             })
                                         }}
@@ -239,7 +254,7 @@
                                     @click="openListForDay(cell.date)"
                                 >
                                     {{
-                                        t("ctf.summary.moreEvents", {
+                                        t("pages.ctf.events.summary.moreEvents", {
                                             count: week.hiddenCounts[dayIndex],
                                         })
                                     }}
@@ -276,9 +291,9 @@
                         <p
                             class="text-base font-medium text-(--md-sys-color-on-surface)"
                         >
-                            {{ t("ctf.empty") }}
+                            {{ t("pages.ctf.events.empty") }}
                         </p>
-                        <p class="mt-2">{{ t("ctf.summary.monthEmpty") }}</p>
+                        <p class="mt-2">{{ t("pages.ctf.events.summary.monthEmpty") }}</p>
                     </div>
                 </div>
 
@@ -295,27 +310,27 @@
                                         <th
                                             class="w-[42%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
                                         >
-                                            {{ t("ctf.table.event") }}
+                                            {{ t("pages.ctf.events.table.event") }}
                                         </th>
                                         <th
                                             class="w-[20%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
                                         >
-                                            {{ t("ctf.table.time") }}
+                                            {{ t("pages.ctf.events.table.time") }}
                                         </th>
                                         <th
                                             class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
                                         >
-                                            {{ t("ctf.table.duration") }}
+                                            {{ t("pages.ctf.events.table.duration") }}
                                         </th>
                                         <th
                                             class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
                                         >
-                                            {{ t("ctf.table.status") }}
+                                            {{ t("pages.ctf.events.table.status") }}
                                         </th>
                                         <th
                                             class="w-[18%] px-3 py-2 text-right text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
                                         >
-                                            {{ t("ctf.table.action") }}
+                                            {{ t("pages.ctf.events.table.action") }}
                                         </th>
                                     </tr>
                                 </thead>
@@ -358,7 +373,7 @@
                                                 >
                                                     {{
                                                         t(
-                                                            `ctf.status.${event.parsedStatus}`,
+                                                            `pages.ctf.events.status.${event.parsedStatus}`,
                                                         )
                                                     }}
                                                 </p>
@@ -394,7 +409,7 @@
                                                     target="_blank"
                                                 >
                                                     <ArrowUpRightIcon class="h-4 w-4" />
-                                                    {{ t("ctf.table.join") }}
+                                                    {{ t("pages.ctf.events.table.join") }}
                                                 </AnzuButton>
                                             </div>
                                         </td>
@@ -431,7 +446,7 @@
                                 >
                                     <div class="space-y-0.5">
                                         <p class="font-medium">
-                                            {{ t("ctf.table.start") }}
+                                            {{ t("pages.ctf.events.table.start") }}
                                         </p>
                                         <p
                                             class="text-(--md-sys-color-on-surface)"
@@ -445,7 +460,7 @@
                                     </div>
                                     <div class="space-y-0.5">
                                         <p class="font-medium">
-                                            {{ t("ctf.table.end") }}
+                                            {{ t("pages.ctf.events.table.end") }}
                                         </p>
                                         <p
                                             class="text-(--md-sys-color-on-surface)"
@@ -459,7 +474,7 @@
                                     </div>
                                     <div class="space-y-0.5">
                                         <p class="font-medium">
-                                            {{ t("ctf.table.duration") }}
+                                            {{ t("pages.ctf.events.table.duration") }}
                                         </p>
                                         <p
                                             class="text-(--md-sys-color-on-surface)"
@@ -469,7 +484,7 @@
                                     </div>
                                     <div class="space-y-0.5">
                                         <p class="font-medium">
-                                            {{ t("ctf.table.status") }}
+                                            {{ t("pages.ctf.events.table.status") }}
                                         </p>
                                         <span
                                             class="inline-flex items-center gap-2 text-(--md-sys-color-on-surface)"
@@ -484,7 +499,7 @@
                                             />
                                             {{
                                                 t(
-                                                    `ctf.status.${event.parsedStatus}`,
+                                                    `pages.ctf.events.status.${event.parsedStatus}`,
                                                 )
                                             }}
                                         </span>
@@ -501,7 +516,7 @@
                                         target="_blank"
                                     >
                                         <ArrowUpRightIcon class="h-4 w-4" />
-                                        {{ t("ctf.table.join") }}
+                                        {{ t("pages.ctf.events.table.join") }}
                                     </AnzuButton>
                                 </div>
                             </article>
@@ -515,9 +530,9 @@
                         <p
                             class="text-base font-medium text-(--md-sys-color-on-surface)"
                         >
-                            {{ t("ctf.empty") }}
+                            {{ t("pages.ctf.events.empty") }}
                         </p>
-                        <p class="mt-2">{{ t("ctf.emptyHint") }}</p>
+                        <p class="mt-2">{{ t("pages.ctf.events.emptyHint") }}</p>
                     </div>
 
                     <div class="flex justify-center">
@@ -558,7 +573,7 @@
                             class="text-sm text-(--md-sys-color-on-surface-variant)"
                         >
                             {{
-                                t("ctf.sheet.daySummary", {
+                                t("pages.ctf.events.sheet.daySummary", {
                                     count: selectedMobileDayEvents.length,
                                 })
                             }}
@@ -587,7 +602,7 @@
                             })
                         "
                     >
-                        {{ t("ctf.sheet.openList") }}
+                        {{ t("pages.ctf.events.sheet.openList") }}
                     </AnzuButton>
                 </div>
 
@@ -624,7 +639,7 @@
                                             statusDotClass(event.parsedStatus)
                                         "
                                     />
-                                    {{ t(`ctf.status.${event.parsedStatus}`) }}
+                                    {{ t(`pages.ctf.events.status.${event.parsedStatus}`) }}
                                 </span>
                             </div>
                             <div
@@ -632,7 +647,7 @@
                             >
                                 <div class="space-y-0.5">
                                     <p class="font-medium">
-                                        {{ t("ctf.table.start") }}
+                                        {{ t("pages.ctf.events.table.start") }}
                                     </p>
                                     <p class="text-(--md-sys-color-on-surface)">
                                         {{
@@ -644,7 +659,7 @@
                                 </div>
                                 <div class="space-y-0.5">
                                     <p class="font-medium">
-                                        {{ t("ctf.table.end") }}
+                                        {{ t("pages.ctf.events.table.end") }}
                                     </p>
                                     <p class="text-(--md-sys-color-on-surface)">
                                         {{
@@ -654,7 +669,7 @@
                                 </div>
                                 <div class="space-y-0.5">
                                     <p class="font-medium">
-                                        {{ t("ctf.table.duration") }}
+                                        {{ t("pages.ctf.events.table.duration") }}
                                     </p>
                                     <p class="text-(--md-sys-color-on-surface)">
                                         {{ formatDurationFromEvent(event) }}
@@ -671,7 +686,7 @@
                                 target="_blank"
                             >
                                 <ArrowUpRightIcon class="h-4 w-4" />
-                                {{ t("ctf.table.join") }}
+                                {{ t("pages.ctf.events.table.join") }}
                             </AnzuButton>
                         </div>
                     </article>
@@ -681,7 +696,7 @@
                     v-else
                     class="py-12 mt-6 p-5 text-center text-sm text-(--md-sys-color-on-surface-variant)"
                 >
-                    {{ t("ctf.sheet.empty") }}
+                    {{ t("pages.ctf.events.sheet.empty") }}
                 </div>
             </div>
         </div>
@@ -1099,9 +1114,9 @@ const displayedMonthLabel = computed(() =>
 const summaryText = computed(() =>
     viewMode.value === "calendar"
         ? monthEvents.value.length
-            ? t("ctf.summary.monthEvents", { count: monthEvents.value.length })
-            : t("ctf.summary.monthEmpty")
-        : t("ctf.summary.totalEvents", { count: matchedEvents.value.length }),
+            ? t("pages.ctf.events.summary.monthEvents", { count: monthEvents.value.length })
+            : t("pages.ctf.events.summary.monthEmpty")
+        : t("pages.ctf.events.summary.totalEvents", { count: matchedEvents.value.length }),
 );
 const totalPages = computed(() =>
     Math.max(1, Math.ceil(matchedEvents.value.length / LIST_PAGE_SIZE)),
@@ -1172,15 +1187,15 @@ const formatDurationFromEvent = (event: ParsedCTFEvent) => {
         Math.round((endDate.getTime() - event.parsedStart.getTime()) / 36e5),
     );
     if (endDate.getTime() - event.parsedStart.getTime() <= 0)
-        return t("ctf.duration.single");
-    if (hours < 24) return t("ctf.duration.hours", { hours });
+        return t("pages.ctf.events.duration.single");
+    if (hours < 24) return t("pages.ctf.events.duration.hours", { hours });
     const days = Math.floor(hours / 24);
     const remainingHours = hours % 24;
     if (!remainingHours)
         return days === 1
-            ? t("ctf.duration.day")
-            : t("ctf.duration.days", { days });
-    return t("ctf.duration.dayHours", { days, hours: remainingHours });
+            ? t("pages.ctf.events.duration.day")
+            : t("pages.ctf.events.duration.days", { days });
+    return t("pages.ctf.events.duration.dayHours", { days, hours: remainingHours });
 };
 
 const eventMetaText = (event: RawCTFEvent) =>
@@ -1194,9 +1209,9 @@ const eventMetaText = (event: RawCTFEvent) =>
 const calendarEventTitle = (event: ParsedCTFEvent) =>
     [
         event.比赛名称,
-        `${t("ctf.table.start")}: ${formatListDateTime(event.parsedStart)}`,
-        `${t("ctf.table.end")}: ${formatListDateTime(event.parsedEnd)}`,
-        `${t("ctf.table.duration")}: ${formatDurationFromEvent(event)}`,
+        `${t("pages.ctf.events.table.start")}: ${formatListDateTime(event.parsedStart)}`,
+        `${t("pages.ctf.events.table.end")}: ${formatListDateTime(event.parsedEnd)}`,
+        `${t("pages.ctf.events.table.duration")}: ${formatDurationFromEvent(event)}`,
     ].join("\n");
 const desktopCalendarRowStyle = (week: CalendarWeek) => ({
     minHeight: `${3.4 + week.maxRows * 1.8 + (week.hiddenCounts.some((count) => count > 0) ? 1.4 : 0.35)}rem`,
@@ -1368,7 +1383,7 @@ const fetchEvents = async () => {
         ];
     } catch (fetchError) {
         console.error(fetchError);
-        error.value = (fetchError as Error).message || t("ctf.fetchError");
+        error.value = (fetchError as Error).message || t("pages.ctf.events.fetchError");
         events.value = [];
     } finally {
         loading.value = false;
@@ -1382,3 +1397,4 @@ onMounted(() => {
     void fetchEvents();
 });
 </script>
+

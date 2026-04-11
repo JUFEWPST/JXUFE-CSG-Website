@@ -2,7 +2,7 @@
     <div class="space-y-4">
         <div class="mb-2 flex items-center justify-between gap-2">
             <h3 class="text-lg font-semibold text-(--md-sys-color-on-surface)">
-                {{ t("ctf.title") }}
+                {{ t("pages.ctf.events.title") }}
             </h3>
             <div class="flex items-center gap-2">
                 <button
@@ -10,13 +10,17 @@
                     class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)"
                     @click="showAll = !showAll"
                 >
-                    {{ showAll ? t("ctf.showLess") : t("ctf.showMore") }}
+                    {{
+                        showAll
+                            ? t("common.actions.showLess")
+                            : t("common.actions.showMore")
+                    }}
                 </button>
                 <button
                     type="button"
                     class="inline-flex items-center gap-1 rounded-lg p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-(--md-sys-color-secondary-container)"
                     @click="refresh"
-                    :title="t('ctf.reload')"
+                    :title="t('common.actions.reload')"
                 >
                     <ArrowPathIcon
                         class="h-5 w-5"
@@ -30,51 +34,80 @@
             <AnzuProgressRing :size="48" status="loading" />
         </div>
 
-        <div v-else-if="error" class="rounded-xl border border-(--md-sys-color-error-container) bg-(--md-sys-color-error-container) p-4">
+        <div
+            v-else-if="error"
+            class="rounded-xl border border-(--md-sys-color-error-container) bg-(--md-sys-color-error-container) p-4"
+        >
             <div class="flex items-start gap-3">
-                <ExclamationTriangleIcon class="h-5 w-5 shrink-0 text-(--md-sys-color-on-error-container)" />
+                <ExclamationTriangleIcon
+                    class="h-5 w-5 shrink-0 text-(--md-sys-color-on-error-container)"
+                />
                 <div class="flex-1">
-                    <p class="text-sm font-medium text-(--md-sys-color-on-error-container)">
-                        {{ t("ctf.error") }}
+                    <p
+                        class="text-sm font-medium text-(--md-sys-color-on-error-container)"
+                    >
+                        {{ t("pages.ctf.events.error") }}
                     </p>
-                    <p class="mt-1 text-xs text-(--md-sys-color-on-error-container/80)">
+                    <p
+                        class="mt-1 text-xs text-(--md-sys-color-on-error-container/80)"
+                    >
                         {{ error }}
                     </p>
                 </div>
             </div>
         </div>
 
-        <div v-else-if="!filteredEvents?.length" class="rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest) p-6 text-center">
-            <CalendarDaysIcon class="mx-auto h-8 w-8 text-(--md-sys-color-on-surface-variant)" />
-            <p class="mt-2 text-sm font-medium text-(--md-sys-color-on-surface)">
-                {{ t("ctf.empty") }}
+        <div
+            v-else-if="!filteredEvents?.length"
+            class="rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest) p-6 text-center"
+        >
+            <CalendarDaysIcon
+                class="mx-auto h-8 w-8 text-(--md-sys-color-on-surface-variant)"
+            />
+            <p
+                class="mt-2 text-sm font-medium text-(--md-sys-color-on-surface)"
+            >
+                {{ t("pages.ctf.events.empty") }}
             </p>
             <p class="mt-1 text-xs text-(--md-sys-color-on-surface-variant)">
-                {{ t("ctf.emptyHint") }}
+                {{ t("pages.ctf.events.emptyHint") }}
             </p>
         </div>
 
-        <div v-else class="overflow-hidden rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest)">
+        <div
+            v-else
+            class="overflow-hidden rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest)"
+        >
             <!-- 表格头部 -->
-            <div class="grid grid-cols-12 gap-2 border-b border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-high) px-4 py-3">
+            <div
+                class="grid grid-cols-12 gap-2 border-b border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-high) px-4 py-3"
+            >
                 <div class="col-span-5">
-                    <span class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)">
-                        {{ t("ctf.table.event") }}
+                    <span
+                        class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ t("pages.ctf.events.table.event") }}
                     </span>
                 </div>
                 <div class="col-span-3">
-                    <span class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)">
-                        {{ t("ctf.table.time") }}
+                    <span
+                        class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ t("pages.ctf.events.table.time") }}
                     </span>
                 </div>
                 <div class="col-span-2">
-                    <span class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)">
-                        {{ t("ctf.table.status") }}
+                    <span
+                        class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ t("pages.ctf.events.table.status") }}
                     </span>
                 </div>
                 <div class="col-span-2 text-right">
-                    <span class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)">
-                        {{ t("ctf.table.action") }}
+                    <span
+                        class="text-xs font-medium uppercase tracking-wider text-(--md-sys-color-on-surface-variant)"
+                    >
+                        {{ t("pages.ctf.events.table.action") }}
                     </span>
                 </div>
             </div>
@@ -98,15 +131,23 @@
                                 />
                             </div>
                             <div class="min-w-0 flex-1">
-                                <p class="truncate text-sm font-medium text-(--md-sys-color-on-surface) group-hover:text-(--md-sys-color-primary)">
+                                <p
+                                    class="truncate text-sm font-medium text-(--md-sys-color-on-surface) group-hover:text-(--md-sys-color-primary)"
+                                >
                                     {{ event.比赛名称 }}
                                 </p>
                                 <div class="mt-1 flex items-center gap-2">
-                                    <span v-if="event.赛事主办" class="inline-flex items-center gap-1 rounded-full bg-(--md-sys-color-surface-container-highest) px-2 py-0.5 text-[10px] font-medium text-(--md-sys-color-on-surface-variant)">
+                                    <span
+                                        v-if="event.赛事主办"
+                                        class="inline-flex items-center gap-1 rounded-full bg-(--md-sys-color-surface-container-highest) px-2 py-0.5 text-[10px] font-medium text-(--md-sys-color-on-surface-variant)"
+                                    >
                                         <UserGroupIcon class="h-3 w-3" />
                                         {{ event.赛事主办 }}
                                     </span>
-                                    <span v-if="event.比赛形式" class="inline-flex items-center gap-1 rounded-full bg-(--md-sys-color-surface-container-highest) px-2 py-0.5 text-[10px] font-medium text-(--md-sys-color-on-surface-variant)">
+                                    <span
+                                        v-if="event.比赛形式"
+                                        class="inline-flex items-center gap-1 rounded-full bg-(--md-sys-color-surface-container-highest) px-2 py-0.5 text-[10px] font-medium text-(--md-sys-color-on-surface-variant)"
+                                    >
                                         <ComputerDesktopIcon class="h-3 w-3" />
                                         {{ event.比赛形式 }}
                                     </span>
@@ -119,14 +160,22 @@
                     <div class="col-span-3">
                         <div class="space-y-1">
                             <div class="flex items-center gap-1.5">
-                                <CalendarIcon class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant)" />
-                                <span class="text-xs font-medium text-(--md-sys-color-on-surface)">
+                                <CalendarIcon
+                                    class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant)"
+                                />
+                                <span
+                                    class="text-xs font-medium text-(--md-sys-color-on-surface)"
+                                >
                                     {{ formatDate(event.比赛时间) }}
                                 </span>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <ClockIcon class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant)" />
-                                <span class="text-xs text-(--md-sys-color-on-surface-variant)">
+                                <ClockIcon
+                                    class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant)"
+                                />
+                                <span
+                                    class="text-xs text-(--md-sys-color-on-surface-variant)"
+                                >
                                     {{ formatDuration(event.比赛时间) }}
                                 </span>
                             </div>
@@ -140,8 +189,15 @@
                                 class="h-2 w-2 rounded-full"
                                 :class="statusColorClass(statusKey(event))"
                             />
-                            <span class="text-xs font-medium" :class="statusTextClass(statusKey(event))">
-                                {{ t(`ctf.status.${statusKey(event)}`) }}
+                            <span
+                                class="text-xs font-medium"
+                                :class="statusTextClass(statusKey(event))"
+                            >
+                                {{
+                                    t(
+                                        `pages.ctf.events.status.${statusKey(event)}`,
+                                    )
+                                }}
                             </span>
                         </div>
                     </div>
@@ -154,10 +210,12 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)"
-                                :title="t('ctf.table.join')"
+                                :title="t('pages.ctf.events.table.join')"
                             >
-                                <ArrowTopRightOnSquareIcon class="h-3.5 w-3.5" />
-                                {{ t("ctf.table.join") }}
+                                <ArrowTopRightOnSquareIcon
+                                    class="h-3.5 w-3.5"
+                                />
+                                {{ t("pages.ctf.events.table.join") }}
                             </a>
                         </div>
                     </div>
@@ -165,7 +223,9 @@
             </div>
 
             <!-- 表格底部 -->
-            <div class="border-t border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-high) px-4 py-3">
+            <div
+                class="border-t border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-high) px-4 py-3"
+            >
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <!-- 状态筛选 -->
@@ -178,16 +238,24 @@
                                 :class="statusFilterClass(status.key)"
                                 @click="toggleStatusFilter(status.key)"
                             >
-                                <div class="h-1.5 w-1.5 rounded-full" :class="statusDotClass(status.key)" />
+                                <div
+                                    class="h-1.5 w-1.5 rounded-full"
+                                    :class="statusDotClass(status.key)"
+                                />
                                 {{ status.label }}
-                                <span class="text-(--md-sys-color-on-surface-variant)">
+                                <span
+                                    class="text-(--md-sys-color-on-surface-variant)"
+                                >
                                     ({{ getStatusCount(status.key) }})
                                 </span>
                             </button>
                         </div>
                     </div>
                     <p class="text-xs text-(--md-sys-color-on-surface-variant)">
-                        <i18n-t keypath="ctf.sourceLabel" tag="span">
+                        <i18n-t
+                            keypath="pages.ctf.events.sourceLabel"
+                            tag="span"
+                        >
                             <template #source>
                                 <a
                                     href="https://github.com/ProbiusOfficial/Hello-CTFtime"
@@ -244,9 +312,9 @@ const activeStatusFilters = ref<Set<string>>(new Set(["oncoming", "running"]));
 
 // 状态筛选选项
 const statusFilters = computed(() => [
-    { key: "oncoming", label: t("ctf.status.oncoming") },
-    { key: "running", label: t("ctf.status.running") },
-    { key: "finished", label: t("ctf.status.finished") },
+    { key: "oncoming", label: t("pages.ctf.events.status.oncoming") },
+    { key: "running", label: t("pages.ctf.events.status.running") },
+    { key: "finished", label: t("pages.ctf.events.status.finished") },
 ]);
 
 // 获取状态分类
@@ -343,7 +411,7 @@ const filteredEvents = computed(() => {
     if (!events.value) return null;
 
     let filtered = events.value.filter((event) =>
-        activeStatusFilters.value.has(statusKey(event))
+        activeStatusFilters.value.has(statusKey(event)),
     );
 
     // 按状态排序：进行中 -> 未开始 -> 已结束
@@ -351,7 +419,12 @@ const filteredEvents = computed(() => {
         const statusA = statusKey(a);
         const statusB = statusKey(b);
 
-        const statusOrder = { running: 0, oncoming: 1, finished: 2, unknown: 3 };
+        const statusOrder = {
+            running: 0,
+            oncoming: 1,
+            finished: 2,
+            unknown: 3,
+        };
         return statusOrder[statusA] - statusOrder[statusB];
     });
 
@@ -388,15 +461,18 @@ const formatDuration = (timeRange: string) => {
         try {
             const startDate = new Date(startStr);
             const endDate = new Date(endStr);
-            const diffDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+            const diffDays = Math.ceil(
+                (endDate.getTime() - startDate.getTime()) /
+                    (1000 * 60 * 60 * 24),
+            );
 
-            if (diffDays === 1) return t("ctf.duration.day");
-            return t("ctf.duration.days", { days: diffDays });
+            if (diffDays === 1) return t("pages.ctf.events.duration.day");
+            return t("pages.ctf.events.duration.days", { days: diffDays });
         } catch {
-            return t("ctf.duration.days", { days: "?" });
+            return t("pages.ctf.events.duration.days", { days: "?" });
         }
     }
-    return t("ctf.duration.single");
+    return t("pages.ctf.events.duration.single");
 };
 
 // 图片加载错误处理

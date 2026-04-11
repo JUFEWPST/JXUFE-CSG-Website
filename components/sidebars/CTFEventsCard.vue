@@ -4,7 +4,7 @@
             <h3
                 class="text-base font-semibold text-(--md-sys-color-on-surface) sm:text-lg"
             >
-                {{ t("ctf.title") }}
+                {{ t("pages.ctf.events.title") }}
             </h3>
             <button
                 type="button"
@@ -15,7 +15,7 @@
                     class="h-4 w-4"
                     :class="{ 'animate-spin-slow': loading }"
                 />
-                <span v-if="!loading">{{ t("ctf.reload") }}</span>
+                <span v-if="!loading">{{ t("common.actions.reload") }}</span>
             </button>
         </div>
 
@@ -24,14 +24,14 @@
         </div>
 
         <div v-else-if="error" class="text-xs text-(--md-sys-color-error)">
-            {{ t("ctf.error") }}
+            {{ t("pages.ctf.events.error") }}
         </div>
 
         <div
             v-else-if="!events?.length"
             class="text-xs text-(--md-sys-color-on-surface-variant)"
         >
-            {{ t("ctf.empty") }}
+            {{ t("pages.ctf.events.empty") }}
         </div>
 
         <div v-else class="space-y-2">
@@ -49,7 +49,7 @@
                             :is="iconForStatus(statusKey(event))"
                             class="h-5 w-5 group-hover:text-(--md-sys-color-primary)"
                             :class="iconColorClass(statusKey(event))"
-                            :title="t(`ctf.status.${statusKey(event)}`)"
+                            :title="t(`pages.ctf.events.status.${statusKey(event)}`)"
                         />
                     </div>
 
@@ -74,7 +74,7 @@
         </div>
 
         <p class="mt-2 text-[11px] text-(--md-sys-color-on-surface-variant)">
-            <i18n-t keypath="ctf.sourceLabel" tag="span">
+            <i18n-t keypath="pages.ctf.events.sourceLabel" tag="span">
                 <template #source>
                     <a
                         href="https://github.com/ProbiusOfficial/Hello-CTFtime"
@@ -221,3 +221,4 @@ onMounted(() => {
     }
 }
 </style>
+

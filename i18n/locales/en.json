@@ -33,6 +33,59 @@
             "meta": {
                 "title": "CTF Events Calendar - Cybersecurity Guild of JXUFE",
                 "description": "Global CTF cybersecurity competition schedule with real-time event updates."
+            },
+            "events": {
+                "title": "Upcoming CTF Events",
+                "status": {
+                    "oncoming": "Not started",
+                    "running": "Ongoing",
+                    "finished": "Finished",
+                    "unknown": "Unknown status"
+                },
+                "loading": "Loading events data...",
+                "error": "Failed to load CTF events. Please try again later.",
+                "empty": "No events to display at the moment.",
+                "emptyHint": "No upcoming events. Please check back later.",
+                "fetchError": "Failed to fetch events data",
+                "sourceLabel": "Data source: {source}",
+                "filters": {
+                    "all": "All Events",
+                    "domestic": "Domestic Only",
+                    "foreign": "Foreign Only"
+                },
+                "view": {
+                    "calendar": "Month",
+                    "list": "List"
+                },
+                "summary": {
+                    "totalEvents": "Total {count} events",
+                    "monthEvents": "{count} events in this month",
+                    "monthEmpty": "No events in the selected month",
+                    "dayEventsShort": "{count} ev",
+                    "moreEvents": "+{count} more"
+                },
+                "sheet": {
+                    "daySummary": "{count} events on this day",
+                    "openList": "View in list",
+                    "empty": "No events on this day"
+                },
+                "duration": {
+                    "day": "1 day",
+                    "days": "{days} days",
+                    "hours": "{hours}h",
+                    "dayHours": "{days}d {hours}h",
+                    "single": "Single day"
+                },
+                "table": {
+                    "event": "Event",
+                    "time": "Time",
+                    "start": "Start",
+                    "end": "End",
+                    "duration": "Duration",
+                    "status": "Status",
+                    "action": "Action",
+                    "join": "Join"
+                }
             }
         },
         "privacy": {
@@ -226,7 +279,10 @@
             "paginationJumpToPage": "Jump to page {page}",
             "paginationGoButton": "GO",
             "prevContent": "Previous",
-            "nextContent": "Next"
+            "nextContent": "Next",
+            "reload": "Reload",
+            "showMore": "Show more",
+            "showLess": "Show less"
         },
         "direction": {
             "left1": "Left",
@@ -265,63 +321,6 @@
         "colorInputLabel": "Pick a custom theme color",
         "Themes": "Themes",
         "themeItem": "Theme color of {name}"
-    },
-    "ctf": {
-        "title": "Upcoming CTF Events",
-        "status": {
-            "oncoming": "Not started",
-            "running": "Ongoing",
-            "finished": "Finished",
-            "unknown": "Unknown status"
-        },
-        "loading": "Loading events data...",
-        "reload": "Reload",
-        "error": "Failed to load CTF events. Please try again later.",
-        "empty": "No events to display at the moment.",
-        "emptyHint": "No upcoming events. Please check back later.",
-        "fetchError": "Failed to fetch events data",
-        "showMore": "Show more",
-        "showLess": "Show less",
-        "sourceLabel": "Data source: {source}",
-        "filters": {
-            "all": "All Events",
-            "domestic": "Domestic Only",
-            "foreign": "Foreign Only"
-        },
-        "view": {
-            "calendar": "Month",
-            "list": "List"
-        },
-        "summary": {
-            "totalEvents": "Total {count} events",
-            "monthEvents": "{count} events in this month",
-            "monthEmpty": "No events in the selected month",
-            "dayEventsShort": "{count} ev",
-            "moreEvents": "+{count} more"
-        },
-        "sheet": {
-            "daySummary": "{count} events on this day",
-            "openList": "View in list",
-            "empty": "No events on this day"
-        },
-        "duration": {
-            "day": "1 day",
-            "days": "{days} days",
-            "hours": "{hours}h",
-            "dayHours": "{days}d {hours}h",
-            "single": "Single day"
-        },
-        "table": {
-            "event": "Event",
-            "time": "Time",
-            "start": "Start",
-            "end": "End",
-            "duration": "Duration",
-            "status": "Status",
-            "action": "Action",
-            "join": "Join",
-            "addToCalendar": "Add to calendar"
-        }
     },
     "calendar": {
         "monthSuffix": "",
