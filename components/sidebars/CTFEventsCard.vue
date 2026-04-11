@@ -49,7 +49,9 @@
                             :is="iconForStatus(statusKey(event))"
                             class="h-5 w-5 group-hover:text-(--md-sys-color-primary)"
                             :class="iconColorClass(statusKey(event))"
-                            :title="t(`pages.ctf.events.status.${statusKey(event)}`)"
+                            :title="
+                                t(`pages.ctf.events.status.${statusKey(event)}`)
+                            "
                         />
                     </div>
 
@@ -221,4 +223,3 @@ onMounted(() => {
     }
 }
 </style>
-

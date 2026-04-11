@@ -90,4 +90,3 @@ useHead(() => ({
     meta: [{ name: "description", content: t("pages.wiki.meta.description") }],
 }));
 </script>
-
