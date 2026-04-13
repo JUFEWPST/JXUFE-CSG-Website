@@ -111,27 +111,32 @@
         --md-sys-color-surface-container-highest: #3a3333;
     }
 
-    body {
+    html {
         @apply bg-(--md-sys-color-background) text-(--md-sys-color-on-background) transition-colors duration-300;
+        scrollbar-gutter: stable;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--md-sys-color-secondary) 100%, transparent) transparent;
     }
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
+@supports selector(::-webkit-scrollbar) {
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 
-::-webkit-scrollbar-track {
-    background: transparent;
-}
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
 
-::-webkit-scrollbar-thumb {
-    background: var(--md-sys-color-outline-variant);
-    border-radius: 4px;
-}
+    ::-webkit-scrollbar-thumb {
+        background: var(--md-sys-color-outline-variant);
+        border-radius: 4px;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--md-sys-color-outline);
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--md-sys-color-outline);
+    }
 }
 
 @font-face {
