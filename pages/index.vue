@@ -123,7 +123,6 @@
 
 <script setup lang="ts">
 import type { Archive } from "~/types/archives";
-import gsap from "gsap";
 
 const { t } = useI18n();
 
@@ -156,12 +155,17 @@ onMounted(() => {
         (entries) => {
             entries.forEach((e) => {
                 if (!e.isIntersecting) return;
-                gsap.from(e.target, {
-                    opacity: 0,
-                    y: 12,
-                    duration: 0.55,
-                    ease: "power2.out",
-                });
+                (e.target as HTMLElement).animate(
+                    [
+                        { opacity: 0, transform: "translateY(12px)" },
+                        { opacity: 1, transform: "translateY(0)" },
+                    ],
+                    {
+                        duration: 550,
+                        easing: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+                        fill: "backwards",
+                    },
+                );
                 io.unobserve(e.target);
             });
         },

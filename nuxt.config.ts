@@ -24,6 +24,9 @@ export default defineNuxtConfig({
             apiBase:
                 process.env.NUXT_PUBLIC_API_BASE ||
                 "https://csec.jxufe.edu.cn/nozomi",
+            siteUrl:
+                process.env.NUXT_PUBLIC_SITE_URL ||
+                "https://csec.jxufe.edu.cn",
             buildInfo: {
                 builder:
                     process.env.NUXT_PUBLIC_BUILD_INFO_BUILDER ||

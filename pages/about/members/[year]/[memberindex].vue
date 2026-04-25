@@ -91,7 +91,7 @@
                                 class="visual-col w-full h-auto md:h-full md:w-1/2 relative flex flex-col items-center justify-center py-2 px-2 sm:px-4"
                             >
                                 <div
-                                    class="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-104 lg:h-104 shadow-xl skew-x-0 md:-skew-x-6 transform transition-all duration-700 bg-(--md-sys-color-surface-container-high) border border-(--md-sys-color-outline-variant)"
+                                    class="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-104 lg:h-104 shadow-xl bg-(--md-sys-color-surface-container-high) border border-(--md-sys-color-outline-variant)"
                                 >
                                     <div
                                         class="absolute top-3 left-3 right-3 bottom-3 border border-(--md-sys-color-outline-variant)/50 z-20 pointer-events-none"
@@ -102,7 +102,7 @@
                                     <img
                                         v-if="member.avatar"
                                         :src="member.avatar"
-                                        class="w-full h-full object-cover skew-x-0 md:skew-x-6 scale-105"
+                                        class="w-full h-full object-cover scale-105"
                                         style="
                                             filter: grayscale(20%)
                                                 contrast(110%);
@@ -110,7 +110,7 @@
                                     />
                                     <div
                                         v-else
-                                        class="w-full h-full flex items-center justify-center text-8xl font-black text-(--md-sys-color-surface-variant) skew-x-0 md:skew-x-6 select-none"
+                                        class="w-full h-full flex items-center justify-center text-8xl font-black text-(--md-sys-color-surface-variant) select-none"
                                     >
                                         {{
                                             member.display
@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="absolute bottom-6 left-6 md:bottom-12 md:left-0 opacity-10 pointer-events-none select-none"
+                                    class="absolute bottom-6 left-6 md:bottom-12 md:left-0 opacity-5 pointer-events-none select-none"
                                 >
                                     <span
                                         class="block text-9xl font-black leading-none tracking-tighter text-(--md-sys-color-on-surface-variant)"
@@ -183,8 +183,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-// @ts-ignore
-import { gsap } from "gsap";
 import { membersArray } from "@/data/membersData";
 import AnzuButton from "@/components/AnzuButton.vue";
 
@@ -264,74 +262,103 @@ const navigate = (path: string, dir: "prev" | "next") => {
 
 // --- Animations ---
 
+const EASE_OUT = "cubic-bezier(0.215, 0.61, 0.355, 1)";
+const EASE_IN = "cubic-bezier(0.55, 0.085, 0.68, 0.53)";
+
 const onEnter = (el: Element, done: () => void) => {
     const isNext = direction.value === 1;
-    const frame = el.querySelector(".member-frame");
+    const frame = el.querySelector(".member-frame") as HTMLElement | null;
 
     if (!frame) {
         done();
         return;
     }
 
-    gsap.set(frame, {
-        opacity: 0,
-        xPercent: isNext ? 10 : -10,
-        scale: 0.995,
+    const frameAnim = frame.animate(
+        [
+            {
+                opacity: 0,
+                transform: `translateX(${isNext ? 10 : -10}%) scale(0.995)`,
+            },
+            { opacity: 1, transform: "translateX(0%) scale(1)" },
+        ],
+        {
+            duration: 650,
+            easing: EASE_OUT,
+            fill: "backwards",
+        },
+    );
+
+    const visual = el.querySelector(".visual-col") as HTMLElement | null;
+    if (visual) {
+        visual.animate(
+            [
+                {
+                    opacity: 0,
+                    transform: `translateX(${isNext ? 24 : -24}px)`,
+                },
+                { opacity: 1, transform: "translateX(0)" },
+            ],
+            {
+                duration: 500,
+                delay: 80,
+                easing: EASE_OUT,
+                fill: "backwards",
+            },
+        );
+    }
+
+    const staggerSelectors = [
+        ".meta-row",
+        ".name-title",
+        ".quote-text",
+        ".contact-line",
+    ];
+    staggerSelectors.forEach((sel, i) => {
+        const target = el.querySelector(sel) as HTMLElement | null;
+        if (!target) return;
+        target.animate(
+            [
+                { opacity: 0, transform: "translateY(10px)" },
+                { opacity: 1, transform: "translateY(0)" },
+            ],
+            {
+                duration: 450,
+                delay: 180 + i * 80,
+                easing: EASE_OUT,
+                fill: "backwards",
+            },
+        );
     });
 
-    const timeline = gsap.timeline({ onComplete: done });
-
-    timeline.to(frame, {
-        opacity: 1,
-        xPercent: 0,
-        scale: 1,
-        duration: 0.65,
-        ease: "power2.out",
-    });
-
-    // Content stagger animation (PV-like)
-    const visual = el.querySelector(".visual-col");
-    const info = el.querySelector(".info-col");
-    const meta = el.querySelector(".meta-row");
-    const title = el.querySelector(".name-title");
-    const quote = el.querySelector(".quote-text");
-    const contact = el.querySelector(".contact-line");
-
-    gsap.from(visual, {
-        opacity: 0,
-        x: isNext ? 24 : -24,
-        duration: 0.5,
-        delay: 0.08,
-        ease: "power2.out",
-    });
-
-    gsap.from([meta, title, quote, contact], {
-        opacity: 0,
-        y: 10,
-        duration: 0.45,
-        stagger: 0.08,
-        delay: 0.18,
-        ease: "power2.out",
-    });
+    frameAnim.finished.then(done).catch(done);
 };
 
 const onLeave = (el: Element, done: () => void) => {
     const isNext = direction.value === 1;
-    const frame = el.querySelector(".member-frame");
+    const frame = el.querySelector(".member-frame") as HTMLElement | null;
 
     if (!frame) {
         done();
         return;
     }
 
-    gsap.to(frame, {
-        opacity: 0,
-        xPercent: isNext ? -8 : 8,
-        scale: 0.992,
-        duration: 0.5,
-        ease: "power2.in",
-        onComplete: done,
-    });
+    const anim = frame.animate(
+        [
+            { opacity: 1, transform: "translateX(0%) scale(1)" },
+            {
+                opacity: 0,
+                transform: `translateX(${isNext ? -8 : 8}%) scale(0.992)`,
+            },
+        ],
+        {
+            duration: 500,
+            easing: EASE_IN,
+            fill: "forwards",
+        },
+    );
+
+    anim.finished.then(done).catch(done);
 };
 </script>
 

@@ -127,6 +127,14 @@ const tocItems = ref<TocItem[]>([]);
 
 const { t, locale } = useI18n();
 
+// Bot-only metadata SSR. Real users skip this entirely; only crawler UAs
+// trigger a CMS fetch on the server to inject rich meta into the HTML.
+await useBotMeta(
+    () =>
+        `/v1/contents/by-path/archive/${route.params.para}?i18n=${getApiLocale(locale.value)}`,
+    { schema: "Article", type: "article", locale: locale.value },
+);
+
 const { setHasContent, clearRightSidebar } = useRightSidebar();
 const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();

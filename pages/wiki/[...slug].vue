@@ -218,6 +218,20 @@ const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 const { setPageTitle: setSitePageTitle } = usePageTitle();
 const { t, locale } = useI18n();
 
+await useBotMeta(
+    () => {
+        const slugParam = route.params.slug;
+        const segs = Array.isArray(slugParam)
+            ? slugParam
+            : slugParam
+              ? [slugParam as string]
+              : [];
+        if (!segs.length) return null;
+        return `/v1/contents/by-path/wiki/${segs.join("/")}?i18n=${getApiLocale(locale.value)}`;
+    },
+    { schema: "TechArticle", type: "article", locale: locale.value },
+);
+
 const slug = computed(() => {
     if (Array.isArray(route.params.slug)) {
         return route.params.slug.join("/");
