@@ -28,7 +28,6 @@ const { setPageTitle } = usePageTitle();
 setPageTitle("pages.about.leaders.title");
 
 useHead(() => ({
-    title: t("pages.about.leaders.meta.title"),
     meta: [
         {
             name: "description",

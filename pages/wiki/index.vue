@@ -69,7 +69,7 @@ const { setPageTitle } = usePageTitle();
 const { t } = useI18n();
 const router = useRouter();
 
-setPageTitle("pages.wiki.title");
+setPageTitle("pages.wiki.title", "", "nav.wiki");
 
 const { data, get, loading, error } = useApi<WikiTreeNode>();
 
@@ -86,7 +86,6 @@ onMounted(() => {
 });
 
 useHead(() => ({
-    title: t("pages.wiki.meta.title"),
     meta: [{ name: "description", content: t("pages.wiki.meta.description") }],
 }));
 </script>

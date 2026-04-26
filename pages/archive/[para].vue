@@ -132,7 +132,13 @@ const { t, locale } = useI18n();
 await useBotMeta(
     () =>
         `/v1/contents/by-path/archive/${route.params.para}?i18n=${getApiLocale(locale.value)}`,
-    { schema: "Article", type: "article", locale: locale.value },
+    {
+        schema: "Article",
+        type: "article",
+        locale: locale.value,
+        titleFormatter: (title) =>
+            `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
+    },
 );
 
 const { setHasContent, clearRightSidebar } = useRightSidebar();
@@ -147,13 +153,8 @@ const currentSlug = computed(() => String(para.value ?? ""));
 const { prev: archivePrev, next: archiveNext } =
     useArchivePrevNext(currentSlug);
 
-const pageTitle = computed(() => {
-    const title = archive.value?.data?.title || archive.value?.title;
-    return title
-        ? `${title} - 江西财经大学网络安全协会
-  `
-        : "加载中...";
-});
+const { setPageTitle } = usePageTitle();
+
 function handleTocUpdate(items: TocItem[]) {
     tocItems.value = items;
     setHasContent(items.length > 0);
@@ -166,11 +167,19 @@ function handleTocUpdate(items: TocItem[]) {
         },
     });
 }
-useHead({
-    title: pageTitle,
-});
-const { setPageTitle } = usePageTitle();
-setPageTitle("");
+
+watch(
+    () => archive.value,
+    (newArchive) => {
+        if (newArchive) {
+            const title = newArchive.data?.title || newArchive.title;
+            if (title) {
+                setPageTitle("", title, "nav.archive");
+            }
+        }
+    },
+    { immediate: true },
+);
 
 const currentContentLang = ref(getApiLocale(locale.value));
 

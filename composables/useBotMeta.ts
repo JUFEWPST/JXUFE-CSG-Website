@@ -93,6 +93,7 @@ export interface UseBotMetaOptions {
     type?: "website" | "article";
     siteName?: string;
     locale?: string;
+    titleFormatter?: (title: string) => string;
 }
 
 export async function useBotMeta(
@@ -134,7 +135,10 @@ export async function useBotMeta(
 
     if (!payload) return;
 
-    const title = payload.data?.title || payload.title || "";
+    const rawTitle = payload.data?.title || payload.title || "";
+    const title = options.titleFormatter
+        ? options.titleFormatter(rawTitle)
+        : rawTitle;
     const description = buildExcerpt(
         payload.data?.body || payload.data?.content || "",
     );

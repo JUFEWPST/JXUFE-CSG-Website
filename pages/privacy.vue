@@ -7,7 +7,6 @@ const { setPageTitle } = usePageTitle();
 setPageTitle("pages.privacy.title");
 
 useHead(() => ({
-    title: t("pages.privacy.meta.title"),
     meta: [
         {
             name: "description",

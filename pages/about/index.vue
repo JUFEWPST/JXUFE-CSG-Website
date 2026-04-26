@@ -24,7 +24,6 @@ const quotes = [
 ];
 
 useHead(() => ({
-    title: t("pages.about.index.meta.title"),
     meta: [
         {
             name: "description",

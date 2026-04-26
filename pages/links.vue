@@ -77,7 +77,6 @@ const { setPageTitle } = usePageTitle();
 setPageTitle("pages.links.title");
 
 useHead(() => ({
-    title: t("pages.links.meta.title"),
     meta: [
         { name: "description", content: t("pages.links.meta.description") },
         { name: "keywords", content: t("pages.links.meta.keywords") },

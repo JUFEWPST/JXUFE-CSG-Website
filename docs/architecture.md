@@ -361,3 +361,50 @@ onUnmounted(() => {
 ```
 
 外层添加了 `lg:hidden`，因此该区域在大屏幕上不会出现，左右两列的功能不受影响。
+
+---
+
+## 页面标题管理
+
+全站页面标题（`<title>`）由 `usePageTitle` 统一管理，禁止在页面组件中通过 `useHead` 直接硬编码 `title`。
+
+### 1. 开发普通页面
+
+在普通页面（如时间线、成员页）中，使用 `setPageTitle` 注册当前页面的标题名。
+
+```ts
+const { setPageTitle } = usePageTitle();
+
+// 建议：直接传入 i18n key，由组合式函数内部处理多语言响应
+setPageTitle("pages.timeline.title");
+```
+
+### 2. 开发带有特定版块后缀的页面
+
+如果你正在开发属于 **Archive（归档）** 或 **Wiki** 范畴的动态页面，需要传入版块后缀的 i18n key。
+
+```ts
+// 参数 1: i18n key (若不使用则填空字符串)
+// 参数 2: 动态拉取的 Raw string (如文章标题)
+// 参数 3: 版块后缀的 i18n key (如 "nav.archive")
+setPageTitle("", content.title, "nav.archive");
+```
+
+### 3. 处理搜索引擎爬虫 (SSR)
+
+由于爬虫不会执行 JS 修改标题，必须在页面 `script setup` 顶层配合 `useBotMeta` 使用。为了保证 SEO 效果与用户看到的标题一致，**必须**手动提供 `titleFormatter`：
+
+```ts
+await useBotMeta(() => `API_URL`, {
+    // ... 其他配置
+    titleFormatter: (title) =>
+        `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
+});
+```
+
+### 4. 标题组装规范
+
+`layouts/default.vue` 会根据配置自动按照以下规则拼装标题，**开发时无需手动拼接字符串**：
+
+- **普通页面**：`标题 - 协会全称` (如：`时间线 - 江西财经大学网络安全协会`)
+- **带版块页面**：`标题 - 协会全称 [空格] 版块名` (如：`2026新春 - 江西财经大学网络安全协会 归档`)

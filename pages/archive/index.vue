@@ -63,10 +63,9 @@ import { usePageTitle } from "@/composables/usePageTitle";
 const { t } = useI18n();
 const { setPageTitle } = usePageTitle();
 
-setPageTitle("pages.archive.title");
+setPageTitle("pages.archive.title", "", "nav.archive");
 
 useHead(() => ({
-    title: t("pages.archive.meta.title"),
     meta: [
         { name: "description", content: t("pages.archive.meta.description") },
         { name: "keywords", content: t("pages.archive.meta.keywords") },
@@ -92,8 +91,8 @@ const loadArchives = async (page: number = 1) => {
     );
     if (archives.value) {
         if (meta.value) {
-            totalPages.value = meta.value.total_pages;
-            currentPage.value = meta.value.current_page;
+            totalPages.value = meta.value.total_pages || 1;
+            currentPage.value = meta.value.current_page || 1;
         }
     } else {
         console.error("加载失败", error.value);

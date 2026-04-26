@@ -265,7 +265,9 @@
                                     :style="desktopCalendarSpacerStyle(week)"
                                 />
                                 <button
-                                    v-if="week.hiddenCounts[dayIndex] > 0"
+                                    v-if="
+                                        (week.hiddenCounts?.[dayIndex] || 0) > 0
+                                    "
                                     type="button"
                                     class="text-xs font-medium text-(--md-sys-color-primary) underline-offset-4 hover:underline"
                                     @click="openListForDay(cell.date)"
@@ -274,9 +276,10 @@
                                         t(
                                             "pages.ctf.events.summary.moreEvents",
                                             {
-                                                count: week.hiddenCounts[
-                                                    dayIndex
-                                                ],
+                                                count:
+                                                    week.hiddenCounts?.[
+                                                        dayIndex
+                                                    ] || 0,
                                             },
                                         )
                                     }}
@@ -446,7 +449,7 @@
                                             >
                                                 <AnzuButton
                                                     variant="filled"
-                                                    class="h-9! min-w-[6rem]! shrink-0 whitespace-nowrap px-4! text-sm!"
+                                                    class="h-9! min-w-24! shrink-0 whitespace-nowrap px-4! text-sm!"
                                                     :href="event.比赛链接"
                                                     target="_blank"
                                                 >
@@ -573,7 +576,7 @@
                                 >
                                     <AnzuButton
                                         variant="filled"
-                                        class="h-10! min-w-[6rem]! shrink-0 whitespace-nowrap px-4!"
+                                        class="h-10! min-w-24! shrink-0 whitespace-nowrap px-4!"
                                         :href="event.比赛链接"
                                         target="_blank"
                                     >
@@ -751,7 +754,7 @@
                         <div class="mt-4 flex items-center justify-end gap-2">
                             <AnzuButton
                                 variant="filled"
-                                class="h-10! min-w-[6rem]! shrink-0 whitespace-nowrap px-4!"
+                                class="h-10! min-w-24! shrink-0 whitespace-nowrap px-4!"
                                 :href="event.比赛链接"
                                 target="_blank"
                             >
@@ -882,7 +885,6 @@ const monthCursor = ref(
 
 setPageTitle("pages.ctf.title");
 useHead(() => ({
-    title: t("pages.ctf.meta.title"),
     meta: [{ name: "description", content: t("pages.ctf.meta.description") }],
 }));
 
@@ -940,8 +942,13 @@ const normalizeDomesticDateText = (value?: string) => {
         /^(\d{4})[年/-](\d{1,2})[月/-](\d{1,2})日?\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/,
     );
     if (!match) return trimmed;
-    const [, year, month, day, hour, minute, second] = match;
-    return `${year}-${pad(month)}-${pad(day)} ${pad(hour)}:${minute}${second ? `:${second}` : ""}`;
+    const year = match[1]!;
+    const month = match[2]!;
+    const day = match[3]!;
+    const hour = match[4]!;
+    const minute = match[5]!;
+    const second = match[6];
+    return `${year}-${pad(month)}-${pad(day)} ${pad(hour)}:${minute}${second ? `:${pad(second)}` : ""}`;
 };
 
 const normalizeDateInput = (value: string) =>
@@ -1442,7 +1449,7 @@ const normalizeDomesticEvents = (payload: unknown): RawCTFEvent[] => {
                 比赛状态: event.status?.trim(),
                 比赛详情: event.readmore?.trim(),
                 地区: "domestic" as EventRegion,
-            };
+            } as RawCTFEvent;
         })
         .filter((event): event is RawCTFEvent => event !== null);
 };

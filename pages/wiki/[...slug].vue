@@ -229,7 +229,13 @@ await useBotMeta(
         if (!segs.length) return null;
         return `/v1/contents/by-path/wiki/${segs.join("/")}?i18n=${getApiLocale(locale.value)}`;
     },
-    { schema: "TechArticle", type: "article", locale: locale.value },
+    {
+        schema: "TechArticle",
+        type: "article",
+        locale: locale.value,
+        titleFormatter: (title) =>
+            `${title} - ${t("meta.fullName")} ${t("nav.wiki")}`,
+    },
 );
 
 const slug = computed(() => {
@@ -430,11 +436,17 @@ const showError = computed(
     () => !isPageLoading.value && !!currentPageError.value,
 );
 
-useHead(() => ({
-    title: content.value?.data?.title
-        ? `${pageTitle.value} - ${t("meta.fullName")}Wiki`
-        : t("pages.wiki.meta.title"),
-}));
+watch(
+    [() => content.value, () => treeNode.value, () => locale.value],
+    () => {
+        const title =
+            content.value?.data?.title ||
+            treeNode.value?.title ||
+            t("pages.wiki.title");
+        setSitePageTitle("", title, "nav.wiki");
+    },
+    { immediate: true },
+);
 
 function handleTocUpdate(items: TocItem[]) {
     tocItems.value = items;
@@ -497,12 +509,10 @@ const fetchContent = async () => {
 
 const updateLayout = () => {
     if (isFolderView.value) {
-        // Re-enable page title for folder views
-        setSitePageTitle("pages.wiki.title");
+        setSitePageTitle("", pageTitle.value, "nav.wiki");
     } else {
         registerWikiToc();
-        // Hide Main Page Title when reading content (User Request)
-        setSitePageTitle("");
+        setSitePageTitle("", pageTitle.value, "nav.wiki");
     }
 };
 

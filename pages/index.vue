@@ -127,7 +127,6 @@ import type { Archive } from "~/types/archives";
 const { t } = useI18n();
 
 useHead(() => ({
-    title: t("pages.home.meta.title"),
     meta: [{ name: "description", content: t("pages.home.meta.description") }],
 }));
 

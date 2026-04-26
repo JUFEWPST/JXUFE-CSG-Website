@@ -17,9 +17,15 @@ import WikiTree from "@/components/sidebars/WikiTree.vue";
 
 const { t } = useI18n();
 const { notificationRef } = useNotification();
-const { titleKey } = usePageTitle();
+const { titleKey, displayTitle, displaySuffix } = usePageTitle();
 
-const hasPageTitle = computed(() => !!titleKey.value);
+useHead(() => ({
+    title: displayTitle.value
+        ? `${displayTitle.value} - ${t("meta.fullName")}${displaySuffix.value}`
+        : t("pages.home.meta.title"),
+}));
+
+const hasPageTitle = computed(() => !!titleKey.value || !!displayTitle.value);
 
 const {
     leftCards,
