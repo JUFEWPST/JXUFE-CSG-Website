@@ -12,6 +12,7 @@
         "links": "関連リンク",
         "timeline": "タイムライン",
         "ctf": "CTF イベント",
+        "volunteer": "スコア検索",
         "aboutChildren": {
             "index": "ギルド概要",
             "leaders": "歴代責任者",
@@ -28,7 +29,134 @@
                 "description": "江西財経大学サイバーセキュリティギルドの発展の歴史と重要なマイルストーンを記録します。"
             }
         },
+        "volunteer": {
+            "title": "スコア検索",
+            "meta": {
+                "title": "スコア検索 - 江西財経大学サイバーセキュリティギルド",
+                "description": "江西財経大学の年度別・省別・専攻別の入学スコアを検索し、志望校選びの参考にできます。"
+            },
+            "loading": "データを読み込んでいます...",
+            "error": "設定データの読み込みに失敗しました。後でもう一度お試しください。",
+            "fetchError": "データの取得に失敗しました",
+            "empty": "データが見つかりません",
+            "emptyHint": "この条件では入学データがありません。条件を変更してお試しください。",
+            "selectHint": "年度と省を選択してから検索ボタンを押してください",
+            "summary": "全 {count} 件",
+            "scoreHint": "あなたの点数：{score} 点",
+            "rankingHint": "あなたの順位：第 {ranking} 位",
+            "filters": {
+                "year": "年度",
+                "province": "省",
+                "category": "科目",
+                "batch": "入学区分",
+                "yourScore": "あなたの点数",
+                "yourRanking": "あなたの順位",
+                "query": "検索",
+                "reset": "リセット",
+                "dataSource": "データソース"
+            },
+            "placeholder": {
+                "year": "年度を選択",
+                "province": "省を選択",
+                "category": "科目を選択（任意）",
+                "score": "点数を入力（任意）",
+                "ranking": "順位を入力（任意）"
+            },
+            "dataSource": {
+                "zsjy": "入試情報",
+                "ranking": "ギルド拡張",
+                "zsjyDescription": "江西財経大学の公式入試情報サイトの公開データに基づき、専攻別の最高点・最低点のみを表示します（順位情報なし）。",
+                "rankingDescription": "サイバーセキュリティギルドが省順位データ（最高点順位・最低点順位）を独自に補完したものです。順位は参考値としてご利用ください。"
+            },
+            "table": {
+                "major": "専攻名",
+                "maxScore": "最高点",
+                "minScore": "最低点",
+                "maxRanking": "最高順位",
+                "minRanking": "最低順位",
+                "match": "マッチ",
+                "category": "科目",
+                "batch": "入学区分",
+                "notes": "備考"
+            },
+            "status": {
+                "safe": "安全",
+                "match": "適合",
+                "reach": "挑戦可",
+                "far": "距離大"
+            },
+            "sourceAlert": {
+                "title": "データソースについて"
+            }
+        },
         "privacy": {
+            "volunteer": {
+                "title": "スコア検索",
+                "meta": {
+                    "title": "スコア検索 - 江西財経大学サイバーセキュリティギルド",
+                    "description": "江西財経大学の年度別・省別・専攻別の入学スコアを検索し、志望校選びの参考にできます。"
+                },
+                "loading": "データを読み込んでいます...",
+                "error": "設定データの読み込みに失敗しました。後でもう一度お試しください。",
+                "fetchError": "データの取得に失敗しました",
+                "empty": "データが見つかりません",
+                "emptyHint": "この条件では入学データがありません。条件を変更してお試しください。",
+                "selectHint": "年度と省を選択してから検索ボタンを押してください",
+                "summary": "全 {count} 件",
+                "scoreHint": "あなたの点数：{score} 点",
+                "rankingHint": "あなたの順位：第 {ranking} 位",
+                "filters": {
+                    "year": "年度",
+                    "province": "省",
+                    "category": "科目",
+                    "batch": "入学区分",
+                    "planType": "計画種別",
+                    "yourScore": "あなたの点数",
+                    "yourRanking": "あなたの順位",
+                    "query": "検索",
+                    "reset": "リセット",
+                    "dataSource": "データソース"
+                },
+                "placeholder": {
+                    "year": "年度を選択",
+                    "province": "省を選択",
+                    "category": "科目を選択（任意）",
+                    "planType": "計画種別を選択（任意）",
+                    "score": "点数を入力（任意）",
+                    "ranking": "順位を入力（任意）"
+                },
+                "dataSource": {
+                    "zsjy": "入学情報",
+                    "ranking": "ギルド拡張",
+                    "plan": "募集計画",
+                    "zsjyDescription": "江西財経大学の公式入試情報サイトからの公開データで、専攻別の最高点と最低点のみが含まれ、順位情報はありません。",
+                    "rankingDescription": "サイバーセキュリティギルドが省順位情報（最高点順位と最低点順位）を補完しました。順位データは参考値です。",
+                    "planDescription": "江西財経大学の公式入試情報サイトからの公開データで、各省の専攻別の計画募集人数を表示します。"
+                },
+                "table": {
+                    "major": "専攻名",
+                    "maxScore": "最高点",
+                    "minScore": "最低点",
+                    "maxRanking": "最高順位",
+                    "minRanking": "最低順位",
+                    "match": "適合",
+                    "category": "科目",
+                    "batch": "入学区分",
+                    "notes": "備考",
+                    "planCount": "募集人数",
+                    "planType": "計画種別",
+                    "majorCode": "専攻コード"
+                },
+                "status": {
+                    "safe": "安定",
+                    "match": "適合",
+                    "reach": "挑戦可",
+                    "far": "差大"
+                },
+                "sourceAlert": {
+                    "title": "データソースについて"
+                }
+            },
             "title": "プライバシーポリシー",
             "meta": {
                 "title": "プライバシーポリシー - 江西財経大学サイバーセキュリティギルド",

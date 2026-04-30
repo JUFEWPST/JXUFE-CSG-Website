@@ -12,6 +12,7 @@
         "links": "Useful Links",
         "timeline": "Timeline",
         "ctf": "CTF Events",
+        "volunteer": "Score Lookup",
         "aboutChildren": {
             "index": "Guild Overview",
             "leaders": "Past Leaders",
@@ -88,7 +89,109 @@
                 }
             }
         },
+        "volunteer": {
+            "title": "Score Lookup",
+            "meta": {
+                "title": "Score Lookup - Cybersecurity Guild of JXUFE",
+                "description": "Look up historical admission scores by province and major for JXUFE, providing reference for college applications."
+            },
+            "loading": "Loading data...",
+            "error": "Failed to load configuration. Please try again later.",
+            "fetchError": "Failed to fetch score data",
+            "empty": "No data found",
+            "emptyHint": "No admission data for the selected filters. Try adjusting your selection.",
+            "selectHint": "Select year and province, then click Search",
+            "summary": "Total {count} records",
+            "scoreHint": "Your score: {score}",
+            "rankingHint": "Your rank: #{ranking}",
+            "filters": {
+                "year": "Year",
+                "province": "Province",
+                "category": "Category",
+                "batch": "Batch",
+                "planType": "Plan Type",
+                "yourScore": "Your Score",
+                "yourRanking": "Your Rank",
+                "query": "Search",
+                "reset": "Reset",
+                "dataSource": "Data Source"
+            },
+            "placeholder": {
+                "year": "Select year",
+                "province": "Select province",
+                "category": "Select category (optional)",
+                "planType": "Select plan type (optional)",
+                "score": "Enter score (optional)",
+                "ranking": "Enter rank (optional)"
+            },
+            "dataSource": {
+                "zsjy": "Admissions",
+                "ranking": "Guild Extended",
+                "plan": "Admission Plan",
+                "zsjyDescription": "Data sourced from JXUFE's official undergraduate admissions website, containing only max/min admission scores without ranking information.",
+                "rankingDescription": "Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.",
+                "planDescription": "Data sourced from JXUFE's official undergraduate admissions website, showing the planned enrollment numbers for each major by province."
+            },
+            "table": {
+                "major": "Major",
+                "maxScore": "Max Score",
+                "minScore": "Min Score",
+                "maxRanking": "Max Rank",
+                "minRanking": "Min Rank",
+                "match": "Match",
+                "category": "Category",
+                "batch": "Batch",
+                "notes": "Notes",
+                "planCount": "Plan Count",
+                "planType": "Plan Type",
+                "majorCode": "Major Code"
+            },
+            "status": {
+                "safe": "Safe",
+                "match": "Match",
+                "reach": "Reach",
+                "far": "Far"
+            },
+            "sourceAlert": {
+                "title": "Data Source"
+            }
+        },
         "privacy": {
+            "volunteer": {
+                "title": "Score Lookup",
+                "meta": {
+                    "title": "Score Lookup - Cybersecurity Guild of JXUFE",
+                    "description": "Look up historical admission scores by province and major for JXUFE, providing reference for college applications."
+                },
+                "loading": "Loading data...",
+                "error": "Failed to load configuration. Please try again later.",
+                "fetchError": "Failed to fetch score data",
+                "empty": "No data found",
+                "emptyHint": "No admission data for the selected filters. Try adjusting your selection.",
+                "selectHint": "Select year and province, then click Search",
+                "summary": "Total {count} records",
+                "filters": {
+                    "year": "Year",
+                    "province": "Province",
+                    "category": "Category",
+                    "batch": "Batch",
+                    "query": "Search",
+                    "reset": "Reset"
+                },
+                "placeholder": {
+                    "year": "Select year",
+                    "province": "Select province",
+                    "category": "Select category (optional)"
+                },
+                "table": {
+                    "major": "Major",
+                    "maxScore": "Max Score",
+                    "minScore": "Min Score",
+                    "category": "Category",
+                    "batch": "Batch",
+                    "notes": "Notes"
+                }
+            },
             "title": "Privacy Policy",
             "meta": {
                 "title": "Privacy Policy - Cybersecurity Guild of JXUFE",

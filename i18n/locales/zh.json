@@ -18,7 +18,8 @@
             "members": "历届成员",
             "excellent": "优秀成员",
             "teacher": "社团指导老师"
-        }
+        },
+        "volunteer": "志愿查询"
     },
     "pages": {
         "timeline": {
@@ -86,6 +87,73 @@
                     "action": "操作",
                     "join": "参加"
                 }
+            }
+        },
+        "volunteer": {
+            "title": "志愿查询",
+            "meta": {
+                "title": "志愿查询 - 江西财经大学网络安全协会",
+                "description": "查询江西财经大学历年各省各专业的招生录取分数，为志愿填报提供参考。"
+            },
+            "loading": "正在加载数据...",
+            "error": "配置数据加载失败，请稍后重试",
+            "fetchError": "查询数据失败",
+            "empty": "未查询到相关数据",
+            "emptyHint": "该筛选条件下暂无录取数据，请尝试调整筛选条件",
+            "selectHint": "请选择年份和省份后点击查询",
+            "summary": "共 {count} 条记录",
+            "scoreHint": "你的分数：{score} 分",
+            "rankingHint": "你的位次：第 {ranking} 名",
+            "filters": {
+                "year": "年份",
+                "province": "省份",
+                "category": "科类",
+                "batch": "批次",
+                "planType": "计划类型",
+                "yourScore": "你的分数",
+                "yourRanking": "你的位次",
+                "query": "查询",
+                "reset": "重置",
+                "dataSource": "数据来源"
+            },
+            "placeholder": {
+                "year": "选择年份",
+                "province": "选择省份",
+                "category": "选择科类（可选）",
+                "planType": "选择计划类型（可选）",
+                "score": "输入分数（可选）",
+                "ranking": "输入位次（可选）"
+            },
+            "dataSource": {
+                "zsjy": "招生网",
+                "ranking": "协会补充",
+                "plan": "招生计划",
+                "zsjyDescription": "数据来自江西财经大学本科招生网公开数据，仅包含专业录取最高分与最低分，无排名信息。",
+                "rankingDescription": "数据由协会自行补齐了省排名信息（最高分位次与最低分位次），排名数据仅供参考。",
+                "planDescription": "数据来自江西财经大学本科招生网公开的招生计划数，展示各专业在各省的计划录取人数。"
+            },
+            "table": {
+                "major": "专业名称",
+                "maxScore": "最高分",
+                "minScore": "最低分",
+                "maxRanking": "最高分位次",
+                "minRanking": "最低分位次",
+                "match": "匹配",
+                "category": "科类",
+                "batch": "批次",
+                "notes": "备注",
+                "planCount": "计划数",
+                "planType": "计划类型",
+                "majorCode": "专业代码"
+            },
+            "status": {
+                "safe": "稳妥",
+                "match": "匹配",
+                "reach": "可冲",
+                "far": "差距较大"
+            },
+            "sourceAlert": {
+                "title": "数据来源说明"
             }
         },
         "privacy": {
