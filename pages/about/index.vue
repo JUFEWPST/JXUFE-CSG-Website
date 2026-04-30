@@ -6,16 +6,12 @@ import { teacherData } from "~/data/teacherData";
 import { honorsData, getLevelColor, getYearColor } from "~/data/honors";
 import { membersArray } from "~/data/membersData";
 import TeacherCard from "~/components/TeacherCard.vue";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 
 const isMounted = ref(false);
 const currentQuote = ref(0);
 let quoteTimer: ReturnType<typeof setInterval> | null = null;
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.about.index.title");
-
 const quotes = [
     "太好听了吧！你打网安真的好好听啊，简直就是天籁！我刚才，听到你打网安了。我们以后一起打网安好不好？一起做学园偶像！",
     "放弃的话就到此为止了，但是，你可以改变命运()",
@@ -23,15 +19,12 @@ const quotes = [
     "协会可能会倒闭，但一定不会变质！（笑",
 ];
 
-useHead(() => ({
-    meta: [
-        {
-            name: "description",
-            content: t("pages.about.index.meta.description"),
-        },
-        { name: "keywords", content: t("pages.about.index.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.about.index.title",
+    descriptionKey: "pages.about.index.meta.description",
+    keywords: t("pages.about.index.meta.keywords"),
+    canonicalPath: "/about",
+});
 
 onMounted(() => {
     isMounted.value = true;

@@ -27,22 +27,14 @@
 <script setup lang="ts">
 import MemberHonorCard from "~/components/MemberHonorCard.vue";
 import { excellentData } from "~/data/excellentData";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.about.excellent.title");
-
-useHead(() => ({
-    title: t("pages.about.excellent.meta.title"),
-    meta: [
-        {
-            name: "description",
-            content: t("pages.about.excellent.meta.description"),
-        },
-        { name: "keywords", content: t("pages.about.excellent.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.about.excellent.title",
+    descriptionKey: "pages.about.excellent.meta.description",
+    keywords: t("pages.about.excellent.meta.keywords"),
+    canonicalPath: "/about/excellent",
+});
 </script>
 <style scoped>
 .grid-cols-auto-fill {

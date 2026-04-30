@@ -792,7 +792,7 @@ import AnzuButton from "@/components/AnzuButton.vue";
 import AnzuButtonGroup from "@/components/AnzuButtonGroup.vue";
 import AnzuPagination from "@/components/AnzuPagination.vue";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 
 definePageMeta({
     alias: "/ctf",
@@ -872,7 +872,6 @@ const DOMESTIC_SOURCE_URL =
 const route = useRoute();
 const router = useRouter();
 const { locale, t } = useI18n();
-const { setPageTitle } = usePageTitle();
 const events = ref<RawCTFEvent[]>([]);
 const loading = ref(false);
 const error = ref<string | null>(null);
@@ -883,10 +882,11 @@ const monthCursor = ref(
     new Date(new Date().getFullYear(), new Date().getMonth(), 1),
 );
 
-setPageTitle("pages.ctf.title");
-useHead(() => ({
-    meta: [{ name: "description", content: t("pages.ctf.meta.description") }],
-}));
+usePageMeta({
+    titleKey: "pages.ctf.title",
+    descriptionKey: "pages.ctf.meta.description",
+    canonicalPath: "/ctf-event",
+});
 
 const displayLocale = computed(() =>
     locale.value.toLowerCase().startsWith("en")

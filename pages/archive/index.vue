@@ -59,18 +59,15 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "#imports";
 import { useApi } from "~/composables/useapi";
 import type { Archive } from "~/types/archives";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.archive.title", "", "nav.archive");
-
-useHead(() => ({
-    meta: [
-        { name: "description", content: t("pages.archive.meta.description") },
-        { name: "keywords", content: t("pages.archive.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.archive.title",
+    descriptionKey: "pages.archive.meta.description",
+    suffixKey: "nav.archive",
+    keywords: t("pages.archive.meta.keywords"),
+    canonicalPath: "/archive",
+});
 
 const route = useRoute();
 const router = useRouter();

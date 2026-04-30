@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 import {
     BookOpenIcon,
     FolderIcon,
@@ -64,12 +64,8 @@ import type { WikiTreeNode } from "~/types/wiki";
 import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
 import WikiIndexTreeItem from "~/components/WikiIndexTreeItem.vue";
 
-const { setPageTitle } = usePageTitle();
-
 const { t } = useI18n();
 const router = useRouter();
-
-setPageTitle("pages.wiki.title", "", "nav.wiki");
 
 const { data, get, loading, error } = useApi<WikiTreeNode>();
 
@@ -85,7 +81,10 @@ onMounted(() => {
     get("/v1/tree?root=wiki&depth=0");
 });
 
-useHead(() => ({
-    meta: [{ name: "description", content: t("pages.wiki.meta.description") }],
-}));
+usePageMeta({
+    titleKey: "pages.wiki.title",
+    descriptionKey: "pages.wiki.meta.description",
+    suffixKey: "nav.wiki",
+    canonicalPath: "/wiki",
+});
 </script>

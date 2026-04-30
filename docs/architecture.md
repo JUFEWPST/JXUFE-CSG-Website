@@ -364,47 +364,78 @@ onUnmounted(() => {
 
 ---
 
-## 页面标题管理
+## 页面 SEO
 
-全站页面标题（`<title>`）由 `usePageTitle` 统一管理，禁止在页面组件中通过 `useHead` 直接硬编码 `title`。
+全站 SEO 元数据（`<title>`、OG、Twitter、canonical、JSON-LD 等）由两套组合式函数分管，**禁止在页面组件中直接调用 `useHead` / `useSeoMeta` / `setPageTitle` 拼凑标签**。
 
-### 1. 开发普通页面
+| 组合式函数 | 适用场景 | 覆盖范围 |
+|-----------|---------|---------|
+| `usePageMeta` | 所有静态页面 | `<title>` + OG + Twitter + canonical + keywords + robots + JSON-LD |
+| `useBotMeta` | CMS 动态页面（`archive/[para]`、`wiki/[...slug]`） | 同上，但仅在服务端对爬虫 UA 渲染 |
 
-在普通页面（如时间线、成员页）中，使用 `setPageTitle` 注册当前页面的标题名。
+两者互斥，一个页面只调用其中一种。
 
-```ts
-const { setPageTitle } = usePageTitle();
+---
 
-// 建议：直接传入 i18n key，由组合式函数内部处理多语言响应
-setPageTitle("pages.timeline.title");
-```
+### `usePageMeta`：静态页面
 
-### 2. 开发带有特定版块后缀的页面
-
-如果你正在开发属于 **Archive（归档）** 或 **Wiki** 范畴的动态页面，需要传入版块后缀的 i18n key。
+一行调用覆盖全部 SEO 标签，内部自动处理标题注册、OG/Twitter 社交分享、结构化数据等：
 
 ```ts
-// 参数 1: i18n key (若不使用则填空字符串)
-// 参数 2: 动态拉取的 Raw string (如文章标题)
-// 参数 3: 版块后缀的 i18n key (如 "nav.archive")
-setPageTitle("", content.title, "nav.archive");
-```
+import { usePageMeta } from "@/composables/usePageMeta";
 
-### 3. 处理搜索引擎爬虫 (SSR)
-
-由于爬虫不会执行 JS 修改标题，必须在页面 `script setup` 顶层配合 `useBotMeta` 使用。为了保证 SEO 效果与用户看到的标题一致，**必须**手动提供 `titleFormatter`：
-
-```ts
-await useBotMeta(() => `API_URL`, {
-    // ... 其他配置
-    titleFormatter: (title) =>
-        `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
+usePageMeta({
+    titleKey: "pages.volunteer.title",            // i18n key，用于 <title> + og:title
+    descriptionKey: "pages.volunteer.meta.description",
+    keywords: "江财,志愿填报,录取分数",               // 可选
+    canonicalPath: "/volunteer",                    // 可选，默认取 route.path
+    suffixKey: "nav.archive",                       // 可选，版块后缀
+    schema: { "@type": "WebApplication", ... },     // 可选，自定义 JSON-LD；传 null 跳过
+    noIndex: false,                                  // 可选，设为 true 输出 noindex
 });
 ```
 
-### 4. 标题组装规范
+- `titleKey` 可省略（如首页），此时沿用 layout 的默认标题
+- 无需手动拼接 ` - 江西财经大学网络安全协会`，layout 自动完成
+- `ogLocale` 自动跟随当前语言（zh → zh_CN, en → en_US, ja → ja_JP, ko → ko_KR）
+- 所有标签在 SSR 阶段即注入 HTML，爬虫无需执行 JS 即可获取完整元数据
 
-`layouts/default.vue` 会根据配置自动按照以下规则拼装标题，**开发时无需手动拼接字符串**：
+**首页特殊处理**：首页不设置 `titleKey`，仅传入 `descriptionKey` + `canonicalPath`，标题沿用 `pages.home.meta.title`（即全站默认标题）。
 
-- **普通页面**：`标题 - 协会全称` (如：`时间线 - 江西财经大学网络安全协会`)
-- **带版块页面**：`标题 - 协会全称 [空格] 版块名` (如：`2026新春 - 江西财经大学网络安全协会 归档`)
+---
+
+### `useBotMeta`：CMS 动态页面
+
+仅用于 `archive/[para].vue` 和 `wiki/[...slug].vue`——这两个页面的标题和内容来自 CMS API，在服务端渲染时需要额外请求数据才能生成 SEO 标签。
+
+```ts
+await useBotMeta(
+    () => `/v1/contents/${route.params.para}`,
+    {
+        schema: "Article",
+        type: "article",
+        titleFormatter: (title) =>
+            `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
+    },
+);
+```
+
+- 仅在服务端、且 User-Agent 匹配已知爬虫（Googlebot、Baiduspider 等 29 种）时执行
+- 从 CMS API 拉取文章标题与正文，提取摘要作为 description，生成 JSON-LD Article schema
+- 非爬虫请求直接跳过，由客户端渲染后再设置标题
+
+---
+
+### `<title>` 组装流程
+
+无论使用 `usePageMeta` 还是 `useBotMeta`，最终的 `<title>` 标签由 `layouts/default.vue` 统一组装：
+
+```
+{pageTitle} - {meta.fullName}{suffix}
+```
+
+- **普通页面**：`时间线 - 江西财经大学网络安全协会`
+- **带版块页面**：`2026新春 - 江西财经大学网络安全协会 归档`
+- **首页**（无 pageTitle）：`江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线`
+
+开发时**无需在页面中手动拼接标题字符串**。

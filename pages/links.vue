@@ -68,20 +68,16 @@
 <script lang="ts" setup>
 import { useLinks } from "~/data/eLinks";
 import { useI18n } from "vue-i18n";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 
 const { Links, iLinks, fLinks } = useLinks();
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.links.title");
-
-useHead(() => ({
-    meta: [
-        { name: "description", content: t("pages.links.meta.description") },
-        { name: "keywords", content: t("pages.links.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.links.title",
+    descriptionKey: "pages.links.meta.description",
+    keywords: t("pages.links.meta.keywords"),
+    canonicalPath: "/links",
+});
 </script>
 
 <style scoped></style>

@@ -58,11 +58,10 @@
 
 <script lang="ts" setup>
 import { timelineData } from "~/data/timelineData";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
 const route = useRoute();
 
 const itemsPerPage = 10;
@@ -81,14 +80,11 @@ const paginatedData = computed(() => {
     return timelineData.slice(start, end);
 });
 
-setPageTitle("pages.timeline.title");
-
-useHead(() => ({
-    title: t("pages.timeline.meta.title"),
-    meta: [
-        { name: "description", content: t("pages.timeline.meta.description") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.timeline.title",
+    descriptionKey: "pages.timeline.meta.description",
+    canonicalPath: "/timeline",
+});
 </script>
 
 <style scoped>

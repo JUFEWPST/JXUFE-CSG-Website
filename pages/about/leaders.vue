@@ -21,19 +21,12 @@
 import LeadersList from "~/components/LeadersList.vue";
 import { leadersData } from "~/data/leadersData";
 import AnzuAlert from "~/components/AnzuAlert.vue";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.about.leaders.title");
-
-useHead(() => ({
-    meta: [
-        {
-            name: "description",
-            content: t("pages.about.leaders.meta.description"),
-        },
-        { name: "keywords", content: t("pages.about.leaders.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.about.leaders.title",
+    descriptionKey: "pages.about.leaders.meta.description",
+    keywords: t("pages.about.leaders.meta.keywords"),
+    canonicalPath: "/about/leaders",
+});
 </script>

@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import { usePageTitle } from "@/composables/usePageTitle";
+
 
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.privacy.title");
-
-useHead(() => ({
-    meta: [
-        {
-            name: "description",
-            content: t("pages.privacy.meta.description"),
-        },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.privacy.title",
+    descriptionKey: "pages.privacy.meta.description",
+    canonicalPath: "/privacy",
+});
 
 const contactEmail = "1834488130@qq.com";
 

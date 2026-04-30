@@ -13,20 +13,12 @@
 <script setup lang="ts">
 import TeacherCard from "~/components/TeacherCard.vue";
 import { teacherData } from "~/data/teacherData";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.about.teacher.title");
-
-useHead(() => ({
-    title: t("pages.about.teacher.meta.title"),
-    meta: [
-        {
-            name: "description",
-            content: t("pages.about.teacher.meta.description"),
-        },
-        { name: "keywords", content: t("pages.about.teacher.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.about.teacher.title",
+    descriptionKey: "pages.about.teacher.meta.description",
+    keywords: t("pages.about.teacher.meta.keywords"),
+    canonicalPath: "/about/teacher",
+});
 </script>

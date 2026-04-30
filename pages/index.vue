@@ -126,9 +126,12 @@ import type { Archive } from "~/types/archives";
 
 const { t } = useI18n();
 
-useHead(() => ({
-    meta: [{ name: "description", content: t("pages.home.meta.description") }],
-}));
+usePageMeta({
+    descriptionKey: "pages.home.meta.description",
+    keywords:
+        "江西财经大学,江财网安协会,网络安全,CTF,信息安全,江财,江西财经大学网络安全协会",
+    canonicalPath: "/",
+});
 
 const { data: archives, loading, error, get } = useApi<Archive[]>();
 const loadArticles = async () => {

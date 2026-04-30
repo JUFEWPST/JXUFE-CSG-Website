@@ -38,23 +38,15 @@
 
 <script setup lang="ts">
 import { membersArray } from "~/data/membersData";
-import { usePageTitle } from "@/composables/usePageTitle";
+
 const members = ref(membersArray);
 const { t } = useI18n();
-const { setPageTitle } = usePageTitle();
-
-setPageTitle("pages.about.members.title");
-
-useHead(() => ({
-    title: t("pages.about.members.meta.title"),
-    meta: [
-        {
-            name: "description",
-            content: t("pages.about.members.meta.description"),
-        },
-        { name: "keywords", content: t("pages.about.members.meta.keywords") },
-    ],
-}));
+usePageMeta({
+    titleKey: "pages.about.members.title",
+    descriptionKey: "pages.about.members.meta.description",
+    keywords: t("pages.about.members.meta.keywords"),
+    canonicalPath: "/about/members",
+});
 </script>
 
 <style scoped>

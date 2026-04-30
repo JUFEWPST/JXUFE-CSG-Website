@@ -194,7 +194,14 @@ definePageMeta({
 
 const route = useRoute();
 const router = useRouter();
-const { t } = useI18n(); // Standard
+const { t } = useI18n();
+
+usePageMeta({
+    titleKey: "pages.about.members.title",
+    descriptionKey: "pages.about.members.meta.description",
+    keywords: t("pages.about.members.meta.keywords"),
+});
+
 const direction = ref(1);
 
 // --- Data Logic ---
