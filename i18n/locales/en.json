@@ -157,41 +157,6 @@
             }
         },
         "privacy": {
-            "volunteer": {
-                "title": "Score Lookup",
-                "meta": {
-                    "title": "Score Lookup - Cybersecurity Guild of JXUFE",
-                    "description": "Look up historical admission scores by province and major for JXUFE, providing reference for college applications."
-                },
-                "loading": "Loading data...",
-                "error": "Failed to load configuration. Please try again later.",
-                "fetchError": "Failed to fetch score data",
-                "empty": "No data found",
-                "emptyHint": "No admission data for the selected filters. Try adjusting your selection.",
-                "selectHint": "Select year and province, then click Search",
-                "summary": "Total {count} records",
-                "filters": {
-                    "year": "Year",
-                    "province": "Province",
-                    "category": "Category",
-                    "batch": "Batch",
-                    "query": "Search",
-                    "reset": "Reset"
-                },
-                "placeholder": {
-                    "year": "Select year",
-                    "province": "Select province",
-                    "category": "Select category (optional)"
-                },
-                "table": {
-                    "major": "Major",
-                    "maxScore": "Max Score",
-                    "minScore": "Min Score",
-                    "category": "Category",
-                    "batch": "Batch",
-                    "notes": "Notes"
-                }
-            },
             "title": "Privacy Policy",
             "meta": {
                 "title": "Privacy Policy - Cybersecurity Guild of JXUFE",

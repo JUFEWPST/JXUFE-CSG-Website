@@ -734,6 +734,7 @@ import AnzuPagination from "@/components/AnzuPagination.vue";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
 
 const PAGE_SIZE = 20;
+const MAX_PAGES = 20;
 
 type DataSource = "zsjy" | "ranking" | "plan";
 type AllFilterItem = Record<string, string>;
@@ -1139,7 +1140,7 @@ const queryData = async () => {
             let page = 1;
             let total = 0;
 
-            while (true) {
+            while (page <= MAX_PAGES) {
                 const params = new URLSearchParams({
                     sch_school_id: "30285",
                     filter_column: JSON.stringify(filterObj),
@@ -1154,14 +1155,14 @@ const queryData = async () => {
                 }
                 allRows = allRows.concat(resp.data.list);
                 total = resp.data.total;
-                if (allRows.length >= total) break;
+                if (allRows.length >= total || resp.data.list.length === 0) break;
                 page += 1;
             }
         } else {
             let page = 1;
             let total = 0;
 
-            while (true) {
+            while (page <= MAX_PAGES) {
                 const params = new URLSearchParams({
                     sch_school_id: "30285",
                     filter_column: JSON.stringify(filterObj),
@@ -1176,7 +1177,7 @@ const queryData = async () => {
                 }
                 allRows = allRows.concat(resp.data.list);
                 total = resp.data.total;
-                if (allRows.length >= total) break;
+                if (allRows.length >= total || resp.data.list.length === 0) break;
                 page += 1;
             }
         }
@@ -1204,7 +1205,8 @@ const queryData = async () => {
 
 const resetFilters = () => {
     selectedYear.value = "2025";
-    selectedProvince.value = "江西省";
+    selectedProvince.value =
+        dataSource.value === "plan" ? "江西" : "江西省";
     selectedCategory.value = null;
     selectedPlanType.value = null;
     userScore.value = null;

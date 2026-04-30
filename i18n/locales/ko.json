@@ -49,6 +49,7 @@
                 "province": "지역",
                 "category": "계열",
                 "batch": "전형",
+                "planType": "계획유형",
                 "yourScore": "내 점수",
                 "yourRanking": "내 순위",
                 "query": "검색",
@@ -59,14 +60,17 @@
                 "year": "연도 선택",
                 "province": "지역 선택",
                 "category": "계열 선택 (선택사항)",
+                "planType": "계획유형 선택 (선택사항)",
                 "score": "점수 입력 (선택사항)",
                 "ranking": "순위 입력 (선택사항)"
             },
             "dataSource": {
                 "zsjy": "입학처",
                 "ranking": "길드 확장",
+                "plan": "모집계획",
                 "zsjyDescription": "장시 재경대학교 공식 입학처 웹사이트의 공개 데이터를 기반으로 하며, 전공별 최고점/최저점만 제공합니다 (순위 정보 없음).",
-                "rankingDescription": "사이버보안 길드가 자체적으로 성(省) 순위 데이터(최고점 순위/최저점 순위)를 보완했습니다. 순위는 참고용으로만 사용하세요."
+                "rankingDescription": "사이버보안 길드가 자체적으로 성(省) 순위 데이터(최고점 순위/최저점 순위)를 보완했습니다. 순위는 참고용으로만 사용하세요.",
+                "planDescription": "장시 재경대학교 공식 입학정보 사이트의 공개 데이터로, 각 지역별 전공 계획 모집 인원을 표시합니다."
             },
             "table": {
                 "major": "전공명",
@@ -77,7 +81,10 @@
                 "match": "매칭",
                 "category": "계열",
                 "batch": "전형",
-                "notes": "비고"
+                "notes": "비고",
+                "planCount": "모집인원",
+                "planType": "계획유형",
+                "majorCode": "전공코드"
             },
             "status": {
                 "safe": "안정",
@@ -90,73 +97,6 @@
             }
         },
         "privacy": {
-            "volunteer": {
-                "title": "점수 조회",
-                "meta": {
-                    "title": "점수 조회 - 장시 재경대학교 사이버보안 길드",
-                    "description": "장시 재경대학교의 연도별, 지역별, 전공별 입학 점수를 조회하여 진학 지원에 참고하세요."
-                },
-                "loading": "데이터를 불러오는 중...",
-                "error": "설정 데이터를 불러오지 못했습니다. 나중에 다시 시도해 주세요.",
-                "fetchError": "데이터 조회에 실패했습니다",
-                "empty": "데이터가 없습니다",
-                "emptyHint": "선택한 조건에 해당하는 입학 데이터가 없습니다. 조건을 변경해 보세요.",
-                "selectHint": "연도와 지역을 선택한 후 검색을 클릭하세요",
-                "summary": "총 {count}건",
-                "scoreHint": "내 점수: {score}점",
-                "rankingHint": "내 순위: 제 {ranking}위",
-                "filters": {
-                    "year": "연도",
-                    "province": "지역",
-                    "category": "계열",
-                    "batch": "전형",
-                    "planType": "계획유형",
-                    "yourScore": "내 점수",
-                    "yourRanking": "내 순위",
-                    "query": "검색",
-                    "reset": "초기화",
-                    "dataSource": "데이터 출처"
-                },
-                "placeholder": {
-                    "year": "연도 선택",
-                    "province": "지역 선택",
-                    "category": "계열 선택 (선택사항)",
-                    "planType": "계획유형 선택 (선택사항)",
-                    "score": "점수 입력 (선택사항)",
-                    "ranking": "순위 입력 (선택사항)"
-                },
-                "dataSource": {
-                    "zsjy": "입학정보",
-                    "ranking": "길드 확장",
-                    "plan": "모집계획",
-                    "zsjyDescription": "장시 재경대학교 공식 입학정보 사이트의 공개 데이터로, 전공별 최고점과 최저점만 포함되어 있으며 순위 정보는 없습니다.",
-                    "rankingDescription": "사이버보안 길드가 지역별 순위 정보(최고점 순위 및 최저점 순위)를 보완했습니다. 순위 데이터는 참고용입니다.",
-                    "planDescription": "장시 재경대학교 공식 입학정보 사이트의 공개 데이터로, 각 지역별 전공 계획 모집 인원을 표시합니다."
-                },
-                "table": {
-                    "major": "전공명",
-                    "maxScore": "최고점",
-                    "minScore": "최저점",
-                    "maxRanking": "최고순위",
-                    "minRanking": "최저순위",
-                    "match": "적합",
-                    "category": "계열",
-                    "batch": "전형",
-                    "notes": "비고",
-                    "planCount": "모집인원",
-                    "planType": "계획유형",
-                    "majorCode": "전공코드"
-                },
-                "status": {
-                    "safe": "안정",
-                    "match": "적합",
-                    "reach": "도전가능",
-                    "far": "차이큼"
-                },
-                "sourceAlert": {
-                    "title": "데이터 출처 안내"
-                }
-            },
             "title": "개인정보 처리방침",
             "meta": {
                 "title": "개인정보 처리방침 - 장시 재경대학교 사이버보안 길드",
