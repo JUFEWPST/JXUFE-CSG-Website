@@ -31,7 +31,9 @@ export function usePageMeta(options: PageMetaOptions) {
     });
 
     if (options.titleKey) {
-        setPageTitle(options.titleKey, undefined, options.suffixKey);
+        setPageTitle(options.titleKey, options.titleOverride, options.suffixKey);
+    } else {
+        setPageTitle("", options.titleOverride, options.suffixKey);
     }
 
     const pageTitle = computed(() => {
@@ -86,15 +88,15 @@ export function usePageMeta(options: PageMetaOptions) {
                 url,
             };
 
-            if (options.schema) {
-                const merged = { ...baseSchema, ...options.schema };
-                headConfig.script = [
-                    {
-                        type: "application/ld+json",
-                        innerHTML: JSON.stringify(merged),
-                    },
-                ];
-            }
+            const merged = options.schema
+                ? { ...baseSchema, ...options.schema }
+                : baseSchema;
+            headConfig.script = [
+                {
+                    type: "application/ld+json",
+                    innerHTML: JSON.stringify(merged),
+                },
+            ];
         }
 
         return headConfig;
