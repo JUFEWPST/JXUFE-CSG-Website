@@ -45,9 +45,9 @@
                 v-if="totalPages >= 1"
                 :totalPages="totalPages"
                 :currentPage="currentPage"
+                :loading="loading"
                 @page-change="handlePageChange"
-            >
-            </AnzuPagination>
+            />
         </div>
     </main>
 </template>
@@ -55,12 +55,27 @@
 <script setup lang="ts">
 import AnzuPagination from "~/components/AnzuPagination.vue";
 import ArticleBlock from "~/components/ArticleBlock.vue";
-import { ref, watch } from "vue";
+import { ref, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "#imports";
 import { useApi } from "~/composables/useapi";
 import type { Archive } from "~/types/archives";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+
+await useBotMeta(
+    () => {
+        const page = route.query.page || 1;
+        return `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=${page}`;
+    },
+    {
+        schema: "CollectionPage",
+        type: "website",
+        locale: locale.value,
+        titleFormatter: (title) =>
+            `${t("pages.archive.title")} - ${t("meta.fullName")}`,
+    },
+);
+
 usePageMeta({
     titleKey: "pages.archive.title",
     descriptionKey: "pages.archive.meta.description",
@@ -121,4 +136,13 @@ const handlePageChange = (page: number) => {
         },
     });
 };
+
+// 数据加载完成后自动上滑
+watch(archives, () => {
+    nextTick(() => {
+        requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    });
+});
 </script>

@@ -79,7 +79,7 @@ const getIndent = (level: number) => {
 
 const getLinkClasses = (item: TocItem) => {
     const baseClasses =
-        "block py-1.5 px-2 md:px-3 no-underline rounded-lg text-sm transition-colors cursor-pointer whitespace-normal wrap-break-word";
+        "block py-1.5 px-2 md:px-3 no-underline rounded-md text-sm transition-colors cursor-pointer whitespace-normal wrap-break-word";
     const activeClasses =
         activeId.value === item.id
             ? "bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-medium"

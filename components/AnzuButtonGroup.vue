@@ -1,6 +1,6 @@
 <template>
     <div
-        class="inline-flex"
+        class="inline-flex *:relative *:z-0 [&>*:focus-visible]:z-10 [&>*:hover]:z-10"
         :class="[
             direction === 'horizontal' ? 'flex-row' : 'flex-col',
             gapClasses,

@@ -11,7 +11,7 @@
         "about": "关于协会",
         "links": "相关链接",
         "timeline": "时间线",
-        "ctf": "CTF赛事",
+        "ctf": "世界 CTF 赛事",
         "aboutChildren": {
             "index": "协会简介",
             "leaders": "历届负责人",
@@ -30,13 +30,13 @@
             }
         },
         "ctf": {
-            "title": "CTF赛事",
+            "title": "世界 CTF 赛事",
             "meta": {
-                "title": "CTF 赛事日历 - 江西财经大学网络安全协会",
-                "description": "全球 CTF 网络安全竞赛时间表，实时更新赛事信息。"
+                "title": "世界 CTF 赛事日历 - 江西财经大学网络安全协会",
+                "description": "全球范围内 CTF 网络安全竞赛排期，实时更新赛事活动。"
             },
             "events": {
-                "title": "近期 CTF 赛事",
+                "title": "近期世界 CTF 赛事",
                 "status": {
                     "oncoming": "未开始",
                     "running": "进行中",
@@ -128,9 +128,10 @@
                 "zsjy": "招生网",
                 "ranking": "协会补充",
                 "plan": "招生计划",
-                "zsjyDescription": "数据来自江西财经大学本科招生网公开数据，仅包含专业录取最高分与最低分，无排名信息。",
+                "zsjyDescription": "数据来自 {link} 公开数据，仅包含专业录取最高分与最低分，无排名信息。",
+                "planDescription": "数据来自 {link} 公开的招生计划数，展示各专业在各省的计划录取人数。",
                 "rankingDescription": "数据由协会自行补齐了省排名信息（最高分位次与最低分位次），排名数据仅供参考。",
-                "planDescription": "数据来自江西财经大学本科招生网公开的招生计划数，展示各专业在各省的计划录取人数。"
+                "zsjyLinkText": "江西财经大学本科招生网"
             },
             "table": {
                 "major": "专业名称",

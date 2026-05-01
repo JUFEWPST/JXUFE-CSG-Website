@@ -15,11 +15,11 @@
                 :name="name"
                 :autocomplete="autocomplete"
                 :readonly="readonly"
-                class="w-full rounded-lg border bg-transparent px-3 py-2 text-sm text-(--md-sys-color-on-surface) outline-none transition-all duration-200 placeholder:text-(--md-sys-color-on-surface-variant)/50"
+                class="w-full rounded-md border bg-transparent px-3 py-2 text-sm text-(--md-sys-color-on-surface) outline-none transition-[border-color,background-color] duration-200 ease-out hover:bg-(--md-sys-color-surface-variant)/5 placeholder:text-(--md-sys-color-on-surface-variant)/50"
                 :class="[
                     localError
-                        ? 'border-(--md-sys-color-error) focus:border-(--md-sys-color-error) focus:ring-1 focus:ring-(--md-sys-color-error)'
-                        : 'border-(--md-sys-color-outline) hover:border-(--md-sys-color-outline-variant) focus:border-(--md-sys-color-primary) focus:ring-1 focus:ring-(--md-sys-color-primary)',
+                        ? 'border-(--md-sys-color-error) focus:border-(--md-sys-color-error) focus:outline-none'
+                        : 'border-(--md-sys-color-outline) hover:border-(--md-sys-color-outline-variant) focus:border-(--md-sys-color-primary) focus:outline-none',
                     {
                         'cursor-not-allowed opacity-50': disabled,
                         'pl-10': $slots.prefix,

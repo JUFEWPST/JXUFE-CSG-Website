@@ -100,7 +100,7 @@ const panelBaseClass = computed(() => {
         props.widthClass,
         "origin-top-right",
         "overflow-hidden",
-        "rounded-xl",
+        "rounded-md",
         "border",
         "border-(--md-sys-color-outline-variant)/50",
         "bg-(--md-sys-color-surface-container)",
@@ -132,11 +132,11 @@ const panelBaseClass = computed(() => {
         <transition
             v-if="transition"
             enter-active-class="transition duration-200 ease-out"
-            enter-from-class="transform translate-y-2 opacity-0"
-            enter-to-class="transform translate-y-0 opacity-100"
+            enter-from-class="transform scale-95 opacity-0"
+            enter-to-class="transform scale-100 opacity-100"
             leave-active-class="transition duration-150 ease-in"
-            leave-from-class="transform translate-y-0 opacity-100"
-            leave-to-class="transform translate-y-2 opacity-0"
+            leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-95 opacity-0"
         >
             <div v-if="isOpen" :class="panelBaseClass" role="dialog">
                 <slot name="menu" :close="close" />

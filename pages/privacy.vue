@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 const { t } = useI18n();
 usePageMeta({
     titleKey: "pages.privacy.title",
@@ -47,7 +45,7 @@ const content = `
 
 本网站可能会请求或展示来自第三方的内容/服务：
 
-1. **CTF 赛事信息**：侧边栏可能会从 GitHub 的公开数据源拉取赛事列表（示例：\`https://raw.githubusercontent.com/ProbiusOfficial/Hello-CTFtime/...\`）。
+1. **世界 CTF 赛事信息**：侧边栏可能会从 GitHub 的公开数据源拉取赛事列表（示例：\`https://raw.githubusercontent.com/ProbiusOfficial/Hello-CTFtime/...\`）。
 2. **外部链接**：本网站包含指向第三方网站（如学校官网、友链等）的链接。点击这些链接后，第三方网站的隐私政策将适用，我们建议您查阅对应政策。
 
 第三方服务在向您提供服务的过程中可能会根据其自身政策收集信息。

@@ -30,6 +30,7 @@
                     stroke-linecap="round"
                     stroke-dasharray="5.556 94.444"
                     stroke-dashoffset="0"
+                    style="stroke: var(--md-sys-color-primary)"
                 />
             </svg>
         </div>
@@ -50,6 +51,13 @@
                 :stroke="trackColor"
                 :stroke-width="strokeWidth"
                 pathLength="100"
+                style="
+                    stroke: color-mix(
+                        in srgb,
+                        var(--md-sys-color-primary) 18%,
+                        transparent
+                    );
+                "
             />
             <circle
                 class="progress-ring__indicator progress-ring__indicator--determinate"
@@ -63,6 +71,7 @@
                 stroke-linecap="round"
                 stroke-dasharray="100"
                 :stroke-dashoffset="dashOffset"
+                style="stroke: var(--md-sys-color-primary)"
             />
         </svg>
         <div
@@ -88,6 +97,7 @@
                             :stroke="props.primaryColor"
                             stroke-width="2.5"
                             viewBox="0 0 24 24"
+                            style="stroke: var(--md-sys-color-primary)"
                         >
                             <path
                                 :d="statusIcon"
@@ -99,6 +109,7 @@
                             v-else-if="status === 'default'"
                             class="text-xs font-medium"
                             :style="{ color: props.primaryColor }"
+                            style="color: var(--md-sys-color-primary)"
                         >
                             {{ Math.round(progress) }}%
                         </span>

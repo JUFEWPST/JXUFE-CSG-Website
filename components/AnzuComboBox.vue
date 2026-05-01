@@ -43,17 +43,17 @@
 
         <Teleport to="body">
             <transition
-                enter-active-class="transition duration-150 ease-out"
-                enter-from-class="transform translate-y-1 opacity-0"
-                enter-to-class="transform translate-y-0 opacity-100"
-                leave-active-class="transition duration-120 ease-in"
-                leave-from-class="transform translate-y-0 opacity-100"
-                leave-to-class="transform translate-y-1 opacity-0"
+                enter-active-class="transition duration-200 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-150 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
             >
                 <div
                     v-if="isOpen"
                     ref="menuRef"
-                    class="shadow-center-sm fixed z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl bg-(--md-sys-color-surface-container) ring-1 ring-black/5"
+                    class="shadow-center-sm fixed z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-md bg-(--md-sys-color-surface-container) ring-1 ring-black/5"
                     :class="menuWidthClass"
                     :style="menuPositionStyle"
                     role="listbox"

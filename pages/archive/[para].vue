@@ -56,19 +56,15 @@
                                 class="h-4 w-4 text-(--md-sys-color-primary)"
                                 aria-hidden="true"
                             />
-                            <button
-                                v-for="lang in i18nFallback.available"
-                                :key="lang"
-                                @click="currentContentLang = lang"
-                                :class="[
-                                    'px-1.5 py-0.5 text-xs rounded-md cursor-pointer transition-colors',
-                                    currentContentLang === lang
-                                        ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
-                                        : 'bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-highest)',
-                                ]"
-                            >
-                                {{ getLangName(lang) }}
-                            </button>
+                            <AnzuSelector
+                                v-model="currentContentLang"
+                                :options="
+                                    i18nFallback.available.map((lang) => ({
+                                        value: lang,
+                                        label: getLangName(lang),
+                                    }))
+                                "
+                            />
                         </div>
                     </div>
                     <div

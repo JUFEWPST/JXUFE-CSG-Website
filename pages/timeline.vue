@@ -58,11 +58,21 @@
 
 <script lang="ts" setup>
 import { timelineData } from "~/data/timelineData";
-
+import { watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const route = useRoute();
+
+// 页面切换后自动上滑
+watch(
+    () => route.query.page,
+    () => {
+        requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    },
+);
 
 const itemsPerPage = 10;
 

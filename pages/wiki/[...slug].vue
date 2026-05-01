@@ -60,19 +60,15 @@
                                 class="h-4 w-4 text-(--md-sys-color-primary)"
                                 aria-hidden="true"
                             />
-                            <button
-                                v-for="lang in i18nFallback.available"
-                                :key="lang"
-                                @click="currentContentLang = lang"
-                                :class="[
-                                    'px-1.5 py-0.5 text-xs rounded-md cursor-pointer transition-colors',
-                                    currentContentLang === lang
-                                        ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
-                                        : 'bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-highest)',
-                                ]"
-                            >
-                                {{ getLangName(lang) }}
-                            </button>
+                            <AnzuSelector
+                                v-model="currentContentLang"
+                                :options="
+                                    i18nFallback.available.map((lang) => ({
+                                        label: getLangName(lang),
+                                        value: lang,
+                                    }))
+                                "
+                            />
                         </div>
                     </div>
                     <div
@@ -151,7 +147,12 @@
                                 v-else
                                 class="w-5 h-5 text-(--md-sys-color-primary)"
                             />
-                            {{ child.title }}
+                            <NuxtLink
+                                :to="`/${child.path}`"
+                                class="hover:underline"
+                            >
+                                {{ child.title }}
+                            </NuxtLink>
                         </h2>
                     </li>
                 </ul>
@@ -174,6 +175,7 @@ import TagList from "~/components/TagList.vue";
 import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
 import AnzuBreadcrumbs from "~/components/AnzuBreadcrumbs.vue";
 import AnzuPrevNextNav from "~/components/AnzuPrevNextNav.vue";
+import AnzuSelector from "~/components/AnzuSelector.vue";
 import WikiTree from "~/components/sidebars/WikiTree.vue";
 import {
     FolderIcon,
@@ -226,7 +228,13 @@ await useBotMeta(
             : slugParam
               ? [slugParam as string]
               : [];
-        if (!segs.length) return null;
+
+        if (!segs.length) {
+            return (
+                "/v1/contents/by-path/wiki?i18n=" + getApiLocale(locale.value)
+            );
+        }
+
         return `/v1/contents/by-path/wiki/${segs.join("/")}?i18n=${getApiLocale(locale.value)}`;
     },
     {
@@ -234,7 +242,9 @@ await useBotMeta(
         type: "article",
         locale: locale.value,
         titleFormatter: (title) =>
-            `${title} - ${t("meta.fullName")} ${t("nav.wiki")}`,
+            title
+                ? `${title} - ${t("meta.fullName")} ${t("nav.wiki")}`
+                : `${t("nav.wiki")} - ${t("meta.fullName")}`,
     },
 );
 

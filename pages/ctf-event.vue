@@ -38,46 +38,47 @@
                 <header
                     class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
                 >
-                    <div class="flex flex-wrap items-center gap-3">
-                        <AnzuButtonGroup v-model="regionFilter" gap="sm">
-                            <AnzuButton
-                                value="all"
-                                class="h-9! min-w-0! px-4!"
-                                >{{
-                                    t("pages.ctf.events.filters.all")
-                                }}</AnzuButton
-                            >
-                            <AnzuButton
-                                value="domestic"
-                                class="h-9! min-w-0! px-4!"
-                                >{{
-                                    t("pages.ctf.events.filters.domestic")
-                                }}</AnzuButton
-                            >
-                            <AnzuButton
-                                value="foreign"
-                                class="h-9! min-w-0! px-4!"
-                                >{{
-                                    t("pages.ctf.events.filters.foreign")
-                                }}</AnzuButton
-                            >
-                        </AnzuButtonGroup>
-                        <AnzuButtonGroup v-model="viewMode" gap="sm">
-                            <AnzuButton
-                                value="calendar"
-                                class="h-9! min-w-0! px-4!"
-                                >{{
-                                    t("pages.ctf.events.view.calendar")
-                                }}</AnzuButton
-                            >
-                            <AnzuButton
-                                value="list"
-                                class="h-9! min-w-0! px-4!"
-                                >{{
-                                    t("pages.ctf.events.view.list")
-                                }}</AnzuButton
-                            >
-                        </AnzuButtonGroup>
+                    <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+                        <AnzuSelector
+                            v-model="regionFilter"
+                            :options="[
+                                {
+                                    label: t('pages.ctf.events.filters.all'),
+                                    value: 'all',
+                                },
+                                {
+                                    label: t(
+                                        'pages.ctf.events.filters.domestic',
+                                    ),
+                                    value: 'domestic',
+                                },
+                                {
+                                    label: t(
+                                        'pages.ctf.events.filters.foreign',
+                                    ),
+                                    value: 'foreign',
+                                },
+                            ]"
+                        />
+
+                        <!-- 分割线 -->
+                        <div
+                            class="h-4 w-px bg-(--md-sys-color-outline-variant)/40"
+                        />
+
+                        <AnzuSelector
+                            v-model="viewMode"
+                            :options="[
+                                {
+                                    label: t('pages.ctf.events.view.calendar'),
+                                    value: 'calendar',
+                                },
+                                {
+                                    label: t('pages.ctf.events.view.list'),
+                                    value: 'list',
+                                },
+                            ]"
+                        />
                     </div>
 
                     <div
@@ -88,7 +89,7 @@
                             class="flex items-center gap-2"
                         >
                             <AnzuButton
-                                variant="outlined"
+                                variant="text"
                                 class="h-9! w-9! min-w-9! px-0!"
                                 :aria-label="t('calendar.actions.prevMonth')"
                                 @click="gotoPrevMonth"
@@ -101,7 +102,7 @@
                                 {{ displayedMonthLabel }}
                             </p>
                             <AnzuButton
-                                variant="outlined"
+                                variant="text"
                                 class="h-9! w-9! min-w-9! px-0!"
                                 :aria-label="t('calendar.actions.nextMonth')"
                                 @click="gotoNextMonth"
@@ -110,7 +111,7 @@
                             </AnzuButton>
                         </div>
                         <AnzuButton
-                            variant="outlined"
+                            variant="text"
                             class="h-9! min-w-0! px-4!"
                             :disabled="loading"
                             @click="refresh"
@@ -607,6 +608,7 @@
                             v-if="matchedEvents.length && totalPages > 1"
                             :total-pages="totalPages"
                             :current-page="currentPage"
+                            :loading="loading"
                         />
                     </div>
                 </div>
@@ -647,7 +649,7 @@
                         </p>
                     </div>
                     <AnzuButton
-                        variant="outlined"
+                        variant="text"
                         class="h-9! w-9! min-w-9! shrink-0 px-0!"
                         :aria-label="t('common.actions.close')"
                         @click="closeMobileDaySheet"
@@ -661,7 +663,7 @@
                     v-if="selectedMobileDay && selectedMobileDayEvents.length"
                 >
                     <AnzuButton
-                        variant="outlined"
+                        variant="text"
                         class="h-9! min-w-0! px-4!"
                         @click="
                             openListForDay(selectedMobileDay, {
@@ -790,9 +792,9 @@ import {
 } from "@heroicons/vue/24/outline";
 import AnzuButton from "@/components/AnzuButton.vue";
 import AnzuButtonGroup from "@/components/AnzuButtonGroup.vue";
+import AnzuSelector from "@/components/AnzuSelector.vue";
 import AnzuPagination from "@/components/AnzuPagination.vue";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
-
 
 definePageMeta({
     alias: "/ctf",
@@ -1404,6 +1406,16 @@ const openListForDay = async (
 watch([viewMode, regionFilter, monthCursor], () => {
     if (selectedMobileDay.value) closeMobileDaySheet();
 });
+
+// 页面切换后自动上滑
+watch(
+    () => route.query.page,
+    () => {
+        requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    },
+);
 
 const createDomesticTimeRange = (startText?: string, endText?: string) => {
     const normalizedStart = normalizeDomesticDateText(startText);

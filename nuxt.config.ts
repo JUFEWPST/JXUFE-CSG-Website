@@ -17,6 +17,7 @@ export default defineNuxtConfig({
             { code: "ko", iso: "ko-KR", name: "한국어", file: "ko.json" },
         ],
         defaultLocale: "zh",
+        baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://csec.jxufe.edu.cn",
     },
 
     runtimeConfig: {

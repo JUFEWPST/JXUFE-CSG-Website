@@ -59,7 +59,7 @@
             <div class="flex flex-1 flex-col text-left min-w-0">
                 <div
                     v-if="leader.message"
-                    class="mb-4 rounded-lg border border-(--md-sys-color-outline-variant)/50 bg-(--md-sys-color-surface-container-high) p-3"
+                    class="mb-4 rounded-md border border-(--md-sys-color-outline-variant)/50 bg-(--md-sys-color-surface-container-high) p-3"
                 >
                     <p
                         class="text-sm leading-relaxed text-(--md-sys-color-on-surface-variant)"

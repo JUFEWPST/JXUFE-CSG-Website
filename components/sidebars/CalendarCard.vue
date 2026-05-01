@@ -34,7 +34,7 @@
 
         <!-- 星期标题 -->
         <div
-            class="grid grid-cols-7 text-center text-xs text-(--md-sys-color-on-surface-variant)"
+            class="grid grid-cols-7 text-center text-[10px] font-medium tracking-tight text-(--md-sys-color-on-surface-variant)/70 uppercase"
         >
             <div v-for="w in weekdays" :key="w" class="py-1">
                 {{ w }}
@@ -46,17 +46,22 @@
             <div
                 v-for="(cell, index) in calendarCells"
                 :key="index"
-                class="flex h-9 items-center justify-center"
+                class="relative flex h-8 items-center justify-center sm:h-9"
             >
                 <div
                     v-if="cell"
                     :class="dayClasses(cell)"
                     :title="dayTitle(cell)"
                 >
-                    <span>{{ cell.date.getDate() }}</span>
+                    <span class="relative z-10">{{ cell.date.getDate() }}</span>
                     <span
                         v-if="cell.events.length"
-                        class="ml-0.5 inline-block h-1.5 w-1.5 rounded-full bg-(--md-sys-color-primary)"
+                        class="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full"
+                        :class="
+                            cell.isToday
+                                ? 'bg-(--md-sys-color-on-primary)'
+                                : 'bg-(--md-sys-color-primary)'
+                        "
                     />
                 </div>
             </div>
@@ -64,35 +69,37 @@
 
         <!-- 图例 -->
         <div
-            class="mt-1 flex flex-wrap gap-2 text-[11px] text-(--md-sys-color-on-surface-variant)"
+            class="mt-1 flex flex-wrap gap-x-3 gap-y-1.5 text-[10px] leading-tight text-(--md-sys-color-on-surface-variant)"
         >
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded border border-(--md-sys-color-primary)/40 bg-(--md-sys-color-secondary-container)"
+                    class="h-2.5 w-2.5 rounded-sm border border-(--md-sys-color-primary)/40 bg-(--md-sys-color-secondary-container)"
                 />
                 <span>{{ t("calendar.legend.holiday") }}</span>
             </div>
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded border border-(--md-sys-color-primary)/60"
+                    class="h-2.5 w-2.5 rounded-sm border border-(--md-sys-color-primary)/60"
                 />
                 <span>{{ t("calendar.legend.workdayAdjusted") }}</span>
             </div>
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded border-2 border-(--md-sys-color-primary) bg-(--md-sys-color-secondary-container)"
+                    class="h-2.5 w-2.5 rounded-sm bg-(--md-sys-color-primary)"
                 />
-                <span>{{ t("calendar.legend.today") }}</span>
+                <span class="font-medium text-(--md-sys-color-primary)">{{
+                    t("calendar.legend.today")
+                }}</span>
             </div>
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded border border-dashed border-(--md-sys-color-outline-variant)"
+                    class="h-2.5 w-2.5 rounded-sm border border-dashed border-(--md-sys-color-outline-variant)"
                 />
                 <span>{{ t("calendar.legend.examWeek") }}</span>
             </div>
             <div class="flex items-center gap-1">
                 <span
-                    class="h-3 w-3 rounded-full bg-(--md-sys-color-primary)"
+                    class="h-2 w-2 rounded-full bg-(--md-sys-color-primary)"
                 />
                 <span>{{ t("calendar.legend.event") }}</span>
             </div>
@@ -100,7 +107,7 @@
 
         <!-- 今日状态卡片 -->
         <div
-            class="mt-1 rounded-lg border border-(--md-sys-color-outline-variant)/60 bg-(--md-sys-color-surface-container-lowest) px-3 py-2 text-xs text-(--md-sys-color-on-surface-variant)"
+            class="mt-1 rounded-md border border-(--md-sys-color-outline-variant)/60 bg-(--md-sys-color-surface-container-lowest) px-3 py-2 text-xs text-(--md-sys-color-on-surface-variant)"
         >
             <div class="flex items-center justify-between">
                 <span class="font-medium text-(--md-sys-color-on-surface)">
@@ -376,27 +383,14 @@ const todayStatus = computed<TodayStatus>(() => {
 
 function dayClasses(day: CalendarDayMeta): string {
     const classes = [
-        "w-8 h-8 rounded-lg flex items-center justify-center text-[13px] select-none transition-colors duration-150",
+        "w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center text-[12px] sm:text-[13px] select-none transition-colors duration-150 relative",
     ];
 
     if (day.isToday) {
-        if (day.isHoliday) {
-            classes.push(
-                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
-            );
-        } else if (day.isWorkdayOverride) {
-            classes.push(
-                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
-            );
-        } else if (day.isExamWeek && !day.isOfficialHoliday) {
-            classes.push(
-                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
-            );
-        } else {
-            classes.push(
-                "bg-(--md-sys-color-secondary-container) border-2 border-(--md-sys-color-primary) text-(--md-sys-color-primary)",
-            );
-        }
+        // 今日：使用醒目的背景和实线描边
+        classes.push(
+            "bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-bold z-10",
+        );
     } else if (day.isExamWeek && !day.isOfficialHoliday) {
         classes.push(
             "border border-dashed border-(--md-sys-color-outline-variant) text-(--md-sys-color-on-surface)",

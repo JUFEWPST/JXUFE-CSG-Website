@@ -35,178 +35,189 @@
                 </AnzuButton>
             </div>
 
-            <section v-else class="space-y-5">
-                <div
-                    class="grid grid-cols-2 items-end gap-3 sm:flex sm:flex-wrap"
-                >
-                    <div class="flex flex-col gap-1">
+            <section v-else class="space-y-8">
+                <div class="flex flex-col gap-8">
+                    <div class="flex flex-col gap-3">
                         <label
-                            class="text-xs font-medium text-(--md-sys-color-on-surface-variant)"
+                            class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
                         >
-                            {{ t("pages.volunteer.filters.year") }}
+                            {{ t("pages.volunteer.filters.dataSource") }}
                         </label>
-                        <AnzuComboBox
-                            v-model="selectedYear"
-                            :items="availableYears"
-                            :placeholder="t('pages.volunteer.placeholder.year')"
-                            :search-placeholder="
-                                t('pages.volunteer.placeholder.year')
+                        <AnzuSelector
+                            v-model="dataSource"
+                            :options="dataSources"
+                            @change="
+                                (val) => switchDataSource(val as DataSource)
                             "
-                            :empty-text="t('common.items.empty')"
-                            menu-width-class="w-36"
-                            @change="onYearChange"
                         />
                     </div>
+                    <div class="flex flex-col gap-6">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                            <div class="flex flex-col gap-2">
+                                <label
+                                    class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
+                                >
+                                    {{ t("pages.volunteer.filters.year") }}
+                                </label>
+                                <AnzuComboBox
+                                    v-model="selectedYear"
+                                    :items="availableYears"
+                                    :placeholder="
+                                        t('pages.volunteer.placeholder.year')
+                                    "
+                                    :search-placeholder="
+                                        t('pages.volunteer.placeholder.year')
+                                    "
+                                    :empty-text="t('common.items.empty')"
+                                    menu-width-class="w-full"
+                                    class="w-full"
+                                    @change="onYearChange"
+                                />
+                            </div>
 
-                    <div class="flex flex-col gap-1">
-                        <label
-                            class="text-xs font-medium text-(--md-sys-color-on-surface-variant)"
-                        >
-                            {{ t("pages.volunteer.filters.province") }}
-                        </label>
-                        <AnzuComboBox
-                            v-model="selectedProvince"
-                            :items="availableProvinces"
-                            :placeholder="
-                                t('pages.volunteer.placeholder.province')
-                            "
-                            :search-placeholder="
-                                t('pages.volunteer.placeholder.province')
-                            "
-                            :empty-text="t('common.items.empty')"
-                            menu-width-class="w-44"
-                            @change="onProvinceChange"
-                        />
-                    </div>
+                            <div class="flex flex-col gap-2">
+                                <label
+                                    class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
+                                >
+                                    {{ t("pages.volunteer.filters.province") }}
+                                </label>
+                                <AnzuComboBox
+                                    v-model="selectedProvince"
+                                    :items="availableProvinces"
+                                    :placeholder="
+                                        t(
+                                            'pages.volunteer.placeholder.province',
+                                        )
+                                    "
+                                    :search-placeholder="
+                                        t(
+                                            'pages.volunteer.placeholder.province',
+                                        )
+                                    "
+                                    :empty-text="t('common.items.empty')"
+                                    menu-width-class="w-full"
+                                    class="w-full"
+                                    @change="onProvinceChange"
+                                />
+                            </div>
 
-                    <div class="flex flex-col gap-1">
-                        <label
-                            class="text-xs font-medium text-(--md-sys-color-on-surface-variant)"
+                            <div class="flex flex-col gap-2">
+                                <label
+                                    class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
+                                >
+                                    {{
+                                        dataSource === "plan"
+                                            ? t(
+                                                  "pages.volunteer.filters.planType",
+                                              )
+                                            : t(
+                                                  "pages.volunteer.filters.category",
+                                              )
+                                    }}
+                                </label>
+                                <AnzuComboBox
+                                    v-if="dataSource === 'plan'"
+                                    v-model="selectedPlanType"
+                                    :items="availablePlanTypes"
+                                    :placeholder="
+                                        t(
+                                            'pages.volunteer.placeholder.planType',
+                                        )
+                                    "
+                                    :search-placeholder="
+                                        t(
+                                            'pages.volunteer.placeholder.planType',
+                                        )
+                                    "
+                                    :empty-text="t('common.items.empty')"
+                                    menu-width-class="w-full"
+                                    class="w-full"
+                                />
+                                <AnzuComboBox
+                                    v-else
+                                    v-model="selectedCategory"
+                                    :items="availableCategories"
+                                    :placeholder="
+                                        t(
+                                            'pages.volunteer.placeholder.category',
+                                        )
+                                    "
+                                    :search-placeholder="
+                                        t(
+                                            'pages.volunteer.placeholder.category',
+                                        )
+                                    "
+                                    :empty-text="t('common.items.empty')"
+                                    menu-width-class="w-full"
+                                    class="w-full"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            v-if="dataSource !== 'plan'"
+                            class="grid grid-cols-1 gap-6 sm:grid-cols-3"
                         >
-                            {{
-                                dataSource === "plan"
-                                    ? t("pages.volunteer.filters.planType")
-                                    : t("pages.volunteer.filters.category")
-                            }}
-                        </label>
-                        <AnzuComboBox
-                            v-if="dataSource === 'plan'"
-                            v-model="selectedPlanType"
-                            :items="availablePlanTypes"
-                            :placeholder="
-                                t('pages.volunteer.placeholder.planType')
-                            "
-                            :search-placeholder="
-                                t('pages.volunteer.placeholder.planType')
-                            "
-                            :empty-text="t('common.items.empty')"
-                            menu-width-class="w-44"
-                        />
-                        <AnzuComboBox
-                            v-else
-                            v-model="selectedCategory"
-                            :items="availableCategories"
-                            :placeholder="
-                                t('pages.volunteer.placeholder.category')
-                            "
-                            :search-placeholder="
-                                t('pages.volunteer.placeholder.category')
-                            "
-                            :empty-text="t('common.items.empty')"
-                            menu-width-class="w-44"
-                        />
-                    </div>
+                            <div class="flex flex-col gap-2">
+                                <label
+                                    class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
+                                >
+                                    {{ t("pages.volunteer.filters.yourScore") }}
+                                </label>
+                                <AnzuInput
+                                    v-model.number="userScore"
+                                    type="number"
+                                    min="0"
+                                    max="750"
+                                    class="w-full"
+                                    :placeholder="
+                                        t('pages.volunteer.placeholder.score')
+                                    "
+                                />
+                            </div>
 
-                    <div class="col-span-2 flex gap-3 sm:contents">
-                        <AnzuButton
-                            variant="filled"
-                            class="h-10! flex-1 sm:min-w-0! sm:flex-initial sm:px-6!"
-                            :disabled="!canQuery || dataLoading"
-                            @click="queryData"
-                        >
-                            <MagnifyingGlassIcon
-                                v-if="!dataLoading"
-                                class="mr-1.5 h-4 w-4"
-                            />
-                            <AnzuProgressRing
-                                v-else
-                                :size="16"
-                                status="loading"
-                                class="mr-1.5"
-                            />
-                            {{ t("pages.volunteer.filters.query") }}
-                        </AnzuButton>
-
-                        <AnzuButton
-                            variant="outlined"
-                            class="h-10! flex-1 sm:min-w-0! sm:flex-initial sm:px-4!"
-                            @click="resetFilters"
-                        >
-                            {{ t("pages.volunteer.filters.reset") }}
-                        </AnzuButton>
-                    </div>
-                </div>
-                <div
-                    v-if="dataSource !== 'plan'"
-                    class="grid grid-cols-2 items-end gap-3 sm:flex sm:flex-wrap"
-                >
-                    <div class="flex flex-col gap-1">
-                        <label
-                            class="text-xs font-medium text-(--md-sys-color-on-surface-variant)"
-                        >
-                            {{ t("pages.volunteer.filters.yourScore") }}
-                        </label>
-                        <input
-                            v-model.number="userScore"
-                            type="number"
-                            :placeholder="
-                                t('pages.volunteer.placeholder.score')
-                            "
-                            class="h-10 w-full sm:w-28 rounded-md border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface) px-3 text-sm text-(--md-sys-color-on-surface) outline-none transition-colors focus:ring-2 focus:ring-(--md-sys-color-primary)/20"
-                        />
-                    </div>
-
-                    <div
-                        v-if="dataSource === 'ranking'"
-                        class="flex flex-col gap-1"
-                    >
-                        <label
-                            class="text-xs font-medium text-(--md-sys-color-on-surface-variant)"
-                        >
-                            {{ t("pages.volunteer.filters.yourRanking") }}
-                        </label>
-                        <input
-                            v-model.number="userRanking"
-                            type="number"
-                            :placeholder="
-                                t('pages.volunteer.placeholder.ranking')
-                            "
-                            class="h-10 w-full sm:w-32 rounded-md border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface) px-3 text-sm text-(--md-sys-color-on-surface) outline-none transition-colors focus:ring-2 focus:ring-(--md-sys-color-primary)/20"
-                        />
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                    <label
-                        class="text-xs font-medium text-(--md-sys-color-on-surface-variant)"
-                    >
-                        {{ t("pages.volunteer.filters.dataSource") }}
-                    </label>
-                    <div class="flex gap-1">
-                        <button
-                            v-for="src in dataSources"
-                            :key="src.value"
-                            type="button"
-                            class="rounded-md px-3 py-1.5 text-xs font-medium transition-colors"
-                            :class="
-                                dataSource === src.value
-                                    ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
-                                    : 'bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)'
-                            "
-                            @click="switchDataSource(src.value)"
-                        >
-                            {{ src.label }}
-                        </button>
+                            <div
+                                v-if="dataSource === 'ranking'"
+                                class="flex flex-col gap-2"
+                            >
+                                <label
+                                    class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
+                                >
+                                    {{
+                                        t("pages.volunteer.filters.yourRanking")
+                                    }}
+                                </label>
+                                <AnzuInput
+                                    v-model.number="userRanking"
+                                    type="number"
+                                    min="1"
+                                    class="w-full"
+                                    :placeholder="
+                                        t('pages.volunteer.placeholder.ranking')
+                                    "
+                                />
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-end gap-2 pt-2">
+                            <AnzuButton variant="text" @click="resetFilters">
+                                <template #icon>
+                                    <ArrowPathIcon class="h-4 w-4" />
+                                </template>
+                                {{
+                                    t("pages.volunteer.filters.reset") || "重置"
+                                }}
+                            </AnzuButton>
+                            <AnzuButton
+                                variant="filled"
+                                :disabled="!canQuery"
+                                :loading="dataLoading"
+                                @click="queryData"
+                            >
+                                <template #icon>
+                                    <MagnifyingGlassIcon class="h-4 w-4" />
+                                </template>
+                                {{ t("pages.volunteer.filters.query") }}
+                            </AnzuButton>
+                        </div>
                     </div>
                 </div>
 
@@ -214,9 +225,35 @@
                     type="info"
                     :title="t('pages.volunteer.sourceAlert.title')"
                 >
-                    <p class="text-sm whitespace-pre-line">
-                        {{ currentSourceDescription }}
-                    </p>
+                    <div class="leading-relaxed whitespace-pre-line opacity-90">
+                        <i18n-t
+                            v-if="
+                                dataSource === 'zsjy' || dataSource === 'plan'
+                            "
+                            :keypath="
+                                dataSource === 'zsjy'
+                                    ? 'pages.volunteer.dataSource.zsjyDescription'
+                                    : 'pages.volunteer.dataSource.planDescription'
+                            "
+                            tag="span"
+                        >
+                            <template #link>
+                                <a
+                                    href="https://zsjy.jxufe.edu.cn/"
+                                    target="_blank"
+                                    class="font-medium text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary-600 hover:decoration-primary"
+                                    >{{
+                                        $t(
+                                            "pages.volunteer.dataSource.zsjyLinkText",
+                                        )
+                                    }}</a
+                                >
+                            </template>
+                        </i18n-t>
+                        <span v-else>
+                            {{ currentSourceDescription }}
+                        </span>
+                    </div>
                 </AnzuAlert>
 
                 <div
@@ -407,14 +444,14 @@
                                         {{ t("pages.volunteer.table.match") }}
                                     </th>
                                     <th
-                                        class="w-[9%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
+                                        class="w-[10%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
                                             t("pages.volunteer.table.category")
                                         }}
                                     </th>
                                     <th
-                                        class="w-[9%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
+                                        class="w-[10%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{ t("pages.volunteer.table.batch") }}
                                     </th>
@@ -434,33 +471,33 @@
                                     class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
                                 >
                                     <td
-                                        class="px-3 py-3 text-sm font-medium text-(--md-sys-color-on-surface)"
+                                        class="px-3 py-4 text-sm font-medium text-(--md-sys-color-on-surface)"
                                     >
                                         {{ row.E }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm tabular-nums text-(--md-sys-color-on-surface)"
+                                        class="px-3 py-4 text-sm font-medium tabular-nums text-(--md-sys-color-primary)"
                                     >
                                         {{ row.F }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm tabular-nums text-(--md-sys-color-on-surface)"
+                                        class="px-3 py-4 text-sm font-medium tabular-nums text-(--md-sys-color-secondary)"
                                     >
                                         {{ row.G }}
                                     </td>
                                     <td
                                         v-if="dataSource === 'ranking'"
-                                        class="px-3 py-3 text-sm tabular-nums text-(--md-sys-color-on-surface)"
-                                    >
-                                        {{ row.J }}
-                                    </td>
-                                    <td
-                                        v-if="dataSource === 'ranking'"
-                                        class="px-3 py-3 text-sm tabular-nums text-(--md-sys-color-on-surface)"
+                                        class="px-3 py-4 text-sm font-medium tabular-nums text-(--md-sys-color-primary)"
                                     >
                                         {{ row.I }}
                                     </td>
-                                    <td v-if="showMatchCol" class="px-3 py-3">
+                                    <td
+                                        v-if="dataSource === 'ranking'"
+                                        class="px-3 py-4 text-sm font-medium tabular-nums text-(--md-sys-color-secondary)"
+                                    >
+                                        {{ row.J }}
+                                    </td>
+                                    <td v-if="showMatchCol" class="px-3 py-4">
                                         <span
                                             class="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap"
                                             :class="matchBadgeClass(row)"
@@ -469,17 +506,17 @@
                                         </span>
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)"
+                                        class="px-3 py-4 text-sm whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{ row.D }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)"
+                                        class="px-3 py-4 text-sm whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{ row.C }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)"
+                                        class="px-3 py-4 text-sm text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{ row.H }}
                                     </td>
@@ -535,29 +572,29 @@
                                     class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
                                 >
                                     <td
-                                        class="px-3 py-3 text-sm font-medium text-(--md-sys-color-on-surface)"
+                                        class="px-3 py-4 text-sm font-medium text-(--md-sys-color-on-surface)"
                                     >
                                         {{ row.C }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm tabular-nums text-(--md-sys-color-on-surface-variant)"
+                                        class="px-3 py-4 text-sm tabular-nums text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{ row.D }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)"
+                                        class="px-3 py-4 text-sm whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{ row.F }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm font-semibold tabular-nums text-(--md-sys-color-on-surface)"
+                                        class="px-3 py-4 text-sm font-semibold tabular-nums text-(--md-sys-color-primary)"
                                     >
                                         {{ row.G }}
                                     </td>
                                     <td
-                                        class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)"
+                                        class="px-3 py-4 text-sm text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{ row.E }}
+                                        {{ row.H }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -570,7 +607,7 @@
                         <article
                             v-for="(row, idx) in paginatedResults"
                             :key="row._id || `mobile-${idx}`"
-                            class="rounded-xl bg-(--md-sys-color-surface-container) p-4"
+                            class="py-3"
                         >
                             <div class="flex items-start justify-between gap-2">
                                 <div class="space-y-1">
@@ -711,6 +748,7 @@
                             v-if="totalPages > 1"
                             :total-pages="totalPages"
                             :current-page="currentPage"
+                            :loading="dataLoading"
                         />
                     </div>
                 </div>
@@ -720,16 +758,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "#imports";
 import { useI18n } from "vue-i18n";
 import {
     MagnifyingGlassIcon,
     ExclamationTriangleIcon,
+    ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 import AnzuAlert from "@/components/AnzuAlert.vue";
 import AnzuButton from "@/components/AnzuButton.vue";
+import AnzuButtonGroup from "@/components/AnzuButtonGroup.vue";
 import AnzuComboBox from "@/components/AnzuComboBox.vue";
+import AnzuInput from "@/components/AnzuInput.vue";
 import AnzuPagination from "@/components/AnzuPagination.vue";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
 
@@ -794,8 +835,8 @@ const selectedYear = ref<string | null>(null);
 const selectedProvince = ref<string | null>(null);
 const selectedCategory = ref<string | null>(null);
 const selectedPlanType = ref<string | null>(null);
-const userScore = ref<number | null>(null);
-const userRanking = ref<number | null>(null);
+const userScore = ref<number | string | undefined>(undefined);
+const userRanking = ref<number | string | undefined>(undefined);
 
 const sortKey = ref<"maxScore" | "minScore" | null>(null);
 const sortDir = ref<"asc" | "desc">("desc");
@@ -826,9 +867,7 @@ const dataSources = computed<{ label: string; value: DataSource }[]>(() => [
 const currentSourceDescription = computed(() => {
     if (dataSource.value === "ranking")
         return t("pages.volunteer.dataSource.rankingDescription");
-    if (dataSource.value === "plan")
-        return t("pages.volunteer.dataSource.planDescription");
-    return t("pages.volunteer.dataSource.zsjyDescription");
+    return "";
 });
 
 const availablePlanTypes = computed(() => {
@@ -867,18 +906,22 @@ const parseScore = (row: EnrollRow, key: string): number => {
 };
 
 const getMatchStatus = (row: EnrollRow): MatchStatus => {
-    if (userRanking.value && dataSource.value === "ranking") {
+    if (
+        userRanking.value !== undefined &&
+        userRanking.value !== "" &&
+        dataSource.value === "ranking"
+    ) {
         const bestRank = Math.min(parseScore(row, "I"), parseScore(row, "J"));
         const worstRank = Math.max(parseScore(row, "I"), parseScore(row, "J"));
         if (worstRank === 0) return "far";
-        const r = userRanking.value;
+        const r = Number(userRanking.value);
         if (r <= bestRank) return "safe";
         if (r <= worstRank) return "match";
         if (r <= Math.round(worstRank * 1.05)) return "reach";
         return "far";
     }
-    if (!userScore.value) return "far";
-    const s = userScore.value;
+    if (userScore.value === undefined || userScore.value === "") return "far";
+    const s = Number(userScore.value);
     const minS = parseScore(row, "G");
     const maxS = parseScore(row, "F");
     if (s >= maxS) return "safe";
@@ -893,7 +936,12 @@ const results = computed(() => {
         const key = sortKey.value === "maxScore" ? "F" : "G";
         const dir = sortDir.value === "desc" ? -1 : 1;
         rows.sort((a, b) => (parseScore(a, key) - parseScore(b, key)) * dir);
-    } else if (userRanking.value || userScore.value) {
+    } else if (
+        (userRanking.value !== undefined &&
+            userRanking.value !== "" &&
+            dataSource.value === "ranking") ||
+        (userScore.value !== undefined && userScore.value !== "")
+    ) {
         rows.sort((a, b) => {
             const aStatus = getMatchStatus(a);
             const bStatus = getMatchStatus(b);
@@ -906,20 +954,22 @@ const results = computed(() => {
             const oa = order[aStatus];
             const ob = order[bStatus];
             if (oa !== ob) return oa - ob;
-            if (userRanking.value && dataSource.value === "ranking") {
+
+            if (
+                userRanking.value !== undefined &&
+                userRanking.value !== "" &&
+                dataSource.value === "ranking"
+            ) {
+                const r = Number(userRanking.value);
                 const aWorst = Math.max(parseScore(a, "I"), parseScore(a, "J"));
                 const bWorst = Math.max(parseScore(b, "I"), parseScore(b, "J"));
-                return (
-                    Math.abs(userRanking.value - aWorst) -
-                    Math.abs(userRanking.value - bWorst)
-                );
+                return Math.abs(r - aWorst) - Math.abs(r - bWorst);
             }
+
+            const s = Number(userScore.value);
             const aMin = parseScore(a, "G");
             const bMin = parseScore(b, "G");
-            return (
-                Math.abs(userScore.value! - aMin) -
-                Math.abs(userScore.value! - bMin)
-            );
+            return Math.abs(s - aMin) - Math.abs(s - bMin);
         });
     }
     return rows;
@@ -986,8 +1036,10 @@ const showMatchCol = computed(
     () =>
         dataSource.value !== "plan" &&
         !!(
-            userScore.value ||
-            (userRanking.value && dataSource.value === "ranking")
+            (userScore.value !== undefined && userScore.value !== "") ||
+            (userRanking.value !== undefined &&
+                userRanking.value !== "" &&
+                dataSource.value === "ranking")
         ),
 );
 
@@ -1031,23 +1083,25 @@ const matchBadgeClass = (row: EnrollRow) => {
 };
 
 const matchLabel = (row: EnrollRow): string => {
-    if (userRanking.value && dataSource.value === "ranking") {
+    if (
+        userRanking.value !== undefined &&
+        userRanking.value !== "" &&
+        dataSource.value === "ranking"
+    ) {
         const s = getMatchStatus(row);
         const bestRank = Math.min(parseScore(row, "I"), parseScore(row, "J"));
         const worstRank = Math.max(parseScore(row, "I"), parseScore(row, "J"));
-        const diffNum =
-            s === "safe"
-                ? bestRank - userRanking.value!
-                : worstRank - userRanking.value!;
+        const r = Number(userRanking.value);
+        const diffNum = s === "safe" ? bestRank - r : worstRank - r;
         const diffStr = diffNum > 0 ? `+${diffNum}` : `${diffNum}`;
         return `${t(`pages.volunteer.status.${s}`)} ${diffStr}`;
     }
-    if (!userScore.value) return "";
+    if (userScore.value === undefined || userScore.value === "") return "";
     const s = getMatchStatus(row);
     const minS = parseScore(row, "G");
     const maxS = parseScore(row, "F");
-    const diffNum =
-        s === "safe" ? userScore.value! - maxS : userScore.value! - minS;
+    const score = Number(userScore.value);
+    const diffNum = s === "safe" ? score - maxS : score - minS;
     const diffStr = diffNum > 0 ? `+${diffNum}` : `${diffNum}`;
     return `${t(`pages.volunteer.status.${s}`)} ${diffStr}`;
 };
@@ -1155,7 +1209,8 @@ const queryData = async () => {
                 }
                 allRows = allRows.concat(resp.data.list);
                 total = resp.data.total;
-                if (allRows.length >= total || resp.data.list.length === 0) break;
+                if (allRows.length >= total || resp.data.list.length === 0)
+                    break;
                 page += 1;
             }
         } else {
@@ -1177,7 +1232,8 @@ const queryData = async () => {
                 }
                 allRows = allRows.concat(resp.data.list);
                 total = resp.data.total;
-                if (allRows.length >= total || resp.data.list.length === 0) break;
+                if (allRows.length >= total || resp.data.list.length === 0)
+                    break;
                 page += 1;
             }
         }
@@ -1205,12 +1261,11 @@ const queryData = async () => {
 
 const resetFilters = () => {
     selectedYear.value = "2025";
-    selectedProvince.value =
-        dataSource.value === "plan" ? "江西" : "江西省";
+    selectedProvince.value = dataSource.value === "plan" ? "江西" : "江西省";
     selectedCategory.value = null;
     selectedPlanType.value = null;
-    userScore.value = null;
-    userRanking.value = null;
+    userScore.value = undefined;
+    userRanking.value = undefined;
     sortKey.value = null;
     rawResults.value = [];
     hasQueried.value = false;
@@ -1258,6 +1313,15 @@ const onProvinceChange = () => {
         }
     }
 };
+
+watch(
+    () => route.query.page,
+    () => {
+        requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    },
+);
 
 onMounted(() => {
     fetchConfig();
