@@ -24,7 +24,6 @@
                     :cy="size / 2"
                     :r="normalizedRadius"
                     fill="none"
-                    :stroke="props.primaryColor"
                     :stroke-width="strokeWidth"
                     pathLength="100"
                     stroke-linecap="round"
@@ -48,7 +47,6 @@
                 :cy="size / 2"
                 :r="normalizedRadius"
                 fill="none"
-                :stroke="trackColor"
                 :stroke-width="strokeWidth"
                 pathLength="100"
                 style="
@@ -65,7 +63,6 @@
                 :cy="size / 2"
                 :r="normalizedRadius"
                 fill="none"
-                :stroke="props.primaryColor"
                 :stroke-width="strokeWidth"
                 pathLength="100"
                 stroke-linecap="round"
@@ -94,7 +91,6 @@
                             :width="iconSize"
                             :height="iconSize"
                             fill="none"
-                            :stroke="props.primaryColor"
                             stroke-width="2.5"
                             viewBox="0 0 24 24"
                             style="stroke: var(--md-sys-color-primary)"
@@ -108,7 +104,6 @@
                         <span
                             v-else-if="status === 'default'"
                             class="text-xs font-medium"
-                            :style="{ color: props.primaryColor }"
                             style="color: var(--md-sys-color-primary)"
                         >
                             {{ Math.round(progress) }}%
@@ -183,10 +178,6 @@ const loadingRingStyle = computed(() => ({
 const determinateRingStyle = computed(() => ({
     "--ring-progress-duration": `${progressAnimationDuration.value}ms`,
 }));
-
-const trackColor = computed(
-    () => `color-mix(in srgb, ${props.primaryColor} 18%, transparent)`,
-);
 
 const effectiveProgress = computed(() => {
     if (props.status === "success") return 100;
