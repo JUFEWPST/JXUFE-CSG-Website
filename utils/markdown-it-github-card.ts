@@ -19,7 +19,7 @@ const RESERVED_PATHS = new Set([
     "discussions", "topics", "trending", "collections", "events", "about",
     "blog", "contact", "security", "pull", "issues", "pulls", "releases",
     "tags", "tree", "blob", "commit", "commits", "watchers", "stargazers",
-    "forks", "branches", "account", "copilot",
+    "forks", "branches", "account", "copilot", "orgs",
 ]);
 
 const getLinkKey = (link: ParsedGithubLink): string => {
