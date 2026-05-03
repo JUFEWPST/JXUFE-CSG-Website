@@ -44,6 +44,9 @@
                     class="hover:text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-on-surface-variant)/8 rounded-md px-2 py-1 -mx-2 transition-all duration-200 flex items-center gap-1.5 cursor-pointer font-medium"
                     @click.prevent="handleClick(item, index)"
                     itemprop="item"
+                    itemscope
+                    itemtype="https://schema.org/Thing"
+                    :itemid="getItemUrl(item, index)"
                 >
                     <component
                         v-if="item.icon"
@@ -61,6 +64,9 @@
                     "
                     @click="handleClick(item, index)"
                     itemprop="item"
+                    itemscope
+                    itemtype="https://schema.org/Thing"
+                    :itemid="getItemUrl(item, index)"
                 >
                     <component
                         v-if="item.icon"
@@ -94,9 +100,20 @@ export interface BreadcrumbItem {
     icon?: Component;
 }
 
-defineProps<{
+const props = defineProps<{
     items: BreadcrumbItem[];
 }>();
+
+const route = useRoute();
+const config = useRuntimeConfig();
+
+const getItemUrl = (item: BreadcrumbItem, index: number) => {
+    const base = config.public.siteUrl;
+    if (index === props.items.length - 1) {
+        return base + route.fullPath;
+    }
+    return item.to ? base + item.to : base + route.fullPath;
+};
 </script>
 
 <style scoped>
