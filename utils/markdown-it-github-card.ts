@@ -12,6 +12,16 @@ interface ParsedGithubLink {
     tag?: string;
 }
 
+const RESERVED_PATHS = new Set([
+    "login", "logout", "signup", "settings", "notifications", "explore",
+    "marketplace", "sponsors", "codespaces", "organizations", "pricing",
+    "features", "new", "import", "search", "dashboard", "stars", "gists",
+    "discussions", "topics", "trending", "collections", "events", "about",
+    "blog", "contact", "security", "pull", "issues", "pulls", "releases",
+    "tags", "tree", "blob", "commit", "commits", "watchers", "stargazers",
+    "forks", "branches", "account", "copilot",
+]);
+
 const getLinkKey = (link: ParsedGithubLink): string => {
     return [
         link.type,
@@ -40,7 +50,7 @@ const parseGithubLink = (href: string): ParsedGithubLink | null => {
         .filter(Boolean);
 
     const owner = segments[0];
-    if (!owner) return null;
+    if (!owner || RESERVED_PATHS.has(owner.toLowerCase())) return null;
 
     if (segments.length === 1) {
         return {
