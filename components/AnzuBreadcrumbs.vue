@@ -108,11 +108,10 @@ const route = useRoute();
 const config = useRuntimeConfig();
 
 const getItemUrl = (item: BreadcrumbItem, index: number) => {
-    const base = config.public.siteUrl;
     if (index === props.items.length - 1) {
-        return base + route.fullPath;
+        return new URL(route.path, config.public.siteUrl).toString();
     }
-    return item.to ? base + item.to : base + route.fullPath;
+    return new URL(item.to || route.path, config.public.siteUrl).toString();
 };
 </script>
 
