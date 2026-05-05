@@ -100,7 +100,7 @@ const panelBaseClass = computed(() => {
         props.widthClass,
         "origin-top-right",
         "overflow-hidden",
-        "rounded-md",
+        "rounded-lg",
         "border",
         "border-(--md-sys-color-outline-variant)/50",
         "bg-(--md-sys-color-surface-container)",

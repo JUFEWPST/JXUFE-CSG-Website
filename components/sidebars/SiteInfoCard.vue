@@ -18,7 +18,7 @@
             <ul class="space-y-2">
                 <li class="flex items-center gap-2">
                     <div
-                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-(--md-sys-color-secondary-container)"
                     >
                         <MapPinIcon
                             class="h-4 w-4 text-(--md-sys-color-primary)"
@@ -33,7 +33,7 @@
 
                 <li class="flex items-center gap-2">
                     <div
-                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-(--md-sys-color-secondary-container)"
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-(--md-sys-color-secondary-container)"
                     >
                         <EnvelopeIcon
                             class="h-4 w-4 text-(--md-sys-color-primary)"

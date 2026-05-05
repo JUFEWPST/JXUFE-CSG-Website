@@ -12,7 +12,7 @@
         >
             <div class="flex min-w-0 flex-1 items-center gap-3">
                 <div
-                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition-colors"
+                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors"
                     :class="[
                         node.is_container
                             ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'

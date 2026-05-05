@@ -80,7 +80,7 @@ const setTheme = (nextIsDark: boolean) => {
                     <div class="grid grid-cols-2 gap-2">
                         <button
                             type="button"
-                            class="flex items-center justify-center gap-2 rounded-md px-2 py-2 text-sm transition-colors"
+                            class="flex items-center justify-center gap-2 rounded-lg px-2 py-2 text-sm transition-colors"
                             :class="[
                                 !isDark
                                     ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
@@ -94,7 +94,7 @@ const setTheme = (nextIsDark: boolean) => {
 
                         <button
                             type="button"
-                            class="flex items-center justify-center gap-2 rounded-md px-2 py-2 text-sm transition-colors"
+                            class="flex items-center justify-center gap-2 rounded-lg px-2 py-2 text-sm transition-colors"
                             :class="[
                                 isDark
                                     ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
@@ -156,7 +156,7 @@ const setTheme = (nextIsDark: boolean) => {
                                 v-for="theme in Themes"
                                 :key="theme.name"
                                 @click="selectPreset(theme.color)"
-                                class="group flex w-full items-center rounded-md px-2 py-1.5 transition-colors hover:bg-(--md-sys-color-secondary-container)"
+                                class="group flex w-full items-center rounded-lg px-2 py-1.5 transition-colors hover:bg-(--md-sys-color-secondary-container)"
                                 :class="{
                                     'bg-(--md-sys-color-secondary-container)':
                                         primaryColor === theme.color,

@@ -4,7 +4,7 @@
         ref="buttonRef"
         class="relative inline-flex min-w-16 cursor-pointer items-center justify-center gap-2 overflow-hidden text-sm font-medium transition-[background-color,border-color,color,box-shadow,opacity] duration-200 ease-out outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--md-sys-color-primary)/20 select-none"
         :class="[
-            buttonGroupClasses ? '' : 'rounded-md',
+            buttonGroupClasses ? '' : 'rounded-lg',
 
             hasDefault
                 ? sizeClasses[effectiveSize]

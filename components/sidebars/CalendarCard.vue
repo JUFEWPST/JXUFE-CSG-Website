@@ -107,7 +107,7 @@
 
         <!-- 今日状态卡片 -->
         <div
-            class="mt-1 rounded-md border border-(--md-sys-color-outline-variant)/60 bg-(--md-sys-color-surface-container-lowest) px-3 py-2 text-xs text-(--md-sys-color-on-surface-variant)"
+            class="mt-1 rounded-lg border border-(--md-sys-color-outline-variant)/60 bg-(--md-sys-color-surface-container-lowest) px-3 py-2 text-xs text-(--md-sys-color-on-surface-variant)"
         >
             <div class="flex items-center justify-between">
                 <span class="font-medium text-(--md-sys-color-on-surface)">
@@ -383,7 +383,7 @@ const todayStatus = computed<TodayStatus>(() => {
 
 function dayClasses(day: CalendarDayMeta): string {
     const classes = [
-        "w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center text-[12px] sm:text-[13px] select-none transition-colors duration-150 relative",
+        "w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-[12px] sm:text-[13px] select-none transition-colors duration-150 relative",
     ];
 
     if (day.isToday) {

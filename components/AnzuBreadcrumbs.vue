@@ -41,7 +41,7 @@
                 <NuxtLink
                     v-if="item.to && index < items.length - 1"
                     :to="item.to"
-                    class="hover:text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-on-surface-variant)/8 rounded-md px-2 py-1 -mx-2 transition-all duration-200 flex items-center gap-1.5 cursor-pointer font-medium"
+                    class="hover:text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-on-surface-variant)/8 rounded-lg px-2 py-1 -mx-2 transition-all duration-200 flex items-center gap-1.5 cursor-pointer font-medium"
                     @click.prevent="handleClick(item, index)"
                     itemprop="item"
                     itemscope

@@ -17,7 +17,7 @@
             <button
                 ref="triggerRef"
                 type="button"
-                class="flex w-full min-w-40 items-center justify-between gap-2 rounded-md border border-(--md-sys-color-outline-variant) px-3 py-2 text-sm text-(--md-sys-color-on-surface) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                class="flex w-full min-w-40 items-center justify-between gap-2 rounded-lg border border-(--md-sys-color-outline-variant) px-3 py-2 text-sm text-(--md-sys-color-on-surface) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
                 @click="toggleMenu"
                 :aria-label="ariaLabel"
                 :aria-expanded="isOpen"
@@ -53,7 +53,7 @@
                 <div
                     v-if="isOpen"
                     ref="menuRef"
-                    class="shadow-center-sm fixed z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-md bg-(--md-sys-color-surface-container) ring-1 ring-black/5"
+                    class="shadow-center-sm fixed z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-(--md-sys-color-surface-container) ring-1 ring-black/5"
                     :class="menuWidthClass"
                     :style="menuPositionStyle"
                     role="listbox"

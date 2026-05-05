@@ -96,7 +96,7 @@ defineExpose({
             <div
                 v-for="notification in notifications"
                 :key="notification.id"
-                class="relative mb-3 w-80 overflow-hidden rounded-md border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)"
+                class="relative mb-3 w-80 overflow-hidden rounded-lg border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)"
                 :class="{
                     'min-h-16': !notification.actions,
                     'min-h-24': notification.actions,

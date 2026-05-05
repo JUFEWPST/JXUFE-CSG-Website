@@ -7,7 +7,7 @@
             <div class="flex items-center gap-2">
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)"
+                    class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)"
                     @click="showAll = !showAll"
                 >
                     {{
@@ -18,7 +18,7 @@
                 </button>
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1 rounded-md p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-(--md-sys-color-secondary-container)"
+                    class="inline-flex items-center gap-1 rounded-lg p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-(--md-sys-color-secondary-container)"
                     @click="refresh"
                     :title="t('common.actions.reload')"
                 >
@@ -126,7 +126,7 @@
                                 <img
                                     :src="event.比赛标志"
                                     :alt="event.比赛名称"
-                                    class="h-8 w-8 rounded-md object-cover"
+                                    class="h-8 w-8 rounded-lg object-cover"
                                     @error="handleImageError"
                                 />
                             </div>
@@ -209,7 +209,7 @@
                                 :href="event.比赛链接"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)"
+                                class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)"
                                 :title="t('pages.ctf.events.table.join')"
                             >
                                 <ArrowTopRightOnSquareIcon

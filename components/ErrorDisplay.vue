@@ -27,7 +27,7 @@
             <!-- Summary blocks -->
             <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div
-                    class="rounded-md border border-(--md-sys-color-outline-variant) p-4"
+                    class="rounded-lg border border-(--md-sys-color-outline-variant) p-4"
                 >
                     <h3
                         class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
@@ -42,7 +42,7 @@
                 </div>
 
                 <div
-                    class="rounded-md border border-(--md-sys-color-outline-variant) p-4"
+                    class="rounded-lg border border-(--md-sys-color-outline-variant) p-4"
                 >
                     <h3
                         class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
@@ -57,7 +57,7 @@
                 </div>
 
                 <div
-                    class="rounded-md border border-(--md-sys-color-outline-variant) p-4 sm:col-span-2"
+                    class="rounded-lg border border-(--md-sys-color-outline-variant) p-4 sm:col-span-2"
                 >
                     <h3
                         class="text-sm font-semibold text-(--md-sys-color-on-surface-variant)"
@@ -74,7 +74,7 @@
 
             <!-- Details -->
             <details
-                class="mt-6 rounded-md border border-(--md-sys-color-outline-variant) p-4"
+                class="mt-6 rounded-lg border border-(--md-sys-color-outline-variant) p-4"
             >
                 <summary
                     class="cursor-pointer select-none text-sm font-semibold text-(--md-sys-color-primary) outline-none"
@@ -82,7 +82,7 @@
                     错误详情
                 </summary>
                 <pre
-                    class="mt-3 overflow-x-auto rounded-md border border-(--md-sys-color-outline-variant) p-3 font-mono text-xs text-(--md-sys-color-on-surface-variant)"
+                    class="mt-3 overflow-x-auto rounded-lg border border-(--md-sys-color-outline-variant) p-3 font-mono text-xs text-(--md-sys-color-on-surface-variant)"
                     >{{ formattedErrorData }}</pre
                 >
             </details>

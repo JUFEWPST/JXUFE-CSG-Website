@@ -4,7 +4,7 @@
             <button
                 type="button"
                 @click="handleChange(option.value)"
-                class="cursor-pointer rounded-md px-2 py-1 text-[11px] font-medium transition-[background-color,color] duration-200 ease-out outline-none focus-visible:ring-2 focus-visible:ring-(--md-sys-color-primary)/20"
+                class="cursor-pointer rounded-lg px-2 py-1 text-[11px] font-medium transition-[background-color,color] duration-200 ease-out outline-none focus-visible:ring-2 focus-visible:ring-(--md-sys-color-primary)/20"
                 :class="[
                     modelValue === option.value
                         ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'

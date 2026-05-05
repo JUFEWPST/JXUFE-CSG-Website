@@ -212,7 +212,7 @@
                                         ).children"
                                         :key="child.path"
                                         :to="child.path"
-                                        class="block rounded-md px-3 py-2 text-sm transition-colors duration-200"
+                                        class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
                                         :class="[
                                             route.path === child.path
                                                 ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
@@ -286,7 +286,7 @@
                                     <div v-if="'children' in link" class="p-1">
                                         <NuxtLink
                                             :to="link.defaultPath || link.path"
-                                            class="block rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200"
+                                            class="block rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200"
                                             :class="[
                                                 isActive(link)
                                                     ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
@@ -313,7 +313,7 @@
                                                 ).children"
                                                 :key="child.path"
                                                 :to="child.path"
-                                                class="block rounded-md px-3 py-2 text-sm transition-colors duration-200"
+                                                class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
                                                 :class="[
                                                     route.path === child.path
                                                         ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
@@ -329,7 +329,7 @@
                                     <NuxtLink
                                         v-else
                                         :to="link.path"
-                                        class="block rounded-md px-3 py-2 text-sm transition-colors duration-200"
+                                        class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
                                         :class="[
                                             isActive(link)
                                                 ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
@@ -407,7 +407,7 @@
                     >
                         <div v-if="'children' in link" class="mb-1">
                             <div
-                                class="mobile-nav-link flex w-full items-center justify-between rounded-md p-2 transition-colors"
+                                class="mobile-nav-link flex w-full items-center justify-between rounded-lg p-2 transition-colors"
                                 :class="
                                     isActive(link)
                                         ? 'bg-(--md-sys-color-surface-container-high) font-medium'
@@ -467,7 +467,7 @@
                                     ).children"
                                     :key="child.path"
                                     :to="child.path"
-                                    class="block rounded-md px-3 py-2 text-sm transition-colors"
+                                    class="block rounded-lg px-3 py-2 text-sm transition-colors"
                                     :class="{
                                         'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)':
                                             route.path === child.path,
@@ -484,7 +484,7 @@
                         <NuxtLink
                             v-else
                             :to="link.path"
-                            class="mobile-nav-link mb-1 block rounded-md p-2 transition-colors"
+                            class="mobile-nav-link mb-1 block rounded-lg p-2 transition-colors"
                             :class="[
                                 isActive(link)
                                     ? 'bg-(--md-sys-color-surface-container-high) font-medium'
@@ -767,8 +767,8 @@ header {
 }
 
 .nav-link-block {
-    @apply relative flex transform cursor-pointer items-center overflow-hidden rounded-md px-2 py-2 text-sm whitespace-nowrap transition-all duration-200 ease-out will-change-transform lg:px-4 lg:text-base;
-    @apply before:absolute before:inset-0 before:z-[-1] before:scale-[0.8] before:rounded-md before:opacity-0 before:backdrop-blur before:transition-all before:duration-300 before:ease-out;
+    @apply relative flex transform cursor-pointer items-center overflow-hidden rounded-lg px-2 py-2 text-sm whitespace-nowrap transition-all duration-200 ease-out will-change-transform lg:px-4 lg:text-base;
+    @apply before:absolute before:inset-0 before:z-[-1] before:scale-[0.8] before:rounded-lg before:opacity-0 before:backdrop-blur before:transition-all before:duration-300 before:ease-out;
     @apply before:origin-center;
     @apply hover:before:scale-100 hover:before:opacity-100;
     @apply before:bg-(--md-sys-color-secondary-container)/40 dark:before:bg-(--md-sys-color-secondary-container)/70;

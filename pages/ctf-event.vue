@@ -336,7 +336,7 @@
                                         class="border-b border-(--md-sys-color-outline-variant)/60 text-left"
                                     >
                                         <th
-                                            class="w-[42%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
+                                            class="w-[42%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
                                         >
                                             {{
                                                 t(
@@ -345,14 +345,14 @@
                                             }}
                                         </th>
                                         <th
-                                            class="w-[20%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
+                                            class="w-[20%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
                                         >
                                             {{
                                                 t("pages.ctf.events.table.time")
                                             }}
                                         </th>
                                         <th
-                                            class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
+                                            class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
                                         >
                                             {{
                                                 t(
@@ -361,7 +361,7 @@
                                             }}
                                         </th>
                                         <th
-                                            class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
+                                            class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
                                         >
                                             {{
                                                 t(
@@ -370,7 +370,7 @@
                                             }}
                                         </th>
                                         <th
-                                            class="w-[18%] px-3 py-2 text-right text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant)"
+                                            class="w-[18%] px-3 py-2 text-right text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
                                         >
                                             {{
                                                 t(
@@ -415,7 +415,7 @@
                                                     }}
                                                 </p>
                                                 <p
-                                                    class="text-xs text-(--md-sys-color-on-surface-variant)"
+                                                    class="text-xs text-(--md-sys-color-on-surface-variant) "
                                                 >
                                                     {{
                                                         t(
@@ -426,11 +426,11 @@
                                             </div>
                                         </td>
                                         <td
-                                            class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant)"
+                                            class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant) truncate"
                                         >
                                             {{ formatDurationFromEvent(event) }}
                                         </td>
-                                        <td class="px-3 py-3">
+                                        <td class="px-3 py-3 truncate">
                                             <span
                                                 class="inline-flex items-center justify-center"
                                             >
