@@ -9,7 +9,7 @@
             >
                 <AnzuProgressRing :size="56" status="loading" />
                 <p class="text-sm sm:text-base">
-                    {{ t("pages.volunteer.loading") }}
+                    {{ t("pages.admissionRef.loading") }}
                 </p>
             </div>
 
@@ -21,7 +21,7 @@
                     <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
                     <div class="space-y-2">
                         <p class="font-semibold">
-                            {{ t("pages.volunteer.error") }}
+                            {{ t("pages.admissionRef.error") }}
                         </p>
                         <p class="text-sm opacity-80">{{ configError }}</p>
                     </div>
@@ -41,7 +41,7 @@
                         <label
                             class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
                         >
-                            {{ t("pages.volunteer.filters.dataSource") }}
+                            {{ t("pages.admissionRef.filters.dataSource") }}
                         </label>
                         <AnzuSelector
                             v-model="dataSource"
@@ -57,16 +57,16 @@
                                 <label
                                     class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
                                 >
-                                    {{ t("pages.volunteer.filters.year") }}
+                                    {{ t("pages.admissionRef.filters.year") }}
                                 </label>
                                 <AnzuComboBox
                                     v-model="selectedYear"
                                     :items="availableYears"
                                     :placeholder="
-                                        t('pages.volunteer.placeholder.year')
+                                        t('pages.admissionRef.placeholder.year')
                                     "
                                     :search-placeholder="
-                                        t('pages.volunteer.placeholder.year')
+                                        t('pages.admissionRef.placeholder.year')
                                     "
                                     :empty-text="t('common.items.empty')"
                                     menu-width-class="w-full"
@@ -79,19 +79,19 @@
                                 <label
                                     class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
                                 >
-                                    {{ t("pages.volunteer.filters.province") }}
+                                    {{ t("pages.admissionRef.filters.province") }}
                                 </label>
                                 <AnzuComboBox
                                     v-model="selectedProvince"
                                     :items="availableProvinces"
                                     :placeholder="
                                         t(
-                                            'pages.volunteer.placeholder.province',
+                                            'pages.admissionRef.placeholder.province',
                                         )
                                     "
                                     :search-placeholder="
                                         t(
-                                            'pages.volunteer.placeholder.province',
+                                            'pages.admissionRef.placeholder.province',
                                         )
                                     "
                                     :empty-text="t('common.items.empty')"
@@ -108,10 +108,10 @@
                                     {{
                                         dataSource === "plan"
                                             ? t(
-                                                  "pages.volunteer.filters.planType",
+                                                  "pages.admissionRef.filters.planType",
                                               )
                                             : t(
-                                                  "pages.volunteer.filters.category",
+                                                  "pages.admissionRef.filters.category",
                                               )
                                     }}
                                 </label>
@@ -121,12 +121,12 @@
                                     :items="availablePlanTypes"
                                     :placeholder="
                                         t(
-                                            'pages.volunteer.placeholder.planType',
+                                            'pages.admissionRef.placeholder.planType',
                                         )
                                     "
                                     :search-placeholder="
                                         t(
-                                            'pages.volunteer.placeholder.planType',
+                                            'pages.admissionRef.placeholder.planType',
                                         )
                                     "
                                     :empty-text="t('common.items.empty')"
@@ -139,12 +139,12 @@
                                     :items="availableCategories"
                                     :placeholder="
                                         t(
-                                            'pages.volunteer.placeholder.category',
+                                            'pages.admissionRef.placeholder.category',
                                         )
                                     "
                                     :search-placeholder="
                                         t(
-                                            'pages.volunteer.placeholder.category',
+                                            'pages.admissionRef.placeholder.category',
                                         )
                                     "
                                     :empty-text="t('common.items.empty')"
@@ -161,7 +161,7 @@
                                 <label
                                     class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
                                 >
-                                    {{ t("pages.volunteer.filters.yourScore") }}
+                                    {{ t("pages.admissionRef.filters.yourScore") }}
                                 </label>
                                 <AnzuInput
                                     v-model.number="userScore"
@@ -170,7 +170,7 @@
                                     max="750"
                                     class="w-full"
                                     :placeholder="
-                                        t('pages.volunteer.placeholder.score')
+                                        t('pages.admissionRef.placeholder.score')
                                     "
                                 />
                             </div>
@@ -183,7 +183,7 @@
                                     class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
                                 >
                                     {{
-                                        t("pages.volunteer.filters.yourRanking")
+                                        t("pages.admissionRef.filters.yourRanking")
                                     }}
                                 </label>
                                 <AnzuInput
@@ -192,7 +192,7 @@
                                     min="1"
                                     class="w-full"
                                     :placeholder="
-                                        t('pages.volunteer.placeholder.ranking')
+                                        t('pages.admissionRef.placeholder.ranking')
                                     "
                                 />
                             </div>
@@ -203,7 +203,7 @@
                                     <ArrowPathIcon class="h-4 w-4" />
                                 </template>
                                 {{
-                                    t("pages.volunteer.filters.reset") || "重置"
+                                    t("pages.admissionRef.filters.reset") || "重置"
                                 }}
                             </AnzuButton>
                             <AnzuButton
@@ -215,7 +215,7 @@
                                 <template #icon>
                                     <MagnifyingGlassIcon class="h-4 w-4" />
                                 </template>
-                                {{ t("pages.volunteer.filters.query") }}
+                                {{ t("pages.admissionRef.filters.query") }}
                             </AnzuButton>
                         </div>
                     </div>
@@ -223,36 +223,10 @@
 
                 <AnzuAlert
                     type="info"
-                    :title="t('pages.volunteer.sourceAlert.title')"
+                    :title="t('pages.admissionRef.sourceAlert.title')"
                 >
                     <div class="leading-relaxed whitespace-pre-line opacity-90">
-                        <i18n-t
-                            v-if="
-                                dataSource === 'zsjy' || dataSource === 'plan'
-                            "
-                            :keypath="
-                                dataSource === 'zsjy'
-                                    ? 'pages.volunteer.dataSource.zsjyDescription'
-                                    : 'pages.volunteer.dataSource.planDescription'
-                            "
-                            tag="span"
-                        >
-                            <template #link>
-                                <a
-                                    href="https://zsjy.jxufe.edu.cn/"
-                                    target="_blank"
-                                    class="font-medium text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary-600 hover:decoration-primary"
-                                    >{{
-                                        $t(
-                                            "pages.volunteer.dataSource.zsjyLinkText",
-                                        )
-                                    }}</a
-                                >
-                            </template>
-                        </i18n-t>
-                        <span v-else>
-                            {{ currentSourceDescription }}
-                        </span>
+                        {{ t("pages.admissionRef.sourceAlert.description") }}
                     </div>
                 </AnzuAlert>
 
@@ -264,7 +238,7 @@
                         class="h-10 w-10 text-(--md-sys-color-on-surface-variant) opacity-40"
                     />
                     <p class="text-sm text-(--md-sys-color-on-surface-variant)">
-                        {{ t("pages.volunteer.selectHint") }}
+                        {{ t("pages.admissionRef.selectHint") }}
                     </p>
                 </div>
 
@@ -274,7 +248,7 @@
                 >
                     <AnzuProgressRing :size="48" status="loading" />
                     <p class="text-sm">
-                        {{ t("pages.volunteer.loading") }}
+                        {{ t("pages.admissionRef.loading") }}
                     </p>
                 </div>
 
@@ -288,7 +262,7 @@
                         />
                         <div class="space-y-2">
                             <p class="font-semibold">
-                                {{ t("pages.volunteer.fetchError") }}
+                                {{ t("pages.admissionRef.fetchError") }}
                             </p>
                             <p class="text-sm opacity-80">{{ dataError }}</p>
                         </div>
@@ -309,12 +283,12 @@
                         <p
                             class="text-base font-medium text-(--md-sys-color-on-surface)"
                         >
-                            {{ t("pages.volunteer.empty") }}
+                            {{ t("pages.admissionRef.empty") }}
                         </p>
                         <p
                             class="text-sm text-(--md-sys-color-on-surface-variant)"
                         >
-                            {{ t("pages.volunteer.emptyHint") }}
+                            {{ t("pages.admissionRef.emptyHint") }}
                         </p>
                     </div>
                 </div>
@@ -329,7 +303,7 @@
                             class="font-medium text-(--md-sys-color-primary)"
                         >
                             {{
-                                t("pages.volunteer.scoreHint", {
+                                t("pages.admissionRef.scoreHint", {
                                     score: userScore,
                                 })
                             }}
@@ -339,7 +313,7 @@
                             class="font-medium text-(--md-sys-color-primary)"
                         >
                             {{
-                                t("pages.volunteer.rankingHint", {
+                                t("pages.admissionRef.rankingHint", {
                                     ranking: userRanking,
                                 })
                             }}
@@ -364,7 +338,7 @@
                                                   : 'w-[30%]'
                                         "
                                     >
-                                        {{ t("pages.volunteer.table.major") }}
+                                        {{ t("pages.admissionRef.table.major") }}
                                     </th>
                                     <th
                                         class="cursor-pointer select-none px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap transition-colors hover:text-(--md-sys-color-primary)"
@@ -379,7 +353,7 @@
                                         @click="toggleSort('maxScore')"
                                     >
                                         {{
-                                            t("pages.volunteer.table.maxScore")
+                                            t("pages.admissionRef.table.maxScore")
                                         }}
                                         <span
                                             v-if="sortKey === 'maxScore'"
@@ -402,7 +376,7 @@
                                         @click="toggleSort('minScore')"
                                     >
                                         {{
-                                            t("pages.volunteer.table.minScore")
+                                            t("pages.admissionRef.table.minScore")
                                         }}
                                         <span
                                             v-if="sortKey === 'minScore'"
@@ -418,7 +392,7 @@
                                     >
                                         {{
                                             t(
-                                                "pages.volunteer.table.maxRanking",
+                                                "pages.admissionRef.table.maxRanking",
                                             )
                                         }}
                                     </th>
@@ -428,7 +402,7 @@
                                     >
                                         {{
                                             t(
-                                                "pages.volunteer.table.minRanking",
+                                                "pages.admissionRef.table.minRanking",
                                             )
                                         }}
                                     </th>
@@ -441,24 +415,24 @@
                                                 : 'w-[14%]'
                                         "
                                     >
-                                        {{ t("pages.volunteer.table.match") }}
+                                        {{ t("pages.admissionRef.table.match") }}
                                     </th>
                                     <th
                                         class="w-[10%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.category")
+                                            t("pages.admissionRef.table.category")
                                         }}
                                     </th>
                                     <th
                                         class="w-[10%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{ t("pages.volunteer.table.batch") }}
+                                        {{ t("pages.admissionRef.table.batch") }}
                                     </th>
                                     <th
                                         class="px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{ t("pages.volunteer.table.notes") }}
+                                        {{ t("pages.admissionRef.table.notes") }}
                                     </th>
                                 </tr>
                             </thead>
@@ -533,33 +507,33 @@
                                     <th
                                         class="w-[30%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{ t("pages.volunteer.table.major") }}
+                                        {{ t("pages.admissionRef.table.major") }}
                                     </th>
                                     <th
                                         class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.majorCode")
+                                            t("pages.admissionRef.table.majorCode")
                                         }}
                                     </th>
                                     <th
                                         class="w-[22%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.planType")
+                                            t("pages.admissionRef.table.planType")
                                         }}
                                     </th>
                                     <th
                                         class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.planCount")
+                                            t("pages.admissionRef.table.planCount")
                                         }}
                                     </th>
                                     <th
                                         class="px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{ t("pages.volunteer.table.notes") }}
+                                        {{ t("pages.admissionRef.table.notes") }}
                                     </th>
                                 </tr>
                             </thead>
@@ -644,7 +618,7 @@
                                         class="text-xs text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.maxScore")
+                                            t("pages.admissionRef.table.maxScore")
                                         }}
                                     </p>
                                     <p
@@ -658,7 +632,7 @@
                                         class="text-xs text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.minScore")
+                                            t("pages.admissionRef.table.minScore")
                                         }}
                                     </p>
                                     <p
@@ -674,7 +648,7 @@
                                         >
                                             {{
                                                 t(
-                                                    "pages.volunteer.table.maxRanking",
+                                                    "pages.admissionRef.table.maxRanking",
                                                 )
                                             }}
                                         </p>
@@ -690,7 +664,7 @@
                                         >
                                             {{
                                                 t(
-                                                    "pages.volunteer.table.minRanking",
+                                                    "pages.admissionRef.table.minRanking",
                                                 )
                                             }}
                                         </p>
@@ -730,7 +704,7 @@
                                         class="text-xs text-(--md-sys-color-on-surface-variant)"
                                     >
                                         {{
-                                            t("pages.volunteer.table.planCount")
+                                            t("pages.admissionRef.table.planCount")
                                         }}
                                     </p>
                                     <p
@@ -802,11 +776,11 @@ const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 usePageMeta({
-    titleKey: "pages.volunteer.title",
-    descriptionKey: "pages.volunteer.meta.description",
+    titleKey: "pages.admissionRef.title",
+    descriptionKey: "pages.admissionRef.meta.description",
     keywords:
         "江西财经大学录取分数,江财志愿填报,高考志愿查询,江财招生,江财录取位次,江西财经大学分数线",
-    canonicalPath: "/volunteer",
+    canonicalPath: "/admission-ref",
     schema: {
         "@type": "WebApplication",
         applicationCategory: "EducationalApplication",
@@ -851,24 +825,18 @@ const rankingCacheLoading = ref(false);
 
 const dataSources = computed<{ label: string; value: DataSource }[]>(() => [
     {
-        label: t("pages.volunteer.dataSource.zsjy"),
+        label: t("pages.admissionRef.dataSource.zsjy"),
         value: "zsjy",
     },
     {
-        label: t("pages.volunteer.dataSource.ranking"),
+        label: t("pages.admissionRef.dataSource.ranking"),
         value: "ranking",
     },
     {
-        label: t("pages.volunteer.dataSource.plan"),
+        label: t("pages.admissionRef.dataSource.plan"),
         value: "plan",
     },
 ]);
-
-const currentSourceDescription = computed(() => {
-    if (dataSource.value === "ranking")
-        return t("pages.volunteer.dataSource.rankingDescription");
-    return "";
-});
 
 const availablePlanTypes = computed(() => {
     const base = planFilterOptions.value["F"] || [];
@@ -1065,7 +1033,7 @@ const paginatedResults = computed(() =>
 );
 
 const summaryText = computed(() =>
-    t("pages.volunteer.summary", { count: results.value.length }),
+    t("pages.admissionRef.summary", { count: results.value.length }),
 );
 
 const matchBadgeClass = (row: EnrollRow) => {
@@ -1094,7 +1062,7 @@ const matchLabel = (row: EnrollRow): string => {
         const r = Number(userRanking.value);
         const diffNum = s === "safe" ? bestRank - r : worstRank - r;
         const diffStr = diffNum > 0 ? `+${diffNum}` : `${diffNum}`;
-        return `${t(`pages.volunteer.status.${s}`)} ${diffStr}`;
+        return `${t(`pages.admissionRef.status.${s}`)} ${diffStr}`;
     }
     if (userScore.value === undefined || userScore.value === "") return "";
     const s = getMatchStatus(row);
@@ -1103,7 +1071,7 @@ const matchLabel = (row: EnrollRow): string => {
     const score = Number(userScore.value);
     const diffNum = s === "safe" ? score - maxS : score - minS;
     const diffStr = diffNum > 0 ? `+${diffNum}` : `${diffNum}`;
-    return `${t(`pages.volunteer.status.${s}`)} ${diffStr}`;
+    return `${t(`pages.admissionRef.status.${s}`)} ${diffStr}`;
 };
 
 const fetchConfig = async () => {
@@ -1141,7 +1109,7 @@ const fetchConfig = async () => {
     } catch (err) {
         console.error(err);
         configError.value =
-            (err as Error).message || t("pages.volunteer.fetchError");
+            (err as Error).message || t("pages.admissionRef.fetchError");
     } finally {
         configLoading.value = false;
     }
@@ -1253,7 +1221,7 @@ const queryData = async () => {
     } catch (err) {
         console.error(err);
         dataError.value =
-            (err as Error).message || t("pages.volunteer.fetchError");
+            (err as Error).message || t("pages.admissionRef.fetchError");
     } finally {
         dataLoading.value = false;
     }

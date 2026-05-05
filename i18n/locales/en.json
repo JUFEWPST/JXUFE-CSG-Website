@@ -12,7 +12,7 @@
         "links": "Useful Links",
         "timeline": "Timeline",
         "ctf": "World CTF Events",
-        "volunteer": "Score Lookup",
+        "admissionRef": "Admission Reference",
         "aboutChildren": {
             "index": "Guild Overview",
             "leaders": "Past Leaders",
@@ -89,11 +89,11 @@
                 }
             }
         },
-        "volunteer": {
-            "title": "Score Lookup",
+        "admissionRef": {
+            "title": "Admission Reference",
             "meta": {
-                "title": "Score Lookup - Cybersecurity Guild of JXUFE",
-                "description": "Look up historical admission scores by province and major for JXUFE, providing reference for college applications."
+                "title": "Admission Reference - Cybersecurity Guild of JXUFE",
+                "description": "Look up historical admission scores, rankings, and enrollment plans by province and major for JXUFE, providing reference for college applications."
             },
             "loading": "Loading data...",
             "error": "Failed to load configuration. Please try again later.",
@@ -127,11 +127,7 @@
             "dataSource": {
                 "zsjy": "Admissions",
                 "ranking": "Guild Extended",
-                "plan": "Admission Plan",
-                "zsjyDescription": "Data sourced from {link}, containing only max/min admission scores without ranking information.",
-                "zsjyLinkText": "JXUFE's official undergraduate admissions website",
-                "rankingDescription": "Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.",
-                "planDescription": "Data sourced from {link}, showing the planned enrollment numbers for each major by province."
+                "plan": "Admission Plan"
             },
             "table": {
                 "major": "Major",
@@ -154,7 +150,8 @@
                 "far": "Far"
             },
             "sourceAlert": {
-                "title": "Data Source"
+                "title": "Data Source",
+                "description": "Admissions: Public admission data from JXUFE's official undergraduate admissions website, containing max/min admission scores by major.\nGuild Extended: Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.\nAdmission Plan: Planned enrollment numbers for each major by province."
             }
         },
         "privacy": {
