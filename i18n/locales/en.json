@@ -12,7 +12,7 @@
         "links": "Useful Links",
         "timeline": "Timeline",
         "ctf": "World CTF Events",
-        "admissionRef": "Admission Reference",
+        "gaokao": "Gaokao Reference",
         "aboutChildren": {
             "index": "Guild Overview",
             "leaders": "Past Leaders",
@@ -89,10 +89,10 @@
                 }
             }
         },
-        "admissionRef": {
-            "title": "Admission Reference",
+        "gaokao": {
+            "title": "Gaokao Reference",
             "meta": {
-                "title": "Admission Reference - Cybersecurity Guild of JXUFE",
+                "title": "Gaokao Reference - Cybersecurity Guild of JXUFE",
                 "description": "Look up historical admission scores, rankings, and enrollment plans by province and major for JXUFE, providing reference for college applications."
             },
             "loading": "Loading data...",
