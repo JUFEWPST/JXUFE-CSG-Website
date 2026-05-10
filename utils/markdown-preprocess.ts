@@ -1,6 +1,6 @@
 type SegmentTransform = (segment: string) => string;
 
-const FENCE_REGEX = /^\s*(`{3,}|~{3,})/;
+const FENCE_REGEX = /^\s*(?:>\s?)?(`{3,}|~{3,})/;
 
 export const transformOutsideFencedBlocks = (
     content: string,
