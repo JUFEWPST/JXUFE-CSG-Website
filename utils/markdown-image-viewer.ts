@@ -1,52 +1,7 @@
-import type MarkdownIt from "markdown-it";
-import type Token from "markdown-it/lib/token.mjs";
-
-const ENV_GROUP_KEY = "__mdImageViewerGroupId";
-const ENV_COUNT_KEY = "__mdImageViewerImageCount";
 const VIEWER_STYLE_ID = "md-image-viewer-style";
-
-type MarkdownRenderEnv = Record<string, unknown> & {
-    [ENV_GROUP_KEY]?: string;
-    [ENV_COUNT_KEY]?: number;
-};
-
-const appendClass = (token: Token, className: string) => {
-    const existing = token.attrGet("class");
-    token.attrSet("class", existing ? `${existing} ${className}` : className);
-};
 
 const createGroupId = () => {
     return `md-gallery-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-};
-
-const markdownItImageViewer = (md: MarkdownIt): void => {
-    const defaultImageRenderer =
-        md.renderer.rules.image ||
-        function (tokens, idx, options, env, slf) {
-            return slf.renderToken(tokens, idx, options);
-        };
-
-    md.renderer.rules.image = (tokens, idx, options, env, slf) => {
-        const token = tokens[idx];
-        if (!token) {
-            return defaultImageRenderer(tokens, idx, options, env, slf);
-        }
-
-        const renderEnv = (env || {}) as MarkdownRenderEnv;
-        if (!renderEnv[ENV_GROUP_KEY]) {
-            renderEnv[ENV_GROUP_KEY] = createGroupId();
-        }
-
-        const imageIndex = Number(renderEnv[ENV_COUNT_KEY] || 0);
-        renderEnv[ENV_COUNT_KEY] = imageIndex + 1;
-
-        token.attrSet("data-md-zoomable", "true");
-        token.attrSet("data-md-img-group", renderEnv[ENV_GROUP_KEY] || "");
-        token.attrSet("data-md-img-index", String(imageIndex));
-        appendClass(token, "md-zoomable-image");
-
-        return defaultImageRenderer(tokens, idx, options, env, slf);
-    };
 };
 
 const ensureViewerStyle = () => {
@@ -238,6 +193,26 @@ export interface MarkdownImageViewerController {
     destroy: () => void;
 }
 
+export const decorateMarkdownImages = (root: HTMLElement) => {
+    const images = Array.from(root.querySelectorAll<HTMLImageElement>("img"));
+    if (!images.length) return;
+
+    const groupId = root.dataset.mdImgGroup || createGroupId();
+    root.dataset.mdImgGroup = groupId;
+
+    let index = 0;
+    images.forEach((image) => {
+        if (image.closest(".md-video-player")) return;
+        if (image.closest(".js-gh-card")) return;
+
+        image.setAttribute("data-md-zoomable", "true");
+        image.setAttribute("data-md-img-group", groupId);
+        image.setAttribute("data-md-img-index", String(index));
+        image.classList.add("md-zoomable-image");
+        index += 1;
+    });
+};
+
 const clamp = (value: number, min: number, max: number) => {
     return Math.min(max, Math.max(min, value));
 };
@@ -384,6 +359,7 @@ export const createMarkdownImageViewerController = (
 
         currentIndex = (index + currentImages.length) % currentImages.length;
         const source = currentImages[currentIndex];
+        if (!source) return;
         const sourceUrl = source.currentSrc || source.getAttribute("src") || "";
         if (!sourceUrl) return;
 
@@ -635,5 +611,3 @@ export const createMarkdownImageViewerController = (
         destroy,
     };
 };
-
-export default markdownItImageViewer;

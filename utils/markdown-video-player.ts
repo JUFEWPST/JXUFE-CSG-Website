@@ -1,13 +1,4 @@
-import type MarkdownIt from "markdown-it";
-import type Token from "markdown-it/lib/token.mjs";
-
 const VIDEO_EXTENSIONS = /\.(mp4|webm|ogg)$/i;
-
-const parseHtmlVideo = (html: string) => {
-    // 提取所有包含 src 的源文件链接，支持 src= 也可以匹配带有 type="video/mp4" 的 source
-    const srcMatch = html.match(/src\s*=\s*["']([^"']+)["']/i);
-    return srcMatch ? srcMatch[1] : null;
-};
 
 const renderVideoPlayer = (src: string, alt: string = "Video") => {
     return `
@@ -60,68 +51,6 @@ const renderVideoPlayer = (src: string, alt: string = "Video") => {
         </button>
     </div>
 </div>`;
-};
-
-const markdownItVideoPlayer = (md: MarkdownIt): void => {
-    const defaultImageRenderer =
-        md.renderer.rules.image ||
-        function (tokens, idx, options, env, slf) {
-            return slf.renderToken(tokens, idx, options);
-        };
-
-    md.renderer.rules.image = (tokens, idx, options, env, slf) => {
-        const token = tokens[idx];
-        if (!token) return defaultImageRenderer(tokens, idx, options, env, slf);
-
-        const src = token.attrGet("src");
-        if (src && VIDEO_EXTENSIONS.test(src)) {
-            const alt = token.content || "Video";
-            return renderVideoPlayer(src, alt);
-        }
-
-        return defaultImageRenderer(tokens, idx, options, env, slf);
-    };
-
-    const defaultHtmlBlockRenderer =
-        md.renderer.rules.html_block ||
-        function (tokens, idx, options, env, slf) {
-            return slf.renderToken(tokens, idx, options);
-        };
-
-    const processHtmlToken = (tokens: Token[], idx: number, options: any, env: any, slf: any, defaultRenderer: any) => {
-        const token = tokens[idx];
-        const content = token.content;
-        if (token && (content.includes("<video") || content.includes("<vedio") || content.includes("<source"))) {
-            let src = parseHtmlVideo(content);
-            if (!src) {
-                const htmlTokens = tokens.filter(t => t.type === "html_inline" || t.type === "html_block");
-                const fullHtml = htmlTokens.map(t => t.content).join(" ");
-                if (fullHtml.includes("<video") || fullHtml.includes("<vedio")) {
-                    src = parseHtmlVideo(fullHtml);
-                    if (src && !content.includes("<video") && !content.includes("<vedio")) {
-                        return "";
-                    }
-                }
-            }
-
-            if (src && (content.includes("<video") || content.includes("<vedio") || token.type === "html_block")) {
-                return renderVideoPlayer(src);
-            }
-        }
-        return defaultRenderer(tokens, idx, options, env, slf);
-    };
-
-    md.renderer.rules.html_block = (tokens, idx, options, env, slf) =>
-        processHtmlToken(tokens, idx, options, env, slf, defaultHtmlBlockRenderer);
-
-    const defaultHtmlInlineRenderer =
-        md.renderer.rules.html_inline ||
-        function (tokens, idx, options, env, slf) {
-            return slf.renderToken(tokens, idx, options);
-        };
-
-    md.renderer.rules.html_inline = (tokens, idx, options, env, slf) =>
-        processHtmlToken(tokens, idx, options, env, slf, defaultHtmlInlineRenderer);
 };
 
 const ensureVideoPlayerStyle = () => {
@@ -227,7 +156,6 @@ const ensureVideoPlayerStyle = () => {
     background: var(--md-sys-color-primary, #4f46e5);
     width: 0%;
     position: relative;
-    /* transition: width 0.1s linear; 取消过渡让手动拖拽更跟手 */
 }
 
 .md-video-progress-input {
@@ -252,7 +180,7 @@ const ensureVideoPlayerStyle = () => {
     transform: translateX(-50%) translateY(4px);
     width: 32px;
     height: 90px;
-    background: rgba(28, 27, 31, 0.9); /* MD3 Dark Surface (#1C1B1F) */
+    background: rgba(28, 27, 31, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--border-radius-base, 12px) / 2);
     display: flex;
@@ -362,6 +290,46 @@ const ensureVideoPlayerStyle = () => {
     document.head.appendChild(style);
 };
 
+const getVideoSrc = (video: HTMLVideoElement): string => {
+    if (video.currentSrc) return video.currentSrc;
+    const direct = video.getAttribute("src");
+    if (direct) return direct;
+    const source = video.querySelector("source");
+    return source?.getAttribute("src") || "";
+};
+
+const replaceWithVideoPlayer = (
+    target: Element,
+    src: string,
+    alt: string = "Video",
+) => {
+    if (!src) return;
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = renderVideoPlayer(src, alt);
+    const player = wrapper.firstElementChild;
+    if (!player) return;
+    target.replaceWith(player);
+};
+
+export const decorateMarkdownVideoEmbeds = (root: HTMLElement) => {
+    const images = Array.from(root.querySelectorAll<HTMLImageElement>("img"));
+    images.forEach((image) => {
+        if (image.closest(".md-video-player")) return;
+        const src = image.getAttribute("src") || "";
+        if (!src || !VIDEO_EXTENSIONS.test(src)) return;
+        const alt = image.getAttribute("alt") || "Video";
+        replaceWithVideoPlayer(image, src, alt);
+    });
+
+    const videos = Array.from(root.querySelectorAll<HTMLVideoElement>("video"));
+    videos.forEach((video) => {
+        if (video.closest(".md-video-player")) return;
+        const src = getVideoSrc(video);
+        if (!src) return;
+        replaceWithVideoPlayer(video, src);
+    });
+};
+
 export interface MarkdownVideoPlayerController {
     destroy: () => void;
     refresh: () => void;
@@ -450,7 +418,7 @@ export const createMarkdownVideoPlayerController = (
                     const bufferedEnd = video.buffered.end(video.buffered.length - 1);
                     const percent = (bufferedEnd / video.duration) * 100;
                     if (progressLoaded) progressLoaded.style.width = `${percent}%`;
-                } catch (e) {
+                } catch {
                     // Ignore index size error
                 }
             };
@@ -562,5 +530,3 @@ export const createMarkdownVideoPlayerController = (
         }
     };
 };
-
-export default markdownItVideoPlayer;

@@ -476,7 +476,7 @@ const registerWikiToc = () => {
         sticky: true,
         showOnMobileBottom: false,
         showOnMobileDrawer: true,
-        scope: "page",
+        scope: "route",
         mutualGroup: "right-context",
         priority: 100,
         when: () => !!content.value && !isFolderView.value,
@@ -487,6 +487,14 @@ const registerWikiToc = () => {
         },
     });
 };
+
+watch(
+    () => route.fullPath,
+    () => {
+        registerWikiToc();
+    },
+    { immediate: true },
+);
 
 const fetchContent = async () => {
     if (!slug.value) return;

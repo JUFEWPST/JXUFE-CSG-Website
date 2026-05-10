@@ -102,7 +102,7 @@ export const useSidebarLayout = () => {
         const scope = config.scope ?? "global";
         const ownerRoutePath = scope === "route" ? route.path : undefined;
         const ownerRouteFullPath =
-            scope === "page" ? route.fullPath : undefined;
+            scope === "page" ? route.fullPath.replace(/#.*$/, "") : undefined;
 
         const base: InternalSidebarCard = {
             id: config.id,
@@ -193,7 +193,7 @@ export const useSidebarLayout = () => {
         const scope = card.scope ?? "global";
         if (scope === "global") return true;
         if (scope === "route") return card.ownerRoutePath === route.path;
-        if (scope === "page") return card.ownerRouteFullPath === route.fullPath;
+        if (scope === "page") return card.ownerRouteFullPath === route.fullPath.replace(/#.*$/, "");
         return true;
     };
 
@@ -302,7 +302,7 @@ export const useSidebarLayout = () => {
         state.value.cards = state.value.cards.filter((c) => {
             const scope = c.scope ?? "global";
             if (scope === "page")
-                return c.ownerRouteFullPath === route.fullPath;
+                return c.ownerRouteFullPath === route.fullPath.replace(/#.*$/, "");
             if (scope === "route") return c.ownerRoutePath === route.path;
             return true;
         });
@@ -316,7 +316,8 @@ export const useSidebarLayout = () => {
     };
 
     watch(
-        () => route.fullPath,
+        // Ignore hash-only navigations; scoped cards should persist.
+        () => route.fullPath.replace(/#.*$/, ""),
         () => {
             pruneScopedCards();
         },
