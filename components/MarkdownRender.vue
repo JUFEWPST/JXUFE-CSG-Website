@@ -231,8 +231,8 @@ watch(
         if (!value) return;
         await nextTick();
         syncMarkdownDom();
-        // MDC 可能需要额外渲染周期，延迟再次同步
-        setTimeout(() => syncMarkdownDom(), 100);
+        await nextTick();
+        syncMarkdownDom();
     },
 );
 
