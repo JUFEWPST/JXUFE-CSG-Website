@@ -4,20 +4,46 @@ import type { TocItem } from "~/types/tocitems";
 import transformMarkdownAlerts from "~/utils/markdown-alerts";
 import transformBilibiliEmbeds from "~/utils/markdown-bilibili";
 import transformGithubCardEmbeds from "~/utils/markdown-github-card";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 
-const SCRIPT_TAG_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gis;
-const STYLE_TAG_REGEX = /<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gis;
-const INLINE_EVENT_ATTR_REGEX =
-    /\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi;
-const DANGEROUS_PROTOCOL_REGEX =
-    /(href|src)\s*=\s*(["'])\s*(javascript:|data:text\/html)/gi;
-
-const sanitizeMarkdownContent = (content: string): string => {
-    return content
-        .replace(SCRIPT_TAG_REGEX, "")
-        .replace(STYLE_TAG_REGEX, "")
-        .replace(INLINE_EVENT_ATTR_REGEX, "")
-        .replace(DANGEROUS_PROTOCOL_REGEX, "$1=$2#");
+const sanitizeSchema = {
+    ...defaultSchema,
+    tagNames: [
+        ...(defaultSchema.tagNames || []),
+        "iframe",
+        "video",
+        "button",
+        "svg",
+        "path",
+        "rect",
+        "polyline",
+        "circle",
+        "line",
+    ],
+    attributes: {
+        ...defaultSchema.attributes,
+        iframe: ["src", "allow", "allowfullscreen", "frameborder", "scrolling"],
+        video: ["src", "controls", "preload", "playsinline", "className", "data-md-video"],
+        button: ["className", "dataCode", "title"],
+        svg: ["xmlns", "width", "height", "viewBox", "fill", "stroke", "strokeWidth", "strokeLinecap", "strokeLinejoin"],
+        path: ["d"],
+        rect: ["x", "y", "width", "height", "rx", "ry"],
+        polyline: ["points"],
+        circle: ["cx", "cy", "r"],
+        line: ["x1", "y1", "x2", "y2"],
+        a: [...(defaultSchema.attributes?.a || []), "target", "rel"],
+        img: [...(defaultSchema.attributes?.img || []), "dataMdZoomable", "dataMdImgGroup", "dataMdImgIndex", "loading"],
+        "*": [
+            ...(defaultSchema.attributes?.["*"] || []),
+            "className",
+            "style",
+            "data*",
+        ],
+    },
+    protocols: {
+        ...defaultSchema.protocols,
+        src: [...(defaultSchema.protocols?.src || ["http", "https"])],
+    },
 };
 
 const flattenTocLinks = (links: TocLink[] = []): TocItem[] => {
@@ -40,10 +66,9 @@ const flattenTocLinks = (links: TocLink[] = []): TocItem[] => {
 
 const prepareMarkdown = (content: string, sanitize = true): string => {
     const normalized = content.replace(/\r\n/g, "\n");
-    const safeContent = sanitize ? sanitizeMarkdownContent(normalized) : normalized;
 
     return transformGithubCardEmbeds(
-        transformBilibiliEmbeds(transformMarkdownAlerts(safeContent)),
+        transformBilibiliEmbeds(transformMarkdownAlerts(normalized)),
     );
 };
 
@@ -61,7 +86,18 @@ export const useMarkdown = (): {
     ): Promise<MDCParserResult> => {
         const preparedContent = prepareMarkdown(content, sanitize);
 
+        const rehypePlugins: Record<string, unknown> = {};
+        if (sanitize) {
+            rehypePlugins["rehype-sanitize"] = {
+                instance: rehypeSanitize,
+                options: sanitizeSchema,
+            };
+        }
+
         return parseMarkdown(preparedContent, {
+            rehype: {
+                plugins: rehypePlugins as Record<string, false | object>,
+            },
             toc: {
                 depth: 6,
                 searchDepth: 6,
