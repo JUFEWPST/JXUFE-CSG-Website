@@ -55,7 +55,7 @@ export const parseGithubLink = (href: string): ParsedGithubLink | null => {
         .filter(Boolean);
 
     const owner = segments[0];
-    if (!owner || RESERVED_PATHS.has(owner)) return null;
+    if (!owner || RESERVED_PATHS.has(owner.toLowerCase())) return null;
 
     if (segments.length === 1) {
         return {
@@ -66,7 +66,7 @@ export const parseGithubLink = (href: string): ParsedGithubLink | null => {
     }
 
     const repo = segments[1] ? segments[1].replace(/\.git$/i, "") : null;
-    if (!repo || RESERVED_PATHS.has(repo)) return null;
+    if (!repo || RESERVED_PATHS.has(repo.toLowerCase())) return null;
 
     if (segments.length === 2) {
         return {
@@ -120,7 +120,7 @@ export const parseGithubLink = (href: string): ParsedGithubLink | null => {
         };
     }
 
-    if (segments.length >= 3 && RESERVED_PATHS.has(marker)) {
+    if (segments.length >= 3 && RESERVED_PATHS.has(marker.toLowerCase())) {
         return null;
     }
 
