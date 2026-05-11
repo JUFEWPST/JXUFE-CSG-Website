@@ -59,8 +59,16 @@
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
     /* Code Block Colors */
-    --codeBlock-bg: var(--md-sys-color-surface-container-low);
-    --codeBlock-inline-bg: var(--md-sys-color-surface-container-low);
+    --codeBlock-bg: color-mix(
+        in srgb,
+        var(--md-sys-color-surface) 96%,
+        var(--md-sys-color-on-surface) 4%
+    );
+    --codeBlock-inline-bg: color-mix(
+        in srgb,
+        var(--md-sys-color-surface) 96%,
+        var(--md-sys-color-on-surface) 4%
+    );
     --codeBlock-line-highlight-bg: color-mix(
         in srgb,
         var(--md-sys-color-primary) 8%,
@@ -68,7 +76,7 @@
     );
     --codeBlock-copy-hover-bg: color-mix(
         in srgb,
-        var(--md-sys-color-on-surface) 6%,
+        var(--md-sys-color-primary) 10%,
         transparent
     );
 
@@ -175,16 +183,24 @@
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
     /* Code Block Colors */
-    --codeBlock-bg: var(--md-sys-color-surface-container);
-    --codeBlock-inline-bg: var(--md-sys-color-surface-container-high);
+    --codeBlock-bg: color-mix(
+        in srgb,
+        var(--md-sys-color-surface) 90%,
+        var(--md-sys-color-on-surface) 10%
+    );
+    --codeBlock-inline-bg: color-mix(
+        in srgb,
+        var(--md-sys-color-surface) 86%,
+        var(--md-sys-color-on-surface) 14%
+    );
     --codeBlock-line-highlight-bg: color-mix(
         in srgb,
-        var(--md-sys-color-primary) 16%,
+        var(--md-sys-color-primary) 15%,
         transparent
     );
     --codeBlock-copy-hover-bg: color-mix(
         in srgb,
-        var(--md-sys-color-on-surface) 10%,
+        var(--md-sys-color-primary) 20%,
         transparent
     );
 
@@ -241,7 +257,7 @@
     display: none !important;
 }
 
-.markdown-wrapper a {
+.markdown-wrapper a:not(.gh-card-link) {
     background-color: transparent;
     color: var(--fgColor-accent);
     text-decoration: none;
@@ -314,7 +330,7 @@
 .markdown-wrapper kbd,
 .markdown-wrapper pre,
 .markdown-wrapper samp {
-    font-family: monospace;
+    font-family: "Consolas", monospace;
     font-size: 1em;
 }
 
@@ -378,7 +394,7 @@
     font: inherit;
 }
 
-.markdown-wrapper a:hover {
+.markdown-wrapper a:not(.gh-card-link):hover {
     text-decoration: wavy underline var(--fgColor-accent);
 }
 
@@ -1169,8 +1185,8 @@
     margin: 0;
     border-radius: 0;
     border: none;
-    padding: 10px 0;
-    background-color: transparent;
+    padding: 12px 14px 10px;
+    background-color: transparent !important;
     box-shadow: none;
 }
 
@@ -1185,7 +1201,7 @@
 
 .markdown-wrapper .code-block-wrapper .code-line {
     display: block;
-    padding: 0 10px;
+    padding: 1px 0;
     white-space: pre;
     line-height: 1.45;
 }
@@ -1214,6 +1230,49 @@
 
 .markdown-wrapper .code-block-wrapper .code-line.is-empty {
     line-height: 1.05;
+}
+
+/* MDC shiki 代码块 */
+.markdown-wrapper .code-block-wrapper pre code {
+    display: block;
+    background: transparent;
+}
+
+.markdown-wrapper .code-block-wrapper pre.shiki {
+    background: transparent !important;
+    counter-reset: code-line;
+}
+
+.markdown-wrapper pre.shiki code {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+}
+
+.markdown-wrapper pre.shiki code .line {
+    display: block;
+    padding: 1px 0;
+    white-space: pre;
+    line-height: 1.45;
+}
+
+.markdown-wrapper pre.shiki code .line.highlight {
+    background-color: var(--codeBlock-line-highlight-bg);
+}
+
+.markdown-wrapper .code-block-wrapper.has-line-numbers pre.shiki code .line {
+    counter-increment: code-line;
+    padding-left: 8px;
+}
+
+.markdown-wrapper .code-block-wrapper.has-line-numbers pre.shiki code .line::before {
+    content: counter(code-line);
+    display: inline-block;
+    width: 2.4em;
+    margin-right: 10px;
+    text-align: right;
+    color: var(--fgColor-muted);
+    user-select: none;
 }
 
 .markdown-wrapper pre code,

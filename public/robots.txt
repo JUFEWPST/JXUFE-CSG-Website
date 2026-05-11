@@ -1,4 +1,4 @@
 User-Agent: *
-Disallow:
+Disallow: /about/members/*
 
 Sitemap: https://csec.jxufe.edu.cn/sitemap.xml

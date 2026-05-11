@@ -17,6 +17,7 @@ export default defineNuxtConfig({
             { code: "ko", iso: "ko-KR", name: "한국어", file: "ko.json" },
         ],
         defaultLocale: "zh",
+        baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://csec.jxufe.edu.cn",
     },
 
     runtimeConfig: {
@@ -65,5 +66,36 @@ export default defineNuxtConfig({
         },
     },
 
-    modules: ["@nuxtjs/i18n"],
+    modules: ["@nuxtjs/i18n", "@nuxtjs/mdc"],
+
+    mdc: {
+        headings: {
+            anchorLinks: true,
+        },
+        highlight: {
+            langs: [
+                "python",
+                "javascript",
+                "typescript",
+                "bash",
+                "json",
+                "yaml",
+                "markdown",
+                "vue",
+                "html",
+                "css",
+                "go",
+                "java",
+                "cpp",
+                "csharp",
+                "php",
+                "ruby",
+                "rust",
+                "sql",
+                "dockerfile",
+                "powershell",
+                "c",
+            ],
+        },
+    },
 });

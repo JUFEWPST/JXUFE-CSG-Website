@@ -1,217 +1,121 @@
-import MarkdownIt from "markdown-it";
-import hljs from "highlight.js";
-import DOMPurify from "dompurify";
-import markdownItTaskLists from "markdown-it-task-lists";
-import markdownItFootnote from "markdown-it-footnote";
-import markdownItDeflist from "markdown-it-deflist";
-import markdownItMark from "markdown-it-mark";
-import markdownItSub from "markdown-it-sub";
-import markdownItSup from "markdown-it-sup";
-import markdownItKatex from "@vscode/markdown-it-katex";
-import bilibiliPlugin from "~/utils/markdown-it-bilibili";
-import alertsPlugin from "~/utils/markdown-it-alerts";
-import githubCardPlugin from "~/utils/markdown-it-github-card";
-import imageViewerPlugin from "~/utils/markdown-it-image-viewer";
-import videoPlayerPlugin from "~/utils/markdown-it-video-player";
+import { parseMarkdown } from "@nuxtjs/mdc/runtime";
+import type { MDCParserResult, TocLink } from "@nuxtjs/mdc";
+import type { TocItem } from "~/types/tocitems";
+import transformMarkdownAlerts from "~/utils/markdown-alerts";
+import transformBilibiliEmbeds from "~/utils/markdown-bilibili";
+import transformGithubCardEmbeds from "~/utils/markdown-github-card";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 
-const ALLOWED_IFRAME_DOMAINS = new Set(["player.bilibili.com"]);
-let domPurifyHookRegistered = false;
-
-const ensureDomPurifyHook = () => {
-    if (domPurifyHookRegistered) return;
-
-    DOMPurify.addHook("beforeSanitizeAttributes", (currentNode) => {
-        if (currentNode.tagName !== "IFRAME") return;
-
-        const src = currentNode.getAttribute("src") || "";
-        if (src.startsWith("/") || src.startsWith("./")) return;
-
-        try {
-            const urlStr = src.startsWith("//") ? `https:${src}` : src;
-            const url = new URL(urlStr);
-            if (!ALLOWED_IFRAME_DOMAINS.has(url.hostname)) {
-                currentNode.removeAttribute("src");
-            }
-        } catch {
-            currentNode.removeAttribute("src");
-        }
-    });
-
-    domPurifyHookRegistered = true;
+const sanitizeSchema = {
+    ...defaultSchema,
+    tagNames: [
+        ...(defaultSchema.tagNames || []),
+        "iframe",
+        "video",
+        "button",
+        "svg",
+        "path",
+        "rect",
+        "polyline",
+        "circle",
+        "line",
+    ],
+    attributes: {
+        ...defaultSchema.attributes,
+        iframe: ["src", "allow", "allowfullscreen", "frameborder", "scrolling"],
+        video: ["src", "controls", "preload", "playsinline", "className", "data-md-video"],
+        button: ["className", "dataCode", "title"],
+        svg: ["xmlns", "width", "height", "viewBox", "fill", "stroke", "strokeWidth", "strokeLinecap", "strokeLinejoin"],
+        path: ["d"],
+        rect: ["x", "y", "width", "height", "rx", "ry"],
+        polyline: ["points"],
+        circle: ["cx", "cy", "r"],
+        line: ["x1", "y1", "x2", "y2"],
+        a: [...(defaultSchema.attributes?.a || []), "target", "rel"],
+        img: [...(defaultSchema.attributes?.img || []), "dataMdZoomable", "dataMdImgGroup", "dataMdImgIndex", "loading"],
+        "*": [
+            ...(defaultSchema.attributes?.["*"] || []),
+            "className",
+            "style",
+            "data*",
+        ],
+    },
+    protocols: {
+        ...defaultSchema.protocols,
+        src: [...(defaultSchema.protocols?.src || ["http", "https"])],
+    },
 };
 
-export const useMarkdown = () => {
-    const mdConfig = {
-        html: true,
-        linkify: true,
-        typographer: true,
-        highlight: (code: string, lang: string): string => {
-            if (lang && hljs.getLanguage(lang)) {
-                try {
-                    return hljs.highlight(code, {
-                        language: lang,
-                        ignoreIllegals: true,
-                    }).value;
-                } catch (e) {
-                    console.warn(`代码高亮失败 (${lang}):`, e);
-                }
-            }
-            return hljs.highlightAuto(code).value;
-        },
-    };
+const flattenTocLinks = (links: TocLink[] = []): TocItem[] => {
+    const items: TocItem[] = [];
 
-    const md = new MarkdownIt(mdConfig);
-    md.use(bilibiliPlugin);
-    md.use(alertsPlugin);
-    md.use(markdownItTaskLists, { label: true, labelAfter: true });
-    md.use(markdownItFootnote);
-    md.use(markdownItDeflist);
-    md.use(markdownItMark);
-    md.use(markdownItSub);
-    md.use(markdownItSup);
-    md.use(markdownItKatex, { throwOnError: false, errorColor: "#cc0000" });
-    md.use(githubCardPlugin);
-    md.use(imageViewerPlugin);
-    md.use(videoPlayerPlugin);
-
-    const parseHighlightLines = (meta: string): Set<number> => {
-        const highlightLines = new Set<number>();
-        const match = meta.match(/\{([^}]+)\}/);
-        if (!match || !match[1]) return highlightLines;
-
-        const ranges = match[1].split(",").map((part) => part.trim());
-        ranges.forEach((range) => {
-            if (!range) return;
-            const [startStr, endStr] = range
-                .split("-")
-                .map((value) => value.trim());
-            const start = Number(startStr);
-            const end = endStr ? Number(endStr) : start;
-            if (Number.isNaN(start) || Number.isNaN(end)) return;
-            const from = Math.min(start, end);
-            const to = Math.max(start, end);
-            for (let line = from; line <= to; line += 1) {
-                highlightLines.add(line);
-            }
+    for (const link of links) {
+        items.push({
+            id: link.id,
+            text: link.text,
+            level: link.depth,
         });
 
-        return highlightLines;
-    };
-
-    const hasLineNumbers = (meta: string): boolean => {
-        return (
-            /(\s|^)(line-numbers|ln)(\s|$)/.test(meta) || /\{[^}]+\}/.test(meta)
-        );
-    };
-
-    // 自定义代码块渲染
-    const defaultFenceRender =
-        md.renderer.rules.fence ||
-        function (tokens, idx, options, env, slf) {
-            return slf.renderToken(tokens, idx, options);
-        };
-
-    md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
-        const token = tokens[idx];
-        if (!token) {
-            return defaultFenceRender(tokens, idx, options, env, slf);
+        if (link.children && link.children.length > 0) {
+            items.push(...flattenTocLinks(link.children));
         }
-        const code = token.content.trim();
-        const info = token.info.trim();
-        let lang = "";
-        let meta = "";
+    }
 
-        if (info) {
-            if (info.startsWith("{")) {
-                meta = info;
-            } else {
-                const parts = info.split(/\s+/g);
-                lang = parts[0] || "";
-                meta = parts.slice(1).join(" ");
-            }
-        }
+    return items;
+};
 
-        const langDisplay = lang || "纯文本";
-        const highlightLines = parseHighlightLines(meta);
-        const showLineNumbers = hasLineNumbers(meta) || highlightLines.size > 0;
+const prepareMarkdown = (content: string, sanitize = true): string => {
+    const normalized = content.replace(/\r\n/g, "\n");
 
-        let highlighted = "";
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                highlighted = hljs.highlight(code, {
-                    language: lang,
-                    ignoreIllegals: true,
-                }).value;
-            } catch (e) {
-                highlighted = md.utils.escapeHtml(code);
-            }
-        } else {
-            highlighted = hljs.highlightAuto(code).value;
+    return transformGithubCardEmbeds(
+        transformBilibiliEmbeds(transformMarkdownAlerts(normalized)),
+    );
+};
+
+export const useMarkdown = (): {
+    prepareMarkdown: (content: string, sanitize?: boolean) => string;
+    parseMdcMarkdown: (
+        content: string,
+        sanitize?: boolean,
+    ) => Promise<MDCParserResult>;
+    extractTocItems: (result: MDCParserResult | null) => TocItem[];
+} => {
+    const parseMdcMarkdown = (
+        content: string,
+        sanitize = true,
+    ): Promise<MDCParserResult> => {
+        const preparedContent = prepareMarkdown(content, sanitize);
+
+        const rehypePlugins: Record<string, unknown> = {};
+        if (sanitize) {
+            rehypePlugins["rehype-sanitize"] = {
+                instance: rehypeSanitize,
+                options: sanitizeSchema,
+            };
         }
 
-        const highlightedLines = highlighted.split("\n");
-        const codeLines = highlightedLines
-            .map((line, index) => {
-                const lineNumber = index + 1;
-                const isHighlighted = highlightLines.has(lineNumber);
-                const isEmptyLine = line.length === 0;
-                const safeLine = isEmptyLine ? "&nbsp;" : line;
-                const lineClass = [
-                    "code-line",
-                    isHighlighted ? "is-highlighted" : "",
-                    isEmptyLine ? "is-empty" : "",
-                ]
-                    .filter(Boolean)
-                    .join(" ");
-                const lineNumberHtml = showLineNumbers
-                    ? `<span class="code-line-number">${lineNumber}</span>`
-                    : "";
-                return `<span class="${lineClass}" data-line="${lineNumber}">${lineNumberHtml}<span class="code-line-content">${safeLine}</span></span>`;
-            })
-            .join("");
-
-        const langClass = lang ? `language-${md.utils.escapeHtml(lang)}` : "";
-        const numberClass = showLineNumbers ? "has-line-numbers" : "";
-
-        return `<div class="code-block-wrapper"><div class="code-block-toolbar"><span class="code-block-lang">${md.utils.escapeHtml(langDisplay)}</span><button class="code-copy-btn" data-code="${md.utils.escapeHtml(code)}" title="复制代码"><svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div><pre><code class="hljs ${langClass} ${numberClass}">${codeLines}</code></pre></div>`;
-    };
-
-    const renderMarkdown = (content: string): string => {
-        if (!content.trim()) return "";
-
-        const rendered = md.render(content);
-        ensureDomPurifyHook();
-
-        return DOMPurify.sanitize(rendered, {
-            USE_PROFILES: { html: true },
-            FORBID_TAGS: ["style", "script"],
-            FORBID_ATTR: ["onerror", "onload", "onclick", "onfocus"],
-            ADD_TAGS: ["iframe", "video", "source"],
-            ADD_ATTR: [
-                "class",
-                "style",
-                "target",
-                "allow",
-                "allowfullscreen",
-                "frameborder",
-                "scrolling",
-                "framespacing",
-                "border",
-                "data-code",
-                "data-line",
-                "data-md-zoomable",
-                "data-md-img-group",
-                "data-md-img-index",
-                "data-md-video",
-                "title",
-                "preload",
-                "playsinline",
-            ],
+        return parseMarkdown(preparedContent, {
+            rehype: {
+                plugins: rehypePlugins as Record<string, false | object>,
+            },
+            toc: {
+                depth: 6,
+                searchDepth: 6,
+            },
         });
+    };
+
+    const extractTocItems = (result: MDCParserResult | null): TocItem[] => {
+        if (!result || !result.toc || !result.toc.links) {
+            return [];
+        }
+
+        return flattenTocLinks(result.toc.links);
     };
 
     return {
-        md,
-        renderMarkdown,
+        prepareMarkdown,
+        parseMdcMarkdown,
+        extractTocItems,
     };
 };

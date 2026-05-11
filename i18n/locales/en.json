@@ -11,8 +11,8 @@
         "about": "About the Guild",
         "links": "Useful Links",
         "timeline": "Timeline",
-        "ctf": "CTF Events",
-        "volunteer": "Score Lookup",
+        "ctf": "World CTF Events",
+        "gaokao": "Gaokao Reference",
         "aboutChildren": {
             "index": "Guild Overview",
             "leaders": "Past Leaders",
@@ -30,13 +30,13 @@
             }
         },
         "ctf": {
-            "title": "CTF Events",
+            "title": "World CTF Events",
             "meta": {
-                "title": "CTF Events Calendar - Cybersecurity Guild of JXUFE",
+                "title": "World CTF Events Calendar - Cybersecurity Guild of JXUFE",
                 "description": "Global CTF cybersecurity competition schedule with real-time event updates."
             },
             "events": {
-                "title": "Upcoming CTF Events",
+                "title": "Upcoming World CTF Events",
                 "status": {
                     "oncoming": "Not started",
                     "running": "Ongoing",
@@ -44,7 +44,7 @@
                     "unknown": "Unknown status"
                 },
                 "loading": "Loading events data...",
-                "error": "Failed to load CTF events. Please try again later.",
+                "error": "Failed to load World CTF events. Please try again later.",
                 "empty": "No events to display at the moment.",
                 "emptyHint": "No upcoming events. Please check back later.",
                 "fetchError": "Failed to fetch events data",
@@ -89,11 +89,11 @@
                 }
             }
         },
-        "volunteer": {
-            "title": "Score Lookup",
+        "gaokao": {
+            "title": "Gaokao Reference",
             "meta": {
-                "title": "Score Lookup - Cybersecurity Guild of JXUFE",
-                "description": "Look up historical admission scores by province and major for JXUFE, providing reference for college applications."
+                "title": "Gaokao Reference - Cybersecurity Guild of JXUFE",
+                "description": "Look up historical admission scores, rankings, and enrollment plans by province and major for JXUFE, providing reference for college applications."
             },
             "loading": "Loading data...",
             "error": "Failed to load configuration. Please try again later.",
@@ -127,10 +127,7 @@
             "dataSource": {
                 "zsjy": "Admissions",
                 "ranking": "Guild Extended",
-                "plan": "Admission Plan",
-                "zsjyDescription": "Data sourced from JXUFE's official undergraduate admissions website, containing only max/min admission scores without ranking information.",
-                "rankingDescription": "Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.",
-                "planDescription": "Data sourced from JXUFE's official undergraduate admissions website, showing the planned enrollment numbers for each major by province."
+                "plan": "Admission Plan"
             },
             "table": {
                 "major": "Major",
@@ -153,7 +150,8 @@
                 "far": "Far"
             },
             "sourceAlert": {
-                "title": "Data Source"
+                "title": "Data Source",
+                "description": "Admissions: Public admission data from JXUFE's official undergraduate admissions website, containing max/min admission scores by major.\nGuild Extended: Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.\nAdmission Plan: Planned enrollment numbers for each major by province."
             }
         },
         "privacy": {

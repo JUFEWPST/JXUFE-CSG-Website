@@ -188,7 +188,7 @@ const fetchEvents = async () => {
         }
     } catch (e) {
         console.error(e);
-        error.value = (e as Error).message || "Failed to load CTF events";
+        error.value = (e as Error).message || "Failed to load World CTF events";
         events.value = [];
     } finally {
         loading.value = false;

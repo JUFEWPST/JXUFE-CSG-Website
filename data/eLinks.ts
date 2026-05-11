@@ -82,7 +82,7 @@ export const useLinks = () => {
         },
         {
             name: "woodfish",
-            url: "https://www.woodfishhhh.xyz/",
+            url: "https://www.woodfish.site/newBlog/",
             icon: "https://pic1.imgdb.cn/item/682f3d1658cb8da5c807b704.jpg",
             droptext: "我喜欢你",
             tags: ["我喜欢喝雪碧", "全栈开发（with AI）"],

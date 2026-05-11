@@ -13,7 +13,7 @@
             />
             {{ titleText }}
         </div>
-        <div>
+        <div class="markdown-alert-content">
             <slot></slot>
         </div>
     </div>

@@ -29,7 +29,7 @@
                     {{ member.display || "" }}
                 </h3>
                 <span
-                    class="inline-flex items-center rounded-md bg-(--md-sys-color-secondary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)"
+                    class="inline-flex items-center rounded-lg bg-(--md-sys-color-secondary-container) px-2 py-0.5 text-xs font-bold text-(--md-sys-color-primary)"
                 >
                     {{ member.position }}
                 </span>

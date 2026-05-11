@@ -79,8 +79,8 @@ export const useNavLinks = (): NavLink[] => {
             icon: TrophyIcon,
         },
         {
-            path: "/volunteer",
-            label: "nav.volunteer",
+            path: "/gaokao",
+            label: "nav.gaokao",
             alwaysInMore: true,
             icon: AcademicCapIcon,
         },
