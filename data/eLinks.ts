@@ -52,7 +52,7 @@ export const useLinks = () => {
             url: "https://www.jxufe-tech.top",
             icon: "/avatar/数智技术协会.avif",
             droptext: "数智技术协会欢迎你！",
-            desc: "《赛博孔子的故事》",
+            desc: "我来酱菜，只办三件事，技术，技术，还是技术！",
         },
     ]);
 
