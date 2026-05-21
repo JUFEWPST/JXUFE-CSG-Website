@@ -277,6 +277,12 @@ watch(
         if (!value) {
             tocItems.value = [];
             emit("toc-updated", []);
+            imageViewerController?.destroy();
+            imageViewerController = null;
+            videoPlayerController?.destroy();
+            videoPlayerController = null;
+            codeCopyController?.destroy();
+            codeCopyController = null;
             return;
         }
         await nextTick();

@@ -8,14 +8,15 @@ import { transformOutsideFencedBlocks } from "~/utils/markdown-preprocess";
  * 3. MDC原生式: ![alt](url){width="width" height="height"}
  */
 
-const IMG_SIZE_SUFFIX_REGEX = /!\[([^\]]*)\]\(([^)\s]+)\s+=(\d*%?)(?:x(\d*%?))?\)/g;
-const IMG_SIZE_ALT_REGEX = /!\[([^\]|]*)\|(\d*%?)(?:x(\d*%?))?\]\(([^)\s]+)\)/g;
+const IMG_SIZE_SUFFIX_REGEX = /!\[([^\]]*)\]\(([^)\s]+)\s+=(\d+%?)?(?:x(\d+%?))?\)/g;
+const IMG_SIZE_ALT_REGEX = /!\[([^\]|]*)\|(\d+%?)?(?:x(\d+%?))?\]\(([^)\s]+)\)/g;
 
 export default function transformMarkdownImageSize(content: string): string {
     return transformOutsideFencedBlocks(content, (segment) => {
         let processed = segment.replace(
             IMG_SIZE_ALT_REGEX,
             (match, alt, width, height, url) => {
+                if (!width && !height) return match;
                 let attrStr = "";
                 if (width && height) {
                     attrStr = `{width="${width}" height="${height}"}`;
@@ -31,6 +32,7 @@ export default function transformMarkdownImageSize(content: string): string {
         processed = processed.replace(
             IMG_SIZE_SUFFIX_REGEX,
             (match, alt, url, width, height) => {
+                if (!width && !height) return match;
                 let attrStr = "";
                 if (width && height) {
                     attrStr = `{width="${width}" height="${height}"}`;

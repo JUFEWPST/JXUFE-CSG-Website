@@ -31,6 +31,34 @@ export const createMarkdownCodeCopyController = (
         copiedTimers.set(button, timer);
     };
 
+    const copyToClipboard = async (text: string): Promise<boolean> => {
+        if (navigator.clipboard?.writeText) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch (error) {
+                console.warn("clipboard API 失败，尝试降级方案:", error);
+            }
+        }
+
+        try {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.setAttribute("readonly", "");
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.select();
+            const ok = document.execCommand("copy");
+            document.body.removeChild(textarea);
+            return ok;
+        } catch (error) {
+            console.error("复制失败:", error);
+            return false;
+        }
+    };
+
     const handleClick = (event: Event) => {
         const target = event.target as Element | null;
         if (!target) return;
@@ -46,12 +74,9 @@ export const createMarkdownCodeCopyController = (
         const encoding = button.getAttribute("data-code-encoding") || "";
         const code = decodeCode(encodedCode, encoding);
 
-        navigator.clipboard
-            .writeText(code)
-            .then(() => flashCopied(button))
-            .catch((error) => {
-                console.error("复制失败:", error);
-            });
+        copyToClipboard(code).then((ok) => {
+            if (ok) flashCopied(button);
+        });
     };
 
     container.addEventListener("click", handleClick);
