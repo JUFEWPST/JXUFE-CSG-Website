@@ -3,7 +3,6 @@
         <div
             ref="markdownRoot"
             class="w-full max-w-full"
-            @click="handleCopyClick"
         >
             <MDCRenderer
                 v-if="renderPayload"
@@ -64,6 +63,10 @@ import {
     type MarkdownVideoPlayerController,
     decorateMarkdownVideoEmbeds,
 } from "~/utils/markdown-video-player";
+import {
+    createMarkdownCodeCopyController,
+    type MarkdownCodeCopyController,
+} from "~/utils/markdown-code-copy";
 import "~/assets/css/markdown.css";
 import type { TocItem } from "~/types/tocitems";
 import slugify from "slugify";
@@ -223,12 +226,25 @@ const syncMarkdownDom = () => {
         videoPlayerController.destroy();
         videoPlayerController = null;
     }
+
+    const hasCopyButtons = root.querySelector(".code-copy-btn");
+    if (hasCopyButtons) {
+        if (!codeCopyController) {
+            codeCopyController = createMarkdownCodeCopyController(root);
+        } else {
+            codeCopyController.refresh();
+        }
+    } else if (codeCopyController) {
+        codeCopyController.destroy();
+        codeCopyController = null;
+    }
 };
 
 let domSyncTimer: ReturnType<typeof setTimeout> | null = null;
 let resizeObserver: ResizeObserver | null = null;
 let imageViewerController: MarkdownImageViewerController | null = null;
 let videoPlayerController: MarkdownVideoPlayerController | null = null;
+let codeCopyController: MarkdownCodeCopyController | null = null;
 
 const clearDomSyncResources = () => {
     if (domSyncTimer !== null) {
@@ -273,40 +289,6 @@ defineExpose({
     markdownRoot,
 });
 
-const handleCopyClick = (event: Event): void => {
-    const target = event.target as Element | null;
-    if (!target) return;
-
-    const button = target.closest(".code-copy-btn") as HTMLButtonElement | null;
-    if (!button) return;
-
-    const encodedCode = button.getAttribute("data-code") || "";
-    const codeEncoding = button.getAttribute("data-code-encoding") || "";
-
-    if (!encodedCode) return;
-
-    let code = encodedCode;
-    if (codeEncoding === "uri") {
-        try {
-            code = decodeURIComponent(encodedCode);
-        } catch {
-            code = encodedCode;
-        }
-    }
-
-    navigator.clipboard
-        .writeText(code)
-        .then(() => {
-            button.classList.add("copied");
-            setTimeout(() => {
-                button.classList.remove("copied");
-            }, 2000);
-        })
-        .catch((error) => {
-            console.error("复制失败:", error);
-        });
-};
-
 watch(
     () => [props.content, props.sanitize],
     ([content]) => {
@@ -323,6 +305,8 @@ onUnmounted(() => {
     imageViewerController = null;
     videoPlayerController?.destroy();
     videoPlayerController = null;
+    codeCopyController?.destroy();
+    codeCopyController = null;
 });
 </script>
 
