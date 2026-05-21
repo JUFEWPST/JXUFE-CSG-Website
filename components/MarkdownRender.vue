@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import type { MDCParserResult } from "@nuxtjs/mdc";
 import type { DefineComponent } from "vue";
-import { computed, nextTick, onUnmounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useMarkdown } from "~/composables/UseMarkdown";
 import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
 import BilibiliEmbed from "~/components/mdc/BilibiliEmbed.vue";
@@ -225,12 +225,44 @@ const syncMarkdownDom = () => {
     }
 };
 
+let domSyncTimer: ReturnType<typeof setTimeout> | null = null;
+let resizeObserver: ResizeObserver | null = null;
+let imageViewerController: MarkdownImageViewerController | null = null;
+let videoPlayerController: MarkdownVideoPlayerController | null = null;
+
+const clearDomSyncResources = () => {
+    if (domSyncTimer !== null) {
+        clearTimeout(domSyncTimer);
+        domSyncTimer = null;
+    }
+    if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+    }
+};
+
+onMounted(() => {
+    resizeObserver = new ResizeObserver(() => {
+        if (domSyncTimer) clearTimeout(domSyncTimer);
+        domSyncTimer = setTimeout(() => {
+            syncMarkdownDom();
+            domSyncTimer = null;
+        }, 100);
+    });
+
+    if (markdownRoot.value) {
+        resizeObserver.observe(markdownRoot.value);
+    }
+});
+
 watch(
     () => parsedContent.value,
     async (value) => {
-        if (!value) return;
-        await nextTick();
-        syncMarkdownDom();
+        if (!value) {
+            tocItems.value = [];
+            emit("toc-updated", []);
+            return;
+        }
         await nextTick();
         syncMarkdownDom();
     },
@@ -240,8 +272,6 @@ defineExpose({
     tocItems,
     markdownRoot,
 });
-let imageViewerController: MarkdownImageViewerController | null = null;
-let videoPlayerController: MarkdownVideoPlayerController | null = null;
 
 const handleCopyClick = (event: Event): void => {
     const target = event.target as Element | null;
@@ -288,6 +318,7 @@ watch(
 );
 
 onUnmounted(() => {
+    clearDomSyncResources();
     imageViewerController?.destroy();
     imageViewerController = null;
     videoPlayerController?.destroy();
