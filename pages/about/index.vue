@@ -25,7 +25,15 @@ usePageMeta({
     canonicalPath: "/about",
 });
 
+const {
+    contributors,
+    loaded: contributorsLoaded,
+    error: contributorsError,
+    load: loadContributors,
+} = useContributors();
+
 onMounted(() => {
+    loadContributors();
     isMounted.value = true;
     quoteTimer = setInterval(() => {
         currentQuote.value = (currentQuote.value + 1) % quotes.length;
@@ -472,7 +480,40 @@ onUnmounted(() => {
                     </i18n-t>
                 </div>
                 <div class="my-2">
+                    <div
+                        v-if="contributors.length"
+                        class="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-2"
+                    >
+                        <a
+                            v-for="c in contributors"
+                            :key="c.login"
+                            :href="c.html_url"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="group flex items-center gap-2.5 rounded-lg px-3 py-2 transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high)/50"
+                        >
+                            <img
+                                :src="c.avatar_url"
+                                :alt="c.login"
+                                class="h-9 w-9 shrink-0 rounded-full object-cover"
+                                loading="lazy"
+                            />
+                            <div class="min-w-0 flex-1">
+                                <div
+                                    class="truncate text-sm font-medium text-(--md-sys-color-on-surface-variant) transition-colors duration-200 group-hover:text-(--md-sys-color-primary)"
+                                >
+                                    {{ c.login }}
+                                </div>
+                                <div
+                                    class="text-xs text-(--md-sys-color-on-surface-variant)/60"
+                                >
+                                    {{ c.contributions }} commits
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                     <a
+                        v-else-if="!contributorsLoaded || contributorsError"
                         href="https://github.com/JUFEWPST/JXUFE-CSG-Website/graphs/contributors"
                     >
                         <img
