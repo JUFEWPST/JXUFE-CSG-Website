@@ -60,6 +60,10 @@ const RESERVED_PATHS = new Set([
 const STANDALONE_GITHUB_LINK_REGEX =
     /^(?:\[(?<label>[^\]]+)\]\((?<markdownUrl>https?:\/\/(?:www\.)?github\.com\/[^)\s]+)\)|<(?<angleUrl>https?:\/\/(?:www\.)?github\.com\/[^>\s]+)>|(?<rawUrl>https?:\/\/(?:www\.)?github\.com\/\S+))$/;
 
+/** 行内 markdown 链接 [text](github-url)，允许前后都有其他文本 */
+const INLINE_GITHUB_MARKDOWN_LINK_REGEX =
+    /^(?<prefix>.*?)\[(?<label>[^\]]+)\]\((?<markdownUrl>https?:\/\/(?:www\.)?github\.com\/[^)\s]+)\)(?<suffix>[\s\S]*)$/;
+
 const TRAILING_GITHUB_URL_REGEX =
     /^(?<prefix>.+?)\s*(?:\[(?<label>[^\]]+)\]\((?<markdownUrl>https?:\/\/(?:www\.)?github\.com\/[^)\s]+)\)|(?<rawUrl>https?:\/\/(?:www\.)?github\.com\/\S+))\s*$/;
 
@@ -146,16 +150,38 @@ const toGithubCardBlock = (href: string): string =>
 interface ExtractedUrl {
     prefix: string;
     href: string;
+    suffix: string;
+    // 来源是否为 markdown 链接语法 [text](url)
+    isMarkdownLink: boolean;
 }
 
 const extractGithubUrl = (line: string): ExtractedUrl | null => {
-    let match = line.match(TRAILING_GITHUB_URL_REGEX);
+    // 优先匹配行内 markdown 链接：[text](github-url)，前后可能有其他文本
+    let match = line.match(INLINE_GITHUB_MARKDOWN_LINK_REGEX);
+    if (match?.groups?.markdownUrl) {
+        return {
+            prefix: (match.groups.prefix || "").trim(),
+            href: match.groups.markdownUrl,
+            suffix: (match.groups.suffix || "").trim(),
+            isMarkdownLink: true,
+        };
+    }
+
+    // 落在行尾的 github 链接（裸 URL 或 markdown 语法）
+    match = line.match(TRAILING_GITHUB_URL_REGEX);
     if (match?.groups) {
         const prefix = match.groups.prefix || "";
         const href = match.groups.markdownUrl || match.groups.rawUrl || "";
-        if (href) return { prefix, href };
+        if (href)
+            return {
+                prefix,
+                href,
+                suffix: "",
+                isMarkdownLink: !!match.groups.markdownUrl,
+            };
     }
 
+    // 独占整行的 github 链接
     match = line.match(STANDALONE_GITHUB_LINK_REGEX);
     if (match?.groups) {
         const href =
@@ -163,7 +189,13 @@ const extractGithubUrl = (line: string): ExtractedUrl | null => {
             match.groups.angleUrl ||
             match.groups.rawUrl ||
             "";
-        if (href) return { prefix: "", href };
+        if (href)
+            return {
+                prefix: "",
+                href,
+                suffix: "",
+                isMarkdownLink: !!match.groups.markdownUrl,
+            };
     }
 
     return null;
@@ -182,9 +214,18 @@ const transform = (segment: string): string =>
             if (!parseGithubLink(extracted.href)) return line;
 
             const cardBlock = toGithubCardBlock(extracted.href);
-            return extracted.prefix
-                ? `${extracted.prefix}\n${cardBlock}`
-                : cardBlock;
+
+            // 使用了 markdown 链接语法：保留原始链接文本，追加卡片
+            if (extracted.isMarkdownLink) {
+                return `${trimmed}\n${cardBlock}`;
+            }
+
+            // 裸 URL：替换为卡片，保留前后的其他文本
+            const parts: string[] = [];
+            if (extracted.prefix) parts.push(extracted.prefix);
+            parts.push(cardBlock);
+            if (extracted.suffix) parts.push(extracted.suffix);
+            return parts.join("\n");
         })
         .join("\n");
 
