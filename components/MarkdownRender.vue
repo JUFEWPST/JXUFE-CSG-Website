@@ -36,7 +36,15 @@
 
 <script setup lang="ts">
 import type { MDCParserResult } from "@nuxtjs/mdc";
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+    computed,
+    nextTick,
+    onMounted,
+    onUnmounted,
+    ref,
+    watch,
+    type DefineComponent,
+} from "vue";
 import {
     useMarkdown,
     markdownPlugins,
@@ -68,7 +76,10 @@ const tocItems = ref<TocItem[]>([]);
 const errorMessage = ref("");
 const parsing = ref(false);
 
-const rendererComponents = markdownComponents;
+const rendererComponents = markdownComponents as Record<
+    string,
+    string | DefineComponent<any, any, any>
+>;
 const decoratorFactories = collectDecorators(markdownPlugins);
 const decorators = new Map<string, MarkdownDecorator>();
 
