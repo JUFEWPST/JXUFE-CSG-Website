@@ -41,7 +41,11 @@ const renderVideoPlayer = (src: string, alt: string = "Video") => {
                 </svg>
             </button>
             <div class="md-video-volume-popup">
-                <input type="range" class="md-video-volume-slider" min="0" max="1" step="0.05" value="1">
+                <div class="md-video-volume-percent">50</div>
+                <div class="md-video-volume-track">
+                    <div class="md-video-volume-filled"></div>
+                    <div class="md-video-volume-thumb"></div>
+                </div>
             </div>
         </div>
         <button class="md-video-btn md-video-fullscreen" aria-label="Fullscreen">
@@ -69,7 +73,6 @@ const ensureVideoPlayerStyle = () => {
     border-radius: var(--border-radius-base, 12px);
     overflow: hidden;
     background: #000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
 }
@@ -106,22 +109,27 @@ const ensureVideoPlayerStyle = () => {
     border: none;
     color: #fff;
     cursor: pointer;
-    padding: 4px;
+    padding: 6px;
     display: grid;
     place-items: center;
-    border-radius: 4px;
-    transition: background 0.2s;
+    border-radius: 8px;
+    transition: background 0.15s ease;
 }
 
 .md-video-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.md-video-btn:active {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .md-video-time {
-    font-size: 13px;
-    font-family: monospace;
+    font-size: 12px;
+    font-family: system-ui, -apple-system, sans-serif;
     font-variant-numeric: tabular-nums;
     user-select: none;
+    opacity: 0.8;
 }
 
 .md-video-progress-container {
@@ -136,10 +144,15 @@ const ensureVideoPlayerStyle = () => {
 .md-video-progress-bar {
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
     position: relative;
     overflow: hidden;
+    transition: height 0.15s ease;
+}
+
+.md-video-progress-container:hover .md-video-progress-bar {
+    height: 6px;
 }
 
 .md-video-progress-loaded {
@@ -175,23 +188,24 @@ const ensureVideoPlayerStyle = () => {
 
 .md-video-volume-popup {
     position: absolute;
-    bottom: calc(100% + 4px);
+    bottom: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%) translateY(4px);
-    width: 32px;
-    height: 90px;
-    background: rgba(28, 27, 31, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: calc(var(--border-radius-base, 12px) / 2);
+    width: 36px;
+    height: 100px;
+    background: rgba(28, 27, 31, 0.95);
+    border-radius: 8px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 6px;
+    padding: 10px 0;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1), visibility 0.2s, transform 0.2s cubic-bezier(0.2, 0, 0, 1);
-    box-shadow: var(--md-sys-elevation-3, 0 4px 8px 3px rgba(0, 0, 0, 0.4));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     z-index: 10;
-    backdrop-filter: blur(8px);
 }
 
 .md-video-volume-container:hover .md-video-volume-popup,
@@ -201,13 +215,45 @@ const ensureVideoPlayerStyle = () => {
     transform: translateX(-50%) translateY(0);
 }
 
-.md-video-volume-slider {
-    transform: rotate(-90deg);
-    width: 70px;
-    height: 4px;
+.md-video-volume-percent {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+    line-height: 1;
+}
+
+.md-video-volume-track {
+    width: 4px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    position: relative;
     cursor: pointer;
-    accent-color: var(--md-sys-color-primary, #4f46e5);
-    margin: 0;
+}
+
+.md-video-volume-filled {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--md-sys-color-primary, #4f46e5);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.md-video-volume-thumb {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, 50%);
+    pointer-events: none;
 }
 
 .md-video-buffering {
@@ -396,8 +442,17 @@ export const createMarkdownVideoPlayerController = (
             const volumeBtn = playerEl.querySelector<HTMLButtonElement>(
                 ".md-video-volume-btn",
             );
-            const volumeSlider = playerEl.querySelector<HTMLInputElement>(
-                ".md-video-volume-slider",
+            const volumeTrack = playerEl.querySelector<HTMLElement>(
+                ".md-video-volume-track",
+            );
+            const volumeFilled = playerEl.querySelector<HTMLElement>(
+                ".md-video-volume-filled",
+            );
+            const volumeThumb = playerEl.querySelector<HTMLElement>(
+                ".md-video-volume-thumb",
+            );
+            const volumePercent = playerEl.querySelector<HTMLElement>(
+                ".md-video-volume-percent",
             );
             const iconVolumeOn =
                 playerEl.querySelector<HTMLElement>(".md-icon-volume-on");
@@ -407,6 +462,7 @@ export const createMarkdownVideoPlayerController = (
 
             if (!video || !playBtn || !progressInput || !progressFilled) return;
 
+            video.volume = 0.5;
             playerEl.classList.add("is-paused");
 
             const updatePlayState = () => {
@@ -481,18 +537,41 @@ export const createMarkdownVideoPlayerController = (
                 updateVolumeUI();
             };
 
-            const onVolumeInput = (e: Event) => {
-                const target = e.target as HTMLInputElement;
-                video.volume = parseFloat(target.value);
+            let isDraggingVolume = false;
+
+            const setVolumeFromEvent = (e: MouseEvent) => {
+                if (!volumeTrack) return;
+                const rect = volumeTrack.getBoundingClientRect();
+                const ratio = 1 - (e.clientY - rect.top) / rect.height;
+                video.volume = Math.max(0, Math.min(1, ratio));
                 video.muted = video.volume === 0;
                 updateVolumeUI();
             };
 
+            const onVolumeMouseDown = (e: MouseEvent) => {
+                isDraggingVolume = true;
+                setVolumeFromEvent(e);
+                const onMove = (ev: MouseEvent) => {
+                    if (isDraggingVolume) setVolumeFromEvent(ev);
+                };
+                const onUp = () => {
+                    isDraggingVolume = false;
+                    document.removeEventListener("mousemove", onMove);
+                    document.removeEventListener("mouseup", onUp);
+                };
+                document.addEventListener("mousemove", onMove);
+                document.addEventListener("mouseup", onUp);
+            };
+
             const updateVolumeUI = () => {
-                if (!iconVolumeOn || !iconVolumeOff || !volumeSlider) return;
-                volumeSlider.value = video.muted
-                    ? "0"
-                    : video.volume.toString();
+                if (!iconVolumeOn || !iconVolumeOff) return;
+                const percent = video.muted ? 0 : Math.round(video.volume * 100);
+                if (volumeFilled)
+                    volumeFilled.style.height = `${percent}%`;
+                if (volumeThumb)
+                    volumeThumb.style.bottom = `${percent}%`;
+                if (volumePercent)
+                    volumePercent.textContent = String(percent);
                 if (video.muted || video.volume === 0) {
                     iconVolumeOn.style.display = "none";
                     iconVolumeOff.style.display = "block";
@@ -528,8 +607,8 @@ export const createMarkdownVideoPlayerController = (
             progressInput.addEventListener("change", onSeekChange);
             fullscreenBtn?.addEventListener("click", toggleFullscreen);
             volumeBtn?.addEventListener("click", toggleVolume);
-            volumeSlider?.addEventListener("input", onVolumeInput);
-            if (volumeSlider) updateVolumeUI();
+            volumeTrack?.addEventListener("mousedown", onVolumeMouseDown);
+            updateVolumeUI();
 
             players.push({
                 container: playerEl,
@@ -555,7 +634,7 @@ export const createMarkdownVideoPlayerController = (
                         toggleFullscreen,
                     );
                     volumeBtn?.removeEventListener("click", toggleVolume);
-                    volumeSlider?.removeEventListener("input", onVolumeInput);
+                    volumeTrack?.removeEventListener("mousedown", onVolumeMouseDown);
                 },
             });
         });
