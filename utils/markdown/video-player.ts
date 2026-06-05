@@ -355,28 +355,55 @@ export const createMarkdownVideoPlayerController = (
 
     const initPlayers = () => {
         const els = Array.from(
-            container.querySelectorAll<HTMLElement>('.md-video-player[data-md-video="true"]')
+            container.querySelectorAll<HTMLElement>(
+                '.md-video-player[data-md-video="true"]',
+            ),
         );
 
-        els.forEach(playerEl => {
+        els.forEach((playerEl) => {
             if (playerEl.dataset.initialized) return;
             playerEl.dataset.initialized = "true";
 
-            const video = playerEl.querySelector<HTMLVideoElement>('.md-video-media');
-            const playBtn = playerEl.querySelector<HTMLButtonElement>('.md-video-play');
-            const iconPlay = playerEl.querySelector<HTMLElement>('.md-icon-play');
-            const iconPause = playerEl.querySelector<HTMLElement>('.md-icon-pause');
-            const timeCurrent = playerEl.querySelector<HTMLElement>('.md-video-time-current');
-            const timeTotal = playerEl.querySelector<HTMLElement>('.md-video-time-total');
-            const progressLoaded = playerEl.querySelector<HTMLElement>('.md-video-progress-loaded');
-            const progressFilled = playerEl.querySelector<HTMLElement>('.md-video-progress-filled');
-            const progressInput = playerEl.querySelector<HTMLInputElement>('.md-video-progress-input');
-            const fullscreenBtn = playerEl.querySelector<HTMLButtonElement>('.md-video-fullscreen');
-            const volumeContainer = playerEl.querySelector<HTMLElement>('.md-video-volume-container');
-            const volumeBtn = playerEl.querySelector<HTMLButtonElement>('.md-video-volume-btn');
-            const volumeSlider = playerEl.querySelector<HTMLInputElement>('.md-video-volume-slider');
-            const iconVolumeOn = playerEl.querySelector<HTMLElement>('.md-icon-volume-on');
-            const iconVolumeOff = playerEl.querySelector<HTMLElement>('.md-icon-volume-off');
+            const video =
+                playerEl.querySelector<HTMLVideoElement>(".md-video-media");
+            const playBtn =
+                playerEl.querySelector<HTMLButtonElement>(".md-video-play");
+            const iconPlay =
+                playerEl.querySelector<HTMLElement>(".md-icon-play");
+            const iconPause =
+                playerEl.querySelector<HTMLElement>(".md-icon-pause");
+            const timeCurrent = playerEl.querySelector<HTMLElement>(
+                ".md-video-time-current",
+            );
+            const timeTotal = playerEl.querySelector<HTMLElement>(
+                ".md-video-time-total",
+            );
+            const progressLoaded = playerEl.querySelector<HTMLElement>(
+                ".md-video-progress-loaded",
+            );
+            const progressFilled = playerEl.querySelector<HTMLElement>(
+                ".md-video-progress-filled",
+            );
+            const progressInput = playerEl.querySelector<HTMLInputElement>(
+                ".md-video-progress-input",
+            );
+            const fullscreenBtn = playerEl.querySelector<HTMLButtonElement>(
+                ".md-video-fullscreen",
+            );
+            const volumeContainer = playerEl.querySelector<HTMLElement>(
+                ".md-video-volume-container",
+            );
+            const volumeBtn = playerEl.querySelector<HTMLButtonElement>(
+                ".md-video-volume-btn",
+            );
+            const volumeSlider = playerEl.querySelector<HTMLInputElement>(
+                ".md-video-volume-slider",
+            );
+            const iconVolumeOn =
+                playerEl.querySelector<HTMLElement>(".md-icon-volume-on");
+            const iconVolumeOff = playerEl.querySelector<HTMLElement>(
+                ".md-icon-volume-off",
+            );
 
             if (!video || !playBtn || !progressInput || !progressFilled) return;
 
@@ -409,22 +436,27 @@ export const createMarkdownVideoPlayerController = (
                 if (!isDraggingProgress) {
                     progressInput.value = percent.toString();
                 }
-                if (timeCurrent) timeCurrent.textContent = formatTime(video.currentTime);
+                if (timeCurrent)
+                    timeCurrent.textContent = formatTime(video.currentTime);
             };
 
             const updateBufferProgress = () => {
                 if (!video.duration || video.buffered.length === 0) return;
                 try {
-                    const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+                    const bufferedEnd = video.buffered.end(
+                        video.buffered.length - 1,
+                    );
                     const percent = (bufferedEnd / video.duration) * 100;
-                    if (progressLoaded) progressLoaded.style.width = `${percent}%`;
+                    if (progressLoaded)
+                        progressLoaded.style.width = `${percent}%`;
                 } catch {
                     // Ignore index size error
                 }
             };
 
             const onDurationChange = () => {
-                if (timeTotal) timeTotal.textContent = formatTime(video.duration);
+                if (timeTotal)
+                    timeTotal.textContent = formatTime(video.duration);
             };
 
             let isDraggingProgress = false;
@@ -458,7 +490,9 @@ export const createMarkdownVideoPlayerController = (
 
             const updateVolumeUI = () => {
                 if (!iconVolumeOn || !iconVolumeOff || !volumeSlider) return;
-                volumeSlider.value = video.muted ? "0" : video.volume.toString();
+                volumeSlider.value = video.muted
+                    ? "0"
+                    : video.volume.toString();
                 if (video.muted || video.volume === 0) {
                     iconVolumeOn.style.display = "none";
                     iconVolumeOff.style.display = "block";
@@ -469,7 +503,8 @@ export const createMarkdownVideoPlayerController = (
             };
 
             const handleWaiting = () => playerEl.classList.add("is-buffering");
-            const handlePlaying = () => playerEl.classList.remove("is-buffering");
+            const handlePlaying = () =>
+                playerEl.classList.remove("is-buffering");
 
             const toggleFullscreen = () => {
                 if (!document.fullscreenElement) {
@@ -506,16 +541,22 @@ export const createMarkdownVideoPlayerController = (
                     video.removeEventListener("pause", updatePlayState);
                     video.removeEventListener("timeupdate", updateProgress);
                     video.removeEventListener("progress", updateBufferProgress);
-                    video.removeEventListener("loadedmetadata", onDurationChange);
+                    video.removeEventListener(
+                        "loadedmetadata",
+                        onDurationChange,
+                    );
                     video.removeEventListener("waiting", handleWaiting);
                     video.removeEventListener("playing", handlePlaying);
                     video.removeEventListener("canplay", handlePlaying);
                     progressInput.removeEventListener("input", onSeekInput);
                     progressInput.removeEventListener("change", onSeekChange);
-                    fullscreenBtn?.removeEventListener("click", toggleFullscreen);
+                    fullscreenBtn?.removeEventListener(
+                        "click",
+                        toggleFullscreen,
+                    );
                     volumeBtn?.removeEventListener("click", toggleVolume);
                     volumeSlider?.removeEventListener("input", onVolumeInput);
-                }
+                },
             });
         });
     };
@@ -525,8 +566,8 @@ export const createMarkdownVideoPlayerController = (
     return {
         refresh: initPlayers,
         destroy: () => {
-            players.forEach(p => p.cleanup());
+            players.forEach((p) => p.cleanup());
             players = [];
-        }
+        },
     };
 };

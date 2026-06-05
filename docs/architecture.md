@@ -368,10 +368,10 @@ onUnmounted(() => {
 
 全站 SEO 元数据（`<title>`、OG、Twitter、canonical、JSON-LD 等）由两套组合式函数分管，**禁止在页面组件中直接调用 `useHead` / `useSeoMeta` / `setPageTitle` 拼凑标签**。
 
-| 组合式函数 | 适用场景 | 覆盖范围 |
-|-----------|---------|---------|
-| `usePageMeta` | 所有静态页面 | `<title>` + OG + Twitter + canonical + keywords + robots + JSON-LD |
-| `useBotMeta` | CMS 动态页面（`archive/[para]`、`wiki/[...slug]`） | 同上，但仅在服务端对爬虫 UA 渲染 |
+| 组合式函数    | 适用场景                                           | 覆盖范围                                                           |
+| ------------- | -------------------------------------------------- | ------------------------------------------------------------------ |
+| `usePageMeta` | 所有静态页面                                       | `<title>` + OG + Twitter + canonical + keywords + robots + JSON-LD |
+| `useBotMeta`  | CMS 动态页面（`archive/[para]`、`wiki/[...slug]`） | 同上，但仅在服务端对爬虫 UA 渲染                                   |
 
 两者互斥，一个页面只调用其中一种。
 
@@ -409,15 +409,12 @@ usePageMeta({
 仅用于 `archive/[para].vue` 和 `wiki/[...slug].vue`——这两个页面的标题和内容来自 CMS API，在服务端渲染时需要额外请求数据才能生成 SEO 标签。
 
 ```ts
-await useBotMeta(
-    () => `/v1/contents/${route.params.para}`,
-    {
-        schema: "Article",
-        type: "article",
-        titleFormatter: (title) =>
-            `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
-    },
-);
+await useBotMeta(() => `/v1/contents/${route.params.para}`, {
+    schema: "Article",
+    type: "article",
+    titleFormatter: (title) =>
+        `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
+});
 ```
 
 - 仅在服务端、且 User-Agent 匹配已知爬虫（Googlebot、Baiduspider 等 29 种）时执行

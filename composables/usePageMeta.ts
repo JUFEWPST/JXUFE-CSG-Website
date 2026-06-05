@@ -31,7 +31,11 @@ export function usePageMeta(options: PageMetaOptions) {
     });
 
     if (options.titleKey) {
-        setPageTitle(options.titleKey, options.titleOverride, options.suffixKey);
+        setPageTitle(
+            options.titleKey,
+            options.titleOverride,
+            options.suffixKey,
+        );
     } else {
         setPageTitle("", options.titleOverride, options.suffixKey);
     }

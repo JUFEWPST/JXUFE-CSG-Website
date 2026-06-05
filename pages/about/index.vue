@@ -7,7 +7,6 @@ import { honorsData, getLevelColor, getYearColor } from "~/data/honors";
 import { membersArray } from "~/data/membersData";
 import TeacherCard from "~/components/TeacherCard.vue";
 
-
 const isMounted = ref(false);
 const currentQuote = ref(0);
 let quoteTimer: ReturnType<typeof setInterval> | null = null;

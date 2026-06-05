@@ -9,7 +9,8 @@ import {
 } from "../sentinel";
 
 const BLOCK_MATH_REGEX = /\$\$\s*\n?([\s\S]*?)\n?\s*\$\$/g;
-const INLINE_MATH_REGEX = /(?<![a-zA-Z0-9$])\$([^\s$](?:[^$]*[^\s$])?)\$(?![0-9])/g;
+const INLINE_MATH_REGEX =
+    /(?<![a-zA-Z0-9$])\$([^\s$](?:[^$]*[^\s$])?)\$(?![0-9])/g;
 const PAIR = SENTINELS.inlineMath;
 
 const encodeBlockTex = (tex: string): string =>

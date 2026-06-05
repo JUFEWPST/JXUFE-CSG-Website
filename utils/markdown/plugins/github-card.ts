@@ -12,13 +12,49 @@ export interface ParsedGithubLink {
 }
 
 const RESERVED_PATHS = new Set([
-    "login", "logout", "signup", "settings", "notifications", "explore",
-    "marketplace", "sponsors", "codespaces", "organizations", "pricing",
-    "features", "new", "import", "search", "dashboard", "stars", "gists",
-    "discussions", "topics", "trending", "collections", "events", "about",
-    "blog", "contact", "security", "pull", "issues", "pulls", "releases",
-    "tags", "tree", "blob", "commit", "commits", "watchers", "stargazers",
-    "forks", "branches", "account", "copilot", "orgs",
+    "login",
+    "logout",
+    "signup",
+    "settings",
+    "notifications",
+    "explore",
+    "marketplace",
+    "sponsors",
+    "codespaces",
+    "organizations",
+    "pricing",
+    "features",
+    "new",
+    "import",
+    "search",
+    "dashboard",
+    "stars",
+    "gists",
+    "discussions",
+    "topics",
+    "trending",
+    "collections",
+    "events",
+    "about",
+    "blog",
+    "contact",
+    "security",
+    "pull",
+    "issues",
+    "pulls",
+    "releases",
+    "tags",
+    "tree",
+    "blob",
+    "commit",
+    "commits",
+    "watchers",
+    "stargazers",
+    "forks",
+    "branches",
+    "account",
+    "copilot",
+    "orgs",
 ]);
 
 const STANDALONE_GITHUB_LINK_REGEX =
@@ -28,7 +64,13 @@ const TRAILING_GITHUB_URL_REGEX =
     /^(?<prefix>.+?)\s*(?:\[(?<label>[^\]]+)\]\((?<markdownUrl>https?:\/\/(?:www\.)?github\.com\/[^)\s]+)\)|(?<rawUrl>https?:\/\/(?:www\.)?github\.com\/\S+))\s*$/;
 
 export const getLinkKey = (link: ParsedGithubLink): string =>
-    [link.type, link.owner, link.repo || "", link.number || "", link.tag || ""].join(":");
+    [
+        link.type,
+        link.owner,
+        link.repo || "",
+        link.number || "",
+        link.tag || "",
+    ].join(":");
 
 export const parseGithubLink = (href: string): ParsedGithubLink | null => {
     let url: URL;
@@ -82,7 +124,13 @@ export const parseGithubLink = (href: string): ParsedGithubLink | null => {
                 tag: decodeURIComponent(segments.slice(4).join("/")),
             };
         }
-        return { href: url.toString(), type: "release", owner, repo, number: id };
+        return {
+            href: url.toString(),
+            type: "release",
+            owner,
+            repo,
+            number: id,
+        };
     }
 
     if (marker && RESERVED_PATHS.has(marker)) {

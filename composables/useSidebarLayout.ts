@@ -193,7 +193,10 @@ export const useSidebarLayout = () => {
         const scope = card.scope ?? "global";
         if (scope === "global") return true;
         if (scope === "route") return card.ownerRoutePath === route.path;
-        if (scope === "page") return card.ownerRouteFullPath === route.fullPath.replace(/#.*$/, "");
+        if (scope === "page")
+            return (
+                card.ownerRouteFullPath === route.fullPath.replace(/#.*$/, "")
+            );
         return true;
     };
 
@@ -302,7 +305,9 @@ export const useSidebarLayout = () => {
         state.value.cards = state.value.cards.filter((c) => {
             const scope = c.scope ?? "global";
             if (scope === "page")
-                return c.ownerRouteFullPath === route.fullPath.replace(/#.*$/, "");
+                return (
+                    c.ownerRouteFullPath === route.fullPath.replace(/#.*$/, "")
+                );
             if (scope === "route") return c.ownerRoutePath === route.path;
             return true;
         });

@@ -79,7 +79,9 @@ export const decorateSentinel = (
         while ((match = matcher.exec(value)) !== null) {
             if (match.index > lastIndex) {
                 fragment.appendChild(
-                    document.createTextNode(value.slice(lastIndex, match.index)),
+                    document.createTextNode(
+                        value.slice(lastIndex, match.index),
+                    ),
                 );
             }
             fragment.appendChild(build(decodePayload(match[1] || "")));
@@ -87,7 +89,9 @@ export const decorateSentinel = (
         }
 
         if (lastIndex < value.length) {
-            fragment.appendChild(document.createTextNode(value.slice(lastIndex)));
+            fragment.appendChild(
+                document.createTextNode(value.slice(lastIndex)),
+            );
         }
 
         textNode.parentNode?.replaceChild(fragment, textNode);
@@ -96,8 +100,7 @@ export const decorateSentinel = (
 
 /** 把纯函数型装饰器包装成统一的 Decorator 工厂。 */
 export const idempotentDecorator =
-    (run: (root: HTMLElement) => void) =>
-    (root: HTMLElement) => {
+    (run: (root: HTMLElement) => void) => (root: HTMLElement) => {
         run(root);
         return {
             refresh: () => run(root),

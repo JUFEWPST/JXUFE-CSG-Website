@@ -1,7 +1,6 @@
 import type { MarkdownPlugin } from "../plugin";
 
-const IMAGE_CAPTION_LINE =
-    /^!\[([^\]]*)\]\(\s*([^)\s]+)\s+"([^"]*)"\s*\)$/;
+const IMAGE_CAPTION_LINE = /^!\[([^\]]*)\]\(\s*([^)\s]+)\s+"([^"]*)"\s*\)$/;
 
 const escapeMdcAttr = (value: string): string =>
     value
