@@ -5,8 +5,8 @@
     -webkit-text-size-adjust: 100%;
     margin: 0;
     font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
-        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica,
+        Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
     font-size: 16px;
     line-height: 1.6;
     word-wrap: break-word;
@@ -59,26 +59,18 @@
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
     /* Code Block Colors */
-    --codeBlock-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-surface) 96%,
-        var(--md-sys-color-on-surface) 4%
-    );
-    --codeBlock-inline-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-surface) 96%,
-        var(--md-sys-color-on-surface) 4%
-    );
-    --codeBlock-line-highlight-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-primary) 8%,
-        transparent
-    );
-    --codeBlock-copy-hover-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-primary) 10%,
-        transparent
-    );
+    --codeBlock-bg: color-mix(in srgb,
+            var(--md-sys-color-surface) 96%,
+            var(--md-sys-color-on-surface) 4%);
+    --codeBlock-inline-bg: color-mix(in srgb,
+            var(--md-sys-color-surface) 96%,
+            var(--md-sys-color-on-surface) 4%);
+    --codeBlock-line-highlight-bg: color-mix(in srgb,
+            var(--md-sys-color-primary) 8%,
+            transparent);
+    --codeBlock-copy-hover-bg: color-mix(in srgb,
+            var(--md-sys-color-primary) 10%,
+            transparent);
 
     /* Borders */
     --borderColor-default: var(--md-sys-color-outline-variant);
@@ -96,65 +88,33 @@
     --color-prettylights-syntax-comment: var(--md-sys-color-on-surface-variant);
     --color-prettylights-syntax-constant: var(--md-sys-color-primary);
     --color-prettylights-syntax-entity: var(--md-sys-color-tertiary);
-    --color-prettylights-syntax-storage-modifier-import: var(
-        --md-sys-color-on-surface
-    );
+    --color-prettylights-syntax-storage-modifier-import: var(--md-sys-color-on-surface);
     --color-prettylights-syntax-entity-tag: var(--md-sys-color-secondary);
     --color-prettylights-syntax-keyword: var(--md-sys-color-tertiary);
     --color-prettylights-syntax-string: var(--md-sys-color-secondary);
     --color-prettylights-syntax-variable: var(--md-sys-color-on-surface);
-    --color-prettylights-syntax-brackethighlighter-unmatched: var(
-        --md-sys-color-error
-    );
-    --color-prettylights-syntax-invalid-illegal-text: var(
-        --md-sys-color-on-error
-    );
+    --color-prettylights-syntax-brackethighlighter-unmatched: var(--md-sys-color-error);
+    --color-prettylights-syntax-invalid-illegal-text: var(--md-sys-color-on-error);
     --color-prettylights-syntax-invalid-illegal-bg: var(--md-sys-color-error);
-    --color-prettylights-syntax-carriage-return-text: var(
-        --md-sys-color-on-surface
-    );
-    --color-prettylights-syntax-carriage-return-bg: var(
-        --md-sys-color-surface-variant
-    );
+    --color-prettylights-syntax-carriage-return-text: var(--md-sys-color-on-surface);
+    --color-prettylights-syntax-carriage-return-bg: var(--md-sys-color-surface-variant);
     --color-prettylights-syntax-string-regexp: var(--md-sys-color-secondary);
     --color-prettylights-syntax-markup-list: var(--md-sys-color-secondary);
     --color-prettylights-syntax-markup-heading: var(--md-sys-color-primary);
     --color-prettylights-syntax-markup-italic: var(--md-sys-color-on-surface);
     --color-prettylights-syntax-markup-bold: var(--md-sys-color-on-surface);
-    --color-prettylights-syntax-markup-deleted-text: var(
-        --md-sys-color-on-error-container
-    );
-    --color-prettylights-syntax-markup-deleted-bg: var(
-        --md-sys-color-error-container
-    );
-    --color-prettylights-syntax-markup-inserted-text: var(
-        --md-sys-color-on-primary-container
-    );
-    --color-prettylights-syntax-markup-inserted-bg: var(
-        --md-sys-color-primary-container
-    );
-    --color-prettylights-syntax-markup-changed-text: var(
-        --md-sys-color-on-secondary-container
-    );
-    --color-prettylights-syntax-markup-changed-bg: var(
-        --md-sys-color-secondary-container
-    );
-    --color-prettylights-syntax-markup-ignored-text: var(
-        --md-sys-color-on-surface-variant
-    );
-    --color-prettylights-syntax-markup-ignored-bg: var(
-        --md-sys-color-surface-container-high
-    );
+    --color-prettylights-syntax-markup-deleted-text: var(--md-sys-color-on-error-container);
+    --color-prettylights-syntax-markup-deleted-bg: var(--md-sys-color-error-container);
+    --color-prettylights-syntax-markup-inserted-text: var(--md-sys-color-on-primary-container);
+    --color-prettylights-syntax-markup-inserted-bg: var(--md-sys-color-primary-container);
+    --color-prettylights-syntax-markup-changed-text: var(--md-sys-color-on-secondary-container);
+    --color-prettylights-syntax-markup-changed-bg: var(--md-sys-color-secondary-container);
+    --color-prettylights-syntax-markup-ignored-text: var(--md-sys-color-on-surface-variant);
+    --color-prettylights-syntax-markup-ignored-bg: var(--md-sys-color-surface-container-high);
     --color-prettylights-syntax-meta-diff-range: var(--md-sys-color-tertiary);
-    --color-prettylights-syntax-sublimelinter-gutter-mark: var(
-        --md-sys-color-outline
-    );
-    --color-prettylights-syntax-constant-other-reference-link: var(
-        --md-sys-color-primary
-    );
-    --color-prettylights-syntax-brackethighlighter-angle: var(
-        --md-sys-color-on-surface-variant
-    );
+    --color-prettylights-syntax-sublimelinter-gutter-mark: var(--md-sys-color-outline);
+    --color-prettylights-syntax-constant-other-reference-link: var(--md-sys-color-primary);
+    --color-prettylights-syntax-brackethighlighter-angle: var(--md-sys-color-on-surface-variant);
 
     color: var(--fgColor-default);
     /* background-color: var(--bgColor-default); */
@@ -183,26 +143,18 @@
     --bgColor-attention-muted: var(--md-sys-color-surface-container-high);
 
     /* Code Block Colors */
-    --codeBlock-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-surface) 90%,
-        var(--md-sys-color-on-surface) 10%
-    );
-    --codeBlock-inline-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-surface) 86%,
-        var(--md-sys-color-on-surface) 14%
-    );
-    --codeBlock-line-highlight-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-primary) 15%,
-        transparent
-    );
-    --codeBlock-copy-hover-bg: color-mix(
-        in srgb,
-        var(--md-sys-color-primary) 20%,
-        transparent
-    );
+    --codeBlock-bg: color-mix(in srgb,
+            var(--md-sys-color-surface) 90%,
+            var(--md-sys-color-on-surface) 10%);
+    --codeBlock-inline-bg: color-mix(in srgb,
+            var(--md-sys-color-surface) 86%,
+            var(--md-sys-color-on-surface) 14%);
+    --codeBlock-line-highlight-bg: color-mix(in srgb,
+            var(--md-sys-color-primary) 15%,
+            transparent);
+    --codeBlock-copy-hover-bg: color-mix(in srgb,
+            var(--md-sys-color-primary) 20%,
+            transparent);
 
     /* Borders */
     --borderColor-default: var(--md-sys-color-outline-variant);
@@ -236,7 +188,7 @@
 .markdown-wrapper h6:hover .anchor .octicon-link:before {
     width: 16px;
     height: 16px;
-    content: " ";
+    content: ' ';
     display: inline-block;
     background-color: currentColor;
     -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
@@ -331,7 +283,7 @@
 .markdown-wrapper kbd,
 .markdown-wrapper pre,
 .markdown-wrapper samp {
-    font-family: "Consolas", monospace;
+    font-family: 'Consolas', monospace;
     font-size: 1em;
 }
 
@@ -360,26 +312,26 @@
     line-height: inherit;
 }
 
-.markdown-wrapper [type="button"],
-.markdown-wrapper [type="reset"],
-.markdown-wrapper [type="submit"] {
+.markdown-wrapper [type='button'],
+.markdown-wrapper [type='reset'],
+.markdown-wrapper [type='submit'] {
     -webkit-appearance: button;
     appearance: button;
 }
 
-.markdown-wrapper [type="checkbox"],
-.markdown-wrapper [type="radio"] {
+.markdown-wrapper [type='checkbox'],
+.markdown-wrapper [type='radio'] {
     box-sizing: border-box;
     padding: 0;
 }
 
-.markdown-wrapper [type="number"]::-webkit-inner-spin-button,
-.markdown-wrapper [type="number"]::-webkit-outer-spin-button {
+.markdown-wrapper [type='number']::-webkit-inner-spin-button,
+.markdown-wrapper [type='number']::-webkit-outer-spin-button {
     height: auto;
 }
 
-.markdown-wrapper [type="search"]::-webkit-search-cancel-button,
-.markdown-wrapper [type="search"]::-webkit-search-decoration {
+.markdown-wrapper [type='search']::-webkit-search-cancel-button,
+.markdown-wrapper [type='search']::-webkit-search-decoration {
     -webkit-appearance: none;
     appearance: none;
 }
@@ -406,13 +358,13 @@
 
 .markdown-wrapper hr::before {
     display: table;
-    content: "";
+    content: '';
 }
 
 .markdown-wrapper hr::after {
     display: table;
     clear: both;
-    content: "";
+    content: '';
 }
 
 /* 表格容器，支持横向滚动 */
@@ -443,30 +395,77 @@
     display: table-cell;
 }
 
+.markdown-wrapper details {
+    padding: 0;
+    background-color: var(--codeBlock-bg);
+    border-radius: var(--border-radius-base);
+}
+
 .markdown-wrapper details summary {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 12px 16px;
+    font-weight: var(--base-text-weight-medium);
+    color: var(--fgColor-default);
+    list-style: none;
+}
+
+.markdown-wrapper details summary::before {
+    content: '';
+    display: inline-block;
+    width: 0.45em;
+    height: 0.45em;
+    border-right: 2px solid var(--fgColor-muted);
+    border-bottom: 2px solid var(--fgColor-muted);
+    transform: rotate(-45deg);
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.markdown-wrapper details[open]>summary::before {
+    transform: rotate(45deg);
+}
+
+.markdown-wrapper details>summary::-webkit-details-marker,
+.markdown-wrapper details>summary::marker {
+    display: none;
+    content: '';
+}
+
+.markdown-wrapper details[open]>summary {
+    background-color: var(--codeBlock-inline-bg);
+}
+
+.markdown-wrapper details> :not(summary) {
+    padding: 16px 20px;
+}
+
+.markdown-wrapper details> :not(summary):last-child {
+    margin-bottom: 0;
 }
 
 .markdown-wrapper a:focus,
-.markdown-wrapper [role="button"]:focus,
-.markdown-wrapper input[type="radio"]:focus,
-.markdown-wrapper input[type="checkbox"]:focus {
+.markdown-wrapper [role='button']:focus,
+.markdown-wrapper input[type='radio']:focus,
+.markdown-wrapper input[type='checkbox']:focus {
     outline: 2px solid var(--focus-outlineColor);
     outline-offset: -2px;
     box-shadow: none;
 }
 
 .markdown-wrapper a:focus:not(:focus-visible),
-.markdown-wrapper [role="button"]:focus:not(:focus-visible),
-.markdown-wrapper input[type="radio"]:focus:not(:focus-visible),
-.markdown-wrapper input[type="checkbox"]:focus:not(:focus-visible) {
+.markdown-wrapper [role='button']:focus:not(:focus-visible),
+.markdown-wrapper input[type='radio']:focus:not(:focus-visible),
+.markdown-wrapper input[type='checkbox']:focus:not(:focus-visible) {
     outline: solid 1px transparent;
 }
 
 .markdown-wrapper a:focus-visible,
-.markdown-wrapper [role="button"]:focus-visible,
-.markdown-wrapper input[type="radio"]:focus-visible,
-.markdown-wrapper input[type="checkbox"]:focus-visible {
+.markdown-wrapper [role='button']:focus-visible,
+.markdown-wrapper input[type='radio']:focus-visible,
+.markdown-wrapper input[type='checkbox']:focus-visible {
     outline: 2px solid var(--focus-outlineColor);
     outline-offset: -2px;
     box-shadow: none;
@@ -474,27 +473,24 @@
 
 .markdown-wrapper a:not([class]):focus,
 .markdown-wrapper a:not([class]):focus-visible,
-.markdown-wrapper input[type="radio"]:focus,
-.markdown-wrapper input[type="radio"]:focus-visible,
-.markdown-wrapper input[type="checkbox"]:focus,
-.markdown-wrapper input[type="checkbox"]:focus-visible {
+.markdown-wrapper input[type='radio']:focus,
+.markdown-wrapper input[type='radio']:focus-visible,
+.markdown-wrapper input[type='checkbox']:focus,
+.markdown-wrapper input[type='checkbox']:focus-visible {
     outline-offset: 0;
 }
 
 .markdown-wrapper kbd {
     display: inline-block;
     padding: var(--base-size-4);
-    font: 11px
-        var(
-            --fontStack-monospace,
+    font: 11px var(--fontStack-monospace,
             ui-monospace,
             SFMono-Regular,
             SF Mono,
             Menlo,
             Consolas,
             Liberation Mono,
-            monospace
-        );
+            monospace);
     line-height: 10px;
     color: var(--fgColor-default);
     vertical-align: middle;
@@ -520,57 +516,32 @@
 .markdown-wrapper h2 {
     font-weight: var(--base-text-weight-semibold, 600);
     padding-bottom: 0.3em;
-    font-size: max(
-        var(--md-heading-min-size),
-        calc(
-            var(--md-heading-2-size) + (var(--md-heading-base-level) - 1) *
-                var(--md-heading-step)
-        )
-    );
+    font-size: max(var(--md-heading-min-size),
+            calc(var(--md-heading-2-size) + (var(--md-heading-base-level) - 1) * var(--md-heading-step)));
 }
 
 .markdown-wrapper h3 {
     font-weight: var(--base-text-weight-semibold, 600);
-    font-size: max(
-        var(--md-heading-min-size),
-        calc(
-            var(--md-heading-3-size) + (var(--md-heading-base-level) - 1) *
-                var(--md-heading-step)
-        )
-    );
+    font-size: max(var(--md-heading-min-size),
+            calc(var(--md-heading-3-size) + (var(--md-heading-base-level) - 1) * var(--md-heading-step)));
 }
 
 .markdown-wrapper h4 {
     font-weight: var(--base-text-weight-semibold, 600);
-    font-size: max(
-        var(--md-heading-min-size),
-        calc(
-            var(--md-heading-4-size) + (var(--md-heading-base-level) - 1) *
-                var(--md-heading-step)
-        )
-    );
+    font-size: max(var(--md-heading-min-size),
+            calc(var(--md-heading-4-size) + (var(--md-heading-base-level) - 1) * var(--md-heading-step)));
 }
 
 .markdown-wrapper h5 {
     font-weight: var(--base-text-weight-semibold, 600);
-    font-size: max(
-        var(--md-heading-min-size),
-        calc(
-            var(--md-heading-5-size) + (var(--md-heading-base-level) - 1) *
-                var(--md-heading-step)
-        )
-    );
+    font-size: max(var(--md-heading-min-size),
+            calc(var(--md-heading-5-size) + (var(--md-heading-base-level) - 1) * var(--md-heading-step)));
 }
 
 .markdown-wrapper h6 {
     font-weight: var(--base-text-weight-semibold, 600);
-    font-size: max(
-        var(--md-heading-min-size),
-        calc(
-            var(--md-heading-6-size) + (var(--md-heading-base-level) - 1) *
-                var(--md-heading-step)
-        )
-    );
+    font-size: max(var(--md-heading-min-size),
+            calc(var(--md-heading-6-size) + (var(--md-heading-base-level) - 1) * var(--md-heading-step)));
     color: var(--fgColor-muted);
 }
 
@@ -614,11 +585,11 @@
     color: var(--md-sys-color-on-surface-variant);
 }
 
-.markdown-wrapper .markdown-alert-content > :first-child {
+.markdown-wrapper .markdown-alert-content> :first-child {
     margin-top: 0;
 }
 
-.markdown-wrapper .markdown-alert-content > :last-child {
+.markdown-wrapper .markdown-alert-content> :last-child {
     margin-bottom: 0;
 }
 
@@ -675,16 +646,14 @@
 .markdown-wrapper tt,
 .markdown-wrapper code,
 .markdown-wrapper samp {
-    font-family: var(
-        --fontStack-monospace,
-        ui-monospace,
-        SFMono-Regular,
-        SF Mono,
-        Menlo,
-        Consolas,
-        Liberation Mono,
-        monospace
-    );
+    font-family: var(--fontStack-monospace,
+            ui-monospace,
+            SFMono-Regular,
+            SF Mono,
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace);
     font-size: 12px;
 }
 
@@ -720,20 +689,20 @@
 
 .markdown-wrapper::before {
     display: table;
-    content: "";
+    content: '';
 }
 
 .markdown-wrapper::after {
     display: table;
     clear: both;
-    content: "";
+    content: '';
 }
 
-.markdown-wrapper > *:first-child {
+.markdown-wrapper>*:first-child {
     margin-top: 0 !important;
 }
 
-.markdown-wrapper > *:last-child {
+.markdown-wrapper>*:last-child {
     margin-bottom: 0 !important;
 }
 
@@ -769,11 +738,11 @@
     margin-bottom: var(--base-size-16);
 }
 
-.markdown-wrapper blockquote > :first-child {
+.markdown-wrapper blockquote> :first-child {
     margin-top: 0;
 }
 
-.markdown-wrapper blockquote > :last-child {
+.markdown-wrapper blockquote> :last-child {
     margin-bottom: 0;
 }
 
@@ -851,27 +820,27 @@
     list-style-type: none;
 }
 
-.markdown-wrapper ol[type="a s"] {
+.markdown-wrapper ol[type='a s'] {
     list-style-type: lower-alpha;
 }
 
-.markdown-wrapper ol[type="A s"] {
+.markdown-wrapper ol[type='A s'] {
     list-style-type: upper-alpha;
 }
 
-.markdown-wrapper ol[type="i s"] {
+.markdown-wrapper ol[type='i s'] {
     list-style-type: lower-roman;
 }
 
-.markdown-wrapper ol[type="I s"] {
+.markdown-wrapper ol[type='I s'] {
     list-style-type: upper-roman;
 }
 
-.markdown-wrapper ol[type="1"] {
+.markdown-wrapper ol[type='1'] {
     list-style-type: decimal;
 }
 
-.markdown-wrapper div > ol:not([type]) {
+.markdown-wrapper div>ol:not([type]) {
     list-style-type: decimal;
 }
 
@@ -892,11 +861,11 @@
     color: var(--fgColor-accent);
 }
 
-.markdown-wrapper li > p {
+.markdown-wrapper li>p {
     margin-top: var(--base-size-16);
 }
 
-.markdown-wrapper li + li {
+.markdown-wrapper li+li {
     margin-top: 0.25em;
 }
 
@@ -927,7 +896,7 @@
     border: none;
 }
 
-.markdown-wrapper table td > :last-child {
+.markdown-wrapper table td> :last-child {
     margin-bottom: 0;
 }
 
@@ -944,11 +913,11 @@
     background-color: transparent;
 }
 
-.markdown-wrapper img[align="right"] {
+.markdown-wrapper img[align='right'] {
     padding-left: 20px;
 }
 
-.markdown-wrapper img[align="left"] {
+.markdown-wrapper img[align='left'] {
     padding-right: 20px;
 }
 
@@ -963,7 +932,7 @@
     overflow: hidden;
 }
 
-.markdown-wrapper span.frame > span {
+.markdown-wrapper span.frame>span {
     display: block;
     float: left;
     width: auto;
@@ -991,7 +960,7 @@
     clear: both;
 }
 
-.markdown-wrapper span.align-center > span {
+.markdown-wrapper span.align-center>span {
     display: block;
     margin: 13px auto 0;
     overflow: hidden;
@@ -1009,7 +978,7 @@
     clear: both;
 }
 
-.markdown-wrapper span.align-right > span {
+.markdown-wrapper span.align-right>span {
     display: block;
     margin: 13px 0 0;
     overflow: hidden;
@@ -1039,7 +1008,7 @@
     overflow: hidden;
 }
 
-.markdown-wrapper span.float-right > span {
+.markdown-wrapper span.float-right>span {
     display: block;
     margin: 13px auto 0;
     overflow: hidden;
@@ -1073,7 +1042,7 @@
     font-size: 100%;
 }
 
-.markdown-wrapper pre > code {
+.markdown-wrapper pre>code {
     padding: 0;
     margin: 0;
     word-break: normal;
@@ -1349,11 +1318,11 @@
 }
 
 .markdown-wrapper [data-footnote-ref]::before {
-    content: "[";
+    content: '[';
 }
 
 .markdown-wrapper [data-footnote-ref]::after {
-    content: "]";
+    content: ']';
 }
 
 .markdown-wrapper .footnotes {
@@ -1383,7 +1352,7 @@
     bottom: calc(var(--base-size-8) * -1);
     left: calc(var(--base-size-24) * -1);
     pointer-events: none;
-    content: "";
+    content: '';
     border: 2px solid var(--borderColor-accent-emphasis);
     border-radius: 6px;
 }
@@ -1520,8 +1489,8 @@
     color: var(--color-prettylights-syntax-constant-other-reference-link);
 }
 
-.markdown-wrapper [role="button"]:focus:not(:focus-visible),
-.markdown-wrapper [role="tabpanel"][tabindex="0"]:focus:not(:focus-visible),
+.markdown-wrapper [role='button']:focus:not(:focus-visible),
+.markdown-wrapper [role='tabpanel'][tabindex='0']:focus:not(:focus-visible),
 .markdown-wrapper button:focus:not(:focus-visible),
 .markdown-wrapper summary:focus:not(:focus-visible),
 .markdown-wrapper a:focus:not(:focus-visible) {
@@ -1529,7 +1498,7 @@
     box-shadow: none;
 }
 
-.markdown-wrapper [tabindex="0"]:focus:not(:focus-visible),
+.markdown-wrapper [tabindex='0']:focus:not(:focus-visible),
 .markdown-wrapper details-dialog:focus:not(:focus-visible) {
     outline: none;
 }
@@ -1537,7 +1506,7 @@
 .markdown-wrapper g-emoji {
     display: inline-block;
     min-width: 1ch;
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     font-size: 1em;
     font-style: normal !important;
     font-weight: var(--base-text-weight-normal, 400);
@@ -1562,7 +1531,7 @@
     cursor: pointer;
 }
 
-.markdown-wrapper .task-list-item + .task-list-item {
+.markdown-wrapper .task-list-item+.task-list-item {
     margin-top: var(--base-size-4);
 }
 
@@ -1584,9 +1553,7 @@
 }
 
 .markdown-wrapper .contains-task-list:hover .task-list-item-convert-container,
-.markdown-wrapper
-    .contains-task-list:focus-within
-    .task-list-item-convert-container {
+.markdown-wrapper .contains-task-list:focus-within .task-list-item-convert-container {
     display: block;
     width: auto;
     height: 24px;
@@ -1598,7 +1565,7 @@
     filter: invert(50%);
 }
 
-.markdown-wrapper > *:first-child > .heading-element:first-child {
+.markdown-wrapper>*:first-child>.heading-element:first-child {
     margin-top: 0 !important;
 }
 

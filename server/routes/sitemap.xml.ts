@@ -40,6 +40,7 @@ const STATIC_ROUTES: SitemapUrl[] = [
     { loc: "/timeline", changefreq: "monthly", priority: 0.5 },
     { loc: "/ctf-event", changefreq: "weekly", priority: 0.6 },
     { loc: "/links", changefreq: "monthly", priority: 0.4 },
+    { loc: "/gaokao", changefreq: "monthly", priority: 0.6 },
     { loc: "/about", changefreq: "monthly", priority: 0.8 },
     { loc: "/about/teacher", changefreq: "yearly", priority: 0.6 },
     { loc: "/about/leaders", changefreq: "monthly", priority: 0.5 },

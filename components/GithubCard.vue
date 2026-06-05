@@ -65,7 +65,7 @@ import {
     getLinkKey,
     getPreviewImage,
     parseGithubLink,
-} from "~/utils/markdown-github-card";
+} from "~/utils/markdown/plugins/github-card";
 
 const props = defineProps<{
     href: string;

@@ -23,6 +23,7 @@
 import { computed } from "vue";
 import {
     CheckCircleIcon,
+    ExclamationCircleIcon,
     ExclamationTriangleIcon,
     InformationCircleIcon,
     XCircleIcon,
@@ -32,7 +33,7 @@ const { t } = useI18n();
 
 interface AlertInfo {
     title?: string;
-    type?: "succ" | "warn" | "info" | "error" | "plain";
+    type?: "succ" | "warn" | "info" | "error" | "important" | "plain";
 }
 
 const props = defineProps<AlertInfo>();
@@ -59,6 +60,7 @@ const iconComponent = computed(() => {
         warn: ExclamationTriangleIcon,
         info: InformationCircleIcon,
         error: XCircleIcon,
+        important: ExclamationCircleIcon,
         plain: null,
     };
 
@@ -71,6 +73,7 @@ const iconColorClass = computed(() => {
         warn: "text-(--md-sys-color-tertiary)",
         info: "text-(--md-sys-color-secondary)",
         error: "text-(--md-sys-color-error)",
+        important: "text-(--md-sys-color-secondary)",
         plain: "text-(--md-sys-color-on-surface-variant)",
     };
 

@@ -548,7 +548,7 @@ watch(currentContentLang, async () => {
 
 watch([content, treeNode], () => {
     if (content.value || treeNode.value) {
-        setTitle(pageTitle.value, t("nav.wiki"));
+        setTitle(pageTitle.value, content.value?.data?.publisher || "");
         updateLayout();
     }
 });

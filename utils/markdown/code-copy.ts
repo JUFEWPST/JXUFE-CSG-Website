@@ -1,7 +1,4 @@
-export interface MarkdownCodeCopyController {
-    destroy: () => void;
-    refresh: () => void;
-}
+import type { MarkdownDecorator } from "./plugin";
 
 const COPIED_CLASS = "copied";
 const COPIED_DURATION_MS = 2000;
@@ -15,9 +12,10 @@ const decodeCode = (raw: string, encoding: string): string => {
     }
 };
 
+/** 代码块复制：事件委托在 container 上，监听 .code-copy-btn 点击。 */
 export const createMarkdownCodeCopyController = (
     container: HTMLElement,
-): MarkdownCodeCopyController => {
+): MarkdownDecorator => {
     const copiedTimers = new WeakMap<HTMLButtonElement, number>();
 
     const flashCopied = (button: HTMLButtonElement) => {
@@ -82,8 +80,7 @@ export const createMarkdownCodeCopyController = (
     container.addEventListener("click", handleClick);
 
     return {
-        refresh: () => {
-        },
+        refresh: () => {},
         destroy: () => {
             container.removeEventListener("click", handleClick);
         },
