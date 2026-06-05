@@ -17,7 +17,8 @@ export default defineNuxtConfig({
             { code: "ko", iso: "ko-KR", name: "한국어", file: "ko.json" },
         ],
         defaultLocale: "zh",
-        baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://csec.jxufe.edu.cn",
+        baseUrl:
+            process.env.NUXT_PUBLIC_SITE_URL || "https://csec.jxufe.edu.cn",
     },
 
     runtimeConfig: {
@@ -26,8 +27,7 @@ export default defineNuxtConfig({
                 process.env.NUXT_PUBLIC_API_BASE ||
                 "https://csec.jxufe.edu.cn/nozomi",
             siteUrl:
-                process.env.NUXT_PUBLIC_SITE_URL ||
-                "https://csec.jxufe.edu.cn",
+                process.env.NUXT_PUBLIC_SITE_URL || "https://csec.jxufe.edu.cn",
             buildInfo: {
                 builder:
                     process.env.NUXT_PUBLIC_BUILD_INFO_BUILDER ||

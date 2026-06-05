@@ -12,6 +12,7 @@
     "dependencies": {
         "@heroicons/vue": "^2.2.0",
         "@material/material-color-utilities": "^0.3.0",
+        "katex": "^0.17.0",
         "nuxt": "^4.4.2",
         "vue": "^3.5.27"
     },
@@ -19,6 +20,7 @@
         "@nuxtjs/i18n": "10.2.4",
         "@nuxtjs/mdc": "^0.21.1",
         "@tailwindcss/vite": "^4.2.2",
+        "@types/katex": "^0.16.8",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "slugify": "^1.6.8",

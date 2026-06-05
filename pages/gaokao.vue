@@ -85,14 +85,10 @@
                                     v-model="selectedProvince"
                                     :items="availableProvinces"
                                     :placeholder="
-                                        t(
-                                            'pages.gaokao.placeholder.province',
-                                        )
+                                        t('pages.gaokao.placeholder.province')
                                     "
                                     :search-placeholder="
-                                        t(
-                                            'pages.gaokao.placeholder.province',
-                                        )
+                                        t('pages.gaokao.placeholder.province')
                                     "
                                     :empty-text="t('common.items.empty')"
                                     menu-width-class="w-full"
@@ -107,12 +103,8 @@
                                 >
                                     {{
                                         dataSource === "plan"
-                                            ? t(
-                                                  "pages.gaokao.filters.planType",
-                                              )
-                                            : t(
-                                                  "pages.gaokao.filters.category",
-                                              )
+                                            ? t("pages.gaokao.filters.planType")
+                                            : t("pages.gaokao.filters.category")
                                     }}
                                 </label>
                                 <AnzuComboBox
@@ -120,14 +112,10 @@
                                     v-model="selectedPlanType"
                                     :items="availablePlanTypes"
                                     :placeholder="
-                                        t(
-                                            'pages.gaokao.placeholder.planType',
-                                        )
+                                        t('pages.gaokao.placeholder.planType')
                                     "
                                     :search-placeholder="
-                                        t(
-                                            'pages.gaokao.placeholder.planType',
-                                        )
+                                        t('pages.gaokao.placeholder.planType')
                                     "
                                     :empty-text="t('common.items.empty')"
                                     menu-width-class="w-full"
@@ -138,14 +126,10 @@
                                     v-model="selectedCategory"
                                     :items="availableCategories"
                                     :placeholder="
-                                        t(
-                                            'pages.gaokao.placeholder.category',
-                                        )
+                                        t('pages.gaokao.placeholder.category')
                                     "
                                     :search-placeholder="
-                                        t(
-                                            'pages.gaokao.placeholder.category',
-                                        )
+                                        t('pages.gaokao.placeholder.category')
                                     "
                                     :empty-text="t('common.items.empty')"
                                     menu-width-class="w-full"
@@ -182,9 +166,7 @@
                                 <label
                                     class="text-sm font-medium text-(--md-sys-color-on-surface-variant)"
                                 >
-                                    {{
-                                        t("pages.gaokao.filters.yourRanking")
-                                    }}
+                                    {{ t("pages.gaokao.filters.yourRanking") }}
                                 </label>
                                 <AnzuInput
                                     v-model.number="userRanking"
@@ -202,9 +184,7 @@
                                 <template #icon>
                                     <ArrowPathIcon class="h-4 w-4" />
                                 </template>
-                                {{
-                                    t("pages.gaokao.filters.reset") || "重置"
-                                }}
+                                {{ t("pages.gaokao.filters.reset") || "重置" }}
                             </AnzuButton>
                             <AnzuButton
                                 variant="filled"
@@ -225,9 +205,22 @@
                     type="info"
                     :title="t('pages.gaokao.sourceAlert.title')"
                 >
-                    <div class="leading-relaxed whitespace-pre-line opacity-90">
-                        {{ t("pages.gaokao.sourceAlert.description") }}
-                    </div>
+                    <i18n-t
+                        keypath="pages.gaokao.sourceAlert.description"
+                        tag="div"
+                        class="leading-relaxed whitespace-pre-line opacity-90"
+                    >
+                        <template #zsjy>
+                            <a
+                                href="https://zsjy.jxufe.edu.cn/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-(--md-sys-color-primary) underline underline-offset-2"
+                            >
+                                {{ t("pages.links.items.zsjy") }}
+                            </a>
+                        </template>
+                    </i18n-t>
                 </AnzuAlert>
 
                 <div
@@ -352,9 +345,7 @@
                                         ]"
                                         @click="toggleSort('maxScore')"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.maxScore")
-                                        }}
+                                        {{ t("pages.gaokao.table.maxScore") }}
                                         <span
                                             v-if="sortKey === 'maxScore'"
                                             class="ml-0.5"
@@ -375,9 +366,7 @@
                                         ]"
                                         @click="toggleSort('minScore')"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.minScore")
-                                        }}
+                                        {{ t("pages.gaokao.table.minScore") }}
                                         <span
                                             v-if="sortKey === 'minScore'"
                                             class="ml-0.5"
@@ -390,21 +379,13 @@
                                         v-if="dataSource === 'ranking'"
                                         class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t(
-                                                "pages.gaokao.table.maxRanking",
-                                            )
-                                        }}
+                                        {{ t("pages.gaokao.table.maxRanking") }}
                                     </th>
                                     <th
                                         v-if="dataSource === 'ranking'"
                                         class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t(
-                                                "pages.gaokao.table.minRanking",
-                                            )
-                                        }}
+                                        {{ t("pages.gaokao.table.minRanking") }}
                                     </th>
                                     <th
                                         v-if="showMatchCol"
@@ -420,9 +401,7 @@
                                     <th
                                         class="w-[10%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.category")
-                                        }}
+                                        {{ t("pages.gaokao.table.category") }}
                                     </th>
                                     <th
                                         class="w-[10%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
@@ -512,23 +491,17 @@
                                     <th
                                         class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.majorCode")
-                                        }}
+                                        {{ t("pages.gaokao.table.majorCode") }}
                                     </th>
                                     <th
                                         class="w-[22%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.planType")
-                                        }}
+                                        {{ t("pages.gaokao.table.planType") }}
                                     </th>
                                     <th
                                         class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.planCount")
-                                        }}
+                                        {{ t("pages.gaokao.table.planCount") }}
                                     </th>
                                     <th
                                         class="px-3 py-2 text-[11px] font-medium tracking-[0.14em] whitespace-nowrap text-(--md-sys-color-on-surface-variant)"
@@ -617,9 +590,7 @@
                                     <p
                                         class="text-xs text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.maxScore")
-                                        }}
+                                        {{ t("pages.gaokao.table.maxScore") }}
                                     </p>
                                     <p
                                         class="text-lg font-semibold tabular-nums text-(--md-sys-color-on-surface)"
@@ -631,9 +602,7 @@
                                     <p
                                         class="text-xs text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.minScore")
-                                        }}
+                                        {{ t("pages.gaokao.table.minScore") }}
                                     </p>
                                     <p
                                         class="text-lg font-semibold tabular-nums text-(--md-sys-color-on-surface)"
@@ -703,9 +672,7 @@
                                     <p
                                         class="text-xs text-(--md-sys-color-on-surface-variant)"
                                     >
-                                        {{
-                                            t("pages.gaokao.table.planCount")
-                                        }}
+                                        {{ t("pages.gaokao.table.planCount") }}
                                     </p>
                                     <p
                                         class="text-2xl font-semibold tabular-nums text-(--md-sys-color-on-surface)"

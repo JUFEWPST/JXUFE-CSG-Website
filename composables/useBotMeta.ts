@@ -112,8 +112,7 @@ export async function useBotMeta(
     const nuxtApp = useNuxtApp();
     const config = useRuntimeConfig();
     const apiBase =
-        (config.public.apiBase as string) ||
-        "https://csec.jxufe.edu.cn/nozomi";
+        (config.public.apiBase as string) || "https://csec.jxufe.edu.cn/nozomi";
     const siteUrl = (
         (config.public.siteUrl as string) || "https://csec.jxufe.edu.cn"
     ).replace(/\/+$/, "");

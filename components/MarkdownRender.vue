@@ -1,9 +1,6 @@
 <template>
     <div class="markdown-container">
-        <div
-            ref="markdownRoot"
-            class="w-full max-w-full"
-        >
+        <div ref="markdownRoot" class="w-full max-w-full">
             <MDCRenderer
                 v-if="renderPayload"
                 :body="renderPayload.body"
@@ -39,63 +36,57 @@
 
 <script setup lang="ts">
 import type { MDCParserResult } from "@nuxtjs/mdc";
-import type { DefineComponent } from "vue";
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
-import { useMarkdown } from "~/composables/UseMarkdown";
+import {
+    computed,
+    nextTick,
+    onMounted,
+    onUnmounted,
+    ref,
+    watch,
+    type DefineComponent,
+} from "vue";
+import {
+    useMarkdown,
+    markdownPlugins,
+    markdownComponents,
+} from "~/composables/UseMarkdown";
 import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
-import BilibiliEmbed from "~/components/mdc/BilibiliEmbed.vue";
-import AnzuAlert from "~/components/AnzuAlert.vue";
-import ProsePre from "~/components/prose/ProsePre.vue";
-import ProseH1 from "~/components/prose/ProseH1.vue";
-import ProseH2 from "~/components/prose/ProseH2.vue";
-import ProseH3 from "~/components/prose/ProseH3.vue";
-import ProseH4 from "~/components/prose/ProseH4.vue";
-import ProseH5 from "~/components/prose/ProseH5.vue";
-import ProseH6 from "~/components/prose/ProseH6.vue";
-import GithubCard from "~/components/GithubCard.vue";
 import {
-    createMarkdownImageViewerController,
-    type MarkdownImageViewerController,
-    decorateMarkdownImages,
-} from "~/utils/markdown-image-viewer";
-import {
-    createMarkdownVideoPlayerController,
-    type MarkdownVideoPlayerController,
-    decorateMarkdownVideoEmbeds,
-} from "~/utils/markdown-video-player";
-import {
-    createMarkdownCodeCopyController,
-    type MarkdownCodeCopyController,
-} from "~/utils/markdown-code-copy";
-import "~/assets/css/markdown.css";
+    collectDecorators,
+    assertComponentsBound,
+    type MarkdownDecorator,
+} from "~/utils/markdown/plugin";
+import { extractHeadingItems, tocItemsEqual } from "~/utils/markdown/toc";
 import type { TocItem } from "~/types/tocitems";
-import slugify from "slugify";
-const { parseMdcMarkdown } = useMarkdown();
+import "~/assets/css/markdown.css";
+
 const props = defineProps<{
     content: string | "";
     sanitize?: boolean;
 }>();
+
 const emit = defineEmits<{
     (e: "toc-updated", items: TocItem[]): void;
 }>();
 
+const { parseMdcMarkdown } = useMarkdown();
 const markdownRoot = ref<HTMLElement | null>(null);
 const parsedContent = ref<MDCParserResult | null>(null);
+const tocItems = ref<TocItem[]>([]);
 const errorMessage = ref("");
 const parsing = ref(false);
-const tocItems = ref<TocItem[]>([]);
-const rendererComponents: Record<string, DefineComponent<any, any, any>> = {
-    pre: ProsePre as unknown as DefineComponent<any, any, any>,
-    h1: ProseH1 as unknown as DefineComponent<any, any, any>,
-    h2: ProseH2 as unknown as DefineComponent<any, any, any>,
-    h3: ProseH3 as unknown as DefineComponent<any, any, any>,
-    h4: ProseH4 as unknown as DefineComponent<any, any, any>,
-    h5: ProseH5 as unknown as DefineComponent<any, any, any>,
-    h6: ProseH6 as unknown as DefineComponent<any, any, any>,
-    "markdown-alert": AnzuAlert as unknown as DefineComponent<any, any, any>,
-    "bilibili-embed": BilibiliEmbed as unknown as DefineComponent<any, any, any>,
-    "github-card": GithubCard as unknown as DefineComponent<any, any, any>,
-};
+
+const rendererComponents = markdownComponents as Record<
+    string,
+    string | DefineComponent<any, any, any>
+>;
+const decoratorFactories = collectDecorators(markdownPlugins);
+const decorators = new Map<string, MarkdownDecorator>();
+
+if (import.meta.dev) {
+    assertComponentsBound(markdownPlugins, markdownComponents);
+}
+
 const renderPayload = computed(() => {
     if (!parsedContent.value) {
         return null;
@@ -106,52 +97,11 @@ const renderPayload = computed(() => {
         data: parsedContent.value.data,
     };
 });
+
 const headingSizeLevel = computed(() => {
     if (tocItems.value.length === 0) return 1;
     return Math.min(...tocItems.value.map((item) => item.level));
 });
-const slugifyConfig = {
-    lower: true, // 转换为小写
-    strict: true, // 移除特殊字符
-    remove: /[*+~.()'"!:@]/g, // 额外要移除的字符
-    locale: "zh", // 支持中文
-    trim: true, // 移除前后空格
-};
-const extractHeadingItems = (): TocItem[] => {
-    if (!markdownRoot.value) return [];
-
-    const headings = markdownRoot.value.querySelectorAll(
-        "h1, h2, h3, h4, h5, h6",
-    );
-    const usedIds = new Set<string>();
-    const items: TocItem[] = [];
-
-    headings.forEach((heading, index) => {
-        if (!heading.id) {
-            const textContent = heading.textContent || "";
-            const baseSlug =
-                slugify(textContent, slugifyConfig) || `heading-${index}`;
-
-            let slug = baseSlug;
-            let counter = 2;
-            while (usedIds.has(slug)) {
-                slug = `${baseSlug}-${counter}`;
-                counter++;
-            }
-            heading.id = slug;
-        }
-
-        usedIds.add(heading.id);
-
-        items.push({
-            id: heading.id,
-            text: heading.textContent || "",
-            level: parseInt(heading.tagName.substring(1)),
-        });
-    });
-
-    return items;
-};
 
 let renderRequestId = 0;
 
@@ -190,61 +140,45 @@ const updateParsedContent = (content: string): Promise<void> => {
         });
 };
 
+const destroyDecorators = () => {
+    for (const decorator of decorators.values()) {
+        decorator.destroy();
+    }
+    decorators.clear();
+};
+
 const syncMarkdownDom = () => {
     const root = markdownRoot.value;
     if (!root) return;
 
-    const items = extractHeadingItems();
-    tocItems.value = items;
-    emit("toc-updated", items);
-
-    decorateMarkdownVideoEmbeds(root);
-    decorateMarkdownImages(root);
-
-    const hasImages = root.querySelector("img[data-md-zoomable='true']");
-    if (hasImages) {
-        if (!imageViewerController) {
-            imageViewerController = createMarkdownImageViewerController(root);
+    for (const factory of decoratorFactories) {
+        const existing = decorators.get(factory.name);
+        if (existing) {
+            existing.refresh();
         } else {
-            imageViewerController.refresh();
+            decorators.set(factory.name, factory.create(root));
         }
-    } else if (imageViewerController) {
-        imageViewerController.destroy();
-        imageViewerController = null;
     }
 
-    const hasVideos = root.querySelector(
-        ".md-video-player[data-md-video='true']",
-    );
-    if (hasVideos) {
-        if (!videoPlayerController) {
-            videoPlayerController = createMarkdownVideoPlayerController(root);
-        } else {
-            videoPlayerController.refresh();
-        }
-    } else if (videoPlayerController) {
-        videoPlayerController.destroy();
-        videoPlayerController = null;
-    }
-
-    const hasCopyButtons = root.querySelector(".code-copy-btn");
-    if (hasCopyButtons) {
-        if (!codeCopyController) {
-            codeCopyController = createMarkdownCodeCopyController(root);
-        } else {
-            codeCopyController.refresh();
-        }
-    } else if (codeCopyController) {
-        codeCopyController.destroy();
-        codeCopyController = null;
+    const items = extractHeadingItems(root);
+    if (!tocItemsEqual(items, tocItems.value)) {
+        tocItems.value = items;
+        emit("toc-updated", items);
     }
 };
 
+watch(
+    () => [props.content, props.sanitize],
+    ([content]) => {
+        updateParsedContent(String(content || "")).catch((error) => {
+            console.error("Markdown 更新失败:", error);
+        });
+    },
+    { immediate: true },
+);
+
 let domSyncTimer: ReturnType<typeof setTimeout> | null = null;
 let resizeObserver: ResizeObserver | null = null;
-let imageViewerController: MarkdownImageViewerController | null = null;
-let videoPlayerController: MarkdownVideoPlayerController | null = null;
-let codeCopyController: MarkdownCodeCopyController | null = null;
 
 const clearDomSyncResources = () => {
     if (domSyncTimer !== null) {
@@ -271,18 +205,18 @@ onMounted(() => {
     }
 });
 
+onUnmounted(() => {
+    clearDomSyncResources();
+    destroyDecorators();
+});
+
 watch(
     () => parsedContent.value,
     async (value) => {
         if (!value) {
             tocItems.value = [];
             emit("toc-updated", []);
-            imageViewerController?.destroy();
-            imageViewerController = null;
-            videoPlayerController?.destroy();
-            videoPlayerController = null;
-            codeCopyController?.destroy();
-            codeCopyController = null;
+            destroyDecorators();
             return;
         }
         await nextTick();
@@ -293,26 +227,6 @@ watch(
 defineExpose({
     tocItems,
     markdownRoot,
-});
-
-watch(
-    () => [props.content, props.sanitize],
-    ([content]) => {
-        updateParsedContent(String(content || "")).catch((error) => {
-            console.error("Markdown 更新失败:", error);
-        });
-    },
-    { immediate: true },
-);
-
-onUnmounted(() => {
-    clearDomSyncResources();
-    imageViewerController?.destroy();
-    imageViewerController = null;
-    videoPlayerController?.destroy();
-    videoPlayerController = null;
-    codeCopyController?.destroy();
-    codeCopyController = null;
 });
 </script>
 

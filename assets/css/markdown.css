@@ -443,8 +443,55 @@
     display: table-cell;
 }
 
+.markdown-wrapper details {
+    padding: 0;
+    background-color: var(--codeBlock-bg);
+    border-radius: var(--border-radius-base);
+}
+
 .markdown-wrapper details summary {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 12px 16px;
+    font-weight: var(--base-text-weight-medium);
+    color: var(--fgColor-default);
+    list-style: none;
+}
+
+.markdown-wrapper details summary::before {
+    content: "";
+    display: inline-block;
+    width: 0.45em;
+    height: 0.45em;
+    border-right: 2px solid var(--fgColor-muted);
+    border-bottom: 2px solid var(--fgColor-muted);
+    transform: rotate(-45deg);
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.markdown-wrapper details[open] > summary::before {
+    transform: rotate(45deg);
+}
+
+.markdown-wrapper details > summary::-webkit-details-marker,
+.markdown-wrapper details > summary::marker {
+    display: none;
+    content: "";
+}
+
+.markdown-wrapper details[open] > summary {
+    background-color: var(--codeBlock-inline-bg);
+}
+
+.markdown-wrapper details > :not(summary) {
+    padding: 16px 20px;
+}
+
+.markdown-wrapper details > :not(summary):last-child {
+    margin-bottom: 0;
 }
 
 .markdown-wrapper a:focus,
@@ -1266,7 +1313,11 @@
     padding-left: 8px;
 }
 
-.markdown-wrapper .code-block-wrapper.has-line-numbers pre.shiki code .line::before {
+.markdown-wrapper
+    .code-block-wrapper.has-line-numbers
+    pre.shiki
+    code
+    .line::before {
     content: counter(code-line);
     display: inline-block;
     width: 2.4em;

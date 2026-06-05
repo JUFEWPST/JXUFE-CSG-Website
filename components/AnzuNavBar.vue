@@ -23,11 +23,39 @@
                             alt="logo"
                         />
                         <span
-                            class="block max-w-56 min-w-0 truncate lg:max-w-[20rem]"
+                            class="block max-w-56 min-w-0 truncate transition-all duration-300 lg:max-w-[20rem]"
+                            :class="
+                                showArticleTitle &&
+                                scrollDirection === 'down'
+                                    ? 'invisible w-0 scale-95 overflow-hidden opacity-0 md:visible md:w-auto md:scale-100 md:overflow-visible md:opacity-100'
+                                    : ''
+                            "
                         >
                             {{ t("meta.fullName") }}
                         </span>
                     </NuxtLink>
+                </div>
+
+                <div
+                    v-if="navTitleBox.title"
+                    class="pointer-events-none absolute top-0 left-0 flex h-full w-full flex-col items-start justify-center px-2 pl-14 text-left transition-all duration-300 md:hidden"
+                    :class="{
+                        'invisible scale-95 opacity-0':
+                            !showArticleTitle || scrollDirection === 'up',
+                    }"
+                >
+                    <div
+                        class="w-full overflow-hidden text-sm leading-tight font-bold text-ellipsis whitespace-nowrap text-(--md-sys-color-on-surface)"
+                    >
+                        {{ navTitleBox.title }}
+                    </div>
+                    <div
+                        class="text-xs text-(--md-sys-color-on-surface-variant) opacity-70"
+                    >
+                        <span v-if="navTitleBox.subtitle">{{
+                            navTitleBox.subtitle
+                        }}</span>
+                    </div>
                 </div>
 
                 <div

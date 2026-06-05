@@ -415,7 +415,7 @@
                                                     }}
                                                 </p>
                                                 <p
-                                                    class="text-xs text-(--md-sys-color-on-surface-variant) "
+                                                    class="text-xs text-(--md-sys-color-on-surface-variant)"
                                                 >
                                                     {{
                                                         t(

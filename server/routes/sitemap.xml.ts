@@ -23,13 +23,13 @@ interface SitemapUrl {
     loc: string;
     lastmod?: string;
     changefreq?:
-    | "always"
-    | "hourly"
-    | "daily"
-    | "weekly"
-    | "monthly"
-    | "yearly"
-    | "never";
+        | "always"
+        | "hourly"
+        | "daily"
+        | "weekly"
+        | "monthly"
+        | "yearly"
+        | "never";
     priority?: number;
 }
 
@@ -40,6 +40,7 @@ const STATIC_ROUTES: SitemapUrl[] = [
     { loc: "/timeline", changefreq: "monthly", priority: 0.5 },
     { loc: "/ctf-event", changefreq: "weekly", priority: 0.6 },
     { loc: "/links", changefreq: "monthly", priority: 0.4 },
+    { loc: "/gaokao", changefreq: "monthly", priority: 0.6 },
     { loc: "/about", changefreq: "monthly", priority: 0.8 },
     { loc: "/about/teacher", changefreq: "yearly", priority: 0.6 },
     { loc: "/about/leaders", changefreq: "monthly", priority: 0.5 },

@@ -18,11 +18,11 @@
 
                 <!-- rail -->
                 <div
-                    class="relative w-10 shrink-0 self-stretch md:w-12 before:absolute before:left-3 before:top-0 before:bottom-0 before:w-0.5 before:bg-[repeating-linear-gradient(to_bottom,var(--md-sys-color-outline-variant)_0px,var(--md-sys-color-outline-variant)_7px,transparent_7px,transparent_14px)]"
+                    class="relative w-10 shrink-0 self-stretch md:w-12 before:absolute before:left-[calc(0.75rem-0.25px)] before:-top-4 before:-bottom-4 before:w-0.5 before:bg-[repeating-linear-gradient(to_bottom,var(--md-sys-color-outline-variant)_0px,var(--md-sys-color-outline-variant)_7px,transparent_7px,transparent_14px)]"
                     aria-hidden="true"
                 >
                     <div
-                        class="absolute left-3 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent outline-3 outline-(--md-sys-color-primary) -outline-offset-2"
+                        class="absolute left-[calc(0.75rem)] top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent outline-3 outline-(--md-sys-color-primary) -outline-offset-2"
                     ></div>
                 </div>
 
@@ -46,9 +46,8 @@
         </div>
 
         <!-- Pagination -->
-        <div class="mt-8 flex justify-center">
+        <div v-if="totalPages > 1" class="mt-8 flex justify-center">
             <AnzuPagination
-                v-if="totalPages > 1"
                 :total-pages="totalPages"
                 :current-page="currentPage"
             />

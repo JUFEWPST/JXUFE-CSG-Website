@@ -186,9 +186,9 @@ img[data-md-zoomable="true"] {
 }
 `;
 
-    const existing = document.getElementById(VIEWER_STYLE_ID) as
-        | HTMLStyleElement
-        | null;
+    const existing = document.getElementById(
+        VIEWER_STYLE_ID,
+    ) as HTMLStyleElement | null;
     if (existing) {
         existing.textContent = styleContent;
         return;
@@ -278,7 +278,8 @@ export const createMarkdownImageViewerController = (
     closeButton.type = "button";
     closeButton.className = "md-image-viewer-btn";
     closeButton.setAttribute("aria-label", "Close image viewer");
-    closeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+    closeButton.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
 
     const prevWrap = document.createElement("div");
     prevWrap.className = "md-image-viewer-nav is-prev";
@@ -287,7 +288,8 @@ export const createMarkdownImageViewerController = (
     prevButton.type = "button";
     prevButton.className = "md-image-viewer-btn";
     prevButton.setAttribute("aria-label", "Previous image");
-    prevButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
+    prevButton.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
 
     const nextWrap = document.createElement("div");
     nextWrap.className = "md-image-viewer-nav is-next";
@@ -296,7 +298,8 @@ export const createMarkdownImageViewerController = (
     nextButton.type = "button";
     nextButton.className = "md-image-viewer-btn";
     nextButton.setAttribute("aria-label", "Next image");
-    nextButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
+    nextButton.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
 
     prevWrap.appendChild(prevButton);
     controls.append(counter, closeButton);
@@ -435,12 +438,16 @@ export const createMarkdownImageViewerController = (
 
         const candidates = getZoomableImages(root);
         currentImages = group
-            ? candidates.filter((img) => img.getAttribute("data-md-img-group") === group)
+            ? candidates.filter(
+                  (img) => img.getAttribute("data-md-img-group") === group,
+              )
             : candidates;
 
         if (!currentImages.length) return;
 
-        const foundIndex = currentImages.findIndex((item) => item === clickedImage);
+        const foundIndex = currentImages.findIndex(
+            (item) => item === clickedImage,
+        );
         currentIndex = foundIndex >= 0 ? foundIndex : 0;
 
         setImageByIndex(currentIndex);
@@ -790,7 +797,10 @@ export const createMarkdownImageViewerController = (
         if (!isOpen) return;
 
         const nextImages = activeGroup
-            ? images.filter((image) => image.getAttribute("data-md-img-group") === activeGroup)
+            ? images.filter(
+                  (image) =>
+                      image.getAttribute("data-md-img-group") === activeGroup,
+              )
             : images;
 
         if (!nextImages.length) {
@@ -815,7 +825,10 @@ export const createMarkdownImageViewerController = (
         viewerImage.removeEventListener("pointerdown", handlePointerDown);
         viewerImage.removeEventListener("pointerup", handlePointerEnd);
         viewerImage.removeEventListener("pointercancel", handlePointerCancel);
-        viewerImage.removeEventListener("lostpointercapture", handlePointerCancel);
+        viewerImage.removeEventListener(
+            "lostpointercapture",
+            handlePointerCancel,
+        );
         viewerImage.removeEventListener("dragstart", handleImageNativeDrag);
         window.removeEventListener("pointermove", handlePointerMove);
         window.removeEventListener("pointerup", handlePointerEnd);

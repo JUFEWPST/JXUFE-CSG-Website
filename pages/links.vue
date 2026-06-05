@@ -69,7 +69,6 @@
 import { useLinks } from "~/data/eLinks";
 import { useI18n } from "vue-i18n";
 
-
 const { Links, iLinks, fLinks } = useLinks();
 const { t } = useI18n();
 usePageMeta({

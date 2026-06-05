@@ -48,9 +48,7 @@
                 </span>
                 <span class="gh-card-meta">
                     <span class="js-gh-stats gh-card-stats" />
-                    <span class="js-gh-state gh-card-state">
-                        GitHub
-                    </span>
+                    <span class="js-gh-state gh-card-state"> GitHub </span>
                 </span>
             </span>
         </a>
@@ -65,7 +63,7 @@ import {
     getLinkKey,
     getPreviewImage,
     parseGithubLink,
-} from "~/utils/markdown-github-card";
+} from "~/utils/markdown/plugins/github-card";
 
 const props = defineProps<{
     href: string;
@@ -92,8 +90,7 @@ const cardSubtitle = computed(() =>
     border: 1px solid var(--md-sys-color-outline-variant, rgba(0, 0, 0, 0.12));
     padding: 0.88rem 0.95rem;
     color: var(--md-sys-color-on-surface, #1c1b1f);
-    transition:
-        border-color 0.2s;
+    transition: border-color 0.2s;
 }
 
 .gh-card-link:hover {
