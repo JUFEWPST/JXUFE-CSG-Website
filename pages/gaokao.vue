@@ -3,39 +3,7 @@
         class="box-border bg-(--md-sys-color-surface-container-lowest) px-4 py-6 sm:px-6 sm:py-8"
     >
         <div class="mx-auto max-w-5xl space-y-6">
-            <div
-                v-if="configLoading"
-                class="flex min-h-72 flex-col items-center justify-center gap-4 text-center text-(--md-sys-color-on-surface-variant)"
-            >
-                <AnzuProgressRing :size="56" status="loading" />
-                <p class="text-sm sm:text-base">
-                    {{ t("pages.gaokao.loading") }}
-                </p>
-            </div>
-
-            <div
-                v-else-if="configError"
-                class="space-y-4 rounded-xl bg-(--md-sys-color-error-container)/60 p-5 text-(--md-sys-color-on-error-container)"
-            >
-                <div class="flex items-start gap-3">
-                    <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
-                    <div class="space-y-2">
-                        <p class="font-semibold">
-                            {{ t("pages.gaokao.error") }}
-                        </p>
-                        <p class="text-sm opacity-80">{{ configError }}</p>
-                    </div>
-                </div>
-                <AnzuButton
-                    variant="filled"
-                    class="h-9! min-w-0! px-4!"
-                    @click="fetchConfig"
-                >
-                    {{ t("common.actions.reload") }}
-                </AnzuButton>
-            </div>
-
-            <section v-else class="space-y-8">
+            <section class="space-y-8">
                 <div class="flex flex-col gap-8">
                     <div class="flex flex-col gap-3">
                         <label
@@ -46,6 +14,7 @@
                         <AnzuSelector
                             v-model="dataSource"
                             :options="dataSources"
+                            :disabled="configLoading"
                             @change="
                                 (val) => switchDataSource(val as DataSource)
                             "
@@ -62,6 +31,7 @@
                                 <AnzuComboBox
                                     v-model="selectedYear"
                                     :items="availableYears"
+                                    :disabled="configLoading"
                                     :placeholder="
                                         t('pages.gaokao.placeholder.year')
                                     "
@@ -84,6 +54,7 @@
                                 <AnzuComboBox
                                     v-model="selectedProvince"
                                     :items="availableProvinces"
+                                    :disabled="configLoading"
                                     :placeholder="
                                         t('pages.gaokao.placeholder.province')
                                     "
@@ -111,6 +82,7 @@
                                     v-if="dataSource === 'plan'"
                                     v-model="selectedPlanType"
                                     :items="availablePlanTypes"
+                                    :disabled="configLoading"
                                     :placeholder="
                                         t('pages.gaokao.placeholder.planType')
                                     "
@@ -125,6 +97,7 @@
                                     v-else
                                     v-model="selectedCategory"
                                     :items="availableCategories"
+                                    :disabled="configLoading"
                                     :placeholder="
                                         t('pages.gaokao.placeholder.category')
                                     "
@@ -188,7 +161,7 @@
                             </AnzuButton>
                             <AnzuButton
                                 variant="filled"
-                                :disabled="!canQuery"
+                                :disabled="!canQuery || configLoading"
                                 :loading="dataLoading"
                                 @click="queryData"
                             >
@@ -201,32 +174,65 @@
                     </div>
                 </div>
 
-                <AnzuAlert
-                    type="info"
-                    :title="t('pages.gaokao.sourceAlert.title')"
+                <div
+                    v-if="configLoading"
+                    class="flex min-h-48 flex-col items-center justify-center gap-4 text-center text-(--md-sys-color-on-surface-variant)"
                 >
-                    <i18n-t
-                        keypath="pages.gaokao.sourceAlert.description"
-                        tag="div"
-                        class="leading-relaxed whitespace-pre-line opacity-90"
-                    >
-                        <template #zsjy>
-                            <a
-                                href="https://zsjy.jxufe.edu.cn/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-(--md-sys-color-primary) underline underline-offset-2"
-                            >
-                                {{ t("pages.links.items.zsjy") }}
-                            </a>
-                        </template>
-                    </i18n-t>
-                </AnzuAlert>
+                    <AnzuProgressRing :size="48" status="loading" />
+                    <p class="text-sm">
+                        {{ t("pages.gaokao.loading") }}
+                    </p>
+                </div>
 
                 <div
-                    v-if="!hasQueried"
-                    class="flex min-h-48 flex-col items-center justify-center gap-2 py-12 text-center"
+                    v-else-if="configError"
+                    class="space-y-4 rounded-xl bg-(--md-sys-color-error-container)/60 p-5 text-(--md-sys-color-on-error-container)"
                 >
+                    <div class="flex items-start gap-3">
+                        <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
+                        <div class="space-y-2">
+                            <p class="font-semibold">
+                                {{ t("pages.gaokao.error") }}
+                            </p>
+                            <p class="text-sm opacity-80">{{ configError }}</p>
+                        </div>
+                    </div>
+                    <AnzuButton
+                        variant="filled"
+                        class="h-9! min-w-0! px-4!"
+                        @click="fetchConfig"
+                    >
+                        {{ t("common.actions.reload") }}
+                    </AnzuButton>
+                </div>
+
+                <template v-else>
+                    <AnzuAlert
+                        type="info"
+                        :title="t('pages.gaokao.sourceAlert.title')"
+                    >
+                        <i18n-t
+                            keypath="pages.gaokao.sourceAlert.description"
+                            tag="div"
+                            class="leading-relaxed whitespace-pre-line opacity-90"
+                        >
+                            <template #zsjy>
+                                <a
+                                    href="https://zsjy.jxufe.edu.cn/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-(--md-sys-color-primary) underline underline-offset-2"
+                                >
+                                    {{ t("pages.links.items.zsjy") }}
+                                </a>
+                            </template>
+                        </i18n-t>
+                    </AnzuAlert>
+
+                    <div
+                        v-if="!hasQueried"
+                        class="flex min-h-48 flex-col items-center justify-center gap-2 py-12 text-center"
+                    >
                     <MagnifyingGlassIcon
                         class="h-10 w-10 text-(--md-sys-color-on-surface-variant) opacity-40"
                     />

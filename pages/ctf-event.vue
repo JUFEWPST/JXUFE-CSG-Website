@@ -3,44 +3,14 @@
         class="box-border bg-(--md-sys-color-surface-container-lowest) px-4 py-6 sm:px-6 sm:py-8"
     >
         <div class="mx-auto max-w-5xl space-y-6">
-            <div
-                v-if="loading"
-                class="flex min-h-72 flex-col items-center justify-center gap-4 text-center text-(--md-sys-color-on-surface-variant)"
-            >
-                <AnzuProgressRing :size="56" status="loading" />
-                <p class="text-sm sm:text-base">
-                    {{ t("pages.ctf.events.loading") }}
-                </p>
-            </div>
-
-            <div
-                v-else-if="error"
-                class="space-y-4 rounded-xl bg-(--md-sys-color-error-container)/60 p-5 text-(--md-sys-color-on-error-container)"
-            >
-                <div class="flex items-start gap-3">
-                    <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
-                    <div class="space-y-2">
-                        <p class="font-semibold">
-                            {{ t("pages.ctf.events.error") }}
-                        </p>
-                        <p class="text-sm opacity-80">{{ error }}</p>
-                    </div>
-                </div>
-                <AnzuButton
-                    variant="filled"
-                    class="h-9! min-w-0! px-4!"
-                    @click="refresh"
-                    >{{ t("common.actions.reload") }}</AnzuButton
-                >
-            </div>
-
-            <section v-else class="space-y-5">
+            <section class="space-y-5">
                 <header
                     class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
                 >
                     <div class="flex flex-wrap items-center gap-2 sm:gap-4">
                         <AnzuSelector
                             v-model="regionFilter"
+                            :disabled="loading"
                             :options="[
                                 {
                                     label: t('pages.ctf.events.filters.all'),
@@ -68,6 +38,7 @@
 
                         <AnzuSelector
                             v-model="viewMode"
+                            :disabled="loading"
                             :options="[
                                 {
                                     label: t('pages.ctf.events.view.calendar'),
@@ -125,10 +96,6 @@
                     </div>
                 </header>
 
-                <div class="text-sm text-(--md-sys-color-on-surface-variant)">
-                    <span>{{ summaryText }}</span>
-                </div>
-
                 <p
                     class="mt-2 text-[11px] text-(--md-sys-color-on-surface-variant)"
                 >
@@ -145,6 +112,42 @@
                         </template>
                     </i18n-t>
                 </p>
+
+                <div
+                    v-if="loading"
+                    class="flex min-h-72 flex-col items-center justify-center gap-4 text-center text-(--md-sys-color-on-surface-variant)"
+                >
+                    <AnzuProgressRing :size="48" status="loading" />
+                    <p class="text-sm sm:text-base">
+                        {{ t("pages.ctf.events.loading") }}
+                    </p>
+                </div>
+
+                <div
+                    v-else-if="error"
+                    class="space-y-4 rounded-xl bg-(--md-sys-color-error-container)/60 p-5 text-(--md-sys-color-on-error-container)"
+                >
+                    <div class="flex items-start gap-3">
+                        <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
+                        <div class="space-y-2">
+                            <p class="font-semibold">
+                                {{ t("pages.ctf.events.error") }}
+                            </p>
+                            <p class="text-sm opacity-80">{{ error }}</p>
+                        </div>
+                    </div>
+                    <AnzuButton
+                        variant="filled"
+                        class="h-9! min-w-0! px-4!"
+                        @click="refresh"
+                        >{{ t("common.actions.reload") }}</AnzuButton
+                    >
+                </div>
+
+                <template v-else>
+                    <div class="text-sm text-(--md-sys-color-on-surface-variant)">
+                        <span>{{ summaryText }}</span>
+                    </div>
 
                 <div v-if="viewMode === 'calendar'" class="space-y-4">
                     <div
@@ -611,7 +614,7 @@
                             :loading="loading"
                         />
                     </div>
-                </div>
+                </template>
             </section>
         </div>
     </main>
