@@ -13,7 +13,7 @@
         "@heroicons/vue": "^2.2.0",
         "@material/material-color-utilities": "^0.3.0",
         "katex": "^0.17.0",
-        "nuxt": "^4.4.2",
+        "nuxt": "^4.4.8",
         "vue": "^3.5.27"
     },
     "devDependencies": {
@@ -21,6 +21,7 @@
         "@nuxtjs/mdc": "^0.21.1",
         "@tailwindcss/vite": "^4.2.2",
         "@types/katex": "^0.16.8",
+        "@types/node": "^25.9.3",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "slugify": "^1.6.8",

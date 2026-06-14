@@ -62,7 +62,7 @@ const props = defineProps<{
 }>();
 
 const currentIndex = ref(0);
-let autoSlideInterval: NodeJS.Timeout | null = null;
+let autoSlideInterval: ReturnType<typeof setInterval> | null = null;
 
 provide("currentSlideIndex", currentIndex);
 
