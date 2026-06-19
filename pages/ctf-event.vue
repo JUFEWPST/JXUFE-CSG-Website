@@ -128,7 +128,9 @@
                     class="space-y-4 rounded-xl bg-(--md-sys-color-error-container)/60 p-5 text-(--md-sys-color-on-error-container)"
                 >
                     <div class="flex items-start gap-3">
-                        <ExclamationTriangleIcon class="mt-0.5 h-5 w-5 shrink-0" />
+                        <ExclamationTriangleIcon
+                            class="mt-0.5 h-5 w-5 shrink-0"
+                        />
                         <div class="space-y-2">
                             <p class="font-semibold">
                                 {{ t("pages.ctf.events.error") }}
@@ -145,420 +147,61 @@
                 </div>
 
                 <template v-else>
-                    <div class="text-sm text-(--md-sys-color-on-surface-variant)">
+                    <div
+                        class="text-sm text-(--md-sys-color-on-surface-variant)"
+                    >
                         <span>{{ summaryText }}</span>
                     </div>
 
-                <div v-if="viewMode === 'calendar'" class="space-y-4">
-                    <div
-                        class="grid grid-cols-7 border border-(--md-sys-color-outline-variant)/60 sm:hidden"
-                    >
+                    <div v-if="viewMode === 'calendar'" class="space-y-4">
                         <div
-                            v-for="(weekday, weekdayIndex) in compactWeekdays"
-                            :key="`compact-${weekdayIndex}`"
-                            class="border-b border-r border-(--md-sys-color-outline-variant)/60 px-1 py-1.5 text-center text-[10px] font-medium text-(--md-sys-color-on-surface-variant) last:border-r-0"
-                        >
-                            {{ weekday }}
-                        </div>
-                        <div
-                            v-for="cell in calendarCells"
-                            :key="`mobile-${cell.key}`"
-                            class="border-b border-r border-(--md-sys-color-outline-variant)/60"
-                            :class="mobileCalendarCellClass(cell)"
-                        >
-                            <button
-                                v-if="cell.eventCount > 0"
-                                type="button"
-                                class="flex h-full w-full flex-col p-2 text-left"
-                                @click="openMobileDaySheet(cell.date)"
-                            >
-                                <div
-                                    class="flex items-start justify-between gap-1"
-                                >
-                                    <span
-                                        class="text-sm font-semibold leading-none"
-                                        :class="calendarDayNumberClass(cell)"
-                                    >
-                                        {{ cell.date.getDate() }}
-                                    </span>
-                                    <span
-                                        class="shrink-0 rounded-full bg-(--md-sys-color-surface-container-highest) px-1.5 text-[10px] leading-4 text-(--md-sys-color-on-surface-variant)"
-                                    >
-                                        {{ cell.eventCount }}
-                                    </span>
-                                </div>
-                                <div class="mt-2 space-y-2">
-                                    <div class="flex items-center gap-1.5">
-                                        <span
-                                            v-for="(
-                                                event, eventIndex
-                                            ) in cell.visibleEvents"
-                                            :key="`mobile-dot-${cell.key}-${eventIndex}`"
-                                            class="h-2 w-2 rounded-full"
-                                            :class="
-                                                statusDotClass(
-                                                    event.parsedStatus,
-                                                )
-                                            "
-                                        />
-                                    </div>
-                                    <p
-                                        class="text-xs font-medium leading-4 text-(--md-sys-color-primary)"
-                                    >
-                                        {{
-                                            t(
-                                                "pages.ctf.events.summary.dayEventsShort",
-                                                {
-                                                    count: cell.eventCount,
-                                                },
-                                            )
-                                        }}
-                                    </p>
-                                </div>
-                            </button>
-                            <div v-else class="p-2">
-                                <div
-                                    class="flex items-start justify-between gap-1"
-                                >
-                                    <span
-                                        class="text-sm font-semibold leading-none"
-                                        :class="calendarDayNumberClass(cell)"
-                                    >
-                                        {{ cell.date.getDate() }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="hidden overflow-hidden border border-(--md-sys-color-outline-variant)/60 sm:block"
-                    >
-                        <div
-                            class="grid grid-cols-7 border-b border-(--md-sys-color-outline-variant)/60"
+                            class="grid grid-cols-7 border border-(--md-sys-color-outline-variant)/60 sm:hidden"
                         >
                             <div
-                                v-for="weekday in weekdays"
-                                :key="weekday"
-                                class="border-r border-(--md-sys-color-outline-variant)/60 px-2 py-2 text-center text-xs font-medium text-(--md-sys-color-on-surface-variant) last:border-r-0"
+                                v-for="(
+                                    weekday, weekdayIndex
+                                ) in compactWeekdays"
+                                :key="`compact-${weekdayIndex}`"
+                                class="border-b border-r border-(--md-sys-color-outline-variant)/60 px-1 py-1.5 text-center text-[10px] font-medium text-(--md-sys-color-on-surface-variant) last:border-r-0"
                             >
                                 {{ weekday }}
                             </div>
-                        </div>
-                        <div
-                            v-for="week in calendarWeeks"
-                            :key="week.key"
-                            class="relative grid grid-cols-7 border-b border-(--md-sys-color-outline-variant)/60 last:border-b-0"
-                        >
                             <div
-                                v-for="(cell, dayIndex) in week.days"
-                                :key="cell.key"
-                                class="relative border-r border-(--md-sys-color-outline-variant)/60 p-2 last:border-r-0"
-                                :class="calendarCellClass(cell)"
-                                :style="desktopCalendarRowStyle(week)"
+                                v-for="cell in calendarCells"
+                                :key="`mobile-${cell.key}`"
+                                class="border-b border-r border-(--md-sys-color-outline-variant)/60"
+                                :class="mobileCalendarCellClass(cell)"
                             >
-                                <div class="flex justify-end">
-                                    <span
-                                        class="text-xs font-medium sm:text-sm"
-                                        :class="calendarDayNumberClass(cell)"
-                                        >{{ cell.date.getDate() }}</span
-                                    >
-                                </div>
-                                <div
-                                    class="mt-1.5"
-                                    :style="desktopCalendarSpacerStyle(week)"
-                                />
                                 <button
-                                    v-if="
-                                        (week.hiddenCounts?.[dayIndex] || 0) > 0
-                                    "
+                                    v-if="cell.eventCount > 0"
                                     type="button"
-                                    class="text-xs font-medium text-(--md-sys-color-primary) underline-offset-4 hover:underline"
-                                    @click="openListForDay(cell.date)"
+                                    class="flex h-full w-full flex-col p-2 text-left"
+                                    @click="openMobileDaySheet(cell.date)"
                                 >
-                                    {{
-                                        t(
-                                            "pages.ctf.events.summary.moreEvents",
-                                            {
-                                                count:
-                                                    week.hiddenCounts?.[
-                                                        dayIndex
-                                                    ] || 0,
-                                            },
-                                        )
-                                    }}
-                                </button>
-                            </div>
-                            <div class="pointer-events-none absolute inset-0">
-                                <a
-                                    v-for="segment in week.segments"
-                                    :key="segment.key"
-                                    :href="segment.event.比赛链接"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="pointer-events-auto absolute flex h-6 items-center px-2 text-[11px] font-medium leading-4 transition-opacity hover:opacity-85"
-                                    :class="
-                                        desktopCalendarSegmentClass(segment)
-                                    "
-                                    :style="
-                                        desktopCalendarSegmentStyle(segment)
-                                    "
-                                    :title="calendarEventTitle(segment.event)"
-                                >
-                                    <span class="truncate">{{
-                                        segment.event.比赛名称
-                                    }}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        v-if="!monthEvents.length"
-                        class="py-12 text-center text-sm text-(--md-sys-color-on-surface-variant)"
-                    >
-                        <p
-                            class="text-base font-medium text-(--md-sys-color-on-surface)"
-                        >
-                            {{ t("pages.ctf.events.empty") }}
-                        </p>
-                        <p class="mt-2">
-                            {{ t("pages.ctf.events.summary.monthEmpty") }}
-                        </p>
-                    </div>
-                </div>
-
-                <div v-else class="space-y-4">
-                    <div v-if="matchedEvents.length" class="space-y-4">
-                        <div class="hidden lg:block overflow-x-auto">
-                            <table
-                                class="min-w-full table-fixed border-collapse"
-                            >
-                                <thead>
-                                    <tr
-                                        class="border-b border-(--md-sys-color-outline-variant)/60 text-left"
+                                    <div
+                                        class="flex items-start justify-between gap-1"
                                     >
-                                        <th
-                                            class="w-[42%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
-                                        >
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.event",
-                                                )
-                                            }}
-                                        </th>
-                                        <th
-                                            class="w-[20%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
-                                        >
-                                            {{
-                                                t("pages.ctf.events.table.time")
-                                            }}
-                                        </th>
-                                        <th
-                                            class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
-                                        >
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.duration",
-                                                )
-                                            }}
-                                        </th>
-                                        <th
-                                            class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
-                                        >
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.status",
-                                                )
-                                            }}
-                                        </th>
-                                        <th
-                                            class="w-[18%] px-3 py-2 text-right text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
-                                        >
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.action",
-                                                )
-                                            }}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody
-                                    class="divide-y divide-(--md-sys-color-outline-variant)/40"
-                                >
-                                    <tr
-                                        v-for="event in paginatedEvents"
-                                        :key="event.比赛ID"
-                                        class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
-                                    >
-                                        <td class="px-3 py-3 align-top">
-                                            <a
-                                                :href="event.比赛链接"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="block truncate text-sm font-semibold text-(--md-sys-color-on-surface) underline-offset-4 hover:text-(--md-sys-color-primary) hover:underline"
-                                                >{{ event.比赛名称 }}</a
-                                            >
-                                            <p
-                                                v-if="eventMetaText(event)"
-                                                class="mt-1 truncate text-xs text-(--md-sys-color-on-surface-variant)"
-                                            >
-                                                {{ eventMetaText(event) }}
-                                            </p>
-                                        </td>
-                                        <td
-                                            class="px-3 py-3 text-sm text-(--md-sys-color-on-surface)"
-                                        >
-                                            <div class="space-y-1">
-                                                <p>
-                                                    {{
-                                                        formatTableDateRange(
-                                                            event,
-                                                        )
-                                                    }}
-                                                </p>
-                                                <p
-                                                    class="text-xs text-(--md-sys-color-on-surface-variant)"
-                                                >
-                                                    {{
-                                                        t(
-                                                            `pages.ctf.events.status.${event.parsedStatus}`,
-                                                        )
-                                                    }}
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant) truncate"
-                                        >
-                                            {{ formatDurationFromEvent(event) }}
-                                        </td>
-                                        <td class="px-3 py-3 truncate">
-                                            <span
-                                                class="inline-flex items-center justify-center"
-                                            >
-                                                <span
-                                                    class="h-2.5 w-2.5 rounded-full"
-                                                    :class="
-                                                        statusDotClass(
-                                                            event.parsedStatus,
-                                                        )
-                                                    "
-                                                />
-                                            </span>
-                                        </td>
-                                        <td class="px-3 py-3">
-                                            <div
-                                                class="flex items-center justify-end gap-2"
-                                            >
-                                                <AnzuButton
-                                                    variant="filled"
-                                                    class="h-9! min-w-24! shrink-0 whitespace-nowrap px-4! text-sm!"
-                                                    :href="event.比赛链接"
-                                                    target="_blank"
-                                                >
-                                                    <ArrowUpRightIcon
-                                                        class="h-4 w-4"
-                                                    />
-                                                    {{
-                                                        t(
-                                                            "pages.ctf.events.table.join",
-                                                        )
-                                                    }}
-                                                </AnzuButton>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="space-y-3 lg:hidden">
-                            <article
-                                v-for="event in paginatedEvents"
-                                :key="`${event.比赛ID}-mobile`"
-                                class="py-4 border-b border-(--md-sys-color-outline-variant)/40 last:border-0"
-                            >
-                                <div class="space-y-2">
-                                    <a
-                                        :href="event.比赛链接"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="block text-base font-semibold text-(--md-sys-color-on-surface) underline-offset-4 hover:text-(--md-sys-color-primary) hover:underline"
-                                    >
-                                        {{ event.比赛名称 }}
-                                    </a>
-                                    <p
-                                        v-if="eventMetaText(event)"
-                                        class="text-xs text-(--md-sys-color-on-surface-variant)"
-                                    >
-                                        {{ eventMetaText(event) }}
-                                    </p>
-                                </div>
-
-                                <div
-                                    class="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-(--md-sys-color-on-surface-variant)"
-                                >
-                                    <div class="space-y-0.5">
-                                        <p class="font-medium">
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.start",
-                                                )
-                                            }}
-                                        </p>
-                                        <p
-                                            class="text-(--md-sys-color-on-surface)"
-                                        >
-                                            {{
-                                                formatListDateTime(
-                                                    event.parsedStart,
-                                                )
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="space-y-0.5">
-                                        <p class="font-medium">
-                                            {{
-                                                t("pages.ctf.events.table.end")
-                                            }}
-                                        </p>
-                                        <p
-                                            class="text-(--md-sys-color-on-surface)"
-                                        >
-                                            {{
-                                                formatListDateTime(
-                                                    event.parsedEnd,
-                                                )
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="space-y-0.5">
-                                        <p class="font-medium">
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.duration",
-                                                )
-                                            }}
-                                        </p>
-                                        <p
-                                            class="text-(--md-sys-color-on-surface)"
-                                        >
-                                            {{ formatDurationFromEvent(event) }}
-                                        </p>
-                                    </div>
-                                    <div class="space-y-0.5">
-                                        <p class="font-medium">
-                                            {{
-                                                t(
-                                                    "pages.ctf.events.table.status",
-                                                )
-                                            }}
-                                        </p>
                                         <span
-                                            class="inline-flex items-center gap-2 text-(--md-sys-color-on-surface)"
+                                            class="text-sm font-semibold leading-none"
+                                            :class="
+                                                calendarDayNumberClass(cell)
+                                            "
                                         >
+                                            {{ cell.date.getDate() }}
+                                        </span>
+                                        <span
+                                            class="shrink-0 rounded-full bg-(--md-sys-color-surface-container-highest) px-1.5 text-[10px] leading-4 text-(--md-sys-color-on-surface-variant)"
+                                        >
+                                            {{ cell.eventCount }}
+                                        </span>
+                                    </div>
+                                    <div class="mt-2 space-y-2">
+                                        <div class="flex items-center gap-1.5">
                                             <span
+                                                v-for="(
+                                                    event, eventIndex
+                                                ) in cell.visibleEvents"
+                                                :key="`mobile-dot-${cell.key}-${eventIndex}`"
                                                 class="h-2 w-2 rounded-full"
                                                 :class="
                                                     statusDotClass(
@@ -566,53 +209,444 @@
                                                     )
                                                 "
                                             />
+                                        </div>
+                                        <p
+                                            class="text-xs font-medium leading-4 text-(--md-sys-color-primary)"
+                                        >
                                             {{
                                                 t(
-                                                    `pages.ctf.events.status.${event.parsedStatus}`,
+                                                    "pages.ctf.events.summary.dayEventsShort",
+                                                    {
+                                                        count: cell.eventCount,
+                                                    },
                                                 )
                                             }}
+                                        </p>
+                                    </div>
+                                </button>
+                                <div v-else class="p-2">
+                                    <div
+                                        class="flex items-start justify-between gap-1"
+                                    >
+                                        <span
+                                            class="text-sm font-semibold leading-none"
+                                            :class="
+                                                calendarDayNumberClass(cell)
+                                            "
+                                        >
+                                            {{ cell.date.getDate() }}
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div
+                            class="hidden overflow-hidden border border-(--md-sys-color-outline-variant)/60 sm:block"
+                        >
+                            <div
+                                class="grid grid-cols-7 border-b border-(--md-sys-color-outline-variant)/60"
+                            >
                                 <div
-                                    class="mt-4 flex items-center justify-end gap-2"
+                                    v-for="weekday in weekdays"
+                                    :key="weekday"
+                                    class="border-r border-(--md-sys-color-outline-variant)/60 px-2 py-2 text-center text-xs font-medium text-(--md-sys-color-on-surface-variant) last:border-r-0"
                                 >
-                                    <AnzuButton
-                                        variant="filled"
-                                        class="h-10! min-w-24! shrink-0 whitespace-nowrap px-4!"
-                                        :href="event.比赛链接"
-                                        target="_blank"
-                                    >
-                                        <ArrowUpRightIcon class="h-4 w-4" />
-                                        {{ t("pages.ctf.events.table.join") }}
-                                    </AnzuButton>
+                                    {{ weekday }}
                                 </div>
-                            </article>
+                            </div>
+                            <div
+                                v-for="week in calendarWeeks"
+                                :key="week.key"
+                                class="relative grid grid-cols-7 border-b border-(--md-sys-color-outline-variant)/60 last:border-b-0"
+                            >
+                                <div
+                                    v-for="(cell, dayIndex) in week.days"
+                                    :key="cell.key"
+                                    class="relative border-r border-(--md-sys-color-outline-variant)/60 p-2 last:border-r-0"
+                                    :class="calendarCellClass(cell)"
+                                    :style="desktopCalendarRowStyle(week)"
+                                >
+                                    <div class="flex justify-end">
+                                        <span
+                                            class="text-xs font-medium sm:text-sm"
+                                            :class="
+                                                calendarDayNumberClass(cell)
+                                            "
+                                            >{{ cell.date.getDate() }}</span
+                                        >
+                                    </div>
+                                    <div
+                                        class="mt-1.5"
+                                        :style="
+                                            desktopCalendarSpacerStyle(week)
+                                        "
+                                    />
+                                    <button
+                                        v-if="
+                                            (week.hiddenCounts?.[dayIndex] ||
+                                                0) > 0
+                                        "
+                                        type="button"
+                                        class="text-xs font-medium text-(--md-sys-color-primary) underline-offset-4 hover:underline"
+                                        @click="openListForDay(cell.date)"
+                                    >
+                                        {{
+                                            t(
+                                                "pages.ctf.events.summary.moreEvents",
+                                                {
+                                                    count:
+                                                        week.hiddenCounts?.[
+                                                            dayIndex
+                                                        ] || 0,
+                                                },
+                                            )
+                                        }}
+                                    </button>
+                                </div>
+                                <div
+                                    class="pointer-events-none absolute inset-0"
+                                >
+                                    <a
+                                        v-for="segment in week.segments"
+                                        :key="segment.key"
+                                        :href="segment.event.比赛链接"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="pointer-events-auto absolute flex h-6 items-center px-2 text-[11px] font-medium leading-4 transition-opacity hover:opacity-85"
+                                        :class="
+                                            desktopCalendarSegmentClass(segment)
+                                        "
+                                        :style="
+                                            desktopCalendarSegmentStyle(segment)
+                                        "
+                                        :title="
+                                            calendarEventTitle(segment.event)
+                                        "
+                                    >
+                                        <span class="truncate">{{
+                                            segment.event.比赛名称
+                                        }}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="!monthEvents.length"
+                            class="py-12 text-center text-sm text-(--md-sys-color-on-surface-variant)"
+                        >
+                            <p
+                                class="text-base font-medium text-(--md-sys-color-on-surface)"
+                            >
+                                {{ t("pages.ctf.events.empty") }}
+                            </p>
+                            <p class="mt-2">
+                                {{ t("pages.ctf.events.summary.monthEmpty") }}
+                            </p>
                         </div>
                     </div>
 
-                    <div
-                        v-else
-                        class="py-12 text-center text-sm text-(--md-sys-color-on-surface-variant)"
-                    >
-                        <p
-                            class="text-base font-medium text-(--md-sys-color-on-surface)"
-                        >
-                            {{ t("pages.ctf.events.empty") }}
-                        </p>
-                        <p class="mt-2">
-                            {{ t("pages.ctf.events.emptyHint") }}
-                        </p>
-                    </div>
+                    <div v-else class="space-y-4">
+                        <div v-if="matchedEvents.length" class="space-y-4">
+                            <div class="hidden lg:block overflow-x-auto">
+                                <table
+                                    class="min-w-full table-fixed border-collapse"
+                                >
+                                    <thead>
+                                        <tr
+                                            class="border-b border-(--md-sys-color-outline-variant)/60 text-left"
+                                        >
+                                            <th
+                                                class="w-[42%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
+                                            >
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.event",
+                                                    )
+                                                }}
+                                            </th>
+                                            <th
+                                                class="w-[20%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
+                                            >
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.time",
+                                                    )
+                                                }}
+                                            </th>
+                                            <th
+                                                class="w-[12%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
+                                            >
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.duration",
+                                                    )
+                                                }}
+                                            </th>
+                                            <th
+                                                class="w-[8%] px-3 py-2 text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
+                                            >
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.status",
+                                                    )
+                                                }}
+                                            </th>
+                                            <th
+                                                class="w-[18%] px-3 py-2 text-right text-[11px] font-medium tracking-[0.14em] text-(--md-sys-color-on-surface-variant) truncate"
+                                            >
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.action",
+                                                    )
+                                                }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody
+                                        class="divide-y divide-(--md-sys-color-outline-variant)/40"
+                                    >
+                                        <tr
+                                            v-for="event in paginatedEvents"
+                                            :key="event.比赛ID"
+                                            class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
+                                        >
+                                            <td class="px-3 py-3 align-top">
+                                                <a
+                                                    :href="event.比赛链接"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="block truncate text-sm font-semibold text-(--md-sys-color-on-surface) underline-offset-4 hover:text-(--md-sys-color-primary) hover:underline"
+                                                    >{{ event.比赛名称 }}</a
+                                                >
+                                                <p
+                                                    v-if="eventMetaText(event)"
+                                                    class="mt-1 truncate text-xs text-(--md-sys-color-on-surface-variant)"
+                                                >
+                                                    {{ eventMetaText(event) }}
+                                                </p>
+                                            </td>
+                                            <td
+                                                class="px-3 py-3 text-sm text-(--md-sys-color-on-surface)"
+                                            >
+                                                <div class="space-y-1">
+                                                    <p>
+                                                        {{
+                                                            formatTableDateRange(
+                                                                event,
+                                                            )
+                                                        }}
+                                                    </p>
+                                                    <p
+                                                        class="text-xs text-(--md-sys-color-on-surface-variant)"
+                                                    >
+                                                        {{
+                                                            t(
+                                                                `pages.ctf.events.status.${event.parsedStatus}`,
+                                                            )
+                                                        }}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td
+                                                class="px-3 py-3 text-sm text-(--md-sys-color-on-surface-variant) truncate"
+                                            >
+                                                {{
+                                                    formatDurationFromEvent(
+                                                        event,
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="px-3 py-3 truncate">
+                                                <span
+                                                    class="inline-flex items-center justify-center"
+                                                >
+                                                    <span
+                                                        class="h-2.5 w-2.5 rounded-full"
+                                                        :class="
+                                                            statusDotClass(
+                                                                event.parsedStatus,
+                                                            )
+                                                        "
+                                                    />
+                                                </span>
+                                            </td>
+                                            <td class="px-3 py-3">
+                                                <div
+                                                    class="flex items-center justify-end gap-2"
+                                                >
+                                                    <AnzuButton
+                                                        variant="filled"
+                                                        class="h-9! min-w-24! shrink-0 whitespace-nowrap px-4! text-sm!"
+                                                        :href="event.比赛链接"
+                                                        target="_blank"
+                                                    >
+                                                        <ArrowUpRightIcon
+                                                            class="h-4 w-4"
+                                                        />
+                                                        {{
+                                                            t(
+                                                                "pages.ctf.events.table.join",
+                                                            )
+                                                        }}
+                                                    </AnzuButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                    <div class="flex justify-center">
-                        <AnzuPagination
-                            v-if="matchedEvents.length && totalPages > 1"
-                            :total-pages="totalPages"
-                            :current-page="currentPage"
-                            :loading="loading"
-                        />
+                            <div class="space-y-3 lg:hidden">
+                                <article
+                                    v-for="event in paginatedEvents"
+                                    :key="`${event.比赛ID}-mobile`"
+                                    class="py-4 border-b border-(--md-sys-color-outline-variant)/40 last:border-0"
+                                >
+                                    <div class="space-y-2">
+                                        <a
+                                            :href="event.比赛链接"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="block text-base font-semibold text-(--md-sys-color-on-surface) underline-offset-4 hover:text-(--md-sys-color-primary) hover:underline"
+                                        >
+                                            {{ event.比赛名称 }}
+                                        </a>
+                                        <p
+                                            v-if="eventMetaText(event)"
+                                            class="text-xs text-(--md-sys-color-on-surface-variant)"
+                                        >
+                                            {{ eventMetaText(event) }}
+                                        </p>
+                                    </div>
+
+                                    <div
+                                        class="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs text-(--md-sys-color-on-surface-variant)"
+                                    >
+                                        <div class="space-y-0.5">
+                                            <p class="font-medium">
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.start",
+                                                    )
+                                                }}
+                                            </p>
+                                            <p
+                                                class="text-(--md-sys-color-on-surface)"
+                                            >
+                                                {{
+                                                    formatListDateTime(
+                                                        event.parsedStart,
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                        <div class="space-y-0.5">
+                                            <p class="font-medium">
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.end",
+                                                    )
+                                                }}
+                                            </p>
+                                            <p
+                                                class="text-(--md-sys-color-on-surface)"
+                                            >
+                                                {{
+                                                    formatListDateTime(
+                                                        event.parsedEnd,
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                        <div class="space-y-0.5">
+                                            <p class="font-medium">
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.duration",
+                                                    )
+                                                }}
+                                            </p>
+                                            <p
+                                                class="text-(--md-sys-color-on-surface)"
+                                            >
+                                                {{
+                                                    formatDurationFromEvent(
+                                                        event,
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                        <div class="space-y-0.5">
+                                            <p class="font-medium">
+                                                {{
+                                                    t(
+                                                        "pages.ctf.events.table.status",
+                                                    )
+                                                }}
+                                            </p>
+                                            <span
+                                                class="inline-flex items-center gap-2 text-(--md-sys-color-on-surface)"
+                                            >
+                                                <span
+                                                    class="h-2 w-2 rounded-full"
+                                                    :class="
+                                                        statusDotClass(
+                                                            event.parsedStatus,
+                                                        )
+                                                    "
+                                                />
+                                                {{
+                                                    t(
+                                                        `pages.ctf.events.status.${event.parsedStatus}`,
+                                                    )
+                                                }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="mt-4 flex items-center justify-end gap-2"
+                                    >
+                                        <AnzuButton
+                                            variant="filled"
+                                            class="h-10! min-w-24! shrink-0 whitespace-nowrap px-4!"
+                                            :href="event.比赛链接"
+                                            target="_blank"
+                                        >
+                                            <ArrowUpRightIcon class="h-4 w-4" />
+                                            {{
+                                                t("pages.ctf.events.table.join")
+                                            }}
+                                        </AnzuButton>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+
+                        <div
+                            v-else
+                            class="py-12 text-center text-sm text-(--md-sys-color-on-surface-variant)"
+                        >
+                            <p
+                                class="text-base font-medium text-(--md-sys-color-on-surface)"
+                            >
+                                {{ t("pages.ctf.events.empty") }}
+                            </p>
+                            <p class="mt-2">
+                                {{ t("pages.ctf.events.emptyHint") }}
+                            </p>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <AnzuPagination
+                                v-if="matchedEvents.length && totalPages > 1"
+                                :total-pages="totalPages"
+                                :current-page="currentPage"
+                                :loading="loading"
+                            />
+                        </div>
                     </div>
                 </template>
             </section>

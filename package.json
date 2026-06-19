@@ -22,11 +22,12 @@
         "@tailwindcss/vite": "^4.2.2",
         "@types/katex": "^0.16.8",
         "@types/node": "^25.9.3",
+        "@vue/language-core": "^3.3.5",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "slugify": "^1.6.8",
         "tailwindcss": "^4.2.2",
         "tsx": "^4.21.0",
-        "vue-router": "^5.0.4"
+        "vue-tsc": "^3.3.5"
     }
 }

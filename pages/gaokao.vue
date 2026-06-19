@@ -12,12 +12,10 @@
                             {{ t("pages.gaokao.filters.dataSource") }}
                         </label>
                         <AnzuSelector
-                            v-model="dataSource"
+                            :model-value="dataSource"
                             :options="dataSources"
                             :disabled="configLoading"
-                            @change="
-                                (val) => switchDataSource(val as DataSource)
-                            "
+                            @change="switchDataSource"
                         />
                     </div>
                     <div class="flex flex-col gap-6">
@@ -585,12 +583,7 @@
                                 </span>
                             </div>
                             <div
-                                class="mt-3 grid gap-x-3 gap-y-2 text-sm"
-                                :class="
-                                    dataSource === 'ranking'
-                                        ? 'grid-cols-2'
-                                        : 'grid-cols-2'
-                                "
+                                class="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-sm"
                             >
                                 <div>
                                     <p
@@ -630,7 +623,7 @@
                                         <p
                                             class="text-base font-semibold tabular-nums text-(--md-sys-color-on-surface)"
                                         >
-                                            {{ row.J }}
+                                            {{ row.I }}
                                         </p>
                                     </div>
                                     <div>
@@ -646,7 +639,7 @@
                                         <p
                                             class="text-base font-semibold tabular-nums text-(--md-sys-color-on-surface)"
                                         >
-                                            {{ row.I }}
+                                            {{ row.J }}
                                         </p>
                                     </div>
                                 </template>
@@ -699,6 +692,7 @@
                         />
                     </div>
                 </div>
+                </template>
             </section>
         </div>
     </main>
@@ -723,6 +717,14 @@ import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
 
 const PAGE_SIZE = 20;
 const MAX_PAGES = 20;
+const SCHOOL_ID = "30285";
+const SCORE_ENROLL_ID = "2658";
+const PLAN_ENROLL_ID = "1974";
+const DEFAULT_YEAR = "2025";
+const DEFAULT_PROVINCE = "江西省";
+const PLAN_DEFAULT_PROVINCE = "江西省";
+const RANKING_DATA_URL =
+    "https://csec.jxufe.edu.cn/nozomi/f/%E6%80%BB%E5%BD%95%E5%8F%96%E6%95%B0%E6%8D%AE";
 
 type DataSource = "zsjy" | "ranking" | "plan";
 type AllFilterItem = Record<string, string>;
@@ -735,14 +737,16 @@ interface ConfigData {
     all_filter: AllFilterItem[];
 }
 
-interface EnrollResponse {
+interface ApiResponse<T> {
     code: number;
-    data: {
-        head: AllFilterItem[];
-        list: EnrollRow[];
-        total: number;
-    };
+    data: T;
     msg: string;
+}
+
+interface EnrollListData {
+    head: AllFilterItem[];
+    list: EnrollRow[];
+    total: number;
 }
 
 const route = useRoute();
@@ -794,7 +798,6 @@ const rawResults = ref<EnrollRow[]>([]);
 const hasQueried = ref(false);
 const dataSource = ref<DataSource>("zsjy");
 const rankingCache = ref<EnrollRow[] | null>(null);
-const rankingCacheLoading = ref(false);
 
 const dataSources = computed<{ label: string; value: DataSource }[]>(() => [
     {
@@ -810,6 +813,14 @@ const dataSources = computed<{ label: string; value: DataSource }[]>(() => [
         value: "plan",
     },
 ]);
+
+const getDefaultProvince = (src: DataSource) =>
+    src === "plan" ? PLAN_DEFAULT_PROVINCE : DEFAULT_PROVINCE;
+
+const resetBaseFilters = (src = dataSource.value) => {
+    selectedYear.value = DEFAULT_YEAR;
+    selectedProvince.value = getDefaultProvince(src);
+};
 
 const availablePlanTypes = computed(() => {
     const base = planFilterOptions.value["F"] || [];
@@ -827,8 +838,11 @@ const availablePlanTypes = computed(() => {
     return Array.from(types).sort();
 });
 
-const switchDataSource = async (src: DataSource) => {
-    if (src === dataSource.value) return;
+const isDataSource = (src: string | number): src is DataSource =>
+    src === "zsjy" || src === "ranking" || src === "plan";
+
+const switchDataSource = async (src: string | number) => {
+    if (!isDataSource(src) || src === dataSource.value) return;
     dataSource.value = src;
     rawResults.value = [];
     hasQueried.value = false;
@@ -837,9 +851,26 @@ const switchDataSource = async (src: DataSource) => {
     selectedCategory.value = null;
     selectedPlanType.value = null;
     await nextTick();
-    selectedYear.value = "2025";
-    selectedProvince.value = src === "plan" ? "江西" : "江西省";
+    resetBaseFilters(src);
 };
+
+const hasUserScore = computed(
+    () =>
+        dataSource.value !== "plan" &&
+        userScore.value !== undefined &&
+        userScore.value !== "",
+);
+
+const hasUserRanking = computed(
+    () =>
+        dataSource.value === "ranking" &&
+        userRanking.value !== undefined &&
+        userRanking.value !== "",
+);
+
+const hasMatchInput = computed(
+    () => hasUserScore.value || hasUserRanking.value,
+);
 
 const parseScore = (row: EnrollRow, key: string): number => {
     const v = parseInt(row[key] || "", 10);
@@ -847,11 +878,7 @@ const parseScore = (row: EnrollRow, key: string): number => {
 };
 
 const getMatchStatus = (row: EnrollRow): MatchStatus => {
-    if (
-        userRanking.value !== undefined &&
-        userRanking.value !== "" &&
-        dataSource.value === "ranking"
-    ) {
+    if (hasUserRanking.value) {
         const bestRank = Math.min(parseScore(row, "I"), parseScore(row, "J"));
         const worstRank = Math.max(parseScore(row, "I"), parseScore(row, "J"));
         if (worstRank === 0) return "far";
@@ -861,7 +888,7 @@ const getMatchStatus = (row: EnrollRow): MatchStatus => {
         if (r <= Math.round(worstRank * 1.05)) return "reach";
         return "far";
     }
-    if (userScore.value === undefined || userScore.value === "") return "far";
+    if (!hasUserScore.value) return "far";
     const s = Number(userScore.value);
     const minS = parseScore(row, "G");
     const maxS = parseScore(row, "F");
@@ -877,12 +904,7 @@ const results = computed(() => {
         const key = sortKey.value === "maxScore" ? "F" : "G";
         const dir = sortDir.value === "desc" ? -1 : 1;
         rows.sort((a, b) => (parseScore(a, key) - parseScore(b, key)) * dir);
-    } else if (
-        (userRanking.value !== undefined &&
-            userRanking.value !== "" &&
-            dataSource.value === "ranking") ||
-        (userScore.value !== undefined && userScore.value !== "")
-    ) {
+    } else if (hasMatchInput.value) {
         rows.sort((a, b) => {
             const aStatus = getMatchStatus(a);
             const bStatus = getMatchStatus(b);
@@ -896,11 +918,7 @@ const results = computed(() => {
             const ob = order[bStatus];
             if (oa !== ob) return oa - ob;
 
-            if (
-                userRanking.value !== undefined &&
-                userRanking.value !== "" &&
-                dataSource.value === "ranking"
-            ) {
+            if (hasUserRanking.value) {
                 const r = Number(userRanking.value);
                 const aWorst = Math.max(parseScore(a, "I"), parseScore(a, "J"));
                 const bWorst = Math.max(parseScore(b, "I"), parseScore(b, "J"));
@@ -938,10 +956,7 @@ const currentAllFilter = computed(() =>
 );
 
 const availableYears = computed(() =>
-    (currentFilterOptions.value["A"] || [])
-        .map((v) => v)
-        .sort()
-        .reverse(),
+    [...(currentFilterOptions.value["A"] || [])].sort().reverse(),
 );
 
 const availableProvinces = computed(() => {
@@ -971,17 +986,12 @@ const availableCategories = computed(() => {
     return Array.from(cats).sort();
 });
 
-const canQuery = computed(() => selectedYear.value && selectedProvince.value);
+const canQuery = computed(
+    () => !!(selectedYear.value && selectedProvince.value),
+);
 
 const showMatchCol = computed(
-    () =>
-        dataSource.value !== "plan" &&
-        !!(
-            (userScore.value !== undefined && userScore.value !== "") ||
-            (userRanking.value !== undefined &&
-                userRanking.value !== "" &&
-                dataSource.value === "ranking")
-        ),
+    () => dataSource.value !== "plan" && hasMatchInput.value,
 );
 
 const currentPage = computed(() => {
@@ -1024,11 +1034,7 @@ const matchBadgeClass = (row: EnrollRow) => {
 };
 
 const matchLabel = (row: EnrollRow): string => {
-    if (
-        userRanking.value !== undefined &&
-        userRanking.value !== "" &&
-        dataSource.value === "ranking"
-    ) {
+    if (hasUserRanking.value) {
         const s = getMatchStatus(row);
         const bestRank = Math.min(parseScore(row, "I"), parseScore(row, "J"));
         const worstRank = Math.max(parseScore(row, "I"), parseScore(row, "J"));
@@ -1037,7 +1043,7 @@ const matchLabel = (row: EnrollRow): string => {
         const diffStr = diffNum > 0 ? `+${diffNum}` : `${diffNum}`;
         return `${t(`pages.gaokao.status.${s}`)} ${diffStr}`;
     }
-    if (userScore.value === undefined || userScore.value === "") return "";
+    if (!hasUserScore.value) return "";
     const s = getMatchStatus(row);
     const minS = parseScore(row, "G");
     const maxS = parseScore(row, "F");
@@ -1052,19 +1058,11 @@ const fetchConfig = async () => {
     configError.value = null;
     try {
         const [scoreResp, planResp] = await Promise.all([
-            $fetch<{
-                code: number;
-                data: ConfigData;
-                msg: string;
-            }>(
-                "https://job-web-api.jobpi.cn/enroll/config/v2/2658?sch_school_id=30285",
+            $fetch<ApiResponse<ConfigData>>(
+                `https://job-web-api.jobpi.cn/enroll/config/v2/${SCORE_ENROLL_ID}?sch_school_id=${SCHOOL_ID}`,
             ),
-            $fetch<{
-                code: number;
-                data: ConfigData;
-                msg: string;
-            }>(
-                "https://job-web-api.jobpi.cn/enroll/config/v2/1974?sch_school_id=30285",
+            $fetch<ApiResponse<ConfigData>>(
+                `https://job-web-api.jobpi.cn/enroll/config/v2/${PLAN_ENROLL_ID}?sch_school_id=${SCHOOL_ID}`,
             ),
         ]);
         if (scoreResp.code !== 200) {
@@ -1077,8 +1075,7 @@ const fetchConfig = async () => {
         allFilter.value = scoreResp.data.all_filter;
         planFilterOptions.value = planResp.data.filter;
         planAllFilter.value = planResp.data.all_filter;
-        selectedYear.value = "2025";
-        selectedProvince.value = "江西省";
+        resetBaseFilters();
     } catch (err) {
         console.error(err);
         configError.value =
@@ -1086,6 +1083,50 @@ const fetchConfig = async () => {
     } finally {
         configLoading.value = false;
     }
+};
+
+const rowMatchesFilter = (
+    row: EnrollRow,
+    filterObj: Record<string, string>,
+) =>
+    Object.entries(filterObj).every(
+        ([key, val]) => !val || row[key] === val,
+    );
+
+const fetchRankingRows = async (filterObj: Record<string, string>) => {
+    if (!rankingCache.value) {
+        rankingCache.value = await $fetch<EnrollRow[]>(RANKING_DATA_URL);
+    }
+    const rows = rankingCache.value || [];
+    return rows.filter((row) => rowMatchesFilter(row, filterObj));
+};
+
+const fetchEnrollPages = async (
+    enrollId: string,
+    filterObj: Record<string, string>,
+) => {
+    let rows: EnrollRow[] = [];
+
+    for (let page = 1; page <= MAX_PAGES; page += 1) {
+        const params = new URLSearchParams({
+            sch_school_id: SCHOOL_ID,
+            filter_column: JSON.stringify(filterObj),
+            page: String(page),
+            page_size: "100",
+        });
+        const resp = await $fetch<ApiResponse<EnrollListData>>(
+            `https://job-web-api.jobpi.cn/enroll/${enrollId}?${params}`,
+        );
+        if (resp.code !== 200) {
+            throw new Error(resp.msg || "Data fetch failed");
+        }
+        rows = rows.concat(resp.data.list);
+        if (rows.length >= resp.data.total || resp.data.list.length === 0) {
+            break;
+        }
+    }
+
+    return rows;
 };
 
 const queryData = async () => {
@@ -1112,72 +1153,15 @@ const queryData = async () => {
     hasQueried.value = true;
 
     try {
-        let allRows: EnrollRow[] = [];
-
-        if (dataSource.value === "ranking") {
-            if (!rankingCache.value) {
-                rankingCacheLoading.value = true;
-                try {
-                    rankingCache.value = await $fetch<EnrollRow[]>(
-                        "https://csec.jxufe.edu.cn/nozomi/f/%E6%80%BB%E5%BD%95%E5%8F%96%E6%95%B0%E6%8D%AE",
-                    );
-                } finally {
-                    rankingCacheLoading.value = false;
-                }
-            }
-            allRows = (rankingCache.value || []).filter((row) => {
-                for (const [key, val] of Object.entries(filterObj)) {
-                    if (val && row[key] !== val) return false;
-                }
-                return true;
-            });
-        } else if (dataSource.value === "plan") {
-            let page = 1;
-            let total = 0;
-
-            while (page <= MAX_PAGES) {
-                const params = new URLSearchParams({
-                    sch_school_id: "30285",
-                    filter_column: JSON.stringify(filterObj),
-                    page: String(page),
-                    page_size: "100",
-                });
-                const resp = await $fetch<EnrollResponse>(
-                    `https://job-web-api.jobpi.cn/enroll/1974?${params}`,
-                );
-                if (resp.code !== 200) {
-                    throw new Error(resp.msg || "Data fetch failed");
-                }
-                allRows = allRows.concat(resp.data.list);
-                total = resp.data.total;
-                if (allRows.length >= total || resp.data.list.length === 0)
-                    break;
-                page += 1;
-            }
-        } else {
-            let page = 1;
-            let total = 0;
-
-            while (page <= MAX_PAGES) {
-                const params = new URLSearchParams({
-                    sch_school_id: "30285",
-                    filter_column: JSON.stringify(filterObj),
-                    page: String(page),
-                    page_size: "100",
-                });
-                const resp = await $fetch<EnrollResponse>(
-                    `https://job-web-api.jobpi.cn/enroll/2658?${params}`,
-                );
-                if (resp.code !== 200) {
-                    throw new Error(resp.msg || "Data fetch failed");
-                }
-                allRows = allRows.concat(resp.data.list);
-                total = resp.data.total;
-                if (allRows.length >= total || resp.data.list.length === 0)
-                    break;
-                page += 1;
-            }
-        }
+        const allRows =
+            dataSource.value === "ranking"
+                ? await fetchRankingRows(filterObj)
+                : await fetchEnrollPages(
+                      dataSource.value === "plan"
+                          ? PLAN_ENROLL_ID
+                          : SCORE_ENROLL_ID,
+                      filterObj,
+                  );
 
         rawResults.value = allRows;
 
@@ -1201,8 +1185,7 @@ const queryData = async () => {
 };
 
 const resetFilters = () => {
-    selectedYear.value = "2025";
-    selectedProvince.value = dataSource.value === "plan" ? "江西" : "江西省";
+    resetBaseFilters();
     selectedCategory.value = null;
     selectedPlanType.value = null;
     userScore.value = undefined;
@@ -1213,6 +1196,25 @@ const resetFilters = () => {
     dataError.value = null;
 };
 
+const clearInvalidDetailFilter = () => {
+    if (dataSource.value === "plan") {
+        if (
+            selectedPlanType.value &&
+            !availablePlanTypes.value.includes(selectedPlanType.value)
+        ) {
+            selectedPlanType.value = null;
+        }
+        return;
+    }
+
+    if (
+        selectedCategory.value &&
+        !availableCategories.value.includes(selectedCategory.value)
+    ) {
+        selectedCategory.value = null;
+    }
+};
+
 const onYearChange = () => {
     if (
         selectedProvince.value &&
@@ -1220,39 +1222,11 @@ const onYearChange = () => {
     ) {
         selectedProvince.value = null;
     }
-    if (dataSource.value === "plan") {
-        if (
-            selectedPlanType.value &&
-            !availablePlanTypes.value.includes(selectedPlanType.value)
-        ) {
-            selectedPlanType.value = null;
-        }
-    } else {
-        if (
-            selectedCategory.value &&
-            !availableCategories.value.includes(selectedCategory.value)
-        ) {
-            selectedCategory.value = null;
-        }
-    }
+    clearInvalidDetailFilter();
 };
 
 const onProvinceChange = () => {
-    if (dataSource.value === "plan") {
-        if (
-            selectedPlanType.value &&
-            !availablePlanTypes.value.includes(selectedPlanType.value)
-        ) {
-            selectedPlanType.value = null;
-        }
-    } else {
-        if (
-            selectedCategory.value &&
-            !availableCategories.value.includes(selectedCategory.value)
-        ) {
-            selectedCategory.value = null;
-        }
-    }
+    clearInvalidDetailFilter();
 };
 
 watch(
