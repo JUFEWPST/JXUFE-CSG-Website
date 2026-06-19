@@ -16,17 +16,13 @@
                             : t("common.actions.showMore")
                     }}
                 </button>
-                <button
-                    type="button"
-                    class="inline-flex items-center gap-1 rounded-lg p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                <AnzuButton
+                    variant="text"
+                    size="sm"
+                    :status="loading ? 'loading' : 'default'"
                     @click="refresh"
                     :title="t('common.actions.reload')"
-                >
-                    <ArrowPathIcon
-                        class="h-5 w-5"
-                        :class="{ 'animate-spin-slow': loading }"
-                    />
-                </button>
+                />
             </div>
         </div>
 
@@ -278,7 +274,6 @@
 import { onMounted, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import {
-    ArrowPathIcon,
     ArrowTopRightOnSquareIcon,
     CalendarIcon,
     CalendarDaysIcon,
@@ -288,6 +283,7 @@ import {
     UserGroupIcon,
 } from "@heroicons/vue/24/outline";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
+import AnzuButton from "@/components/AnzuButton.vue";
 
 const { t, locale } = useI18n();
 
@@ -521,18 +517,4 @@ onMounted(() => {
 
 <style scoped>
 @reference "tailwindcss";
-
-.animate-spin-slow {
-    animation: spin 1.2s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
 </style>

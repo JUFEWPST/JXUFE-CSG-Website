@@ -84,13 +84,9 @@
                         <AnzuButton
                             variant="text"
                             class="h-9! min-w-0! px-4!"
-                            :disabled="loading"
+                            :status="loading ? 'loading' : 'default'"
                             @click="refresh"
                         >
-                            <ArrowPathRoundedSquareIcon
-                                class="h-4 w-4"
-                                :class="{ 'animate-spin': loading }"
-                            />
                             {{ t("common.actions.reload") }}
                         </AnzuButton>
                     </div>
@@ -820,7 +816,6 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "#imports";
 import { useI18n } from "vue-i18n";
 import {
-    ArrowPathRoundedSquareIcon,
     ArrowUpRightIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
@@ -828,7 +823,6 @@ import {
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import AnzuButton from "@/components/AnzuButton.vue";
-import AnzuButtonGroup from "@/components/AnzuButtonGroup.vue";
 import AnzuSelector from "@/components/AnzuSelector.vue";
 import AnzuPagination from "@/components/AnzuPagination.vue";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
