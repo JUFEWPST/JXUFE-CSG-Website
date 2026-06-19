@@ -15,21 +15,15 @@
                 <div class="flex min-w-0 shrink-0 items-center">
                     <NuxtLink
                         to="/"
-                        class="nav-link-block text-md mr-2 flex min-w-0 shrink-0 cursor-pointer items-center py-1! font-bold transition-colors hover:text-(--md-sys-color-primary) sm:text-lg"
+                        class="nav-link-block text-md flex min-w-0 shrink-0 cursor-pointer items-center py-1! font-bold transition-colors hover:text-(--md-sys-color-primary) sm:text-lg md:mr-2"
                     >
                         <img
                             src="/favicon.svg"
-                            class="mr-2 h-9 shrink-0"
+                            class="h-9 shrink-0 md:mr-2"
                             alt="logo"
                         />
                         <span
-                            class="block max-w-56 min-w-0 truncate transition-all duration-300 lg:max-w-[20rem]"
-                            :class="
-                                showArticleTitle &&
-                                scrollDirection === 'down'
-                                    ? 'invisible w-0 scale-95 overflow-hidden opacity-0 md:visible md:w-auto md:scale-100 md:overflow-visible md:opacity-100'
-                                    : ''
-                            "
+                            class="hidden max-w-56 min-w-0 truncate md:block lg:max-w-[20rem]"
                         >
                             {{ t("meta.fullName") }}
                         </span>
@@ -37,24 +31,42 @@
                 </div>
 
                 <div
-                    v-if="navTitleBox.title"
-                    class="pointer-events-none absolute top-0 left-0 flex h-full w-full flex-col items-start justify-center px-2 pl-14 text-left transition-all duration-300 md:hidden"
-                    :class="{
-                        'invisible scale-95 opacity-0':
-                            !showArticleTitle || scrollDirection === 'up',
-                    }"
+                    class="relative mr-2 flex h-10 min-w-0 flex-1 items-center md:hidden"
                 >
-                    <div
-                        class="w-full overflow-hidden text-sm leading-tight font-bold text-ellipsis whitespace-nowrap text-(--md-sys-color-on-surface)"
+                    <NuxtLink
+                        to="/"
+                        class="absolute inset-0 flex min-w-0 items-center text-left text-sm font-bold text-(--md-sys-color-on-surface) transition-opacity duration-300"
+                        :class="
+                            mobileNavTitleVisible
+                                ? 'pointer-events-none opacity-0'
+                                : 'opacity-100'
+                        "
                     >
-                        {{ navTitleBox.title }}
-                    </div>
+                        <span class="min-w-0 truncate">
+                            {{ t("meta.fullName") }}
+                        </span>
+                    </NuxtLink>
                     <div
-                        class="text-xs text-(--md-sys-color-on-surface-variant) opacity-70"
+                        v-if="navTitleBox.title"
+                        class="pointer-events-none absolute inset-0 flex min-w-0 flex-col items-start justify-center text-left transition-opacity duration-300"
+                        :class="
+                            mobileNavTitleVisible
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                        "
                     >
-                        <span v-if="navTitleBox.subtitle">{{
-                            navTitleBox.subtitle
-                        }}</span>
+                        <div
+                            class="w-full min-w-0 truncate text-sm leading-tight font-bold text-(--md-sys-color-on-surface)"
+                        >
+                            {{ navTitleBox.title }}
+                        </div>
+                        <div
+                            class="w-full min-w-0 truncate text-xs text-(--md-sys-color-on-surface-variant) opacity-70"
+                        >
+                            <span v-if="navTitleBox.subtitle">{{
+                                navTitleBox.subtitle
+                            }}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -401,9 +413,7 @@
                     </div>
                 </div>
 
-                <div
-                    class="ml-2 flex min-w-0 items-center gap-1 sm:ml-4 sm:gap-2"
-                >
+                <div class="ml-2 flex shrink-0 items-center gap-1 sm:ml-4 sm:gap-2">
                     <ToggleTheme class="shrink-0" />
                     <ToggleLocale class="shrink-0" />
                     <button
@@ -427,7 +437,7 @@
             >
                 <div
                     v-show="isMenuOpen"
-                    class="absolute top-full right-0 z-60 mt-2 max-h-[calc(100vh-5rem)] w-64 origin-top-right overflow-y-auto rounded-xl border border-(--md-sys-color-outline-variant)/50 bg-(--md-sys-color-surface-container) p-3 shadow-lg md:hidden"
+                    class="absolute top-full right-0 z-60 mt-2 max-h-[calc(100vh-5rem)] w-64 origin-top-right overflow-y-auto rounded-xl border border-(--md-sys-color-outline-variant)/50 bg-(--md-sys-color-surface-container-lowest) p-3 shadow-lg md:hidden"
                 >
                     <template
                         v-for="link in navLinks"
@@ -660,6 +670,13 @@ const isMenuOpen = ref(false);
 const showArticleTitle = ref(false);
 const lastScrollY = ref(0);
 const scrollDirection = ref<"up" | "down">("up");
+
+const mobileNavTitleVisible = computed(
+    () =>
+        !!navTitleBox.value.title &&
+        showArticleTitle.value &&
+        scrollDirection.value === "down",
+);
 
 const anyPopupOpen = computed(() => {
     const desktopAny = Object.values(dropdownStates).some(Boolean);
