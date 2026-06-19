@@ -17,7 +17,7 @@
                 ? 'bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-primary)'
                 : '',
             effectiveVariant === 'text'
-                ? 'bg-transparent text-(--md-sys-color-primary) px-3 hover:bg-(--md-sys-color-primary)/8 active:bg-(--md-sys-color-primary)/12'
+                ? 'bg-transparent text-(--md-sys-color-primary) px-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10'
                 : '',
             effectiveVariant === 'elevated'
                 ? 'bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-primary)'

@@ -144,7 +144,7 @@ defineExpose({
                             :class="{
                                 'bg-black/5 text-(--md-sys-color-on-surface-variant) hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10':
                                     !action.primary,
-                                'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)':
+                                'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-black/10 dark:hover:bg-white/10':
                                     action.primary,
                             }"
                         >

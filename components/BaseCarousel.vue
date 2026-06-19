@@ -9,7 +9,7 @@
         <template v-if="itemCount > 1">
             <button
                 @click="prevSlide"
-                class="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-(--md-sys-color-surface-container-low)/80 text-(--md-sys-color-on-surface) backdrop-blur-sm transition-all hover:bg-(--md-sys-color-surface-container-high) disabled:opacity-0 md:left-4"
+                class="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-(--md-sys-color-surface-container-low)/80 text-(--md-sys-color-on-surface) backdrop-blur-sm transition-all hover:bg-black/10 dark:hover:bg-white/10 disabled:opacity-0 md:left-4"
                 aria-label="Previous slide"
             >
                 <svg
@@ -24,7 +24,7 @@
 
             <button
                 @click="nextSlide"
-                class="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-(--md-sys-color-surface-container-low)/80 text-(--md-sys-color-on-surface) backdrop-blur-sm transition-all hover:bg-(--md-sys-color-surface-container-high) disabled:opacity-0 md:right-4"
+                class="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-(--md-sys-color-surface-container-low)/80 text-(--md-sys-color-on-surface) backdrop-blur-sm transition-all hover:bg-black/10 dark:hover:bg-white/10 disabled:opacity-0 md:right-4"
                 aria-label="Next slide"
             >
                 <svg
@@ -45,7 +45,7 @@
                     :class="[
                         currentIndex === index
                             ? 'w-6 bg-(--md-sys-color-primary)'
-                            : 'w-1.5 bg-(--md-sys-color-outline-variant) hover:bg-(--md-sys-color-on-surface-variant)',
+                            : 'w-1.5 bg-(--md-sys-color-outline-variant) hover:bg-black/20 dark:hover:bg-white/20',
                     ]"
                     :aria-label="`Go to slide ${index + 1}`"
                 ></button>

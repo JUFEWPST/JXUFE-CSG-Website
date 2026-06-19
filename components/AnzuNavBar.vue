@@ -117,7 +117,7 @@
                                     </div>
                                     <button
                                         type="button"
-                                        class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                                        class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                                     >
                                         <svg
                                             class="h-3.5 w-3.5 text-(--md-sys-color-on-surface-variant) transition-transform"
@@ -220,7 +220,7 @@
                                                 moreOpen = false;
                                                 toggleDropdown(link.path);
                                             "
-                                            class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                                            class="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                                             :class="{
                                                 'rotate-180':
                                                     !!dropdownStates[link.path],
@@ -255,8 +255,8 @@
                                         class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
                                         :class="[
                                             route.path === child.path
-                                                ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
-                                                : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                                ? 'bg-(--md-sys-color-primary)/10 font-medium text-(--md-sys-color-primary)'
+                                                : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
                                         ]"
                                         @click="closeDropdown(link.path)"
                                     >
@@ -329,8 +329,8 @@
                                             class="block rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200"
                                             :class="[
                                                 isActive(link)
-                                                    ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
-                                                    : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                                    ? 'bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)'
+                                                    : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
                                             ]"
                                             @click="moreOpen = false"
                                         >
@@ -356,8 +356,8 @@
                                                 class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
                                                 :class="[
                                                     route.path === child.path
-                                                        ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
-                                                        : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                                        ? 'bg-(--md-sys-color-primary)/10 font-medium text-(--md-sys-color-primary)'
+                                                        : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
                                                 ]"
                                                 @click="moreOpen = false"
                                             >
@@ -372,8 +372,8 @@
                                         class="block rounded-lg px-3 py-2 text-sm transition-colors duration-200"
                                         :class="[
                                             isActive(link)
-                                                ? 'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)'
-                                                : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                                ? 'bg-(--md-sys-color-primary)/10 font-medium text-(--md-sys-color-primary)'
+                                                : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
                                         ]"
                                         @click="moreOpen = false"
                                     >
@@ -417,7 +417,7 @@
                     <ToggleTheme class="shrink-0" />
                     <ToggleLocale class="shrink-0" />
                     <button
-                        class="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high) md:hidden"
+                        class="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/5 md:hidden"
                         aria-label="打开菜单"
                         @click.stop="toggleMenu"
                         type="button"
@@ -449,7 +449,7 @@
                                 :class="
                                     isActive(link)
                                         ? 'bg-(--md-sys-color-surface-container-high) font-medium'
-                                        : 'hover:bg-(--md-sys-color-surface-container-high)/50'
+                                        : 'hover:bg-black/5 dark:hover:bg-white/5'
                                 "
                             >
                                 <NuxtLink
@@ -472,7 +472,7 @@
 
                                 <button
                                     @click.stop="toggleMobileSubmenu(link.path)"
-                                    class="rounded-full p-1 hover:bg-(--md-sys-color-surface-container-highest)"
+                                    class="rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/5"
                                     aria-label="子菜单"
                                 >
                                     <svg
@@ -507,9 +507,9 @@
                                     :to="child.path"
                                     class="block rounded-lg px-3 py-2 text-sm transition-colors"
                                     :class="{
-                                        'bg-(--md-sys-color-secondary-container) font-medium text-(--md-sys-color-on-secondary-container)':
+                                        'bg-(--md-sys-color-primary)/10 font-medium text-(--md-sys-color-primary)':
                                             route.path === child.path,
-                                        'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)':
+                                        'text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5':
                                             route.path !== child.path,
                                     }"
                                     @click="closeMenu"
@@ -526,7 +526,7 @@
                             :class="[
                                 isActive(link)
                                     ? 'bg-(--md-sys-color-surface-container-high) font-medium'
-                                    : 'hover:bg-(--md-sys-color-surface-container-high)/50',
+                                    : 'hover:bg-black/5 dark:hover:bg-white/5',
                             ]"
                             @click="closeMenu"
                         >

@@ -2,7 +2,7 @@
     <AnzuDropdown v-model="isOpen" width-class="w-48" align="right">
         <template #trigger>
             <button
-                class="flex h-7.5 w-7.5 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high)"
+                class="flex h-7.5 w-7.5 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/5"
                 @click="isOpen = !isOpen"
                 aria-label="Change language"
                 :aria-expanded="isOpen"
@@ -23,8 +23,8 @@
                 class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm font-medium transition-colors"
                 :class="
                     l.code === locale
-                        ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
-                        : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)'
+                        ? 'bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)'
+                        : 'text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5'
                 "
             >
                 <span

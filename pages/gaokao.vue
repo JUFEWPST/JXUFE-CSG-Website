@@ -425,7 +425,7 @@
                                 <tr
                                     v-for="(row, idx) in paginatedResults"
                                     :key="row._id || idx"
-                                    class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
+                                    class="transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                                 >
                                     <td
                                         class="px-3 py-4 text-sm font-medium text-(--md-sys-color-on-surface)"
@@ -520,7 +520,7 @@
                                 <tr
                                     v-for="(row, idx) in paginatedResults"
                                     :key="row._id || idx"
-                                    class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
+                                    class="transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                                 >
                                     <td
                                         class="px-3 py-4 text-sm font-medium text-(--md-sys-color-on-surface)"
@@ -1027,7 +1027,7 @@ const matchBadgeClass = (row: EnrollRow) => {
         case "match":
             return "bg-(--md-sys-color-primary-container) text-(--md-sys-color-on-primary-container)";
         case "reach":
-            return "bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)";
+            return "bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)";
         default:
             return "";
     }

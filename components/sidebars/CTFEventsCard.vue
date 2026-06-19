@@ -41,7 +41,7 @@
                 :href="event.比赛链接"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group block rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest) px-3 py-2.5 transition-colors hover:bg-(--md-sys-color-secondary-container)"
+                class="group block rounded-xl border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container-lowest) px-3 py-2.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
             >
                 <div class="flex items-center gap-3">
                     <div class="shrink-0">

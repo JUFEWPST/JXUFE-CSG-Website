@@ -490,7 +490,7 @@ onUnmounted(() => {
                             :href="c.html_url"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="group flex items-center gap-2.5 rounded-lg px-3 py-2 transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high)/50"
+                            class="group flex items-center gap-2.5 rounded-lg px-3 py-2 transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/5"
                         >
                             <img
                                 :src="c.avatar_url"

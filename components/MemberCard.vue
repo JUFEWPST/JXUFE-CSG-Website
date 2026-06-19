@@ -1,7 +1,7 @@
 <template>
     <NuxtLink
         :to="`/about/members/${year}/${index}`"
-        class="flex w-full min-w-70 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50 cursor-pointer"
+        class="flex w-full min-w-70 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
         :title="member.message"
     >
         <div

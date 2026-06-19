@@ -7,7 +7,7 @@
             <div class="flex items-center gap-2">
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)"
+                    class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5"
                     @click="showAll = !showAll"
                 >
                     {{
@@ -18,7 +18,7 @@
                 </button>
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1 rounded-lg p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-(--md-sys-color-secondary-container)"
+                    class="inline-flex items-center gap-1 rounded-lg p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                     @click="refresh"
                     :title="t('common.actions.reload')"
                 >
@@ -117,7 +117,7 @@
                 <div
                     v-for="event in filteredEvents"
                     :key="event.比赛ID + event.比赛名称"
-                    class="group grid grid-cols-12 gap-2 px-4 py-3 transition-colors hover:bg-(--md-sys-color-surface-container)"
+                    class="group grid grid-cols-12 gap-2 px-4 py-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                 >
                     <!-- 赛事名称和标志 -->
                     <div class="col-span-5">
@@ -209,7 +209,7 @@
                                 :href="event.比赛链接"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)"
+                                class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-black/10 dark:hover:bg-white/10"
                                 :title="t('pages.ctf.events.table.join')"
                             >
                                 <ArrowTopRightOnSquareIcon
@@ -379,12 +379,12 @@ const statusFilterClass = (status: string) => {
             case "finished":
                 return "bg-(--md-sys-color-tertiary-container) text-(--md-sys-color-on-tertiary-container)";
             case "oncoming":
-                return "bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)";
+                return "bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)";
             default:
                 return "bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface)";
         }
     }
-    return "bg-(--md-sys-color-surface-container-lowest) text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-low)";
+    return "bg-(--md-sys-color-surface-container-lowest) text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5";
 };
 
 // 获取状态数量

@@ -410,7 +410,7 @@
                                         <tr
                                             v-for="event in paginatedEvents"
                                             :key="event.比赛ID"
-                                            class="transition-colors hover:bg-(--md-sys-color-surface-container)/45"
+                                            class="transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                                         >
                                             <td class="px-3 py-3 align-top">
                                                 <a
@@ -1393,7 +1393,7 @@ const calendarEventClass = (status: EventStatus) =>
         : status === "finished"
           ? "bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-on-surface-variant)"
           : status === "oncoming"
-            ? "bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)"
+            ? "bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)"
             : "bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface-variant)";
 
 const gotoPrevMonth = () => {
