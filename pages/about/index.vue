@@ -89,9 +89,7 @@ onUnmounted(() => {
                             </div>
                         </client-only>
 
-                        <span class="text-(--md-sys-color-primary)">网安</span>
-                        *
-                        <span class="text-(--md-sys-color-tertiary)">领域</span>
+                        <span class="whitespace-nowrap"><span class="text-(--md-sys-color-primary)">网安</span> * <span class="text-(--md-sys-color-tertiary)">领域</span></span>
                         <div
                             class="absolute -top-5 -left-4 text-2xl text-(--md-sys-color-secondary)"
                         >
