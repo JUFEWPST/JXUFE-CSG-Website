@@ -141,7 +141,9 @@ onUnmounted(() => {
                     >
                         {{ t("pages.about.index.intro.title") }}
                     </h2>
-                    <hr class="border-(--md-sys-color-outline-variant)" />
+                    <div
+                        class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                    ></div>
                 </header>
 
                 <div class="space-y-4 text-pretty">
@@ -182,11 +184,9 @@ onUnmounted(() => {
                         </h3>
 
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                            <div
-                                class="space-y-1 border-l-2 border-(--md-sys-color-outline-variant) pl-3"
-                            >
+                            <div class="space-y-1 rounded-lg p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
                                 <h4
-                                    class="text-sm font-medium text-(--md-sys-color-on-surface) sm:text-base"
+                                    class="text-sm font-bold text-(--md-sys-color-primary) sm:text-base"
                                 >
                                     {{
                                         t(
@@ -205,11 +205,9 @@ onUnmounted(() => {
                                 </p>
                             </div>
 
-                            <div
-                                class="space-y-1 border-l-2 border-(--md-sys-color-outline-variant) pl-3"
-                            >
+                            <div class="space-y-1 rounded-lg p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
                                 <h4
-                                    class="text-sm font-medium text-(--md-sys-color-on-surface) sm:text-base"
+                                    class="text-sm font-bold text-(--md-sys-color-primary) sm:text-base"
                                 >
                                     {{
                                         t(
@@ -228,11 +226,9 @@ onUnmounted(() => {
                                 </p>
                             </div>
 
-                            <div
-                                class="space-y-1 border-l-2 border-(--md-sys-color-outline-variant) pl-3"
-                            >
+                            <div class="space-y-1 rounded-lg p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
                                 <h4
-                                    class="text-sm font-medium text-(--md-sys-color-on-surface) sm:text-base"
+                                    class="text-sm font-bold text-(--md-sys-color-primary) sm:text-base"
                                 >
                                     {{
                                         t(
@@ -274,11 +270,16 @@ onUnmounted(() => {
             <!-- Faculty Advisor -->
             <section class="space-y-4">
                 <div class="flex flex-wrap items-end justify-between gap-4">
-                    <h2
-                        class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
-                    >
-                        {{ t("pages.about.teacher.title") }}
-                    </h2>
+                    <header class="space-y-2">
+                        <h2
+                            class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
+                        >
+                            {{ t("pages.about.teacher.title") }}
+                        </h2>
+                        <div
+                            class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                        ></div>
+                    </header>
                 </div>
                 <div class="flex justify-center">
                     <TeacherCard :teacher="teacherData" />
@@ -288,11 +289,16 @@ onUnmounted(() => {
             <!-- Leaders -->
             <section class="space-y-4">
                 <div class="flex flex-wrap items-end justify-between gap-4">
-                    <h2
-                        class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
-                    >
-                        {{ t("pages.about.index.members.leaders") }}
-                    </h2>
+                    <header class="space-y-2">
+                        <h2
+                            class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
+                        >
+                            {{ t("pages.about.index.members.leaders") }}
+                        </h2>
+                        <div
+                            class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                        ></div>
+                    </header>
                     <NuxtLink
                         to="/about/leaders"
                         class="text-sm font-bold text-(--md-sys-color-on-surface-variant) underline-offset-4 transition hover:text-(--md-sys-color-on-surface) hover:underline sm:text-base"
@@ -306,11 +312,16 @@ onUnmounted(() => {
             <!-- Members -->
             <section class="space-y-4">
                 <div class="flex flex-wrap items-end justify-between gap-4">
-                    <h2
-                        class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
-                    >
-                        {{ t("pages.about.index.members.members") }}
-                    </h2>
+                    <header class="space-y-2">
+                        <h2
+                            class="text-xl font-bold text-(--md-sys-color-on-surface) sm:text-2xl"
+                        >
+                            {{ t("pages.about.index.members.members") }}
+                        </h2>
+                        <div
+                            class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                        ></div>
+                    </header>
                     <NuxtLink
                         to="/about/members"
                         class="text-sm font-bold text-(--md-sys-color-on-surface-variant) underline-offset-4 transition hover:text-(--md-sys-color-on-surface) hover:underline sm:text-base"
@@ -329,7 +340,9 @@ onUnmounted(() => {
                     >
                         {{ t("pages.about.index.members.honors") }}
                     </h2>
-                    <hr class="border-(--md-sys-color-outline-variant)" />
+                    <div
+                        class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                    ></div>
                 </header>
 
                 <div class="space-y-8">
@@ -356,7 +369,7 @@ onUnmounted(() => {
                             >
                                 <span
                                     class="min-w-10 rounded-full px-2 py-1 text-center text-xs font-bold text-white"
-                                    :class="`bg-linear-to-r ${getLevelColor(honor.level)}`"
+                                    :class="getLevelColor(honor.level)"
                                 >
                                     {{ honor.level }}
                                 </span>
@@ -370,8 +383,11 @@ onUnmounted(() => {
                 </div>
 
                 <div
-                    class="border-t border-(--md-sys-color-outline-variant) pt-4 text-center text-xs text-(--md-sys-color-on-surface-variant) sm:text-sm"
+                    class="pt-4 text-center text-xs text-(--md-sys-color-on-surface-variant) sm:text-sm"
                 >
+                    <div
+                        class="mx-auto mb-2 h-0.5 w-16 rounded-full bg-(--md-sys-color-primary)"
+                    ></div>
                     <p class="mt-1">
                         我认为奇迹与魔法对谁都会带来幸福，是十分美好的事物。
                     </p>
@@ -385,7 +401,9 @@ onUnmounted(() => {
                     >
                         {{ t("pages.about.index.joinUs.title") }}
                     </h2>
-                    <hr class="border-(--md-sys-color-outline-variant)" />
+                    <div
+                        class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                    ></div>
                 </header>
                 <div class="flex flex-col items-center gap-8 md:flex-row">
                     <div
@@ -460,7 +478,9 @@ onUnmounted(() => {
                     >
                         Contributors
                     </h2>
-                    <hr class="border-(--md-sys-color-outline-variant)" />
+                    <div
+                        class="h-1 w-10 rounded-full bg-(--md-sys-color-primary)"
+                    ></div>
                 </header>
                 <div
                     class="space-y-3 text-sm leading-relaxed text-(--md-sys-color-on-surface-variant) sm:text-base md:text-lg"

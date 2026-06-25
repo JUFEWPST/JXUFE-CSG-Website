@@ -10,13 +10,14 @@ export interface YearHonors {
 
 export const getLevelColor = (level: string): string => {
     const colorMap: Record<string, string> = {
-        国一: "from-blue-500 to-blue-600",
-        国二: "from-purple-500 to-purple-600",
-        省二: "from-green-500 to-green-600",
-        省三: "from-yellow-500 to-yellow-600",
+        国一: "bg-amber-500",
+        国二: "bg-violet-500",
+        省一: "bg-sky-500",
+        省二: "bg-teal-500",
+        省三: "bg-cyan-500",
     };
 
-    return colorMap[level] || "from-gray-500 to-gray-600";
+    return colorMap[level] || "bg-gray-500";
 };
 
 export const getYearColor = (year: string): string => {
