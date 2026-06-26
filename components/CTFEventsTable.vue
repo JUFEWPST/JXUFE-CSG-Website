@@ -7,7 +7,7 @@
             <div class="flex items-center gap-2">
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)"
+                    class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5"
                     @click="showAll = !showAll"
                 >
                     {{
@@ -16,17 +16,13 @@
                             : t("common.actions.showMore")
                     }}
                 </button>
-                <button
-                    type="button"
-                    class="inline-flex items-center gap-1 rounded-lg p-1.5 text-(--md-sys-color-primary) transition-colors hover:bg-(--md-sys-color-secondary-container)"
+                <AnzuButton
+                    variant="text"
+                    size="sm"
+                    :status="loading ? 'loading' : 'default'"
                     @click="refresh"
                     :title="t('common.actions.reload')"
-                >
-                    <ArrowPathIcon
-                        class="h-5 w-5"
-                        :class="{ 'animate-spin-slow': loading }"
-                    />
-                </button>
+                />
             </div>
         </div>
 
@@ -117,7 +113,7 @@
                 <div
                     v-for="event in filteredEvents"
                     :key="event.比赛ID + event.比赛名称"
-                    class="group grid grid-cols-12 gap-2 px-4 py-3 transition-colors hover:bg-(--md-sys-color-surface-container)"
+                    class="group grid grid-cols-12 gap-2 px-4 py-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                 >
                     <!-- 赛事名称和标志 -->
                     <div class="col-span-5">
@@ -209,7 +205,7 @@
                                 :href="event.比赛链接"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)"
+                                class="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-black/10 dark:hover:bg-white/10"
                                 :title="t('pages.ctf.events.table.join')"
                             >
                                 <ArrowTopRightOnSquareIcon
@@ -278,7 +274,6 @@
 import { onMounted, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import {
-    ArrowPathIcon,
     ArrowTopRightOnSquareIcon,
     CalendarIcon,
     CalendarDaysIcon,
@@ -288,6 +283,7 @@ import {
     UserGroupIcon,
 } from "@heroicons/vue/24/outline";
 import AnzuProgressRing from "@/components/AnzuProgressRing.vue";
+import AnzuButton from "@/components/AnzuButton.vue";
 
 const { t, locale } = useI18n();
 
@@ -379,12 +375,12 @@ const statusFilterClass = (status: string) => {
             case "finished":
                 return "bg-(--md-sys-color-tertiary-container) text-(--md-sys-color-on-tertiary-container)";
             case "oncoming":
-                return "bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)";
+                return "bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)";
             default:
                 return "bg-(--md-sys-color-surface-container-highest) text-(--md-sys-color-on-surface)";
         }
     }
-    return "bg-(--md-sys-color-surface-container-lowest) text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-low)";
+    return "bg-(--md-sys-color-surface-container-lowest) text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5";
 };
 
 // 获取状态数量
@@ -521,18 +517,4 @@ onMounted(() => {
 
 <style scoped>
 @reference "tailwindcss";
-
-.animate-spin-slow {
-    animation: spin 1.2s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
 </style>

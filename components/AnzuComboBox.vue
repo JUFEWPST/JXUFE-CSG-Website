@@ -17,7 +17,7 @@
             <button
                 ref="triggerRef"
                 type="button"
-                class="flex w-full min-w-40 items-center justify-between gap-2 rounded-lg border border-(--md-sys-color-outline-variant) px-3 py-2 text-sm text-(--md-sys-color-on-surface) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                class="flex w-full min-w-40 items-center justify-between gap-2 rounded-lg bg-black/5 px-3 py-2 text-sm text-(--md-sys-color-on-surface) transition-colors hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10"
                 @click="toggleMenu"
                 :aria-label="ariaLabel"
                 :aria-expanded="isOpen"
@@ -53,20 +53,18 @@
                 <div
                     v-if="isOpen"
                     ref="menuRef"
-                    class="shadow-center-sm fixed z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-(--md-sys-color-surface-container) ring-1 ring-black/5"
+                    class="fixed z-50 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-(--md-sys-color-surface-container-lowest) shadow-lg"
                     :class="menuWidthClass"
                     :style="menuPositionStyle"
                     role="listbox"
                     @mouseenter="handleMouseEnter"
                     @mouseleave="handleMouseLeave"
                 >
-                    <div
-                        class="border-b border-(--md-sys-color-outline-variant)/40 p-2"
-                    >
+                    <div class="p-2">
                         <input
                             v-model="query"
                             type="text"
-                            class="w-full rounded-full border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface) px-3 py-1.5 text-sm text-(--md-sys-color-on-surface) outline-none focus:ring-2 focus:ring-(--md-sys-color-primary)/20"
+                            class="w-full rounded-lg bg-black/5 px-3 py-1.5 text-sm text-(--md-sys-color-on-surface) outline-none focus:ring-2 focus:ring-(--md-sys-color-on-surface)/15 dark:bg-white/5"
                             :placeholder="searchPlaceholder"
                             @keydown.escape.prevent="closeNow"
                         />
@@ -83,8 +81,8 @@
                             class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors"
                             :class="
                                 isSelected(it)
-                                    ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
-                                    : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)'
+                                    ? 'bg-(--md-sys-color-primary)/8 text-(--md-sys-color-primary)'
+                                    : 'text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5'
                             "
                         >
                             <span

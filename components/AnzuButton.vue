@@ -2,40 +2,40 @@
     <component
         :is="tag"
         ref="buttonRef"
-        class="relative inline-flex min-w-16 cursor-pointer items-center justify-center gap-2 overflow-hidden text-sm font-medium transition-[background-color,border-color,color,box-shadow,opacity] duration-200 ease-out outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--md-sys-color-primary)/20 select-none"
+        class="relative inline-flex cursor-pointer items-center justify-center gap-2 overflow-hidden text-sm font-medium transition-[background-color,border-color,color,box-shadow,opacity] duration-200 ease-out outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--md-sys-color-primary)/20 select-none"
         :class="[
             buttonGroupClasses ? '' : 'rounded-lg',
 
             hasDefault
-                ? sizeClasses[effectiveSize]
+                ? [sizeClasses[effectiveSize], 'min-w-16']
                 : iconOnlySizeClasses[effectiveSize],
 
             effectiveVariant === 'filled'
                 ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary)'
                 : '',
             effectiveVariant === 'outlined'
-                ? 'border border-(--md-sys-color-outline) bg-transparent text-(--md-sys-color-primary)'
+                ? 'bg-(--md-sys-color-surface-container-high) text-(--md-sys-color-primary)'
                 : '',
             effectiveVariant === 'text'
-                ? 'bg-transparent text-(--md-sys-color-primary) px-3 hover:bg-(--md-sys-color-primary)/8 active:bg-(--md-sys-color-primary)/12'
+                ? 'bg-transparent text-(--md-sys-color-primary) px-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10'
                 : '',
             effectiveVariant === 'elevated'
-                ? 'bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-primary) shadow-sm'
+                ? 'bg-(--md-sys-color-surface-container-low) text-(--md-sys-color-primary)'
                 : '',
             effectiveVariant === 'tonal'
-                ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
+                ? 'bg-(--md-sys-color-primary)/8 text-(--md-sys-color-primary)'
                 : '',
             buttonGroupClasses.includes('horizontal')
-                ? 'rounded-none border-r-0'
+                ? 'rounded-none'
                 : '',
             buttonGroupClasses.includes('horizontal')
-                ? 'first:rounded-l-md last:rounded-r-md last:border-r'
+                ? 'first:rounded-l-lg last:rounded-r-lg'
                 : '',
             buttonGroupClasses.includes('vertical')
-                ? 'rounded-none border-b-0'
+                ? 'rounded-none'
                 : '',
             buttonGroupClasses.includes('vertical')
-                ? 'first:rounded-t-md last:rounded-b-md last:border-b'
+                ? 'first:rounded-t-lg last:rounded-b-lg'
                 : '',
             isButtonDisabled && !isLoading
                 ? 'pointer-events-none opacity-60'
@@ -232,7 +232,7 @@ const isSelected = computed(() => {
 
 const effectiveVariant = computed(() => {
     if (buttonGroupContext && props.value !== undefined) {
-        return isSelected.value ? "filled" : "outlined";
+        return isSelected.value ? "filled" : "text";
     }
     return props.variant;
 });
@@ -260,8 +260,6 @@ const linkRel = computed(() => {
 });
 
 const loadingColor = computed(() => {
-    if (isDisabled.value) return "var(--md-sys-color-on-surface)";
-
     switch (effectiveVariant.value) {
         case "filled":
             return "var(--md-sys-color-on-primary)";
@@ -270,7 +268,7 @@ const loadingColor = computed(() => {
         case "text":
             return "var(--md-sys-color-primary)";
         case "tonal":
-            return "var(--md-sys-color-on-secondary-container)";
+            return "var(--md-sys-color-primary)";
         default:
             return "currentColor";
     }

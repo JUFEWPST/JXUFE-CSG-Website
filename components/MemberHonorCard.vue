@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex w-full min-w-75 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50"
+        class="flex w-full min-w-75 flex-row items-start gap-4 rounded-xl p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
         :title="person.honors?.join(' | ')"
     >
         <div

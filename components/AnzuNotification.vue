@@ -96,7 +96,7 @@ defineExpose({
             <div
                 v-for="notification in notifications"
                 :key="notification.id"
-                class="relative mb-3 w-80 overflow-hidden rounded-lg border border-(--md-sys-color-outline-variant) bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)"
+                class="relative mb-3 w-80 overflow-hidden rounded-lg bg-(--md-sys-color-surface-container-lowest) text-(--md-sys-color-on-surface) shadow-lg"
                 :class="{
                     'min-h-16': !notification.actions,
                     'min-h-24': notification.actions,
@@ -113,7 +113,7 @@ defineExpose({
                     <div class="flex-1">
                         <button
                             @click="removeNotification(notification.id)"
-                            class="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full text-base leading-none text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-(--md-sys-color-surface-container-high) hover:text-(--md-sys-color-on-surface)"
+                            class="absolute top-3 right-3 flex h-7 w-7 items-center justify-center rounded-full text-base leading-none text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-black/5 hover:text-(--md-sys-color-on-surface) dark:hover:bg-white/5"
                             aria-label="关闭通知"
                         >
                             &times;
@@ -140,11 +140,11 @@ defineExpose({
                                     notificationId: notification.id,
                                 })
                             "
-                            class="rounded-full border px-3 py-1.5 text-xs transition-colors"
+                            class="rounded-lg px-3 py-1.5 text-xs transition-colors"
                             :class="{
-                                'border-(--md-sys-color-outline) text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-variant)':
+                                'bg-black/5 text-(--md-sys-color-on-surface-variant) hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10':
                                     !action.primary,
-                                'border-transparent bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-on-primary-container)':
+                                'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) hover:bg-black/10 dark:hover:bg-white/10':
                                     action.primary,
                             }"
                         >
@@ -152,12 +152,8 @@ defineExpose({
                         </button>
                     </template>
                 </div>
-                <div
-                    class="absolute bottom-0 h-1 w-full overflow-hidden bg-(--md-sys-color-primary)"
-                >
-                    <div
-                        v-if="notification.timeout !== 0"
-                        class="bg-opacity-30 absolute top-0 right-0 h-full bg-white"
+                <div class="absolute bottom-0 h-0.5 w-full overflow-hidden bg-black/10 dark:bg-white/10">
+                    <div v-if="notification.timeout !== 0" class="absolute top-0 right-0 h-full bg-(--md-sys-color-primary)/60"
                         :style="{
                             animation: `progress ${notification.timeout ?? 5000}ms linear forwards`,
                         }"

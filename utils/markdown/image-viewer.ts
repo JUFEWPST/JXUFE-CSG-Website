@@ -87,13 +87,13 @@ img[data-md-zoomable="true"] {
 }
 
 .md-image-viewer-counter {
-    height: 28px;
-    padding: 0 10px;
+    height: 40px;
+    padding: 0 16px;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--md-sys-color-on-surface, #f4f4f4);
     background: color-mix(in srgb, var(--md-sys-color-surface-container-low, #1e1e1e) 80%, transparent);
@@ -101,8 +101,8 @@ img[data-md-zoomable="true"] {
 }
 
 .md-image-viewer-btn {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border: none;
     border-radius: 999px;
     color: var(--md-sys-color-on-primary, #ffffff);
@@ -113,9 +113,7 @@ img[data-md-zoomable="true"] {
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition:
-        background-color 0.18s ease,
-        color 0.18s ease;
+    transition: background-color 0.18s ease;
 }
 
 .md-image-viewer-btn::after {
@@ -155,6 +153,10 @@ img[data-md-zoomable="true"] {
     display: none;
 }
 
+.md-image-viewer-mobile-bar {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .md-image-viewer-overlay {
         padding: 8px;
@@ -163,12 +165,12 @@ img[data-md-zoomable="true"] {
     .md-image-viewer-stage {
         width: 100%;
         height: 100%;
-        padding: 10px 16px;
+        padding: 10px 8px 72px;
     }
 
     .md-image-viewer-image {
-        max-width: calc(100vw - 28px);
-        max-height: calc(100vh - 56px);
+        max-width: calc(100vw - 16px);
+        max-height: calc(100vh - 120px);
     }
 
     .md-image-viewer-controls {
@@ -176,12 +178,64 @@ img[data-md-zoomable="true"] {
         right: 8px;
     }
 
-    .md-image-viewer-nav.is-prev {
-        left: 6px;
+    .md-image-viewer-nav {
+        display: none;
     }
 
-    .md-image-viewer-nav.is-next {
-        right: 6px;
+    .md-image-viewer-counter {
+        display: none;
+    }
+
+    .md-image-viewer-mobile-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        padding: 16px;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+        background: linear-gradient(to top, color-mix(in srgb, var(--md-sys-color-surface, #121212) 90%, transparent) 60%, transparent);
+    }
+
+    .md-image-viewer-mobile-bar-btn {
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 999px;
+        color: var(--md-sys-color-on-primary, #ffffff);
+        background: var(--md-sys-color-primary, #4f46e5);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: background-color 0.18s ease;
+    }
+
+    .md-image-viewer-mobile-bar-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: currentColor;
+        opacity: 0;
+        transition: opacity 0.18s ease;
+    }
+
+    .md-image-viewer-mobile-bar-btn:active::after {
+        opacity: 0.12;
+    }
+
+    .md-image-viewer-mobile-bar-counter {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--md-sys-color-on-surface, #f4f4f4);
+        min-width: 52px;
+        text-align: center;
     }
 }
 `;
@@ -301,10 +355,32 @@ export const createMarkdownImageViewerController = (
     nextButton.innerHTML =
         '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
 
+    const mobileBar = document.createElement("div");
+    mobileBar.className = "md-image-viewer-mobile-bar";
+
+    const mobilePrevBtn = document.createElement("button");
+    mobilePrevBtn.type = "button";
+    mobilePrevBtn.className = "md-image-viewer-mobile-bar-btn";
+    mobilePrevBtn.setAttribute("aria-label", "Previous image");
+    mobilePrevBtn.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
+
+    const mobileCounter = document.createElement("span");
+    mobileCounter.className = "md-image-viewer-mobile-bar-counter";
+    mobileCounter.textContent = "1 / 1";
+
+    const mobileNextBtn = document.createElement("button");
+    mobileNextBtn.type = "button";
+    mobileNextBtn.className = "md-image-viewer-mobile-bar-btn";
+    mobileNextBtn.setAttribute("aria-label", "Next image");
+    mobileNextBtn.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
+
+    mobileBar.append(mobilePrevBtn, mobileCounter, mobileNextBtn);
     prevWrap.appendChild(prevButton);
     controls.append(counter, closeButton);
     nextWrap.appendChild(nextButton);
-    stage.append(viewerImage, controls, prevWrap, nextWrap);
+    stage.append(viewerImage, controls, prevWrap, nextWrap, mobileBar);
     overlay.append(backdrop, stage);
     document.body.appendChild(overlay);
 
@@ -397,7 +473,9 @@ export const createMarkdownImageViewerController = (
     };
 
     const updateCounter = () => {
-        counter.textContent = `${currentIndex + 1} / ${currentImages.length || 1}`;
+        const text = `${currentIndex + 1} / ${currentImages.length || 1}`;
+        counter.textContent = text;
+        mobileCounter.textContent = text;
         overlay.setAttribute(
             "data-multiple",
             currentImages.length > 1 ? "true" : "false",
@@ -820,6 +898,8 @@ export const createMarkdownImageViewerController = (
         prevButton.removeEventListener("click", handlePrevClick);
         nextButton.removeEventListener("click", handleNextClick);
         closeButton.removeEventListener("click", handleCloseClick);
+        mobilePrevBtn.removeEventListener("click", handlePrevClick);
+        mobileNextBtn.removeEventListener("click", handleNextClick);
         stage.removeEventListener("wheel", handleWheel);
         stage.removeEventListener("contextmenu", handleStageContextMenu);
         viewerImage.removeEventListener("pointerdown", handlePointerDown);
@@ -874,6 +954,8 @@ export const createMarkdownImageViewerController = (
     prevButton.addEventListener("click", handlePrevClick);
     nextButton.addEventListener("click", handleNextClick);
     closeButton.addEventListener("click", handleCloseClick);
+    mobilePrevBtn.addEventListener("click", handlePrevClick);
+    mobileNextBtn.addEventListener("click", handleNextClick);
     stage.addEventListener("wheel", handleWheel, { passive: false });
     stage.addEventListener("contextmenu", handleStageContextMenu);
     viewerImage.addEventListener("pointerdown", handlePointerDown);

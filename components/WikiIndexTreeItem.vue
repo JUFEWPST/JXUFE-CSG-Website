@@ -5,7 +5,7 @@
                 'flex cursor-pointer select-none items-center justify-between rounded-xl py-3 pr-4 transition-colors',
                 isActive
                     ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-medium'
-                    : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                    : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
             ]"
             :style="{ paddingLeft: `${padding}rem` }"
             @click="handleClick"
@@ -15,7 +15,7 @@
                     class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors"
                     :class="[
                         node.is_container
-                            ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
+                            ? 'bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)'
                             : 'text-(--md-sys-color-primary)',
                     ]"
                 >

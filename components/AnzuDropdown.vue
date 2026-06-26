@@ -101,12 +101,8 @@ const panelBaseClass = computed(() => {
         "origin-top-right",
         "overflow-hidden",
         "rounded-lg",
-        "border",
-        "border-(--md-sys-color-outline-variant)/50",
-        "bg-(--md-sys-color-surface-container)",
+        "bg-(--md-sys-color-surface-container-lowest)",
         "shadow-lg",
-        "ring-1",
-        "ring-black/5",
         props.panelClass,
     ]
         .filter(Boolean)

@@ -15,7 +15,7 @@
             <div class="flex items-center gap-1">
                 <button
                     type="button"
-                    class="flex h-7 w-7 items-center justify-center rounded-full text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                    class="flex h-7 w-7 items-center justify-center rounded-full text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                     @click="gotoPrevMonth"
                     :aria-label="t('calendar.actions.prevMonth')"
                 >
@@ -23,7 +23,7 @@
                 </button>
                 <button
                     type="button"
-                    class="flex h-7 w-7 items-center justify-center rounded-full text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-(--md-sys-color-surface-container-high)"
+                    class="flex h-7 w-7 items-center justify-center rounded-full text-(--md-sys-color-on-surface-variant) transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                     @click="gotoNextMonth"
                     :aria-label="t('calendar.actions.nextMonth')"
                 >
@@ -397,7 +397,7 @@ function dayClasses(day: CalendarDayMeta): string {
         );
     } else if (day.isHoliday) {
         classes.push(
-            "bg-(--md-sys-color-secondary-container) border border-(--md-sys-color-primary)/30 text-(--md-sys-color-primary)",
+            "bg-(--md-sys-color-primary)/10 border border-(--md-sys-color-primary)/30 text-(--md-sys-color-primary)",
         );
     } else if (day.isWorkdayOverride) {
         classes.push(
@@ -405,7 +405,7 @@ function dayClasses(day: CalendarDayMeta): string {
         );
     } else {
         classes.push(
-            "text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-surface-container-high)",
+            "text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5",
         );
     }
 

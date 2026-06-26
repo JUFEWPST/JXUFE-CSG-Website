@@ -6,7 +6,7 @@
             <div
                 v-for="(item, index) in paginatedData"
                 :key="index"
-                class="group flex w-full min-h-20 items-center rounded-xl transition-colors hover:bg-(--md-sys-color-surface-container-highest)/50 duration-75 animate-fade-in-up"
+                class="group flex w-full min-h-20 items-center rounded-xl transition-colors hover:bg-black/5 dark:hover:bg-white/5 duration-75 animate-fade-in-up"
                 :style="{ animationDelay: `${index * 100}ms` }"
             >
                 <!-- date -->

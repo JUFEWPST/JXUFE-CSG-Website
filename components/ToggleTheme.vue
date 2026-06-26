@@ -47,7 +47,7 @@ const setTheme = (nextIsDark: boolean) => {
     <AnzuDropdown v-model="showMenu" width-class="w-72" align="right">
         <template #trigger>
             <button
-                class="flex h-7.5 w-7.5 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-(--md-sys-color-surface-container-high)"
+                class="flex h-7.5 w-7.5 items-center justify-center rounded-full text-(--md-sys-color-on-surface) transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/5"
                 @click="showMenu = !showMenu"
                 :title="t('themeMenu.tooltip')"
                 aria-haspopup="true"
@@ -83,8 +83,8 @@ const setTheme = (nextIsDark: boolean) => {
                             class="flex items-center justify-center gap-2 rounded-lg px-2 py-2 text-sm transition-colors"
                             :class="[
                                 !isDark
-                                    ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
-                                    : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                    ? 'bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)'
+                                    : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
                             ]"
                             @click="setTheme(false)"
                         >
@@ -97,8 +97,8 @@ const setTheme = (nextIsDark: boolean) => {
                             class="flex items-center justify-center gap-2 rounded-lg px-2 py-2 text-sm transition-colors"
                             :class="[
                                 isDark
-                                    ? 'bg-(--md-sys-color-secondary-container) text-(--md-sys-color-on-secondary-container)'
-                                    : 'text-(--md-sys-color-on-surface) hover:bg-(--md-sys-color-surface-container-high)',
+                                    ? 'bg-(--md-sys-color-primary)/10 text-(--md-sys-color-primary)'
+                                    : 'text-(--md-sys-color-on-surface) hover:bg-black/5 dark:hover:bg-white/5',
                             ]"
                             @click="setTheme(true)"
                         >
@@ -156,7 +156,7 @@ const setTheme = (nextIsDark: boolean) => {
                                 v-for="theme in Themes"
                                 :key="theme.name"
                                 @click="selectPreset(theme.color)"
-                                class="group flex w-full items-center rounded-lg px-2 py-1.5 transition-colors hover:bg-(--md-sys-color-secondary-container)"
+                                class="group flex w-full items-center rounded-lg px-2 py-1.5 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                                 :class="{
                                     'bg-(--md-sys-color-secondary-container)':
                                         primaryColor === theme.color,

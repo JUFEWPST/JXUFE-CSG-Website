@@ -133,7 +133,7 @@
                     <li
                         v-for="child in treeNode.children"
                         :key="child.id"
-                        class="block p-4 rounded-xl bg-(--md-sys-color-surface-container-low) hover:bg-(--md-sys-color-surface-container-high) transition-colors cursor-pointer border border-(--md-sys-color-outline-variant)/20"
+                        class="block p-4 rounded-xl bg-(--md-sys-color-surface-container-low) hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer border border-(--md-sys-color-outline-variant)/20"
                         @click="router.push(`/${child.path}`)"
                     >
                         <h2

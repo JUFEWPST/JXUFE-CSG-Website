@@ -5,7 +5,7 @@
                 'flex cursor-pointer select-none items-center justify-between rounded-lg py-1.5 pr-2 text-sm transition-colors md:pr-3',
                 isActive
                     ? 'bg-(--md-sys-color-primary) text-(--md-sys-color-on-primary) font-medium'
-                    : 'text-(--md-sys-color-on-surface-variant) hover:bg-(--md-sys-color-primary-container) hover:text-(--md-sys-color-primary)',
+                    : 'text-(--md-sys-color-on-surface-variant) hover:bg-black/5 dark:hover:bg-white/5 hover:text-(--md-sys-color-primary)',
             ]"
             :style="{ paddingLeft: `${padding}rem` }"
             @click="handleClick"
