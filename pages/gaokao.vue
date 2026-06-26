@@ -209,22 +209,28 @@
                         type="info"
                         :title="t('pages.gaokao.sourceAlert.title')"
                     >
-                        <i18n-t
-                            keypath="pages.gaokao.sourceAlert.description"
-                            tag="div"
-                            class="leading-relaxed whitespace-pre-line opacity-90"
-                        >
-                            <template #zsjy>
-                                <a
-                                    href="https://zsjy.jxufe.edu.cn/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-(--md-sys-color-primary) underline underline-offset-2"
+                        <ul class="space-y-1 text-sm leading-relaxed opacity-90">
+                            <li
+                                v-for="key in ['score', 'ranking', 'plan']"
+                                :key="key"
+                            >
+                                <i18n-t
+                                    :keypath="`pages.gaokao.sourceAlert.items.${key}`"
+                                    tag="span"
                                 >
-                                    {{ t("pages.links.items.zsjy") }}
-                                </a>
-                            </template>
-                        </i18n-t>
+                                    <template #zsjy>
+                                        <a
+                                            href="https://zsjy.jxufe.edu.cn/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-(--md-sys-color-primary) underline underline-offset-2"
+                                        >
+                                            {{ t("pages.links.items.zsjy") }}
+                                        </a>
+                                    </template>
+                                </i18n-t>
+                            </li>
+                        </ul>
                     </AnzuAlert>
 
                     <div
@@ -694,6 +700,51 @@
                 </div>
                 </template>
             </section>
+
+            <AnzuAlert
+                type="info"
+                :title="t('pages.gaokao.contact.title')"
+            >
+                <div class="space-y-1.5 text-sm leading-relaxed opacity-90">
+                    <div class="flex flex-wrap gap-x-4 gap-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <GlobeAltIcon class="h-4 w-4 shrink-0" />
+                            <span>{{ t("pages.gaokao.contact.website") }}：</span>
+                            <a
+                                href="https://www.jxufe.edu.cn"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-(--md-sys-color-primary) underline underline-offset-2"
+                            >
+                                www.jxufe.edu.cn
+                            </a>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <PhoneIcon class="h-4 w-4 shrink-0" />
+                            <span>{{ t("pages.gaokao.contact.phone") }}：</span>
+                            <a
+                                href="tel:079183816635"
+                                class="text-(--md-sys-color-primary) underline underline-offset-2"
+                            >
+                                0791-83816635
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <ChatBubbleLeftRightIcon class="h-4 w-4 shrink-0" />
+                            <span>{{ t("pages.gaokao.contact.wechat") }}：</span>
+                            江西财经大学
+                            <span class="text-xs opacity-70">(jxufe_cn)</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span>{{ t("pages.gaokao.contact.wechatAlt") }}：</span>
+                            江西财经大学招生办
+                            <span class="text-xs opacity-70">(jxcdzsb)</span>
+                        </div>
+                    </div>
+                </div>
+            </AnzuAlert>
         </div>
     </main>
 </template>
@@ -706,6 +757,9 @@ import {
     MagnifyingGlassIcon,
     ExclamationTriangleIcon,
     ArrowPathIcon,
+    GlobeAltIcon,
+    PhoneIcon,
+    ChatBubbleLeftRightIcon,
 } from "@heroicons/vue/24/outline";
 import AnzuAlert from "@/components/AnzuAlert.vue";
 import AnzuButton from "@/components/AnzuButton.vue";

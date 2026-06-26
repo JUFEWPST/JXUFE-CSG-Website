@@ -151,7 +151,18 @@
             },
             "sourceAlert": {
                 "title": "Data Source",
-                "description": "Admissions: Public admission data from {zsjy}, containing max/min admission scores by major.\nGuild Extended: Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.\nAdmission Plan: Planned enrollment numbers for each major by province."
+                "items": {
+                    "score": "Admissions: Public admission data API from {zsjy}, containing max/min admission scores by major.",
+                    "ranking": "Guild Extended: Provincial ranking data (max/min score ranks) supplemented by the Cybersecurity Guild. Ranking data is for reference only.",
+                    "plan": "Admission Plan: Planned enrollment numbers for each major by province, sourced from {zsjy}."
+                }
+            },
+            "contact": {
+                "title": "Admissions Inquiry",
+                "website": "Website",
+                "phone": "Phone",
+                "wechat": "WeChat",
+                "wechatAlt": "Admissions Office"
             }
         },
         "privacy": {
