@@ -1149,7 +1149,10 @@ const rowMatchesFilter = (
 
 const fetchRankingRows = async (filterObj: Record<string, string>) => {
     if (!rankingCache.value) {
-        rankingCache.value = await $fetch<EnrollRow[]>(RANKING_DATA_URL);
+        const data = await $fetch<EnrollRow[]>(RANKING_DATA_URL, {
+            responseType: "json",
+        });
+        rankingCache.value = Array.isArray(data) ? data : [];
     }
     const rows = rankingCache.value || [];
     return rows.filter((row) => rowMatchesFilter(row, filterObj));
