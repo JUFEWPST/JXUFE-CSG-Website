@@ -1,438 +1,199 @@
-# 开发指南
+# UX 设计规范
 
-这份文档记录了项目前端的一些约定与设计思路——在动 UI 之前翻阅一遍，或许能帮你少走一些弯路哦~。
+这份文档定义本项目的界面设计约定。动手写 UI 之前先读一遍，让你的产出和全站保持统一的手感。
 
-## 颜色系统：MD3 token
+## 设计基调
 
-整套配色采用了 Material Design 3 风格的 CSS 变量体系。我们并未严格遵循规范本身，稍微进行了一些调整
+本项目以 **Material Design 3** 为设计基底，取其神而不拘其形：配色、层级、圆角、动效都借鉴 MD3，但具体落地以**视觉一致**与**实现简洁**为先，按需裁剪。
 
-变量统一集中在 `assets/css/main.css` 中定义，命名前缀为 `--md-sys-color-*`；亮色值挂载在 `:root` 下，暗色值则在 `.dark` 选择器中进行覆盖。
+三条贯穿全文的原则：
 
-常用的几类变量如下：
+- **Token 驱动**：颜色、层级一律引用设计 token，引用即可。
+- **轻量克制**：用最小的视觉变化把反馈讲清楚；动效服务于层次。
+- **组件优先**：能用 `Anzu*` 组件就用，保证全站控件手感一致。
 
-- 主色与对应容器色：`--md-sys-color-primary`、`--md-sys-color-on-primary` 及其 `-container` 系列
-- Surface：`--md-sys-color-surface`、`--md-sys-color-on-surface`，需要分层时可使用 `surface-container` 配合 `-low / -high / -highest`
-- 描边：`--md-sys-color-outline` 与 `--md-sys-color-outline-variant`
+---
 
-### 在组件中使用
+## 颜色：一切走 token
 
-借助 Tailwind 的任意值语法直接引用：
+全套配色是 MD3 token 体系，变量前缀 `--md-sys-color-*`。主题色在运行时由种子色生成整套调色板，并支持用户换肤——**所以组件里只认 token，换肤与明暗切换都会自动生效**。
+
+用 Tailwind 任意值语法引用：
 
 ```html
-<div
-    class="bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)"
->
-    ...
-</div>
+<div class="bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)">
 ```
 
-几种常见搭配方式：
+常用搭配：
 
-- **卡片容器**
-    - 背景：`bg-(--md-sys-color-surface-container)`，需要更浅或更深时改为 `-low / -high`
-    - 文本：主内容 `text-(--md-sys-color-on-surface)`、次要内容 `text-(--md-sys-color-on-surface-variant)`
-    - 描边：`border-(--md-sys-color-outline-variant)/50`
-- **tonal 标签**（例如 MemberCard 上的职位 chip）
-    - 背景：`bg-(--md-sys-color-primary-container)`
-    - 文字：`text-(--md-sys-color-primary)`
-
-### 主题切换
-
-暗色模式的切换方式很简单——在 `<html>` 元素上添加 `.dark` 类即可：
-
-```js
-document.documentElement.classList.toggle("dark", isDark);
-```
-
-编写组件时请勿硬编码颜色值，全部通过 token 引用。这样一来，主题切换时就不需要修改任何组件代码啦~。
+- **卡片容器**：背景 `surface-container-lowest`（需要层次再用 `-low / -high`），正文 `on-surface`，次要文字 `on-surface-variant`，描边 `outline-variant/50`
+- **主操作 / 强调**：`primary` + `on-primary`
+- **tonal 标签 chip**：背景 `primary-container`，文字 `primary`
+- **明暗**：给 `<html>` 加 `.dark` 类即可，token 自动切换；组件写一套色值就够
 
 ---
 
-## 默认布局：`layouts/default.vue`
+## 交互状态：轻量叠色
 
-页面顶层设置为 `min-h-screen`，全站背景色为 `--md-sys-color-surface-container`；Banner 独立使用 `--md-sys-color-background`，使顶部区域与正文内容形成视觉层次感；三列容器均为透明，让全局背景得以透出。
+这是项目对 MD3 裁剪得最明显的一处，**统一遵循以下手感**：
 
-### 三列网格
-
-```vue
-<div class="w-full max-w-400 mx-auto px-2">
-  <div class="grid grid-cols-1 lg:grid-cols-10 gap-4">
-    <!-- 左列：lg:col-span-2 lg:col-start-1 -->
-    <!-- 中列：lg:col-span-6 lg:col-start-3 -->
-    <!-- 右列：lg:col-span-2 lg:col-start-9 -->
-  </div>
-</div>
-```
-
-- 左右两列用于挂载侧边卡片：站点信息、日历、目录等
-- 中列为主页面区域 `<main>`
-- 屏幕宽度小于 `lg` 时，左右两列隐藏，侧边卡片改为在主体下方依次排列（称为"移动端底部卡片"）
-
-中列本身的实现：
-
-```vue
-<main
-    :class="[
-        'lg:col-span-6 lg:col-start-3',
-        'rounded-xl overflow-hidden',
-        !isHome ? 'shadow-center-sm' : '',
-    ]"
-    class="min-w-0 mt-4 mb-2 md:mb-10"
->
-    <slot />
-</main>
-```
-
-首页不显示阴影，其余页面默认带有阴影——视觉上呈现出浮起卡片的效果。
+- **hover / active**：盖一层中性叠色 `hover:bg-black/5 dark:hover:bg-white/5`，按下加深到 `/10`。全站可点元素都用这套。
+- **主按钮按压**：在实底上叠 `bg-current` 覆盖层，`hover` 透明度 `0.08`、`active` `0.12`。
+- **焦点**：`focus-visible:ring-2 ring-(--md-sys-color-primary)/20`，只在键盘焦点时出现。
+- **选中态**：用 `primary-container` / `secondary-container` 低饱和容器色打底，配 `primary` 文字。
 
 ---
 
-## 侧边栏卡片：`useSidebarLayout`
+## 组件：优先用 Anzu 组件
 
-侧边卡片采用声明式设计：在组件或页面中"注册"一张卡片，组合式函数与默认布局会自动将其放置到对应位置（左列 / 右列 / 移动端底部），路由切换时也会自动进行清理。
+UI 由 `Anzu*` 组件搭建：`AnzuButton`、`AnzuInput`、`AnzuDropdown`、`AnzuNavBar`、`AnzuNotification`、`AnzuPagination`、`AnzuSelector`、`AnzuAlert` 等。新页面优先复用。
 
-### API
+`AnzuButton` 是按钮规范基准：
 
-```ts
-import { useSidebarLayout } from "@/composables/useSidebarLayout";
+- 变体：`filled`（主操作）、`tonal`、`elevated`、`outlined`、`text`（弱操作）
+- 尺寸：`sm / md / lg`
+- 内建 loading / success / error 状态与图标插槽
 
-const {
-    leftCards,
-    rightCards,
-    mobileBottomCards,
-    registerCard,
-    unregisterCard,
-    clearSide,
-    setCardOptions,
-} = useSidebarLayout();
+需要手写控件时，沿用上面的颜色 token 与叠色状态约定，让它和组件长在一起。
+
+---
+
+## 图标
+
+- 界面图标优先用 **Heroicons**（`@heroicons/vue/24/outline`，描边风格，与全站统一）。
+- 没有合适的 Heroicon 时，才退而使用内联 SVG：用 `currentColor` 取色、尺寸用 `h-* w-*`，跟随 token。
+- **不要用 emoji** 充当图标、按钮符号或标题装饰；代码、界面、文档都一致适用。
+- 尺寸惯例：行内图标 `h-4 w-4` 或 `h-5 w-5`；按钮图标走 `AnzuButton` 的 `#icon` 插槽。
+
+---
+
+## 形状与阴影
+
+- **圆角**：控件（按钮 / 输入框 / 下拉）`rounded-lg`；卡片 / 容器 / 代码块 `rounded-xl`；图标钮 / 胶囊 / 浮动按钮 `rounded-full`。
+- **阴影**：用工具类 `shadow-center-sm`（卡片默认）与 `shadow-center-md`（强调）。两者是四向均匀的柔光阴影，表达"浮起"而非方向光。
+- **浮层**：下拉、菜单、通知用 `shadow-lg` + `surface-container-lowest` 背景。
+
+---
+
+## 动效
+
+按交互体量分档，统一使用：
+
+- **微交互**（hover、按压、图标）：`150–200ms`，`ease-out`
+- **状态 / 明暗 / 主题色切换**：`300ms`，`transition-colors`
+- **大区块 / Banner / 头部**：`500–700ms`，强调曲线 `cubic-bezier(0.25, 0.8, 0.25, 1)`
+- **进出场**：`scale-95 ↔ scale-100` 配 `opacity`（下拉、菜单、弹层通用）
+
+动效用来强化反馈与空间层次，默认从简。
+
+---
+
+## 视觉克制
+
+设计时避免以下手法：
+
+- 用边框包裹、框住元素来分区
+- 强阴影、又深又重的投影
+- hover 时元素上浮、抬升或放大
+- 发光、光晕
+- 渐变色填充
+
+例外：`ArticleBlock`、`LinkBlock` 与导航栏菜单项有各自既定的 hover 效果，无需为上述规则改动它们。
+
+---
+
+## 排版与字体
+
+- 全站字体 `HarmonyOS Sans SC`，无需在组件里再声明。
+- 正文用 `on-surface`，次要 / 辅助文字用 `on-surface-variant`，弱化层级靠颜色而非缩小字号。
+- 正文区（Markdown）标题用 `clamp()` 流式字号，自动适配视口。
+
+---
+
+## 布局：自适应三列
+
+页面顶层背景用 `surface-container`；头部 Banner 用 `background` 形成层次；三列容器透明，让全局背景透出。
+
+```
+左列 col-span-2  |  主列（自适应）  |  右列 col-span-2
 ```
 
-### 卡片配置
+主列宽度**随侧栏存在与否自动伸缩**：左右都有 → 6 列；只剩一侧 → 8 列；两侧皆无 → 占满 10 列。交给布局，不用手算。
+
+- 小于 `lg` 时左右列隐藏，侧栏卡片转为主体下方堆叠或移动端抽屉。
+- 用路由 meta `showLeftSidebar` / `showRightSidebar` 可让某页隐藏某侧。
+- **卡片外观统一**：`rounded-xl` + `surface-container-lowest` + `shadow-center-sm`，内边距 `p-6`。
+
+---
+
+## 侧边栏卡片：声明式注册
+
+侧栏内容通过 `useSidebarLayout` 声明式"注册"，布局会自动把卡片投放到对应位置（左 / 右 / 移动端底部 / 移动端抽屉），路由切换时自动清理。
 
 ```ts
-export interface SidebarCardConfig {
-    id: string; // 唯一标识
-    side: "left" | "right"; // 默认归属列
-    order?: number; // 同侧同 sticky 分组内的排序，数值越小越靠前
-    sticky?: boolean; // 桌面端是否固定在视口顶部
-    showOnMobileBottom?: boolean; // 移动端是否加入"底部队列"
-    slots?: ("left" | "right" | "mobileBottom")[]; // 投放位置（默认使用 side 的值）
-    scope?: "global" | "route" | "page"; // 显示范围
-    includeRoutes?: string[]; // 路由前缀白名单
-    excludeRoutes?: string[]; // 路由前缀黑名单
-    mutualGroup?: string; // 互斥分组：同组仅保留一张卡片
-    priority?: number; // 互斥时的优先级，数值越大越优先
-    when?: (ctx) => boolean; // 自定义显示条件
-    component: any; // 要渲染的组件
-    props?: Record<string, any>; // 传递给组件的 props
-}
-```
+const { registerCard, setCardOptions, unregisterCard, clearSide } =
+    useSidebarLayout();
 
-有两个细节值得留意哦：
-
-- 卡片的**纯数据**部分（id / side / order / sticky / props / 路由规则等）通过 `useState` 管理，可参与 SSR 序列化；组件本体与 `when` 函数则存放在本地的 `componentRegistry` 和 `ruleRegistry` 中，从而规避了"`useState` 无法存储函数"这个常见问题。
-- `scope: "page" | "route"` 的卡片会在路由变化时自动清除。编写页面时无需逐一调用 `unregisterCard`，是不是很方便呢~。
-
-### 注册 / 更新 / 移除
-
-注册一张卡片：
-
-```ts
 registerCard({
     id: "site-info",
     side: "left",
     order: 10,
-    sticky: false,
     showOnMobileBottom: true,
     component: SiteInfoCard,
 });
 ```
 
-如果需要后续修改 props、排序或 sticky 属性：
+`SidebarCardConfig` 关键字段：
 
-```ts
-setCardOptions("archive-toc", {
-    order: 50,
-    sticky: true,
-    showOnMobileBottom: true,
-    mutualGroup: "right-context",
-    priority: 100,
-    props: {
-        items,
-        markdownRenderRef: markdownRender.value,
-    },
-});
-```
+| 字段                                    | 说明                                       |
+| --------------------------------------- | ------------------------------------------ |
+| `id` / `side` / `component`             | 必填：唯一标识、默认归属列、渲染组件       |
+| `order`                                 | 同列排序，越小越靠上                       |
+| `sticky`                                | 桌面端吸顶（吸顶卡片整体沉到列底）         |
+| `scope`                                 | `global` / `route` / `page`，后两者随路由自动清除 |
+| `includeRoutes` / `excludeRoutes`       | 路由前缀白 / 黑名单                        |
+| `mutualGroup` / `priority`              | 互斥分组，同组按 priority 留一张           |
+| `when`                                  | 运行时自定义显示条件                       |
+| `showOnMobileBottom`                    | 移动端进底部堆叠                           |
+| `showOnMobileDrawer` + `mobileLabelKey` | 移动端进浮层抽屉，及抽屉按钮文案           |
 
-手动清理方式：
+要点：
 
-```ts
-unregisterCard("archive-toc");
-clearSide("right"); // 清空整列
-```
-
----
-
-## 排序与 sticky
-
-### 排序规则
-
-`useSidebarLayout.ts` 中负责排序的核心逻辑：
-
-```ts
-const leftCards = computed(() =>
-    resolvedCards.value
-        .filter((c) => c.slots.includes("left"))
-        .slice()
-        // sticky 卡片整体下沉，order 决定上下顺序
-        .sort((a, b) => {
-            const stickyA = a.sticky ? 1 : 0;
-            const stickyB = b.sticky ? 1 : 0;
-            if (stickyA !== stickyB) return stickyA - stickyB;
-            return (a.order ?? 100) - (b.order ?? 100);
-        }),
-);
-```
-
-排序逻辑相当直观：
-
-- 同一列中，先排列所有非 sticky 卡片，sticky 卡片统一排列在底部
-- 各自分组内再按 `order` 值从小到大排列
-- 若声明了 `mutualGroup`，则在排序之前先按 `priority` 选出胜出者，组内其余卡片不参与渲染
-
-设计目标在于：像"右侧 TOC 始终固定在底部，其余卡片各归其位"这样的需求，仅需两行配置即可实现。
-
-### sticky 的渲染
-
-`layouts/default.vue` 中，左右两列各有一个 `<aside>`，内部划分为两块区域：非 sticky 卡片在上方，sticky 卡片在下方；sticky 区域外层包裹了 `lg:sticky lg:top-32`，当滚动至距视口顶部 128px 时便会固定住。
-
-```vue
-<aside
-    v-if="showLeft && (leftNonStickyCards.length || leftStickyCards.length)"
-    class="hidden lg:block lg:col-span-2 lg:col-start-1"
->
-    <div v-if="leftNonStickyCards.length">
-        <div
-            v-for="card in leftNonStickyCards"
-            :key="card.id"
-            class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)"
-        >
-            <div class="p-6">
-                <component :is="card.component" v-bind="card.props || {}" />
-            </div>
-        </div>
-    </div>
-
-    <div v-if="leftStickyCards.length" class="lg:sticky lg:top-32">
-        <div
-            v-for="card in leftStickyCards"
-            :key="card.id"
-            class="mt-4 rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)"
-        >
-            <div class="p-6">
-                <component :is="card.component" v-bind="card.props || {}" />
-            </div>
-        </div>
-    </div>
-</aside>
-```
-
-右列结构与之对称，此处不再赘述。若要让某张卡片固定，只需为其设置 `sticky: true`；同一列中的多张 sticky 卡片会按 `order` 值决定排列顺序。
-
----
-
-## 默认卡片与页面接入示例
-
-### 全局默认卡片
-
-`layouts/default.vue` 在挂载时注册了三张全局卡片：
-
-```ts
-// 左侧：站点信息
-registerCard({
-    id: "site-info",
-    side: "left",
-    order: 10,
-    sticky: false,
-    showOnMobileBottom: true,
-    component: SiteInfoCard,
-});
-
-// 右侧：日历（除归档与 Wiki 页面外均显示）
-registerCard({
-    id: "site-calendar",
-    side: "right",
-    order: 10,
-    sticky: false,
-    showOnMobileBottom: true,
-    excludeRoutes: ["/archive/", "/wiki"],
-    mutualGroup: "right-context",
-    priority: 1,
-    component: CalendarCard,
-});
-
-// 左侧：Wiki 树（仅在 /wiki 路径下出现）
-registerCard({
-    id: "wiki-tree",
-    side: "left",
-    order: 10,
-    sticky: true,
-    showOnMobileBottom: true,
-    includeRoutes: ["/wiki"],
-    component: WikiTree,
-});
-```
-
-`mutualGroup: "right-context"` 的设计意图是为右列上下文预留位置——日历卡片作为默认占位方，当归档详情页的 TOC 卡片设置了更高的 priority 值时，进入归档页面后日历卡片会自动让位。
-
-### 归档详情页：TOC 卡片
-
-文件 `pages/archive/[para].vue`：
-
-```ts
-import MarkdownTOC from "~/components/MarkdownTOC.vue";
-import { useSidebarLayout } from "@/composables/useSidebarLayout";
-import { useRightSidebar } from "@/composables/useRightSidebar";
-
-const markdownRender = ref();
-const tocItems = ref<TocItem[]>([]);
-
-const { setHasContent, clearRightSidebar } = useRightSidebar();
-const { registerCard, setCardOptions } = useSidebarLayout();
-
-function handleTocUpdate(items: TocItem[]) {
-    tocItems.value = items;
-    setHasContent(items.length > 0);
-
-    setCardOptions("archive-toc", {
-        props: {
-            items,
-            markdownRenderRef: markdownRender.value,
-        },
-    });
-}
-
-onMounted(() => {
-    registerCard({
-        id: "archive-toc",
-        side: "right",
-        order: 50,
-        sticky: true,
-        showOnMobileBottom: false,
-        scope: "page",
-        mutualGroup: "right-context",
-        priority: 100,
-        component: MarkdownTOC,
-        props: {
-            items: tocItems.value,
-            markdownRenderRef: markdownRender.value,
-        },
-    });
-});
-
-onUnmounted(() => {
-    clearRightSidebar();
-});
-```
-
-实际效果如下：
-
-- 桌面端：TOC 出现在右列底部，并固定于视口中
-- 移动端：默认不展示，如需显示可设置 `showOnMobileBottom: true` 或在 `slots` 中加入 `"mobileBottom"`
-
----
-
-## 移动端底部卡片
-
-只要某张卡片声明了 `showOnMobileBottom: true`，或者 `slots` 中包含了 `"mobileBottom"`，在屏幕宽度小于 `lg` 时，它就会被收入主体下方的"底部队列"中依次展示：
-
-```vue
-<div class="mt-4 space-y-4 lg:hidden">
-    <div
-        v-for="card in mobileBottomCards"
-        :key="card.id"
-        class="rounded-xl bg-(--md-sys-color-surface-container-lowest) dark:bg-(--md-sys-color-surface-container-lowest) shadow-center-sm text-(--md-sys-color-on-surface)"
-    >
-        <div class="p-6">
-            <component :is="card.component" v-bind="card.props || {}" />
-        </div>
-    </div>
-</div>
-```
-
-外层添加了 `lg:hidden`，因此该区域在大屏幕上不会出现，左右两列的功能不受影响。
+- 纯数据字段走 `useState`，可参与 SSR；`component` 与 `when` 存本地注册表，规避函数无法序列化的问题。
+- `scope: "route" | "page"` 的卡片随路由自动清理，页面里无需手动 `unregisterCard`。
+- 后续改 props / 排序用 `setCardOptions(id, { ... })`。
 
 ---
 
 ## 页面 SEO
 
-全站 SEO 元数据（`<title>`、OG、Twitter、canonical、JSON-LD 等）由两套组合式函数分管，**禁止在页面组件中直接调用 `useHead` / `useSeoMeta` / `setPageTitle` 拼凑标签**。
+SEO 元数据由两个组合式函数统管，**页面里不要直接写 `useHead` / `useSeoMeta` 拼标签**：
 
-| 组合式函数    | 适用场景                                           | 覆盖范围                                                           |
-| ------------- | -------------------------------------------------- | ------------------------------------------------------------------ |
-| `usePageMeta` | 所有静态页面                                       | `<title>` + OG + Twitter + canonical + keywords + robots + JSON-LD |
-| `useBotMeta`  | CMS 动态页面（`archive/[para]`、`wiki/[...slug]`） | 同上，但仅在服务端对爬虫 UA 渲染                                   |
+| 函数          | 场景                                                     |
+| ------------- | -------------------------------------------------------- |
+| `usePageMeta` | 所有静态页面                                             |
+| `useBotMeta`  | CMS 动态页（`archive/[para]`、`wiki/[...slug]`），仅服务端对爬虫渲染 |
 
-两者互斥，一个页面只调用其中一种。
-
----
-
-### `usePageMeta`：静态页面
-
-一行调用覆盖全部 SEO 标签，内部自动处理标题注册、OG/Twitter 社交分享、结构化数据等：
+一个页面只用其中一个。标题统一由 layout 组装成 `{页面标题} - {全站名}{后缀}`，页面只传 `titleKey` 等，不用手拼字符串。
 
 ```ts
-import { usePageMeta } from "@/composables/usePageMeta";
-
 usePageMeta({
-    titleKey: "pages.volunteer.title",            // i18n key，用于 <title> + og:title
+    titleKey: "pages.volunteer.title",
     descriptionKey: "pages.volunteer.meta.description",
-    keywords: "江财,志愿填报,录取分数",               // 可选
-    canonicalPath: "/volunteer",                    // 可选，默认取 route.path
-    suffixKey: "nav.archive",                       // 可选，版块后缀
-    schema: { "@type": "WebApplication", ... },     // 可选，自定义 JSON-LD；传 null 跳过
-    noIndex: false,                                  // 可选，设为 true 输出 noindex
+    canonicalPath: "/volunteer",
 });
 ```
 
-- `titleKey` 可省略（如首页），此时沿用 layout 的默认标题
-- 无需手动拼接 ` - 江西财经大学网络安全协会`，layout 自动完成
-- `ogLocale` 自动跟随当前语言（zh → zh_CN, en → en_US, ja → ja_JP, ko → ko_KR）
-- 所有标签在 SSR 阶段即注入 HTML，爬虫无需执行 JS 即可获取完整元数据
-
-**首页特殊处理**：首页不设置 `titleKey`，仅传入 `descriptionKey` + `canonicalPath`，标题沿用 `pages.home.meta.title`（即全站默认标题）。
-
 ---
 
-### `useBotMeta`：CMS 动态页面
+## 请保留的「私货」彩蛋
 
-仅用于 `archive/[para].vue` 和 `wiki/[...slug].vue`——这两个页面的标题和内容来自 CMS API，在服务端渲染时需要额外请求数据才能生成 SEO 标签。
+下面这些是作者们特意埋的彩蛋，是项目的小特色。重构、改文案、清理代码或补 i18n 时请**原样保留**，别顺手抹平：
 
-```ts
-await useBotMeta(() => `/v1/contents/${route.params.para}`, {
-    schema: "Article",
-    type: "article",
-    titleFormatter: (title) =>
-        `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
-});
-```
+- **分页器「芳文跳」按钮**（`components/AnzuPagination.vue`）：跳页按钮文案是固定的「芳文跳」，属于刻意保留的彩蛋文案、并非漏翻的占位符——别替换成「跳转 / Go」，也别塞进 i18n。
+- **主题色预设名**（`components/ToggleTheme.vue`）：`Miku`、`Umi`、`Nico`、`Honoka`… 这些预设名与配色是刻意的对应关系，保持原样，别改成「蓝 / 粉」之类的通用名。
+- **首页 Banner 隐藏 logo**（`layouts/default.vue`）：点击首页头图会在文字模式与若干隐藏图标之间循环切换，保留这个点击交互（图标列表见 `homeBannerImages`，后续新增图标也加在这里）。
+- **关于页隐藏 logo**（`pages/about/index.vue`）：顶部「网安 \* 领域」是一个 `FlipToggle`，翻面会露出 `网安领域.webp` 与一句彩蛋文案，保留它的 back 面与翻转交互。
 
-- 仅在服务端、且 User-Agent 匹配已知爬虫（Googlebot、Baiduspider 等 29 种）时执行
-- 从 CMS API 拉取文章标题与正文，提取摘要作为 description，生成 JSON-LD Article schema
-- 非爬虫请求直接跳过，由客户端渲染后再设置标题
+调整这些组件的布局 / 样式没问题，但以上内容请留着它们。
 
----
-
-### `<title>` 组装流程
-
-无论使用 `usePageMeta` 还是 `useBotMeta`，最终的 `<title>` 标签由 `layouts/default.vue` 统一组装：
-
-```
-{pageTitle} - {meta.fullName}{suffix}
-```
-
-- **普通页面**：`时间线 - 江西财经大学网络安全协会`
-- **带版块页面**：`2026新春 - 江西财经大学网络安全协会 归档`
-- **首页**（无 pageTitle）：`江西财经大学网络安全协会 - 共筑网络安全 坚守网络防线`
-
-开发时**无需在页面中手动拼接标题字符串**。

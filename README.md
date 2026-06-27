@@ -11,7 +11,6 @@
 >
 > 由 Vercel 托管的站点 [https://jxufe-csg-website.vercel.app/](https://jxufe-csg-website.vercel.app/) 仍可访问。该站点基于 [TangTangChu](https://github.com/TangTangChu) Fork 的仓库构建。
 >
-> 自定义域名 [https://jxufe.tech](https://jxufe.tech) 目前指向上述 Vercel 测试站点。
 
 本网站基于 [Nuxt: The Progressive Web Framework](https://nuxt.com/) 开发（v4），本项目的 UX 设计与界面布局灵感来源于 [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) 项目，特别感谢 matsuzaka-yuki 以及 Fuwari 的作者 saicaca 提供的优秀设计思路
 
