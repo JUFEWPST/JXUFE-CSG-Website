@@ -192,7 +192,7 @@ usePageMeta({
 
 - **分页器「芳文跳」按钮**（`components/AnzuPagination.vue`）：跳页按钮文案是固定的「芳文跳」，属于刻意保留的彩蛋文案、并非漏翻的占位符——别替换成「跳转 / Go」，也别塞进 i18n。
 - **主题色预设名**（`components/ToggleTheme.vue`）：`Miku`、`Umi`、`Nico`、`Honoka`… 这些预设名与配色是刻意的对应关系，保持原样，别改成「蓝 / 粉」之类的通用名。
-- **首页 Banner 隐藏 logo**（`layouts/default.vue`）：点击首页头图会在文字模式与若干隐藏图标之间循环切换，保留这个点击交互（图标列表见 `homeBannerImages`，后续新增图标也加在这里）。
+- **首页 Banner 隐藏 logo**（`layouts/default.vue`）：点击首页头图在文字与隐藏图标间切换，保留这个点击交互。
 - **关于页隐藏 logo**（`pages/about/index.vue`）：顶部「网安 \* 领域」是一个 `FlipToggle`，翻面会露出 `网安领域.webp` 与一句彩蛋文案，保留它的 back 面与翻转交互。
 
 调整这些组件的布局 / 样式没问题，但以上内容请留着它们。

@@ -186,10 +186,14 @@ const mainColumnClass = computed(() => {
     return "lg:col-span-10 lg:col-start-1";
 });
 
-const homeBannerImages = [
-    "/home-banners/MahouCsg.svg",
-    "/home-banners/网安协会Creative.svg",
-] as const;
+const homeBannerModules = import.meta.glob<string>(
+    "../assets/images/home-banners/*.svg",
+    { eager: true, query: "?url", import: "default" },
+);
+
+const homeBannerImages = Object.entries(homeBannerModules)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, url]) => url);
 
 const homeBannerState = ref(0);
 
@@ -274,18 +278,24 @@ const toggleMahou = () => {
             <div
                 class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
             >
-                <div
-                    class="h-full w-full max-w-6xl px-4 transition-opacity duration-500"
-                    :class="isBannerImageVisible ? 'opacity-100' : 'opacity-0'"
-                    :style="{
-                        backgroundImage: activeHomeBannerImage
-                            ? `url(${activeHomeBannerImage})`
-                            : 'none',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'contain',
-                        backgroundPosition: 'center',
-                    }"
-                />
+                <div class="relative h-full w-full max-w-6xl">
+                    <div
+                        v-for="(image, index) in homeBannerImages"
+                        :key="image"
+                        class="absolute inset-x-4 inset-y-0 transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                        :class="
+                            isHome && homeBannerState - 1 === index
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                        "
+                        :style="{
+                            backgroundImage: `url(${image})`,
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                        }"
+                    />
+                </div>
             </div>
 
             <div
