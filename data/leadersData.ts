@@ -1,5 +1,15 @@
 export const leadersData = [
     {
+        name: "Lestine",
+        class: "25网络空间安全(低空数据管理与安全)1班",
+        year: "2026",
+        message: "梦想在远方，我在月球",
+        achievements: [
+            "CCPC 东盟国际大学生程序设计竞赛(桂林) 铜牌",
+        ],
+        avatar: "https://ilestine.cn/images/im.jpg",
+    },
+    {
         name: "糖糖毬",
         class: "24网络空间安全1班",
         year: "2025",
