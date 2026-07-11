@@ -88,9 +88,9 @@ export const useLinks = () => {
             tags: ["我喜欢喝雪碧", "全栈开发（with AI）"],
         },
         {
-            name: "piterの小屋",
+            name: "piterの小窝",
             url: "https://npiter.de/",
-            icon: "https://upload-bbs.miyoushe.com/upload/2025/01/13/363839390/3b27ef57435c87542b43e4fecdabc040_3189688091243815374.png?x-oss-process=image//resize,s_600/quality,q_80/auto-orient,0/interlace,1/format,png",
+            icon: "https://npiter.de/wp-content/uploads/2025/10/cropped-1761900400-20250308_141502_0.jpg",
         },
     ];
 
