@@ -123,6 +123,7 @@
 
 <script setup lang="ts">
 import type { Archive } from "~/types/archives";
+import { fetchCmsData, normalizeApiError } from "~/composables/useapi";
 
 const { t } = useI18n();
 
@@ -133,13 +134,20 @@ usePageMeta({
     canonicalPath: "/",
 });
 
-const { data: archives, loading, error, get } = useApi<Archive[]>();
-const loadArticles = async () => {
-    await get(
+const {
+    data: archives,
+    pending: loading,
+    error: asyncError,
+} = await useAsyncData("home-recent-archives", async () => {
+    const result = await fetchCmsData<Archive[]>(
         `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=1&page_size=6`,
     );
-};
-void loadArticles();
+    return result.data;
+});
+
+const error = computed(() =>
+    asyncError.value ? normalizeApiError(asyncError.value) : null,
+);
 
 const aboutRef = ref<HTMLElement | null>(null);
 const newsRef = ref<HTMLElement | null>(null);

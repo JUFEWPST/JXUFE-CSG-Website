@@ -1,5 +1,5 @@
 {
-    "name": "nuxt-app",
+    "name": "jxufe-csg-website",
     "private": true,
     "type": "module",
     "scripts": {
@@ -7,7 +7,10 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "nuxt prepare",
+        "typecheck": "nuxt typecheck",
+        "format": "prettier --write .",
+        "subset-font": "python scripts/subset-font.py"
     },
     "dependencies": {
         "@heroicons/vue": "^2.2.0",

@@ -55,12 +55,14 @@
 <script setup lang="ts">
 import AnzuPagination from "~/components/AnzuPagination.vue";
 import ArticleBlock from "~/components/ArticleBlock.vue";
-import { ref, watch, nextTick } from "vue";
+import { computed, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "#imports";
-import { useApi } from "~/composables/useapi";
+import { fetchCmsData, normalizeApiError } from "~/composables/useapi";
 import type { Archive } from "~/types/archives";
 
 const { t, locale } = useI18n();
+const route = useRoute();
+const router = useRouter();
 
 await useBotMeta(
     () => {
@@ -84,47 +86,47 @@ usePageMeta({
     canonicalPath: "/archive",
 });
 
-const route = useRoute();
-const router = useRouter();
+const pageFromRoute = computed(() => {
+    const raw = route.query.page;
+    const pageNum = parseInt(String(Array.isArray(raw) ? raw[0] : raw) || "1", 10);
+    return Number.isFinite(pageNum) && pageNum > 0 ? pageNum : 1;
+});
+
 const {
-    data: archives,
-    meta,
-    loading,
-    error,
-    get: getArchives,
-} = useApi<Archive[]>();
-const { data: topArchives, get: getTopArchives } = useApi<Archive[]>();
-const currentPage = ref(1);
-const totalPages = ref(1);
-
-const loadArchives = async (page: number = 1) => {
-    await getArchives(
-        `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=${page}`,
-    );
-    if (archives.value) {
-        if (meta.value) {
-            totalPages.value = meta.value.total_pages || 1;
-            currentPage.value = meta.value.current_page || 1;
-        }
-    } else {
-        console.error("加载失败", error.value);
-    }
-};
-
-const loadTopArchives = async () => {
-    getTopArchives(
-        "/v1/contents?type_slug=archive&fields=publish_time&filter[is_top][eq]=true",
-    );
-};
-loadTopArchives();
-watch(
-    () => route.query.page,
-    (newPage) => {
-        const pageNum = parseInt(newPage as string) || 1;
-        currentPage.value = pageNum;
-        loadArchives(pageNum);
+    data: listPayload,
+    pending: loading,
+    error: asyncError,
+} = await useAsyncData(
+    "archive-list",
+    async () => {
+        const page = pageFromRoute.value;
+        const [list, top] = await Promise.all([
+            fetchCmsData<Archive[]>(
+                `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=${page}`,
+            ),
+            fetchCmsData<Archive[]>(
+                "/v1/contents?type_slug=archive&fields=publish_time&filter[is_top][eq]=true",
+            ),
+        ]);
+        return {
+            archives: list.data,
+            meta: list.meta,
+            topArchives: top.data,
+        };
     },
-    { immediate: true },
+    {
+        watch: [pageFromRoute],
+    },
+);
+
+const archives = computed(() => listPayload.value?.archives ?? null);
+const topArchives = computed(() => listPayload.value?.topArchives ?? null);
+const currentPage = computed(
+    () => listPayload.value?.meta?.current_page || pageFromRoute.value,
+);
+const totalPages = computed(() => listPayload.value?.meta?.total_pages || 1);
+const error = computed(() =>
+    asyncError.value ? normalizeApiError(asyncError.value) : null,
 );
 
 const handlePageChange = (page: number) => {
@@ -137,8 +139,9 @@ const handlePageChange = (page: number) => {
     });
 };
 
-// 数据加载完成后自动上滑
-watch(archives, () => {
+// 分页切换后滚到顶部（仅客户端）
+watch(pageFromRoute, () => {
+    if (!import.meta.client) return;
     nextTick(() => {
         requestAnimationFrame(() => {
             window.scrollTo({ top: 0, behavior: "smooth" });

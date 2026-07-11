@@ -26,7 +26,8 @@ ENV PORT=3000
 
 EXPOSE 3000
 
+# node:slim 无 curl，用 Node 自身探测
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:3000/ || exit 1
+    CMD node -e "fetch('http://127.0.0.1:3000/').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["node", ".output/server/index.mjs"]

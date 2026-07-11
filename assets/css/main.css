@@ -101,6 +101,16 @@
 
     html {
         @apply bg-(--md-sys-color-background) text-(--md-sys-color-on-background) transition-colors duration-300;
+        font-family:
+            "HarmonyOS Sans SC",
+            "PingFang SC",
+            "Hiragino Sans GB",
+            "Microsoft YaHei UI",
+            "Microsoft YaHei",
+            "Noto Sans SC",
+            system-ui,
+            -apple-system,
+            sans-serif;
         scrollbar-gutter: stable;
         scrollbar-width: thin;
         scrollbar-color: color-mix(
@@ -132,15 +142,11 @@
     }
 }
 
+/* 相对路径交给 Vite 打包哈希；子集化后缺失字形走系统字体回退 */
 @font-face {
-    font-family: HarmonyOS_Sans_SC_Medium;
+    font-family: "HarmonyOS Sans SC";
     font-style: normal;
+    font-weight: 400 700;
     font-display: swap;
-    src:
-        url("/assets/font/HarmonyOS_Sans_SC_Medium.woff2") format("woff2"),
-        url("/assets/font/HarmonyOS_Sans_SC_Medium.woff2") format("woff");
-}
-
-* {
-    font-family: HarmonyOS_Sans_SC_Medium;
+    src: url("../font/HarmonyOS_Sans_SC_Medium.woff2") format("woff2");
 }

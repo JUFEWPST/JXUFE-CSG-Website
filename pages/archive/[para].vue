@@ -108,7 +108,11 @@ import { computed, onMounted, ref, onUnmounted, watch } from "vue";
 import { useRoute } from "#imports";
 import type { ArchiveData } from "~/types/archives";
 import type { TocItem } from "~/types/tocitems";
-import { useApi } from "#imports";
+import {
+    fetchCmsData,
+    normalizeApiError,
+    type ApiMeta,
+} from "~/composables/useapi";
 import { useArchivePrevNext } from "~/composables/useArchivePrevNext";
 import { useRightSidebar } from "@/composables/useRightSidebar";
 import { usePageTitle } from "@/composables/usePageTitle";
@@ -123,8 +127,7 @@ const tocItems = ref<TocItem[]>([]);
 
 const { t, locale } = useI18n();
 
-// Bot-only metadata SSR. Real users skip this entirely; only crawler UAs
-// trigger a CMS fetch on the server to inject rich meta into the HTML.
+// Bot-only metadata SSR（结构化数据）；正文对所有用户走下方 useAsyncData。
 await useBotMeta(
     () =>
         `/v1/contents/by-path/archive/${route.params.para}?i18n=${getApiLocale(locale.value)}`,
@@ -142,8 +145,34 @@ const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 
 const para = computed(() => route.params.para);
-const { data: archive, loading, error, get, meta } = useApi<ArchiveData>();
+const currentContentLang = ref(getApiLocale(locale.value));
+
+const {
+    data: archivePayload,
+    pending: loading,
+    error: asyncError,
+} = await useAsyncData(
+    () =>
+        `archive-detail-${String(para.value ?? "")}-${currentContentLang.value}`,
+    async () => {
+        const slug = para.value;
+        if (!slug) return null;
+        const result = await fetchCmsData<ArchiveData>(
+            `/v1/contents/by-path/archive/${slug}?i18n=${currentContentLang.value}`,
+        );
+        return result;
+    },
+    {
+        watch: [para, currentContentLang],
+    },
+);
+
+const archive = computed(() => archivePayload.value?.data ?? null);
+const meta = computed(() => archivePayload.value?.meta as ApiMeta | undefined);
 const i18nFallback = computed(() => meta.value?.i18n);
+const error = computed(() =>
+    asyncError.value ? normalizeApiError(asyncError.value) : null,
+);
 
 const currentSlug = computed(() => String(para.value ?? ""));
 const { prev: archivePrev, next: archiveNext } =
@@ -155,7 +184,6 @@ function handleTocUpdate(items: TocItem[]) {
     tocItems.value = items;
     setHasContent(items.length > 0);
 
-    // 更新 TOC 侧边卡片的 props，保证目录跟随最新内容
     setCardOptions("archive-toc", {
         props: {
             items,
@@ -177,20 +205,11 @@ watch(
     { immediate: true },
 );
 
-const currentContentLang = ref(getApiLocale(locale.value));
-
 watch(locale, (newLocale) => {
     currentContentLang.value = getApiLocale(newLocale);
 });
 
-watch(currentContentLang, (newLang) => {
-    get(`/v1/contents/by-path/archive/${para.value}?i18n=${newLang}`);
-});
-
 onMounted(() => {
-    get(
-        `/v1/contents/by-path/archive/${para.value}?i18n=${currentContentLang.value}`,
-    );
     setScrollReveal(true);
 });
 
@@ -232,7 +251,7 @@ watch(
     },
     { immediate: true },
 );
-// 离开页面时清除数据
+
 onUnmounted(() => {
     clearRightSidebar();
     resetNavTitle();

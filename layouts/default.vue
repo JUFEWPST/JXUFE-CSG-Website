@@ -186,19 +186,30 @@ const mainColumnClass = computed(() => {
     return "lg:col-span-10 lg:col-start-1";
 });
 
+// 非 eager：避免所有路由都打进首页彩蛋 Banner SVG
 const homeBannerModules = import.meta.glob<string>(
     "../assets/images/home-banners/*.svg",
-    { eager: true, query: "?url", import: "default" },
+    { query: "?url", import: "default" },
 );
 
-const homeBannerImages = Object.entries(homeBannerModules)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([, url]) => url);
+const homeBannerImages = ref<string[]>([]);
+const homeBannersLoaded = ref(false);
+
+const loadHomeBanners = async () => {
+    if (homeBannersLoaded.value || !import.meta.client) return;
+    homeBannersLoaded.value = true;
+    const entries = Object.entries(homeBannerModules).sort(([a], [b]) =>
+        a.localeCompare(b),
+    );
+    homeBannerImages.value = await Promise.all(
+        entries.map(async ([, loader]) => loader()),
+    );
+};
 
 const homeBannerState = ref(0);
 
 const activeHomeBannerImage = computed(
-    () => homeBannerImages[homeBannerState.value - 1] ?? null,
+    () => homeBannerImages.value[homeBannerState.value - 1] ?? null,
 );
 
 const isBannerImageVisible = computed(
@@ -247,13 +258,15 @@ watch(
     { immediate: true },
 );
 
-const toggleMahou = () => {
+const toggleMahou = async () => {
     if (!isHome.value) {
         homeBannerState.value = 0;
         return;
     }
-    homeBannerState.value =
-        (homeBannerState.value + 1) % (homeBannerImages.length + 1);
+    await loadHomeBanners();
+    const total = homeBannerImages.value.length + 1;
+    if (total <= 1) return;
+    homeBannerState.value = (homeBannerState.value + 1) % total;
 };
 </script>
 

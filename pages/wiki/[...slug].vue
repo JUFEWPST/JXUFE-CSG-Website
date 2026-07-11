@@ -188,7 +188,11 @@ import { onBeforeRouteLeave } from "vue-router";
 import { useRoute, useRouter } from "#imports";
 import type { TocItem } from "~/types/tocitems";
 import type { WikiTreeNode } from "~/types/wiki";
-import { useApi } from "#imports";
+import {
+    fetchCmsData,
+    normalizeApiError,
+    type ApiMeta,
+} from "~/composables/useapi";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
 import { useNavTitle } from "@/composables/useNavTitle";
 import { usePageTitle } from "@/composables/usePageTitle";
@@ -208,12 +212,18 @@ interface WikiData {
     [key: string]: any;
 }
 
+interface WikiPagePayload {
+    content: WikiData | null;
+    contentMeta?: ApiMeta;
+    treeNode: WikiTreeNode | null;
+    breadcrumbTree: WikiTreeNode | null;
+    sectionTree: WikiTreeNode | null;
+}
+
 const route = useRoute();
 const router = useRouter();
 const markdownRender = ref();
 const tocItems = ref<TocItem[]>([]);
-const pageLoading = ref(false);
-let fetchSequence = 0;
 
 const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
@@ -294,38 +304,79 @@ const contentPath = computed(() => {
     return `wiki/${slugSegments.value.join("/")}`;
 });
 
-const { data: content, loading, error, get, meta } = useApi<WikiData>();
-const i18nFallback = computed(() => meta.value?.i18n);
+const loadWikiPage = async (): Promise<WikiPagePayload> => {
+    const lang = currentContentLang.value;
+    const depth = slugSegments.value.length + 1;
+
+    const [breadcrumbResult, sectionResult, treeResult] = await Promise.all([
+        fetchCmsData<WikiTreeNode>(
+            `/v1/tree?root=wiki&depth=${depth}&i18n=${lang}`,
+        ),
+        fetchCmsData<WikiTreeNode>(
+            `/v1/tree?root=${firstLevelRootPath.value}&i18n=${lang}`,
+        ),
+        fetchCmsData<WikiTreeNode>(
+            `/v1/tree?root=${treeRootPath.value}&depth=2&i18n=${lang}`,
+        ),
+    ]);
+
+    const treeNode = treeResult.data;
+    if (treeNode?.is_container === true) {
+        return {
+            content: null,
+            treeNode,
+            breadcrumbTree: breadcrumbResult.data,
+            sectionTree: sectionResult.data,
+        };
+    }
+
+    try {
+        const contentResult = await fetchCmsData<WikiData>(
+            `/v1/contents/by-path/${contentPath.value}?i18n=${lang}`,
+        );
+        return {
+            content: contentResult.data,
+            contentMeta: contentResult.meta,
+            treeNode,
+            breadcrumbTree: breadcrumbResult.data,
+            sectionTree: sectionResult.data,
+        };
+    } catch {
+        // 树节点存在但正文缺失时，仍返回树结构
+        return {
+            content: null,
+            treeNode,
+            breadcrumbTree: breadcrumbResult.data,
+            sectionTree: sectionResult.data,
+        };
+    }
+};
+
 const {
-    data: treeNode,
-    loading: loadingTree,
-    error: treeError,
-    get: getTree,
-} = useApi<any>();
-const {
-    data: breadcrumbTree,
-    loading: loadingBreadcrumbTree,
-    error: breadcrumbTreeError,
-    get: getBreadcrumbTree,
-} = useApi<WikiTreeNode>();
-const {
-    data: sectionTree,
-    loading: loadingSectionTree,
-    error: sectionTreeError,
-    get: getSectionTree,
-} = useApi<WikiTreeNode>();
+    data: wikiPayload,
+    pending: isPageLoading,
+    error: pageAsyncError,
+} = await useAsyncData(
+    () => `wiki-page-${slug.value || "root"}-${currentContentLang.value}`,
+    loadWikiPage,
+    {
+        watch: [slug, currentContentLang],
+    },
+);
+
+const content = computed(() => wikiPayload.value?.content ?? null);
+const treeNode = computed(() => wikiPayload.value?.treeNode ?? null);
+const breadcrumbTree = computed(
+    () => wikiPayload.value?.breadcrumbTree ?? null,
+);
+const sectionTree = computed(() => wikiPayload.value?.sectionTree ?? null);
+const i18nFallback = computed(() => wikiPayload.value?.contentMeta?.i18n);
+const error = computed(() =>
+    pageAsyncError.value ? normalizeApiError(pageAsyncError.value) : null,
+);
 
 const isFolder = computed(() => treeNode.value?.is_container === true);
 const isFolderView = computed(() => isFolder.value);
-const isResolvingWikiPage = computed(
-    () =>
-        loadingBreadcrumbTree.value ||
-        loadingSectionTree.value ||
-        loadingTree.value,
-);
-const isPageLoading = computed(
-    () => pageLoading.value || isResolvingWikiPage.value,
-);
 
 const pageTitle = computed(() => {
     return (
@@ -435,13 +486,7 @@ const wikiNext = computed<PrevNextTarget | null>(() => {
         : null;
 });
 
-const currentPageError = computed(
-    () =>
-        breadcrumbTreeError.value ||
-        sectionTreeError.value ||
-        treeError.value ||
-        error.value,
-);
+const currentPageError = computed(() => error.value);
 const showError = computed(
     () => !isPageLoading.value && !!currentPageError.value,
 );
@@ -496,35 +541,6 @@ watch(
     { immediate: true },
 );
 
-const fetchContent = async () => {
-    if (!slug.value) return;
-    fetchSequence += 1;
-    const currentFetch = fetchSequence;
-    pageLoading.value = true;
-
-    try {
-        await getBreadcrumbTree(
-            `/v1/tree?root=wiki&depth=${slugSegments.value.length + 1}&i18n=${currentContentLang.value}`,
-        );
-        await getSectionTree(
-            `/v1/tree?root=${firstLevelRootPath.value}&i18n=${currentContentLang.value}`,
-        );
-        await getTree(
-            `/v1/tree?root=${treeRootPath.value}&depth=2&i18n=${currentContentLang.value}`,
-        );
-        if (treeNode.value?.is_container === true) {
-            return;
-        }
-        await get(
-            `/v1/contents/by-path/${contentPath.value}?i18n=${currentContentLang.value}`,
-        );
-    } finally {
-        if (currentFetch === fetchSequence) {
-            pageLoading.value = false;
-        }
-    }
-};
-
 const updateLayout = () => {
     if (isFolderView.value) {
         setSitePageTitle("", pageTitle.value, "nav.wiki");
@@ -534,30 +550,17 @@ const updateLayout = () => {
     }
 };
 
-onMounted(async () => {
+onMounted(() => {
     setScrollReveal(true);
-
-    await fetchContent();
     updateLayout();
 });
 
-watch(currentContentLang, async () => {
-    await fetchContent();
-    updateLayout();
-});
-
-watch([content, treeNode], () => {
+watch([content, treeNode, isPageLoading], () => {
+    if (isPageLoading.value) return;
     if (content.value || treeNode.value) {
         setTitle(pageTitle.value, content.value?.data?.publisher || "");
         updateLayout();
     }
-});
-
-watch(treeRootPath, async () => {
-    // Reset state on nav
-    setSitePageTitle("pages.wiki.title");
-    await fetchContent();
-    updateLayout();
 });
 
 onBeforeRouteLeave((to, from, next) => {

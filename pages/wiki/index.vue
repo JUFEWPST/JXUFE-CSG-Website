@@ -15,7 +15,8 @@
                         {{ t("pages.wiki.tree.loadError") }}
                     </p>
                     <button
-                        @click="refresh"
+                        type="button"
+                        @click="() => refresh()"
                         class="text-(--md-sys-color-primary) hover:underline"
                     >
                         {{ t("common.actions.reload") }}
@@ -49,37 +50,28 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-
-import {
-    BookOpenIcon,
-    FolderIcon,
-    DocumentTextIcon,
-    ArrowRightIcon,
-} from "@heroicons/vue/24/outline";
+import { BookOpenIcon } from "@heroicons/vue/24/outline";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
-import { useApi } from "~/composables/useapi";
+import { fetchCmsData, normalizeApiError } from "~/composables/useapi";
 import type { WikiTreeNode } from "~/types/wiki";
 import AnzuProgressRing from "~/components/AnzuProgressRing.vue";
 import WikiIndexTreeItem from "~/components/WikiIndexTreeItem.vue";
 
 const { t } = useI18n();
-const router = useRouter();
 
-const { data, get, loading, error } = useApi<WikiTreeNode>();
-
-const refresh = () => {
-    get("/v1/tree?root=wiki&depth=0");
-};
-
-const handleNavigate = (item: WikiTreeNode) => {
-    router.push(`/${item.path}`);
-};
-
-onMounted(() => {
-    get("/v1/tree?root=wiki&depth=0");
+const {
+    data,
+    pending: loading,
+    error: asyncError,
+    refresh,
+} = await useAsyncData("wiki-index-tree", async () => {
+    const result = await fetchCmsData<WikiTreeNode>("/v1/tree?root=wiki&depth=0");
+    return result.data;
 });
+
+const error = computed(() =>
+    asyncError.value ? normalizeApiError(asyncError.value) : null,
+);
 
 usePageMeta({
     titleKey: "pages.wiki.title",

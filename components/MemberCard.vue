@@ -12,6 +12,8 @@
                 :src="member.avatar"
                 :alt="member.display || 'User Avatar'"
                 class="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
             />
             <div v-else class="flex h-full w-full items-center justify-center">
                 <span
