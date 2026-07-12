@@ -146,7 +146,6 @@
 @font-face {
     font-family: "HarmonyOS Sans SC";
     font-style: normal;
-    font-weight: 400 700;
     font-display: swap;
     src: url("../font/HarmonyOS_Sans_SC_Medium.woff2") format("woff2");
 }
