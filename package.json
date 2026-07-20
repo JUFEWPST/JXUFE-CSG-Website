@@ -9,6 +9,7 @@
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
         "typecheck": "nuxt typecheck",
+        "lint": "oxlint",
         "format": "prettier --write .",
         "subset-font": "python scripts/subset-font.py"
     },
@@ -26,6 +27,7 @@
         "@types/katex": "^0.16.8",
         "@types/node": "^25.9.3",
         "@vue/language-core": "^3.3.5",
+        "oxlint": "^1.74.0",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "slugify": "^1.6.8",
