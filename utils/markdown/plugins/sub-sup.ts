@@ -6,7 +6,7 @@ import {
     idempotentDecorator,
 } from "../sentinel";
 
-const SUPERSCRIPT_REGEX = /\^([^\^\s]+)\^/g;
+const SUPERSCRIPT_REGEX = /\^([^^\s]+)\^/g;
 const SUBSCRIPT_REGEX = /(?<!~)~(?!~)([^~\s]+)~(?!~)/g;
 
 const transform = (segment: string): string =>
