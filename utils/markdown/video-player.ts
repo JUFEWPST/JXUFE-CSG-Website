@@ -1,6 +1,6 @@
 const VIDEO_EXTENSIONS = /\.(mp4|webm|ogg)$/i;
 
-const renderVideoPlayer = (src: string, alt: string = "Video") => {
+const renderVideoPlayer = (src: string) => {
     return `
 <div class="md-video-player" data-md-video="true">
     <video class="md-video-media" src="${src}" preload="metadata" playsinline></video>
@@ -344,14 +344,10 @@ const getVideoSrc = (video: HTMLVideoElement): string => {
     return source?.getAttribute("src") || "";
 };
 
-const replaceWithVideoPlayer = (
-    target: Element,
-    src: string,
-    alt: string = "Video",
-) => {
+const replaceWithVideoPlayer = (target: Element, src: string) => {
     if (!src) return;
     const wrapper = document.createElement("div");
-    wrapper.innerHTML = renderVideoPlayer(src, alt);
+    wrapper.innerHTML = renderVideoPlayer(src);
     const player = wrapper.firstElementChild;
     if (!player) return;
     target.replaceWith(player);
@@ -363,8 +359,7 @@ export const decorateMarkdownVideoEmbeds = (root: HTMLElement) => {
         if (image.closest(".md-video-player")) return;
         const src = image.getAttribute("src") || "";
         if (!src || !VIDEO_EXTENSIONS.test(src)) return;
-        const alt = image.getAttribute("alt") || "Video";
-        replaceWithVideoPlayer(image, src, alt);
+        replaceWithVideoPlayer(image, src);
     });
 
     const videos = Array.from(root.querySelectorAll<HTMLVideoElement>("video"));
@@ -435,9 +430,6 @@ export const createMarkdownVideoPlayerController = (
             );
             const fullscreenBtn = playerEl.querySelector<HTMLButtonElement>(
                 ".md-video-fullscreen",
-            );
-            const volumeContainer = playerEl.querySelector<HTMLElement>(
-                ".md-video-volume-container",
             );
             const volumeBtn = playerEl.querySelector<HTMLButtonElement>(
                 ".md-video-volume-btn",

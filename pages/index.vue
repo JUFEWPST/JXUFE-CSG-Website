@@ -181,7 +181,7 @@ onMounted(() => {
         },
         { threshold: 0.12 },
     );
-    targets.forEach((t) => io.observe(t));
+    targets.forEach((el) => io.observe(el));
 });
 </script>
 
