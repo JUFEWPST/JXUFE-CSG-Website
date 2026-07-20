@@ -55,7 +55,11 @@ function createRange(
         const m = String(current.getMonth() + 1).padStart(2, "0");
         const d = String(current.getDate()).padStart(2, "0");
         result.push({ date: `${y}-${m}-${d}`, type, name });
-        current.setDate(current.getDate() + 1);
+        current = new Date(
+            current.getFullYear(),
+            current.getMonth(),
+            current.getDate() + 1,
+        );
     }
 
     return result;
