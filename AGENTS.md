@@ -12,6 +12,7 @@ Nuxt 4 + Vue 3 + Tailwind CSS v4 + `@nuxtjs/i18n` + `@nuxtjs/mdc` + TypeScript
 - `pnpm dev` —— 开发环境，不过既然你是AI的话，这个代码还是交给人类执行吧
 - `pnpm exec nuxt typecheck` —— 做类型检查
 - `pnpm exec prettier --write .` —— 格式化代码
+- `pnpm lint` —— 推荐跑一下静态检查；告警不必一股脑全修，有些是误报或纯给自己找麻烦，按实际影响判断即可
 
 ## 代码约定
 
