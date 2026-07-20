@@ -113,7 +113,7 @@ export function useArchivePrevNext(currentSlug: Ref<string>) {
                     if (keep) bySlug.set(slug, item);
                 }
 
-                const items = Array.from(bySlug.values()).sort(
+                const items = Array.from(bySlug.values()).toSorted(
                     sortByPublishTimeDesc,
                 );
                 state.value.items = items;

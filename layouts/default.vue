@@ -198,7 +198,7 @@ const homeBannersLoaded = ref(false);
 const loadHomeBanners = async () => {
     if (homeBannersLoaded.value || !import.meta.client) return;
     homeBannersLoaded.value = true;
-    const entries = Object.entries(homeBannerModules).sort(([a], [b]) =>
+    const entries = Object.entries(homeBannerModules).toSorted(([a], [b]) =>
         a.localeCompare(b),
     );
     homeBannerImages.value = await Promise.all(
