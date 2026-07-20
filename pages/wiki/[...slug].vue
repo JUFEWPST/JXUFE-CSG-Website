@@ -430,10 +430,10 @@ const breadcrumbItems = computed(() => {
 type PrevNextTarget = { to: string; title: string };
 
 const sortWikiNodes = (nodes: WikiTreeNode[]) => {
-    return nodes.slice().sort((a, b) => {
+    return nodes.toSorted((a, b) => {
         if (a.order !== b.order) return a.order - b.order;
-        const t = a.title.localeCompare(b.title);
-        if (t !== 0) return t;
+        const cmp = a.title.localeCompare(b.title);
+        if (cmp !== 0) return cmp;
         return a.path.localeCompare(b.path);
     });
 };

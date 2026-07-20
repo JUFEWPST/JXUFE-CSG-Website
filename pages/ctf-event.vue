@@ -1161,7 +1161,7 @@ const calendarWeeks = computed<CalendarWeek[]>(() =>
                     event.parsedEffectiveEnd.getTime() >= weekStart.getTime() &&
                     event.parsedStart.getTime() < weekAfterEnd.getTime(),
             )
-            .sort(
+            .toSorted(
                 (a, b) =>
                     a.parsedStart.getTime() - b.parsedStart.getTime() ||
                     b.parsedEffectiveEnd.getTime() -

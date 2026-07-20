@@ -889,7 +889,7 @@ const availablePlanTypes = computed(() => {
             types.add(f["F"]);
         }
     }
-    return Array.from(types).sort();
+    return Array.from(types).toSorted();
 });
 
 const isDataSource = (src: string | number): src is DataSource =>
@@ -1010,7 +1010,7 @@ const currentAllFilter = computed(() =>
 );
 
 const availableYears = computed(() =>
-    [...(currentFilterOptions.value["A"] || [])].sort().reverse(),
+    [...(currentFilterOptions.value["A"] || [])].toSorted().reverse(),
 );
 
 const availableProvinces = computed(() => {
@@ -1021,7 +1021,7 @@ const availableProvinces = computed(() => {
             provinces.add(f["B"]);
         }
     }
-    return Array.from(provinces).sort();
+    return Array.from(provinces).toSorted();
 });
 
 const availableCategories = computed(() => {
@@ -1037,7 +1037,7 @@ const availableCategories = computed(() => {
             cats.add(f["D"]);
         }
     }
-    return Array.from(cats).sort();
+    return Array.from(cats).toSorted();
 });
 
 const canQuery = computed(
