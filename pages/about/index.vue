@@ -436,7 +436,7 @@ onUnmounted(() => {
                         <div class="mt-4 flex flex-wrap gap-3">
                             <AnzuButton
                                 class="h-10"
-                                href="https://qm.qq.com/q/v7pD9BL4Lm"
+                                href="https://qm.qq.com/q/ZW0uFjyDCM"
                                 primary-color="oklch(62.3% 0.214 259.815)"
                                 target="_blank"
                             >
@@ -457,7 +457,7 @@ onUnmounted(() => {
                     <div class="flex justify-center md:w-1/2">
                         <figure class="max-w-xs">
                             <img
-                                src="/assets/images/2025JXUFECGS.svg"
+                                src="https://csec.jxufe.edu.cn/i/r/welcome"
                                 class="h-56 w-56 object-contain p-3"
                                 :alt="t('pages.about.index.joinUs.qrLabel')"
                             />

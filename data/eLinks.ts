@@ -92,6 +92,11 @@ export const useLinks = () => {
             url: "https://npiter.de/",
             icon: "https://npiter.de/wp-content/uploads/2025/10/cropped-1761900400-20250308_141502_0.jpg",
         },
+        {
+            name: "糖糖毬",
+            url: "https://tantanchugasuki.cn/",
+            icon: "https://img.tantanchugasuki.cn/i/r/avatar",
+        },
     ];
 
     return {
