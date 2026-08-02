@@ -608,5 +608,10 @@
             "holiday": "Holiday",
             "workdayAdjusted": "Adjusted"
         }
+    },
+    "notice": {
+        "title": "Notices",
+        "empty": "No notices",
+        "error": "Failed to load notices. Please try again later."
     }
 }

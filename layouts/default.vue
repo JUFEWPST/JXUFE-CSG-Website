@@ -13,6 +13,7 @@ import { usePageTitle } from "@/composables/usePageTitle";
 import { useSidebarLayout } from "@/composables/useSidebarLayout";
 import SiteInfoCard from "@/components/sidebars/SiteInfoCard.vue";
 import CalendarCard from "@/components/sidebars/CalendarCard.vue";
+import NoticeCard from "@/components/sidebars/NoticeCard.vue";
 import WikiTree from "@/components/sidebars/WikiTree.vue";
 
 const { t } = useI18n();
@@ -92,6 +93,15 @@ registerCard({
     sticky: false,
     showOnMobileBottom: true,
     component: SiteInfoCard,
+});
+
+registerCard({
+    id: "notice",
+    side: "left",
+    order: 5,
+    sticky: false,
+    showOnMobileBottom: true,
+    component: NoticeCard,
 });
 
 registerCard({

@@ -640,5 +640,10 @@
             "holiday": "휴일",
             "workdayAdjusted": "대체"
         }
+    },
+    "notice": {
+        "title": "공지",
+        "empty": "공지가 없습니다",
+        "error": "공지를 불러오지 못했습니다. 나중에 다시 시도해 주세요."
     }
 }

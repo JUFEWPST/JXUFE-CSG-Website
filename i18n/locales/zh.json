@@ -608,5 +608,10 @@
             "holiday": "节假日",
             "workdayAdjusted": "调休"
         }
+    },
+    "notice": {
+        "title": "通知",
+        "empty": "暂无通知",
+        "error": "通知加载失败，请稍后重试"
     }
 }

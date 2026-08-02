@@ -8,11 +8,14 @@
         draggable="false"
       />
     </div>-->
-        <div class="space-y-2">
-            <div
-                class="text-xs font-medium tracking-wide text-(--md-sys-color-on-surface-variant)"
-            >
-                {{ t("footer.contact") }}
+        <div class="space-y-3">
+            <div class="flex items-center gap-2">
+                <ChatBubbleLeftRightIcon
+                    class="h-5 w-5 text-(--md-sys-color-primary)"
+                />
+                <h2 class="text-lg font-bold text-(--md-sys-color-on-surface)">
+                    {{ t("footer.contact") }}
+                </h2>
             </div>
 
             <ul class="space-y-2">
@@ -51,7 +54,11 @@
 </template>
 
 <script setup lang="ts">
-import { MapPinIcon, EnvelopeIcon } from "@heroicons/vue/24/outline";
+import {
+    ChatBubbleLeftRightIcon,
+    MapPinIcon,
+    EnvelopeIcon,
+} from "@heroicons/vue/24/outline";
 
 const { t } = useI18n();
 </script>
