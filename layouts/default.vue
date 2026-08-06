@@ -6,7 +6,6 @@ import PageFooter from "@/components/PageFooter.vue";
 import AnzuNotification from "~/components/AnzuNotification.vue";
 import { useNotification } from "@/composables/useNotification";
 import { useFetchNotice } from "@/composables/useFetchNotice";
-import { useOncePerSession } from "@/composables/useOncePerSession";
 import { useI18n } from "vue-i18n";
 import { useColorPalette } from "@/composables/useColorPalette";
 import { usePageTitle } from "@/composables/usePageTitle";
@@ -151,9 +150,7 @@ const closeMobileDrawer = () => {
 };
 
 if (import.meta.client) {
-    useOncePerSession("init-notice", () => {
-        useFetchNotice();
-    });
+    useFetchNotice();
 }
 
 const isHome = computed(() => route.path === "/" || route.path === "");
