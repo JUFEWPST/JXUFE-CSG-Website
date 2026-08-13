@@ -127,19 +127,6 @@ const tocItems = ref<TocItem[]>([]);
 
 const { t, locale } = useI18n();
 
-// Bot-only metadata SSR（结构化数据）；正文对所有用户走下方 useAsyncData。
-await useBotMeta(
-    () =>
-        `/v1/contents/by-path/archive/${route.params.para}?i18n=${getApiLocale(locale.value)}`,
-    {
-        schema: "Article",
-        type: "article",
-        locale: locale.value,
-        titleFormatter: (title) =>
-            `${title} - ${t("meta.fullName")} ${t("nav.archive")}`,
-    },
-);
-
 const { setHasContent, clearRightSidebar } = useRightSidebar();
 const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
@@ -168,6 +155,18 @@ const {
 );
 
 const archive = computed(() => archivePayload.value?.data ?? null);
+
+// 爬虫专用 SEO 元数据：复用 useAsyncData 已取回的 payload，仅服务端对爬虫执行。
+await useBotMeta(() => archivePayload.value?.data ?? null, {
+    schema: "Article",
+    type: "article",
+    locale: locale.value,
+    titleFormatter: (title) =>
+        title
+            ? `${title} - ${t("meta.fullName")} ${t("nav.archive")}`
+            : `${t("nav.archive")} - ${t("meta.fullName")}`,
+});
+
 const meta = computed(() => archivePayload.value?.meta as ApiMeta | undefined);
 const i18nFallback = computed(() => meta.value?.i18n);
 const error = computed(() =>

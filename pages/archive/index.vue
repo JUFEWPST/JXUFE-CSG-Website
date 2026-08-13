@@ -60,23 +60,9 @@ import { useRoute, useRouter } from "#imports";
 import { fetchCmsData, normalizeApiError } from "~/composables/useapi";
 import type { Archive } from "~/types/archives";
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-
-await useBotMeta(
-    () => {
-        const page = route.query.page || 1;
-        return `/v1/contents?type_slug=archive&fields=publish_time&sort_order=desc&page=${page}`;
-    },
-    {
-        schema: "CollectionPage",
-        type: "website",
-        locale: locale.value,
-        titleFormatter: (title) =>
-            `${t("pages.archive.title")} - ${t("meta.fullName")}`,
-    },
-);
 
 usePageMeta({
     titleKey: "pages.archive.title",
@@ -84,11 +70,16 @@ usePageMeta({
     suffixKey: "nav.archive",
     keywords: t("pages.archive.meta.keywords"),
     canonicalPath: "/archive",
+    // 列表页统一输出 CollectionPage 结构化数据（覆盖默认 WebPage）
+    schema: { "@type": "CollectionPage" },
 });
 
 const pageFromRoute = computed(() => {
     const raw = route.query.page;
-    const pageNum = parseInt(String(Array.isArray(raw) ? raw[0] : raw) || "1", 10);
+    const pageNum = parseInt(
+        String(Array.isArray(raw) ? raw[0] : raw) || "1",
+        10,
+    );
     return Number.isFinite(pageNum) && pageNum > 0 ? pageNum : 1;
 });
 

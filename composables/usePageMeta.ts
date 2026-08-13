@@ -9,6 +9,7 @@ export interface PageMetaOptions {
     canonicalPath?: string;
     schema?: Record<string, unknown> | null;
     noIndex?: boolean;
+    ogImage?: string;
 }
 
 export function usePageMeta(options: PageMetaOptions) {
@@ -57,9 +58,11 @@ export function usePageMeta(options: PageMetaOptions) {
         ogUrl: () => url,
         ogSiteName: () => t("meta.fullName"),
         ogLocale,
-        twitterCard: "summary",
+        ogImage: options.ogImage,
+        twitterCard: "summary_large_image",
         twitterTitle: ogTitle,
         twitterDescription: description,
+        twitterImage: options.ogImage,
     });
 
     useHead(() => {

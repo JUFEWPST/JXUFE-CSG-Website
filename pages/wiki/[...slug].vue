@@ -190,6 +190,7 @@ import type { TocItem } from "~/types/tocitems";
 import type { WikiTreeNode } from "~/types/wiki";
 import {
     fetchCmsData,
+    getApiBaseUrl,
     normalizeApiError,
     type ApiMeta,
 } from "~/composables/useapi";
@@ -229,34 +230,6 @@ const { registerCard, setCardOptions } = useSidebarLayout();
 const { setTitle, setScrollReveal, reset: resetNavTitle } = useNavTitle();
 const { setPageTitle: setSitePageTitle } = usePageTitle();
 const { t, locale } = useI18n();
-
-await useBotMeta(
-    () => {
-        const slugParam = route.params.slug;
-        const segs = Array.isArray(slugParam)
-            ? slugParam
-            : slugParam
-              ? [slugParam as string]
-              : [];
-
-        if (!segs.length) {
-            return (
-                "/v1/contents/by-path/wiki?i18n=" + getApiLocale(locale.value)
-            );
-        }
-
-        return `/v1/contents/by-path/wiki/${segs.join("/")}?i18n=${getApiLocale(locale.value)}`;
-    },
-    {
-        schema: "TechArticle",
-        type: "article",
-        locale: locale.value,
-        titleFormatter: (title) =>
-            title
-                ? `${title} - ${t("meta.fullName")} ${t("nav.wiki")}`
-                : `${t("nav.wiki")} - ${t("meta.fullName")}`,
-    },
-);
 
 const slug = computed(() => {
     if (Array.isArray(route.params.slug)) {
@@ -307,16 +280,21 @@ const contentPath = computed(() => {
 const loadWikiPage = async (): Promise<WikiPagePayload> => {
     const lang = currentContentLang.value;
     const depth = slugSegments.value.length + 1;
+    // useRuntimeConfig 依赖请求上下文：在首个 await 之前同步捕获 baseURL
+    const apiBase = getApiBaseUrl();
 
     const [breadcrumbResult, sectionResult, treeResult] = await Promise.all([
         fetchCmsData<WikiTreeNode>(
             `/v1/tree?root=wiki&depth=${depth}&i18n=${lang}`,
+            { baseURL: apiBase },
         ),
         fetchCmsData<WikiTreeNode>(
             `/v1/tree?root=${firstLevelRootPath.value}&i18n=${lang}`,
+            { baseURL: apiBase },
         ),
         fetchCmsData<WikiTreeNode>(
             `/v1/tree?root=${treeRootPath.value}&depth=2&i18n=${lang}`,
+            { baseURL: apiBase },
         ),
     ]);
 
@@ -333,6 +311,7 @@ const loadWikiPage = async (): Promise<WikiPagePayload> => {
     try {
         const contentResult = await fetchCmsData<WikiData>(
             `/v1/contents/by-path/${contentPath.value}?i18n=${lang}`,
+            { baseURL: apiBase },
         );
         return {
             content: contentResult.data,
@@ -365,6 +344,18 @@ const {
 );
 
 const content = computed(() => wikiPayload.value?.content ?? null);
+
+// 爬虫专用 SEO 元数据：复用 useAsyncData 已取回的 payload，仅服务端对爬虫执行。
+await useBotMeta(() => wikiPayload.value ?? null, {
+    schema: "TechArticle",
+    type: "article",
+    locale: locale.value,
+    titleFormatter: (title) =>
+        title
+            ? `${title} - ${t("meta.fullName")} ${t("nav.wiki")}`
+            : `${t("nav.wiki")} - ${t("meta.fullName")}`,
+});
+
 const treeNode = computed(() => wikiPayload.value?.treeNode ?? null);
 const breadcrumbTree = computed(
     () => wikiPayload.value?.breadcrumbTree ?? null,

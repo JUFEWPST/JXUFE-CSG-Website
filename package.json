@@ -16,6 +16,7 @@
     "dependencies": {
         "@heroicons/vue": "^2.2.0",
         "@material/material-color-utilities": "^0.3.0",
+        "isbot": "^5.2.1",
         "katex": "^0.17.0",
         "nuxt": "^4.4.8",
         "vue": "^3.5.27"

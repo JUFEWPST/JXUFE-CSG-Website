@@ -78,7 +78,8 @@ export const normalizeApiError = (err: unknown): ApiError => {
     };
 
     if (fetchErr.data && typeof fetchErr.data === "object") {
-        const data = fetchErr.data as ErrorResponse & Partial<CmsEnvelope<unknown>>;
+        const data = fetchErr.data as ErrorResponse &
+            Partial<CmsEnvelope<unknown>>;
         return {
             status: fetchErr.statusCode ?? data.status ?? 500,
             name: data.name || "ApiError",
@@ -102,7 +103,7 @@ export const normalizeApiError = (err: unknown): ApiError => {
     };
 };
 
-const getApiBaseUrl = (): string => {
+export const getApiBaseUrl = (): string => {
     const config = useRuntimeConfig();
     return (config.public?.apiBase as string) || DEFAULT_BASE_URL;
 };
@@ -116,22 +117,19 @@ export async function fetchCmsData<T>(
         method?: "GET" | "POST" | "PUT" | "DELETE";
         body?: unknown;
         signal?: AbortSignal;
+        baseURL?: string;
     } = {},
 ): Promise<CmsResult<T>> {
-    const baseURL = getApiBaseUrl();
+    // useRuntimeConfig 依赖请求上下文；跨 await 调用时须由调用方提前传入 baseURL
+    const baseURL = options.baseURL ?? getApiBaseUrl();
     const method = options.method ?? "GET";
     const payload = await $fetch<unknown>(`${baseURL}${endpoint}`, {
         method,
         signal: options.signal,
-        body:
-            options.body !== undefined
-                ? { data: options.body }
-                : undefined,
+        body: options.body !== undefined ? { data: options.body } : undefined,
         headers: {
             Accept: "application/json",
-            ...(method !== "GET"
-                ? { "Content-Type": "application/json" }
-                : {}),
+            ...(method !== "GET" ? { "Content-Type": "application/json" } : {}),
         },
     });
 
@@ -203,7 +201,8 @@ export function useApi<T>() {
 
             const result = await fetchCmsData<T>(endpoint, {
                 method,
-                body: method === "GET" || method === "DELETE" ? undefined : body,
+                body:
+                    method === "GET" || method === "DELETE" ? undefined : body,
                 signal: activeController.signal,
             });
 

@@ -21,7 +21,9 @@
 用 Tailwind 任意值语法引用：
 
 ```html
-<div class="bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)">
+<div
+    class="bg-(--md-sys-color-surface-container) text-(--md-sys-color-on-surface)"
+></div>
 ```
 
 常用搭配：
@@ -145,17 +147,17 @@ registerCard({
 
 `SidebarCardConfig` 关键字段：
 
-| 字段                                    | 说明                                       |
-| --------------------------------------- | ------------------------------------------ |
-| `id` / `side` / `component`             | 必填：唯一标识、默认归属列、渲染组件       |
-| `order`                                 | 同列排序，越小越靠上                       |
-| `sticky`                                | 桌面端吸顶（吸顶卡片整体沉到列底）         |
+| 字段                                    | 说明                                              |
+| --------------------------------------- | ------------------------------------------------- |
+| `id` / `side` / `component`             | 必填：唯一标识、默认归属列、渲染组件              |
+| `order`                                 | 同列排序，越小越靠上                              |
+| `sticky`                                | 桌面端吸顶（吸顶卡片整体沉到列底）                |
 | `scope`                                 | `global` / `route` / `page`，后两者随路由自动清除 |
-| `includeRoutes` / `excludeRoutes`       | 路由前缀白 / 黑名单                        |
-| `mutualGroup` / `priority`              | 互斥分组，同组按 priority 留一张           |
-| `when`                                  | 运行时自定义显示条件                       |
-| `showOnMobileBottom`                    | 移动端进底部堆叠                           |
-| `showOnMobileDrawer` + `mobileLabelKey` | 移动端进浮层抽屉，及抽屉按钮文案           |
+| `includeRoutes` / `excludeRoutes`       | 路由前缀白 / 黑名单                               |
+| `mutualGroup` / `priority`              | 互斥分组，同组按 priority 留一张                  |
+| `when`                                  | 运行时自定义显示条件                              |
+| `showOnMobileBottom`                    | 移动端进底部堆叠                                  |
+| `showOnMobileDrawer` + `mobileLabelKey` | 移动端进浮层抽屉，及抽屉按钮文案                  |
 
 要点：
 
@@ -169,12 +171,14 @@ registerCard({
 
 SEO 元数据由两个组合式函数统管，**页面里不要直接写 `useHead` / `useSeoMeta` 拼标签**：
 
-| 函数          | 场景                                                     |
-| ------------- | -------------------------------------------------------- |
-| `usePageMeta` | 所有静态页面                                             |
+| 函数          | 场景                                                                 |
+| ------------- | -------------------------------------------------------------------- |
+| `usePageMeta` | 所有静态页面                                                         |
 | `useBotMeta`  | CMS 动态页（`archive/[para]`、`wiki/[...slug]`），仅服务端对爬虫渲染 |
 
 一个页面只用其中一个。标题统一由 layout 组装成 `{页面标题} - {全站名}{后缀}`，页面只传 `titleKey` 等，不用手拼字符串。
+
+`useBotMeta` 不自行请求 CMS：把 `useAsyncData` 已取回的内容对象通过 `payloadFactory` 传入（详情页为内容对象；wiki 容器页传 `wikiPayload`，由内部归一化）。
 
 ```ts
 usePageMeta({
@@ -196,4 +200,3 @@ usePageMeta({
 - **关于页隐藏 logo**（`pages/about/index.vue`）：顶部「网安 \* 领域」是一个 `FlipToggle`，翻面会露出 `网安领域.webp` 与一句彩蛋文案，保留它的 back 面与翻转交互。
 
 调整这些组件的布局 / 样式没问题，但以上内容请留着它们。
-

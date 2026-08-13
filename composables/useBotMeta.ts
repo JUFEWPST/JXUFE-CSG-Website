@@ -1,37 +1,12 @@
-const BOT_UA_PATTERNS: RegExp[] = [
-    /Googlebot/i,
-    /Bingbot/i,
-    /Baiduspider/i,
-    /YandexBot/i,
-    /DuckDuckBot/i,
-    /Sogou/i,
-    /YisouSpider/i,
-    /360Spider/i,
-    /HaosouSpider/i,
-    /Bytespider/i,
-    /PetalBot/i,
-    /Applebot/i,
-    /Twitterbot/i,
-    /facebookexternalhit/i,
-    /facebot/i,
-    /LinkedInBot/i,
-    /WhatsApp/i,
-    /TelegramBot/i,
-    /Slackbot/i,
-    /Discordbot/i,
-    /WeChat/i,
-    /MicroMessenger/i,
-    /Weibo/i,
-    /AhrefsBot/i,
-    /SemrushBot/i,
-    /MJ12bot/i,
-    /SeznamBot/i,
-    /ia_archiver/i,
-];
+import { isbot } from "isbot";
+import { getApiLocale } from "~/utils/i18n";
+
+// 微信/QQ 内置浏览器不是爬虫，但分享卡片需要爬虫级元数据
+const INAPP_BROWSER_PATTERNS: RegExp[] = [/MicroMessenger/i, /MQQBrowser/i];
 
 const isBotUA = (ua: string | null | undefined): boolean => {
     if (!ua) return false;
-    return BOT_UA_PATTERNS.some((p) => p.test(ua));
+    return isbot(ua) || INAPP_BROWSER_PATTERNS.some((p) => p.test(ua));
 };
 
 const stripMarkdown = (input: string): string =>
@@ -68,25 +43,69 @@ const encodePath = (path: string): string =>
         })
         .join("/");
 
-interface CmsEnvelope<T> {
-    code: number;
-    message?: string;
-    data: T;
+type Dict = Record<string, unknown>;
+
+/**
+ * 归一化 CMS 内容对象：详情 { id, data: { title, body, ... }, tags }、
+ * wiki 容器页 { content: null, treeNode }、列表接口返回数组。
+ */
+interface NormalizedContent {
+    title: string;
+    description: string;
+    author?: string;
+    publishedAt?: string;
+    tags: string[];
 }
 
-interface ContentResponse {
-    title?: string;
-    slug?: string;
-    data?: {
-        title?: string;
-        body?: string;
-        content?: string;
-        publish_time?: string;
-        publisher?: string;
-        [key: string]: unknown;
+const normalizeContent = (payload: unknown): NormalizedContent | null => {
+    if (!payload || typeof payload !== "object") return null;
+    if (Array.isArray(payload)) return null;
+
+    const root = payload as Dict;
+    // wiki：正文在 content 下，容器页标题在 treeNode
+    const content =
+        root.content && typeof root.content === "object"
+            ? (root.content as Dict)
+            : root;
+    const data =
+        content.data && typeof content.data === "object"
+            ? (content.data as Dict)
+            : {};
+
+    const getStr = (...keys: unknown[]): string => {
+        for (const k of keys) {
+            if (typeof k === "string" && k.trim()) return k.trim();
+        }
+        return "";
     };
-    tags?: { name: string }[];
-}
+
+    const title = getStr(
+        data.title,
+        content.title,
+        root.title,
+        root.treeNode && typeof root.treeNode === "object"
+            ? ((root.treeNode as Dict).title as string)
+            : undefined,
+    );
+    const body = getStr(data.body, data.content, content.body);
+    const author =
+        getStr(data.publisher, data.author, content.publisher) || undefined;
+    const publishedAt =
+        getStr(data.publish_time, data.published_at, content.publish_time) ||
+        undefined;
+    const rawTags = content.tags ?? root.tags;
+    const tags = Array.isArray(rawTags)
+        ? rawTags
+              .map((t) =>
+                  t && typeof t === "object"
+                      ? ((t as Dict).name as string)
+                      : String(t ?? ""),
+              )
+              .filter(Boolean)
+        : [];
+
+    return { title, description: body, author, publishedAt, tags };
+};
 
 export interface UseBotMetaOptions {
     schema?: "Article" | "TechArticle" | "WebPage" | "CollectionPage";
@@ -94,68 +113,58 @@ export interface UseBotMetaOptions {
     siteName?: string;
     locale?: string;
     titleFormatter?: (title: string) => string;
+    ogImage?: string;
 }
 
+/**
+ * 仅服务端对爬虫渲染 SEO 元数据。
+ * payloadFactory 提供 useAsyncData 已取回的内容对象（或 null）。
+ */
 export async function useBotMeta(
-    endpointFactory: () => string | null,
+    payloadFactory: () => unknown | Promise<unknown>,
     options: UseBotMetaOptions = {},
 ) {
     if (import.meta.client) return;
+
+    // 依赖 Nuxt 上下文的调用必须在第一个 await 之前同步完成：
+    // 页面 setup 在 await 后续跑时，嵌套 await 会丢失 Vue 实例上下文
+    const nuxtApp = useNuxtApp();
+    const config = useRuntimeConfig();
+    const route = useRoute();
 
     const event = useRequestEvent();
     const uaHeader = event?.node?.req?.headers["user-agent"];
     const ua = Array.isArray(uaHeader) ? uaHeader[0] : uaHeader;
     if (!isBotUA(ua)) return;
 
-    const endpoint = endpointFactory();
-    if (!endpoint) return;
-    const nuxtApp = useNuxtApp();
-    const config = useRuntimeConfig();
-    const apiBase =
-        (config.public.apiBase as string) || "https://csec.jxufe.edu.cn/nozomi";
+    const payload = await payloadFactory();
+    const normalized = normalizeContent(payload);
+    if (!normalized) return;
+
     const siteUrl = (
         (config.public.siteUrl as string) || "https://csec.jxufe.edu.cn"
     ).replace(/\/+$/, "");
-    const route = useRoute();
-    const routePath = route.path;
+    const url = `${siteUrl}${encodePath(route.path)}`;
 
-    let payload: ContentResponse | null = null;
-    try {
-        const res = await $fetch<CmsEnvelope<ContentResponse>>(
-            `${apiBase}${endpoint}`,
-            { headers: { Accept: "application/json" } },
-        );
-        if (res?.code === 200 && res.data) {
-            payload = res.data;
-        }
-    } catch {
-        return;
-    }
-
-    if (!payload) return;
-
-    const rawTitle = payload.data?.title || payload.title || "";
+    const rawTitle = normalized.title;
     const title = options.titleFormatter
         ? options.titleFormatter(rawTitle)
         : rawTitle;
-    const description = buildExcerpt(
-        payload.data?.body || payload.data?.content || "",
-    );
-    const tags = (payload.tags ?? []).map((t) => t.name);
-    const author = payload.data?.publisher;
-    const publishedAt = payload.data?.publish_time;
+    const description = buildExcerpt(normalized.description);
+    const siteName = options.siteName ?? "江西财经大学网络安全协会";
+    const canonicalLocale = getApiLocale(options.locale ?? "zh");
+    const ogLocale = canonicalLocale.replace("-", "_");
     const schema = options.schema ?? "Article";
     const ogType = options.type ?? "article";
-    const siteName = options.siteName ?? "江西财经大学网络安全协会";
-    const ogLocale = (options.locale ?? "zh_CN").replace("-", "_");
-    const url = `${siteUrl}${encodePath(routePath)}`;
 
     const seoPayload: Record<string, unknown> = {
         ogType,
         ogUrl: url,
         ogSiteName: siteName,
         ogLocale,
+        ogImage: options.ogImage,
         twitterCard: "summary_large_image",
+        twitterImage: options.ogImage,
     };
     if (title) {
         seoPayload.title = title;
@@ -167,25 +176,27 @@ export async function useBotMeta(
         seoPayload.ogDescription = description;
         seoPayload.twitterDescription = description;
     }
-    if (publishedAt) seoPayload.articlePublishedTime = publishedAt;
-    if (author) seoPayload.articleAuthor = author;
-    if (tags.length) seoPayload.articleTag = tags;
+    if (normalized.publishedAt)
+        seoPayload.articlePublishedTime = normalized.publishedAt;
+    if (normalized.author) seoPayload.articleAuthor = normalized.author;
+    if (normalized.tags.length) seoPayload.articleTag = normalized.tags;
 
+    const articleLike = schema === "Article" || schema === "TechArticle";
     const jsonLd: Record<string, unknown> = {
         "@context": "https://schema.org",
         "@type": schema,
-        headline: title,
-        name: title,
+        headline: rawTitle || title,
+        name: rawTitle || title,
         description,
         url,
-        inLanguage: options.locale ?? "zh-CN",
-        author: author
-            ? { "@type": "Person", name: author }
+        inLanguage: canonicalLocale,
+        author: normalized.author
+            ? { "@type": "Person", name: normalized.author }
             : { "@type": "Organization", name: siteName },
         isPartOf: { "@type": "WebSite", name: siteName, url: siteUrl },
     };
-    if (publishedAt) jsonLd.datePublished = publishedAt;
-    if (tags.length) jsonLd.keywords = tags.join(", ");
+    if (normalized.publishedAt) jsonLd.datePublished = normalized.publishedAt;
+    if (normalized.tags.length) jsonLd.keywords = normalized.tags.join(", ");
 
     nuxtApp.runWithContext(() => {
         useSeoMeta(seoPayload);
@@ -193,12 +204,16 @@ export async function useBotMeta(
             {
                 title,
                 link: [{ rel: "canonical", href: url }],
-                script: [
-                    {
-                        type: "application/ld+json",
-                        innerHTML: JSON.stringify(jsonLd),
-                    },
-                ],
+                // 文章类 schema 仅在存在正文时输出
+                script:
+                    articleLike && !description
+                        ? []
+                        : [
+                              {
+                                  type: "application/ld+json",
+                                  innerHTML: JSON.stringify(jsonLd),
+                              },
+                          ],
             },
             { tagPriority: "high" },
         );
