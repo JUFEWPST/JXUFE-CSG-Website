@@ -58,7 +58,7 @@ export const useLinks = () => {
     const iLinks = computed(() => [
         {
             name: t("pages.links.items.ctfplatform"),
-            url: "http://172.28.52.11/",
+            url: "http://172.28.52.16/",
             icon: "/favicon.svg",
         },
         {
