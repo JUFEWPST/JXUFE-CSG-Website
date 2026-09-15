@@ -53,6 +53,12 @@ export const useLinks = () => {
             droptext: "数智技术协会欢迎你！",
             desc: "我来酱菜，只办三件事，技术，技术，还是技术！",
         },
+        {
+            name: "江西财经大学IT帮",
+            url: "https://itbang.bethanyapi.org",
+            icon: "https://itbang.bethanyapi.org/api/status/logo",
+            desc: "喜欢IT，喜欢玩垃圾，喜欢做公益，就来IT帮一起玩吧",
+        },
     ]);
 
     const iLinks = computed(() => [
