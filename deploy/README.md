@@ -68,8 +68,7 @@ Built by AnzuOrchestra / 2026-01-02T03:30:00+08:00 / #470695
 
 优先使用以下镜像站
 
-- https://gh.llkk.cc/
-- https://github.dpik.top/
+- https://gitcode.com/MeetLonging/JXUFE-CSG-Website.git
 
 ## 日志
 
