@@ -16,8 +16,7 @@ IMAGE_NAME="${IMAGE_NAME:-}"
 LOCK_FILE="${LOCK_FILE:-$DEPLOY_DIR/anzu-orchestra.lock}"
 
 MIRROR_URLS=(
-    "https://gh.llkk.cc/https://github.com/JUFEWPST/JXUFE-CSG-Website"
-    "https://github.dpik.top/https://github.com/JUFEWPST/JXUFE-CSG-Website"
+    "https://gitcode.com/MeetLonging/JXUFE-CSG-Website.git"
 )
 ORIGINAL_URL="https://github.com/JUFEWPST/JXUFE-CSG-Website"
 
