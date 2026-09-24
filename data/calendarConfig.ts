@@ -100,9 +100,8 @@ export const semesterCalendarConfigs: SemesterCalendarConfig[] = [
             ...createRange("2026-09-22", "2026-09-24", "event", "新生入学、专业教育"),
             { date: "2026-09-13", type: "event", name: "老生报到注册" },
             { date: "2026-09-14", type: "event", name: "本科生正式上课" },
-            ...createRange("2026-09-25", "2026-09-27", "holiday", "中秋节假期"),
+            ...createRange("2026-09-25", "2026-10-07", "holiday", "中秋节国庆连放假期"),
             { date: "2026-09-28", type: "event", name: "新生正式上课" },
-            ...createRange("2026-10-01", "2026-10-07", "holiday", "国庆节假期"),
             { date: "2026-10-10", type: "workday", name: "调休上课（补第 4 周周五课程）" },
 
             ...createRange("2026-10-29", "2026-10-31", "event", "校运会"),
@@ -110,12 +109,15 @@ export const semesterCalendarConfigs: SemesterCalendarConfig[] = [
             { date: "2026-12-31", type: "event", name: "本科生课程结束" },
 
             { date: "2027-01-01", type: "holiday", name: "元旦假期" },
-            { date: "2027-01-16", type: "event", name: "寒假开始" },
+            { date: "2027-01-04", type: "workday", name: "调休上课（补第 4 周周一课程）" },
+            { date: "2027-01-05", type: "workday", name: "调休上课（补第 4 周周二课程）" },
+            { date: "2027-01-06", type: "workday", name: "调休上课（补第 4 周周三课程）" },
+            { date: "2027-01-19", type: "event", name: "寒假开始" },
         ],
         examWeeks: [
             {
-                start: "2027-01-04",
-                end: "2027-01-15",
+                start: "2027-01-07",
+                end: "2027-01-18",
                 name: "期末周",
             },
         ],

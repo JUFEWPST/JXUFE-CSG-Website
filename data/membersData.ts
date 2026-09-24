@@ -43,7 +43,7 @@ const member2025: Member[] = [
     {
         display: "Heaven",
         name: "柯善璐",
-        avatar: "https://pic-bed.dearheaven.cn/img/touxiang.webp",
+        avatar: "/avatar/heaven.avif",
         position: "学习部部长",
     },
     {
