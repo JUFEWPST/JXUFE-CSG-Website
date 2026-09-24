@@ -102,6 +102,12 @@ export const useLinks = () => {
             url: "https://tantanchugasuki.cn/",
             icon: "https://img.tantanchugasuki.cn/i/r/avatar",
         },
+        {
+            name: "JXUFE OFFER",
+            url: "https://jufe.woodfish.site/1",
+            icon: "https://jufe.woodfish.site/_next/image?url=%2F0b9e02d4fcddecc48d4b61e79cb26f16_compressed.png&w=64&q=75",
+            desc: "你喜欢我"
+        },
     ];
 
     return {

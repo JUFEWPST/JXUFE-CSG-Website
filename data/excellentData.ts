@@ -37,6 +37,7 @@ export const excellentData: person[] = [
         avatar: "/avatar/弔.avif",
         className: "23网络空间安全1班",
         honors: [
+            "保研至华东师范大学",
             "24届网安会长XZY的小迷弟（重点）",
             "南昌ICPC省铜",
             "天梯赛团体国一",
@@ -60,4 +61,10 @@ export const excellentData: person[] = [
         className: "24网络空间安全1班",
         honors: ["专业前5名", "中国机器人及人工智能大赛 省二等奖"],
     },
+    {
+        name: "柯善璐",
+        avatar: "/avatar/heaven.avif",
+        className: "24网络空间安全1班",
+        honors: ["25届会长QT的小迷弟（重点）", "2024级网络空间安全专业第一", "2025-2026学年国家励志奖学金"]
+    }
 ];
